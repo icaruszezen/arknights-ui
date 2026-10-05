@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="t d">
+  <title id="t">色板</title>
+  <desc id="d">中性色、信号色、稀有度色三组色板，标注色值与可信度。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .h { fill: #fff; font-size: 20px; }
+    .sub { fill: #8d8d8d; font-size: 12px; }
+    .hex { fill: #d2d2d2; font-size: 12px; }
+    .name { fill: #fff; font-size: 12px; }
+    .src { fill: #8d8d8d; font-size: 11px; }
+  </style>
+  <rect width="960" height="560" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="559" fill="none" stroke="#333"/>
+
+  <text x="40" y="52" class="cond h">NEUTRAL</text>
+  <text x="150" y="52" class="cjk sub">中性色 · 画面 90% 以上的面积</text>
+  <line x1="40" y1="64" x2="920" y2="64" stroke="#fff" stroke-opacity=".3"/>
+  <g>
+    <rect x="40" y="80" width="80" height="64" fill="#000" stroke="#333"/>
+    <rect x="120" y="80" width="80" height="64" fill="#121212" stroke="#333"/>
+    <rect x="200" y="80" width="80" height="64" fill="#1d1f20"/>
+    <rect x="280" y="80" width="80" height="64" fill="#242424"/>
+    <rect x="360" y="80" width="80" height="64" fill="#333333"/>
+    <rect x="440" y="80" width="80" height="64" fill="#424242"/>
+    <rect x="520" y="80" width="80" height="64" fill="#585858"/>
+    <rect x="600" y="80" width="80" height="64" fill="#8d8d8d"/>
+    <rect x="680" y="80" width="80" height="64" fill="#ababab"/>
+    <rect x="760" y="80" width="80" height="64" fill="#d2d2d2"/>
+    <rect x="840" y="80" width="80" height="64" fill="#fdfdfb"/>
+  </g>
+  <g class="data hex">
+    <text x="40" y="162">#000000</text><text x="120" y="162">#121212</text><text x="200" y="162">#1d1f20</text>
+    <text x="280" y="162">#242424</text><text x="360" y="162">#333333</text><text x="440" y="162">#424242</text>
+    <text x="520" y="162">#585858</text><text x="600" y="162">#8d8d8d</text><text x="680" y="162">#ababab</text>
+    <text x="760" y="162">#d2d2d2</text><text x="840" y="162">#fdfdfb</text>
+  </g>
+  <g class="cjk src">
+    <text x="40" y="180">底色</text><text x="120" y="180">近黑面板</text><text x="200" y="180">深色面板</text>
+    <text x="280" y="180">幽灵字</text><text x="360" y="180">深灰</text><text x="440" y="180">石墨面板*</text>
+    <text x="520" y="180">弱按钮</text><text x="600" y="180">描边</text><text x="680" y="180">未激活</text>
+    <text x="760" y="180">次要文字</text><text x="840" y="180">纸白面板*</text>
+  </g>
+
+  <text x="40" y="244" class="cond h">SIGNAL</text>
+  <text x="126" y="244" class="cjk sub">信号色 · 只在需要被看见的地方出现</text>
+  <line x1="40" y1="256" x2="920" y2="256" stroke="#fff" stroke-opacity=".3"/>
+  <g>
+    <rect x="40" y="272" width="200" height="88" fill="#18d1ff"/>
+    <rect x="252" y="272" width="120" height="88" fill="#22bbff"/>
+    <rect x="384" y="272" width="120" height="88" fill="#0098dc"/>
+    <rect x="516" y="272" width="120" height="88" fill="#ffd802"/>
+    <rect x="648" y="272" width="120" height="88" fill="#ff5e19"/>
+    <rect x="780" y="272" width="140" height="88" fill="#e33b3b"/>
+  </g>
+  <g class="cjk name">
+    <text x="48" y="292" fill="#000" style="fill:#000">信息 / 品牌青蓝</text>
+    <text x="260" y="292" style="fill:#000">游戏蓝*</text>
+    <text x="392" y="292">罗德岛蓝*</text>
+    <text x="524" y="292" style="fill:#000">行动 / 警示*</text>
+    <text x="656" y="292" style="fill:#000">强调*</text>
+    <text x="788" y="292">危险 / 敌方*</text>
+  </g>
+  <g class="data hex">
+    <text x="40" y="378">#18d1ff</text><text x="252" y="378">#22bbff</text><text x="384" y="378">#0098dc</text>
+    <text x="516" y="378">#ffd802</text><text x="648" y="378">#ff5e19</text><text x="780" y="378">#e33b3b</text>
+  </g>
+
+  <text x="40" y="440" class="cond h">TIER</text>
+  <text x="96" y="440" class="cjk sub">稀有度 / 材料档位*</text>
+  <line x1="40" y1="452" x2="920" y2="452" stroke="#fff" stroke-opacity=".3"/>
+  <g>
+    <rect x="40" y="468" width="140" height="40" fill="#9c9c9c"/>
+    <rect x="188" y="468" width="140" height="40" fill="#d8dd5a"/>
+    <rect x="336" y="468" width="140" height="40" fill="#4aabea"/>
+    <rect x="484" y="468" width="140" height="40" fill="#cfc2d1"/>
+    <rect x="632" y="468" width="140" height="40" fill="#f1c644"/>
+    <rect x="780" y="468" width="140" height="40" fill="#ff5e19"/>
+  </g>
+  <g class="data hex">
+    <text x="40" y="526">T1 #9c9c9c</text><text x="188" y="526">T2 #d8dd5a</text><text x="336" y="526">T3 #4aabea</text>
+    <text x="484" y="526">T4 #cfc2d1</text><text x="632" y="526">T5 #f1c644</text><text x="780" y="526">T6 #ff5e19</text>
+  </g>
+  <text x="920" y="546" text-anchor="end" class="cjk src">无标记 = 官网实测；* = 社区项目取值或估计，见 tokens.json 的 source 字段</text>
+</svg>

@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="t d">
+  <title id="t">面板与层级</title>
+  <desc id="d">纸白面板、石墨面板、毛玻璃浮层三种表面，以及卡片、抽屉的层级关系。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <defs>
+    <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#000" flood-opacity=".45"/></filter>
+    <filter id="blur"><feGaussianBlur stdDeviation="6"/></filter>
+    <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.1" fill="#000" fill-opacity=".18"/></pattern>
+    <clipPath id="glass"><rect x="700" y="96" width="200" height="150"/></clipPath>
+  </defs>
+  <rect width="960" height="440" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="439" fill="none" stroke="#333"/>
+
+  <text x="40" y="44" class="data tag">01 PAPER</text>
+  <text x="104" y="44" class="cjk note">纸白：最高优先级，一屏只给一两块</text>
+  <rect x="40" y="64" width="250" height="190" fill="#fdfdfb" filter="url(#sh)"/>
+  <rect x="40" y="194" width="250" height="60" fill="url(#dots)"/>
+  <rect x="40" y="64" width="6" height="190" fill="#18d1ff"/>
+  <text x="64" y="108" class="cjk" font-size="22" font-weight="700" fill="#323232">采购凭证</text>
+  <text x="64" y="128" class="cond" font-size="12" fill="#8d8d8d" letter-spacing="1">PURCHASE CERTIFICATE</text>
+  <text x="64" y="176" class="data" font-size="32" font-weight="700" fill="#323232">258</text>
+  <line x1="64" y1="140" x2="270" y2="140" stroke="#323232" stroke-opacity=".2"/>
+
+  <text x="340" y="44" class="data tag">02 GRAPHITE</text>
+  <text x="430" y="44" class="cjk note">石墨：默认容器，半透明，可叠放</text>
+  <rect x="340" y="64" width="250" height="190" fill="#424242" fill-opacity=".92" filter="url(#sh)"/>
+  <rect x="356" y="80" width="250" height="190" fill="#313131" fill-opacity=".95"/>
+  <text x="376" y="124" class="cjk" font-size="22" font-weight="700" fill="#fff">制造站</text>
+  <text x="376" y="144" class="cond" font-size="12" fill="#ababab" letter-spacing="1">FACTORY</text>
+  <rect x="376" y="166" width="210" height="6" fill="#000" fill-opacity=".4"/>
+  <rect x="376" y="166" width="130" height="6" fill="#ffd802"/>
+  <text x="376" y="196" class="data" font-size="12" fill="#ababab">02:14:36</text>
+
+  <text x="660" y="44" class="data tag">03 FROSTED</text>
+  <text x="742" y="44" class="cjk note">毛玻璃：浮层压住下层</text>
+  <rect x="660" y="64" width="260" height="190" fill="#1d1f20"/>
+  <g>
+    <rect x="676" y="84" width="96" height="60" fill="#18d1ff"/><rect x="784" y="84" width="120" height="60" fill="#fdfdfb"/>
+    <rect x="676" y="156" width="150" height="80" fill="#ff5e19"/><rect x="838" y="156" width="66" height="80" fill="#424242"/>
+  </g>
+  <g clip-path="url(#glass)">
+    <g filter="url(#blur)">
+      <rect x="660" y="64" width="260" height="190" fill="#1d1f20"/>
+      <rect x="676" y="84" width="96" height="60" fill="#18d1ff"/><rect x="784" y="84" width="120" height="60" fill="#fdfdfb"/>
+      <rect x="676" y="156" width="150" height="80" fill="#ff5e19"/><rect x="838" y="156" width="66" height="80" fill="#424242"/>
+    </g>
+    <rect x="700" y="96" width="200" height="150" fill="#000" fill-opacity=".45"/>
+  </g>
+  <rect x="700" y="96" width="200" height="150" fill="none" stroke="#fff" stroke-opacity=".3"/>
+  <text x="716" y="130" class="cjk" font-size="16" font-weight="700" fill="#fff">职业详情</text>
+  <text x="716" y="150" class="cjk" font-size="11" fill="#d2d2d2">blur 0.5rem + 黑 40–50%</text>
+
+  <line x1="40" y1="296" x2="920" y2="296" stroke="#fff" stroke-opacity=".3"/>
+
+  <text x="40" y="330" class="data tag">04 ELEVATION</text>
+  <text x="140" y="330" class="cjk note">层级从低到高：场景 → 晕影 / 模糊 → 石墨面板 → 纸白面板 → 信号色 → 毛玻璃弹层</text>
+  <g>
+    <rect x="40" y="352" width="140" height="48" fill="#0c0d0e" stroke="#333"/>
+    <rect x="186" y="352" width="140" height="48" fill="#1d1f20"/>
+    <rect x="332" y="352" width="140" height="48" fill="#424242"/>
+    <rect x="478" y="352" width="140" height="48" fill="#fdfdfb"/>
+    <rect x="624" y="352" width="140" height="48" fill="#18d1ff"/>
+    <rect x="770" y="352" width="150" height="48" fill="#000" fill-opacity=".6" stroke="#fff" stroke-opacity=".3"/>
+  </g>
+  <g class="cjk" font-size="12" text-anchor="middle">
+    <text x="110" y="381" fill="#8d8d8d">0 场景</text><text x="256" y="381" fill="#ababab">1 压暗</text><text x="402" y="381" fill="#fff">2 石墨</text>
+    <text x="548" y="381" fill="#323232">3 纸白</text><text x="694" y="381" fill="#000">4 信号</text><text x="845" y="381" fill="#fff">5 弹层</text>
+  </g>
+</svg>

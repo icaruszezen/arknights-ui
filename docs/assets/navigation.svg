@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 460" role="img" aria-labelledby="t d">
+  <title id="t">导航结构</title>
+  <desc id="d">官网双语顶栏、游戏内返回与主页下拉导航、标签页三种导航形态。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <rect width="960" height="460" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="459" fill="none" stroke="#333"/>
+
+  <!-- 官网顶栏 -->
+  <text x="40" y="44" class="data tag">01 WEBSITE TOP NAV</text>
+  <text x="190" y="44" class="cjk note">官网：英文为主、中文为注；右侧图标区用竖线隔开</text>
+  <rect x="40" y="60" width="880" height="72" fill="#000"/>
+  <rect x="60" y="80" width="72" height="30" fill="none" stroke="#fff" stroke-opacity=".6"/>
+  <text x="96" y="100" text-anchor="middle" class="cjk" font-size="11" fill="#8d8d8d">LOGO</text>
+  <g class="cond" font-size="18" fill="#fff">
+    <text x="330" y="94">INDEX</text><text x="404" y="94" fill="#18d1ff">INFORMATION</text><text x="532" y="94">OPERATOR</text>
+    <text x="636" y="94">WORLD</text><text x="712" y="94">MEDIA</text><text x="784" y="94">MORE</text>
+  </g>
+  <g class="cjk" font-size="11" font-weight="500" fill="#fff">
+    <text x="330" y="112">首页</text><text x="404" y="112" fill="#18d1ff">情报</text><text x="532" y="112">干员</text>
+    <text x="636" y="112">设定</text><text x="712" y="112">泰拉万象</text><text x="784" y="112">更多内容</text>
+  </g>
+  <line x1="856" y1="60" x2="856" y2="132" stroke="#fff" stroke-opacity=".3"/>
+  <circle cx="888" cy="96" r="8" fill="none" stroke="#fff"/>
+
+  <!-- 游戏内 -->
+  <text x="40" y="180" class="data tag">02 IN-GAME BACK / HOME</text>
+  <text x="216" y="180" class="cjk note">游戏内：左上角“返回 + 主页”，主页按钮下拉出隐藏导航（估计）</text>
+  <rect x="40" y="196" width="880" height="120" fill="#1d1f20"/>
+  <polygon points="40,196 150,196 134,236 40,236" fill="#313131"/>
+  <path d="M82 208 L70 216 L82 224" stroke="#fff" stroke-width="3" fill="none"/>
+  <polygon points="154,196 232,196 216,236 138,236" fill="#424242"/>
+  <path d="M174 218 L185 208 L196 218 V226 H174 Z" fill="none" stroke="#fff" stroke-width="2"/>
+  <polygon points="200,214 206,214 203,218" fill="#fff"/>
+  <text x="252" y="222" class="cjk" font-size="16" font-weight="700" fill="#fff">干员</text>
+  <rect x="138" y="240" width="520" height="64" fill="#000" fill-opacity=".85" stroke="#fff" stroke-opacity=".2"/>
+  <g class="cjk" font-size="12" font-weight="700" fill="#fff" text-anchor="middle">
+    <text x="182" y="268">首页</text><text x="252" y="268">作战</text><text x="322" y="268">编队</text><text x="392" y="268" fill="#18d1ff">干员</text>
+    <text x="462" y="268">基建</text><text x="532" y="268">采购</text><text x="602" y="268">任务</text>
+  </g>
+  <g class="cond" font-size="9" fill="#8d8d8d" text-anchor="middle" letter-spacing=".8">
+    <text x="182" y="284">HOME</text><text x="252" y="284">TERMINAL</text><text x="322" y="284">SQUADS</text><text x="392" y="284" fill="#18d1ff">OPERATOR</text>
+    <text x="462" y="284">BASE</text><text x="532" y="284">STORE</text><text x="602" y="284">MISSION</text>
+  </g>
+  <rect x="362" y="298" width="60" height="4" fill="#18d1ff"/>
+  <g class="data" font-size="12" fill="#fff" text-anchor="end">
+    <text x="900" y="222">龙门币 128,400   合成玉 6,000   理智 131/135</text>
+  </g>
+
+  <!-- 标签页 -->
+  <text x="40" y="364" class="data tag">03 TABS</text>
+  <text x="96" y="364" class="cjk note">标签页：选中项反白成实心块，其余只留文字；或以 4px 底条指示</text>
+  <rect x="40" y="382" width="72" height="28" fill="#fff"/>
+  <text x="76" y="401" text-anchor="middle" class="cjk" font-size="13" font-weight="700" fill="#000">最新</text>
+  <polygon points="100,392 106,396 100,400" fill="#18d1ff"/>
+  <g class="cjk" font-size="13" font-weight="700" fill="#fff" text-anchor="middle">
+    <text x="156" y="401">公告</text><text x="228" y="401">活动</text><text x="300" y="401">新闻</text>
+  </g>
+  <g class="cjk" font-size="13" font-weight="700" text-anchor="middle">
+    <text x="520" y="401" fill="#18d1ff">全部</text><text x="600" y="401" fill="#ababab">近卫</text><text x="680" y="401" fill="#ababab">狙击</text><text x="760" y="401" fill="#ababab">术师</text><text x="840" y="401" fill="#ababab">医疗</text>
+  </g>
+  <line x1="480" y1="416" x2="880" y2="416" stroke="#fff" stroke-opacity=".3"/>
+  <rect x="490" y="413" width="60" height="4" fill="#18d1ff"/>
+</svg>

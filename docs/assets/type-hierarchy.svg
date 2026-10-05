@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="t d">
+  <title id="t">字体层级样张</title>
+  <desc id="d">五种字体角色与一组典型的中英双语标题组合。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .wide { font-family: 'Novecento Sans Wide','Novecento Wide','Montserrat','Segoe UI',Arial,sans-serif; font-weight: 700; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .serif { font-family: 'Source Han Serif SC','Noto Serif SC','Songti SC',SimSun,serif; font-weight: 900; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <rect width="960" height="600" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="599" fill="none" stroke="#333"/>
+
+  <!-- 幽灵标题 -->
+  <text x="36" y="146" class="cond" font-size="112" fill="#242424" letter-spacing="-5.6">BREAKING NEWS</text>
+  <text x="40" y="40" class="data tag">01 GHOST</text>
+  <text x="130" y="40" class="cjk note">窄体无衬线 · 7rem · 字距 -0.05em · #242424 · 垫在内容之后</text>
+
+  <!-- 双语标题组 -->
+  <text x="40" y="196" class="data tag">02 DISPLAY</text>
+  <text x="140" y="196" class="cjk note">宽体英文在上 3.125rem，中文粗黑在下 3.75rem，行高 1</text>
+  <text x="40" y="248" class="wide" font-size="40" fill="#fff">ABOUT TERRA</text>
+  <text x="40" y="304" class="cjk" font-size="48" font-weight="700" fill="#fff">泰拉万象</text>
+  <rect x="40" y="320" width="128" height="4" fill="#18d1ff"/>
+
+  <!-- 导航 -->
+  <text x="520" y="196" class="data tag">03 NAV</text>
+  <text x="590" y="196" class="cjk note">英文窄体 1.375rem + 中文 0.875rem</text>
+  <g class="cond" font-size="22" fill="#fff">
+    <text x="520" y="244">INDEX</text><text x="600" y="244" fill="#18d1ff">INFORMATION</text><text x="780" y="244">OPERATOR</text>
+  </g>
+  <g class="cjk" font-size="13" font-weight="500" fill="#fff">
+    <text x="520" y="264">首页</text><text x="600" y="264" fill="#18d1ff">情报</text><text x="780" y="264">干员</text>
+  </g>
+
+  <!-- 数据 -->
+  <text x="520" y="312" class="data tag">04 DATA</text>
+  <text x="596" y="312" class="cjk note">伪等宽体 · 日期、计数、编号</text>
+  <text x="520" y="350" class="data" font-size="20" fill="#d2d2d2" letter-spacing="1">2026 // 10 / 03</text>
+  <text x="720" y="356" class="data" font-size="44" font-weight="700" fill="#18d1ff">01</text>
+  <text x="776" y="340" class="data" font-size="13" fill="#fff">// 01 / 05</text>
+  <text x="776" y="358" class="wide" font-size="11" fill="#fff" letter-spacing="1.1">INFORMATION</text>
+
+  <line x1="40" y1="392" x2="920" y2="392" stroke="#fff" stroke-opacity=".3"/>
+
+  <!-- 游戏内指令 -->
+  <text x="40" y="424" class="data tag">05 COMMAND</text>
+  <text x="150" y="424" class="cjk note">游戏主界面：重磅中文衬线 + 小号英文注脚（社区）</text>
+  <rect x="40" y="444" width="300" height="116" fill="#fdfdfb"/>
+  <text x="60" y="512" class="serif" font-size="52" fill="#323232">作战</text>
+  <text x="62" y="540" class="cond" font-size="14" fill="#8d8d8d" letter-spacing="1">TERMINAL</text>
+  <rect x="352" y="444" width="180" height="116" fill="#424242"/>
+  <text x="368" y="504" class="serif" font-size="34" fill="#fff">编队</text>
+  <text x="370" y="528" class="cond" font-size="12" fill="#ababab" letter-spacing="1">SQUADS</text>
+
+  <!-- 微文案 -->
+  <text x="580" y="424" class="data tag">06 MICRO</text>
+  <text x="664" y="424" class="cjk note">纯装饰 · 0.375rem · 字距 0.5em</text>
+  <text x="580" y="462" class="wide" font-size="7" fill="#ababab" letter-spacing="3.5">RHODES ISLAND PHARMACEUTICALS INC.</text>
+  <text x="580" y="480" class="wide" font-size="7" fill="#585858" letter-spacing="3.5">HTTPS://AK.HYPERGRYPH.COM/</text>
+  <text x="580" y="520" class="cjk" font-size="13" fill="#d2d2d2">正文 1.125rem / 行高 1.6</text>
+  <text x="580" y="544" class="cjk" font-size="13" fill="#8d8d8d">罗德岛最高管理者之一，阿米娅的直接辅导者。</text>
+</svg>

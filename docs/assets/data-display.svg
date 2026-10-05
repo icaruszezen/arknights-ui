@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 360" role="img" aria-labelledby="t d">
+  <title id="t">数据展示：新闻行、数值、进度、星级</title>
+  <desc id="d">新闻列表行的三栏结构，以及数值、进度条、标签、星级的写法。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+    .lead { stroke: #585858; stroke-width: 1; fill: none; }
+  </style>
+  <rect width="960" height="360" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="359" fill="none" stroke="#333"/>
+
+  <text x="40" y="44" class="data tag">01 NEWS ROW</text>
+  <text x="140" y="44" class="cjk note">分类 / 日期 / 标题各占一格，行间 1px 白 30% 细线</text>
+  <rect x="40" y="60" width="480" height="188" fill="#000"/>
+  <g>
+    <text x="60" y="110" class="cjk" font-size="15" font-weight="700" fill="#18d1ff">活动</text>
+    <text x="120" y="94" class="data" font-size="13" fill="#ababab" letter-spacing="1">2026 // 10 / 03</text>
+    <text x="120" y="118" class="cjk" font-size="15" fill="#d2d2d2" letter-spacing="2">SideStory 限时活动即将开启</text>
+    <line x1="60" y1="140" x2="500" y2="140" stroke="#fff" stroke-opacity=".3"/>
+    <text x="60" y="190" class="cjk" font-size="15" font-weight="700" fill="#18d1ff">公告</text>
+    <text x="120" y="174" class="data" font-size="13" fill="#ababab" letter-spacing="1">2026 // 09 / 29</text>
+    <text x="120" y="198" class="cjk" font-size="15" fill="#d2d2d2" letter-spacing="2">09月29日16:00闪断更新公告</text>
+    <line x1="60" y1="220" x2="500" y2="220" stroke="#fff" stroke-opacity=".3"/>
+  </g>
+  <path class="lead" d="M76 200 V268 H40"/><text x="40" y="286" class="cjk note">分类：青蓝，1.125rem Bold</text>
+  <path class="lead" d="M258 166 H372 V258"/><text x="236" y="272" class="cjk note">日期：伪等宽，“//” 与 “/” 混用，字距 1px</text>
+  <path class="lead" d="M400 204 V306 H384"/><text x="236" y="310" class="cjk note">标题：字距 2px，最多两行</text>
+
+  <text x="560" y="44" class="data tag">02 VALUE</text>
+  <text x="626" y="44" class="cjk note">大数字 + 小单位 + 分母</text>
+  <text x="560" y="104" class="data" font-size="48" font-weight="700" fill="#fff">131</text>
+  <text x="652" y="104" class="data" font-size="20" fill="#ababab">/135</text>
+  <text x="560" y="124" class="cond" font-size="12" fill="#8d8d8d" letter-spacing="1">SANITY · 理智</text>
+  <text x="760" y="104" class="data" font-size="48" font-weight="700" fill="#18d1ff">01</text>
+  <text x="820" y="86" class="data" font-size="14" fill="#fff">// 05</text>
+
+  <text x="560" y="172" class="data tag">03 PROGRESS</text>
+  <rect x="560" y="188" width="360" height="4" fill="#fff" fill-opacity=".3"/>
+  <rect x="560" y="188" width="150" height="4" fill="#18d1ff"/>
+  <rect x="560" y="206" width="360" height="10" fill="#333"/>
+  <rect x="560" y="206" width="250" height="10" fill="#ffd802"/>
+  <g fill="#121212"><rect x="630" y="206" width="2" height="10"/><rect x="702" y="206" width="2" height="10"/><rect x="774" y="206" width="2" height="10"/><rect x="846" y="206" width="2" height="10"/></g>
+  <text x="920" y="234" text-anchor="end" class="data" font-size="12" fill="#ababab">EXP 2,480 / 3,600</text>
+
+  <text x="560" y="276" class="data tag">04 TAG / STAR</text>
+  <polygon points="560,292 624,292 630,298 630,314 560,314" fill="#fff"/>
+  <text x="594" y="308" text-anchor="middle" class="cjk" font-size="12" font-weight="700" fill="#000">近卫</text>
+  <rect x="642" y="292" width="64" height="22" fill="none" stroke="#18d1ff"/>
+  <text x="674" y="308" text-anchor="middle" class="cjk" font-size="12" fill="#18d1ff">输出</text>
+  <rect x="718" y="292" width="64" height="22" fill="#424242"/>
+  <text x="750" y="308" text-anchor="middle" class="cjk" font-size="12" fill="#fff">生存</text>
+  <g fill="#f1c644">
+    <polygon points="806,296 809,303 816,303 810,307 813,314 806,310 799,314 802,307 796,303 803,303"/>
+    <polygon points="828,296 831,303 838,303 832,307 835,314 828,310 821,314 824,307 818,303 825,303"/>
+    <polygon points="850,296 853,303 860,303 854,307 857,314 850,310 843,314 846,307 840,303 847,303"/>
+    <polygon points="872,296 875,303 882,303 876,307 879,314 872,310 865,314 868,307 862,303 869,303"/>
+    <polygon points="894,296 897,303 904,303 898,307 901,314 894,310 887,314 890,307 884,303 891,303"/>
+  </g>
+</svg>

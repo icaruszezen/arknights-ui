@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="t d">
+  <title id="t">几何语言</title>
+  <desc id="d">矩形模块、单角切角、斜轴、三角母题、细线五种基本构形。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+    .dim { stroke: #18d1ff; stroke-width: 1; fill: none; }
+  </style>
+  <rect width="960" height="520" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="519" fill="none" stroke="#333"/>
+
+  <!-- 1 矩形模块 -->
+  <text x="40" y="44" class="data tag">01 MODULE</text>
+  <text x="40" y="64" class="cjk note">直角矩形，错位拼合，不留圆角</text>
+  <rect x="40" y="84" width="150" height="96" fill="#fdfdfb"/>
+  <rect x="196" y="84" width="74" height="45" fill="#424242"/>
+  <rect x="196" y="135" width="74" height="45" fill="#424242"/>
+  <rect x="40" y="186" width="110" height="40" fill="#424242"/>
+  <rect x="156" y="186" width="114" height="40" fill="#18d1ff"/>
+
+  <!-- 2 切角 -->
+  <text x="340" y="44" class="data tag">02 CUT CORNER</text>
+  <text x="340" y="64" class="cjk note">只切一个角；切角尺寸三档 6 / 12 / 24px</text>
+  <polygon points="340,84 566,84 590,108 590,226 340,226" fill="#1d1f20" stroke="#fff" stroke-opacity=".5"/>
+  <path class="dim" d="M566 76 V70 H590 V76"/>
+  <text x="578" y="62" text-anchor="middle" class="data" font-size="11" fill="#18d1ff">24</text>
+  <rect x="340" y="84" width="4" height="142" fill="#18d1ff"/>
+  <text x="362" y="130" class="cjk" font-size="20" font-weight="700" fill="#fff">罗德岛</text>
+  <text x="362" y="150" class="cond" font-size="12" fill="#ababab" letter-spacing="1">RHODES ISLAND</text>
+  <polygon points="362,180 434,180 440,186 440,204 362,204" fill="#fff"/>
+  <text x="372" y="197" class="data" font-size="11" fill="#000">READ MORE</text>
+  <polygon points="452,180 512,180 512,198 506,204 452,204" fill="none" stroke="#ababab"/>
+  <text x="462" y="197" class="data" font-size="11" fill="#ababab">TAG 6px</text>
+
+  <!-- 3 斜轴 -->
+  <text x="660" y="44" class="data tag">03 SLANT AXIS</text>
+  <text x="660" y="64" class="cjk note">全局只用一个倾斜方向：45°</text>
+  <rect x="660" y="84" width="260" height="142" fill="#1d1f20"/>
+  <g stroke="#fff" stroke-opacity=".12">
+    <path d="M660 226 L802 84 M720 226 L862 84 M780 226 L920 86 M840 226 L920 146 M660 166 L742 84 M660 106 L682 84"/>
+    <path d="M920 226 L778 84 M860 226 L718 84 M800 226 L660 86 M740 226 L660 146 M920 166 L838 84 M920 106 L898 84"/>
+  </g>
+  <polygon points="700,196 730,166 790,166 760,196" fill="#18d1ff"/>
+  <polygon points="772,196 802,166 822,166 792,196" fill="#fff" fill-opacity=".5"/>
+  <polygon points="804,196 834,166 844,166 814,196" fill="#fff" fill-opacity=".25"/>
+
+  <line x1="40" y1="262" x2="920" y2="262" stroke="#fff" stroke-opacity=".3"/>
+
+  <!-- 4 三角母题 -->
+  <text x="40" y="298" class="data tag">04 TRIANGLE</text>
+  <text x="40" y="318" class="cjk note">三角是贯穿品牌的符号：指示、警示、徽记外框</text>
+  <polygon points="90,440 150,340 210,440" fill="none" stroke="#fff" stroke-width="2"/>
+  <polygon points="118,424 150,370 182,424" fill="#fff"/>
+  <polygon points="250,360 274,372 250,384" fill="#18d1ff"/>
+  <polygon points="250,400 266,408 250,416" fill="#fff"/>
+  <polygon points="250,432 260,437 250,442" fill="#ababab"/>
+  <text x="286" y="377" class="cjk note">激活 / 播放</text>
+  <text x="286" y="413" class="cjk note">列表指示</text>
+  <text x="286" y="441" class="cjk note">更多 &gt;</text>
+
+  <!-- 5 细线 -->
+  <text x="400" y="298" class="data tag">05 RULES</text>
+  <text x="400" y="318" class="cjk note">1px 细线承担分区，粗线只留给激活态</text>
+  <line x1="400" y1="350" x2="660" y2="350" stroke="#fff" stroke-opacity=".3"/>
+  <text x="676" y="354" class="cjk note">1px · 白 30%</text>
+  <line x1="400" y1="378" x2="660" y2="378" stroke="#b2b2b2" stroke-dasharray="4 4"/>
+  <text x="676" y="382" class="cjk note">虚线 4 / 4</text>
+  <defs>
+    <linearGradient id="fade" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></linearGradient>
+  </defs>
+  <rect x="400" y="405" width="260" height="1" fill="url(#fade)"/>
+  <text x="676" y="410" class="cjk note">一端渐隐</text>
+  <rect x="400" y="432" width="96" height="4" fill="#18d1ff"/>
+  <rect x="496" y="433.5" width="164" height="1" fill="#fff" fill-opacity=".3"/>
+  <text x="676" y="438" class="cjk note">4px 激活条 + 细线轨道</text>
+  <g stroke="#ababab" stroke-width="1" fill="none">
+    <path d="M400 470 h10 M405 465 v10"/>
+    <path d="M440 465 v10 h10" />
+    <path d="M480 475 v-10 h10" />
+    <rect x="516" y="466" width="8" height="8"/>
+  </g>
+  <text x="676" y="474" class="cjk note">十字标 / 角标 / 方点</text>
+</svg>

@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" role="img" aria-labelledby="t d">
+  <title id="t">官网分屏线框</title>
+  <desc id="d">官网单屏的固定骨架：顶部双语导航、右侧计数栏、背景幽灵字、内容区与底部滚动提示。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .wide { font-family: 'Novecento Sans Wide','Novecento Wide','Montserrat','Segoe UI',Arial,sans-serif; font-weight: 700; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #18d1ff; font-size: 12px; }
+    .lead { stroke: #18d1ff; stroke-width: 1; fill: none; stroke-dasharray: 2 3; }
+  </style>
+  <defs>
+    <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 0 L80 80 M80 0 L0 80" stroke="#fff" stroke-opacity=".06"/><rect width="80" height="80" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
+    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#fff" fill-opacity=".25"/></pattern>
+    <linearGradient id="fadeDots" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient>
+    <mask id="m"><rect x="0" y="245" width="240" height="160" fill="url(#fadeDots)"/></mask>
+  </defs>
+  <rect width="960" height="600" fill="#121212"/>
+
+  <!-- 画面 -->
+  <g transform="translate(40 40)">
+    <rect width="720" height="405" fill="#000"/>
+    <rect width="720" height="405" fill="url(#grid)"/>
+    <rect x="0" y="245" width="240" height="160" fill="url(#dots)" mask="url(#m)"/>
+
+    <!-- 顶栏 -->
+    <rect x="14" y="12" width="44" height="18" fill="none" stroke="#fff" stroke-opacity=".6"/>
+    <g class="cond" font-size="9" fill="#fff">
+      <text x="290" y="18">INDEX</text><text x="338" y="18" fill="#18d1ff">INFORMATION</text><text x="412" y="18">OPERATOR</text>
+      <text x="476" y="18">WORLD</text><text x="524" y="18">MEDIA</text><text x="570" y="18">MORE</text>
+    </g>
+    <g class="cjk" font-size="6" fill="#fff">
+      <text x="290" y="28">首页</text><text x="338" y="28" fill="#18d1ff">情报</text><text x="412" y="28">干员</text>
+      <text x="476" y="28">设定</text><text x="524" y="28">泰拉万象</text><text x="570" y="28">更多内容</text>
+    </g>
+    <line x1="0" y1="56" x2="720" y2="56" stroke="#fff" stroke-opacity=".15"/>
+
+    <!-- 右栏 -->
+    <line x1="632" y1="0" x2="632" y2="405" stroke="#fff" stroke-opacity=".3"/>
+    <g fill="#fff"><circle cx="652" cy="20" r="3"/><rect x="672" y="14" width="2" height="12" fill="#18d1ff"/><rect x="676" y="17" width="2" height="6" fill="#18d1ff"/><circle cx="700" cy="20" r="4" fill="none" stroke="#fff"/></g>
+    <text x="646" y="198" class="data" font-size="26" font-weight="700" fill="#18d1ff">01</text>
+    <text x="684" y="186" class="data" font-size="8" fill="#fff">// 01 / 05</text>
+    <text x="684" y="198" class="wide" font-size="5.5" fill="#fff" letter-spacing=".4">INFORMATION</text>
+
+    <!-- 幽灵字 -->
+    <text x="54" y="368" class="cond" font-size="42" fill="#242424" letter-spacing="-2.1">BREAKING NEWS</text>
+    <line x1="0" y1="338" x2="632" y2="338" stroke="#fff" stroke-opacity=".15"/>
+
+    <!-- 内容区：新闻列表 + 图 -->
+    <rect x="22" y="70" width="34" height="9" fill="#fff"/>
+    <g fill="#fff" fill-opacity=".8"><rect x="66" y="72" width="16" height="5"/><rect x="106" y="72" width="16" height="5"/><rect x="146" y="72" width="16" height="5"/></g>
+    <g>
+      <rect x="22" y="94" width="14" height="6" fill="#18d1ff"/><rect x="52" y="90" width="50" height="3" fill="#8d8d8d"/><rect x="52" y="98" width="104" height="5" fill="#d2d2d2"/><rect x="52" y="107" width="70" height="5" fill="#d2d2d2"/>
+      <line x1="22" y1="122" x2="158" y2="122" stroke="#fff" stroke-opacity=".3"/>
+      <rect x="22" y="134" width="14" height="6" fill="#18d1ff"/><rect x="52" y="130" width="50" height="3" fill="#8d8d8d"/><rect x="52" y="138" width="104" height="5" fill="#d2d2d2"/><rect x="52" y="147" width="60" height="5" fill="#d2d2d2"/>
+      <line x1="22" y1="162" x2="158" y2="162" stroke="#fff" stroke-opacity=".3"/>
+      <rect x="22" y="174" width="14" height="6" fill="#18d1ff"/><rect x="52" y="170" width="50" height="3" fill="#8d8d8d"/><rect x="52" y="178" width="104" height="5" fill="#d2d2d2"/>
+      <line x1="22" y1="194" x2="158" y2="194" stroke="#fff" stroke-opacity=".3"/>
+      <rect x="22" y="204" width="46" height="9" fill="#585858"/>
+    </g>
+    <rect x="206" y="60" width="426" height="278" fill="#1d1f20"/>
+    <path d="M206 338 L632 60 M206 60 L632 338" stroke="#fff" stroke-opacity=".08"/>
+    <text x="419" y="204" text-anchor="middle" class="cjk" font-size="11" fill="#585858">KEY VISUAL · 16:9 出血到右栏</text>
+    <rect x="354" y="337" width="110" height="3" fill="#18d1ff"/><rect x="464" y="337" width="168" height="3" fill="#fff" fill-opacity=".5"/>
+
+    <!-- 滚动提示 -->
+    <polygon points="352,392 360,398 368,392 360,395" fill="#fff" fill-opacity=".7"/>
+    <rect width="720" height="405" fill="none" stroke="#333"/>
+  </g>
+
+  <!-- 标注 -->
+  <g class="cjk note">
+    <path class="lead" d="M500 52 V30 H780"/><text x="786" y="34">① 双语导航：英文窄体在上，</text><text x="786" y="50">   中文小字在下；激活 = 青蓝</text>
+    <path class="lead" d="M712 232 H780"/><text x="786" y="228">② 右栏：竖线 + 栏目计数</text><text x="786" y="244">   “01 // 01 / 05”</text>
+    <path class="lead" d="M400 400 H780"/><text x="786" y="396">③ 幽灵标题：7rem，#242424，</text><text x="786" y="412">   与内容底边重叠</text>
+    <path class="lead" d="M200 180 V470 H260"/><text x="266" y="474">④ 内容区左起 9rem；列表与大图不等分，图片一侧出血</text>
+    <path class="lead" d="M450 378 V500 H500"/><text x="506" y="504">⑤ 轮播进度：4px 青蓝段 + 灰轨</text>
+    <path class="lead" d="M80 300 V530 H140"/><text x="146" y="534">⑥ 背景：近黑底 + 斜线网格 + 左下角半调网点</text>
+  </g>
+  <text x="40" y="576" class="cjk" font-size="12" fill="#8d8d8d">线框根据 2026-10-06 官网实测绘制；灰块代表官方图片与文字，未使用任何官方素材。</text>
+</svg>

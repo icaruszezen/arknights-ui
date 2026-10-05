@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="t d">
+  <title id="t">装饰元素</title>
+  <desc id="d">角标、编号、微文案、条码、坐标标注等装饰元素的写法。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .wide { font-family: 'Novecento Sans Wide','Novecento Wide','Montserrat','Segoe UI',Arial,sans-serif; font-weight: 700; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <rect width="960" height="440" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="439" fill="none" stroke="#333"/>
+
+  <!-- 编号 -->
+  <text x="40" y="44" class="data tag">01 COUNTER</text>
+  <text x="124" y="44" class="cjk note">编号永远带前导零和总数</text>
+  <text x="40" y="112" class="data" font-size="56" font-weight="700" fill="#18d1ff">01</text>
+  <text x="112" y="86" class="data" font-size="16" fill="#fff">// 01 / 05</text>
+  <text x="112" y="110" class="wide" font-size="12" fill="#fff" letter-spacing="1.2">INFORMATION</text>
+  <text x="40" y="146" class="data" font-size="14" fill="#ababab" letter-spacing="1">2026 // 10 / 03</text>
+  <text x="200" y="146" class="data" font-size="14" fill="#ababab">NO.0147</text>
+  <text x="290" y="146" class="data" font-size="14" fill="#ababab">VOL.69</text>
+
+  <!-- 角标 -->
+  <text x="400" y="44" class="data tag">02 CORNER MARK</text>
+  <text x="510" y="44" class="cjk note">角标框住内容，但不闭合</text>
+  <g stroke="#fff" stroke-width="1.5" fill="none">
+    <path d="M400 84 v-16 h16"/><path d="M584 68 h16 v16"/><path d="M600 132 v16 h-16"/><path d="M416 148 h-16 v-16"/>
+  </g>
+  <text x="500" y="106" text-anchor="middle" class="cjk" font-size="18" font-weight="700" fill="#fff">罗德岛</text>
+  <text x="500" y="126" text-anchor="middle" class="cond" font-size="11" fill="#ababab" letter-spacing="1">RHODES ISLAND</text>
+
+  <!-- 标注线 -->
+  <text x="660" y="44" class="data tag">03 CALLOUT</text>
+  <text x="736" y="44" class="cjk note">方点 + 折线 + 黑底标签</text>
+  <rect x="668" y="118" width="10" height="10" fill="none" stroke="#fff"/>
+  <rect x="671" y="121" width="4" height="4" fill="#18d1ff"/>
+  <path d="M678 123 H710 L730 96 H760" stroke="#fff" stroke-opacity=".6" fill="none"/>
+  <rect x="760" y="84" width="96" height="24" fill="#000"/>
+  <text x="768" y="101" class="cond" font-size="14" fill="#18d1ff">MONSTER SIREN</text>
+
+  <line x1="40" y1="184" x2="920" y2="184" stroke="#fff" stroke-opacity=".3"/>
+
+  <!-- 微文案 -->
+  <text x="40" y="218" class="data tag">04 MICRO COPY</text>
+  <text x="148" y="218" class="cjk note">微缩英文：真实的名称 / 网址 / 版权信息，拉开字距，当作纹理使用</text>
+  <text x="40" y="252" class="wide" font-size="8" fill="#ababab" letter-spacing="4">RHODES ISLAND</text>
+  <text x="40" y="270" class="wide" font-size="8" fill="#585858" letter-spacing="4">HTTPS://AK.HYPERGRYPH.COM/</text>
+  <text x="40" y="288" class="data" font-size="9" fill="#585858">© HYPERGRYPH</text>
+  <g transform="translate(330 236)">
+    <text class="wide" font-size="8" fill="#585858" letter-spacing="2" transform="rotate(90)">PRTS // 01</text>
+  </g>
+  <text x="352" y="252" class="cjk note">· 竖排时顺时针旋转 90°，贴边放置</text>
+  <text x="352" y="272" class="cjk note">· 只写真实存在的词，不写乱码拉丁文</text>
+  <text x="352" y="292" class="cjk note">· 颜色压到 #585858–#ababab，永不抢主信息</text>
+
+  <!-- 条码 / 刻度 -->
+  <text x="660" y="218" class="data tag">05 BARCODE / TICKS</text>
+  <g fill="#fff">
+    <rect x="660" y="236" width="2" height="30"/><rect x="665" y="236" width="1" height="30"/><rect x="669" y="236" width="4" height="30"/><rect x="676" y="236" width="1" height="30"/>
+    <rect x="680" y="236" width="2" height="30"/><rect x="686" y="236" width="3" height="30"/><rect x="692" y="236" width="1" height="30"/><rect x="696" y="236" width="2" height="30"/>
+    <rect x="702" y="236" width="4" height="30"/><rect x="709" y="236" width="1" height="30"/><rect x="713" y="236" width="2" height="30"/><rect x="719" y="236" width="1" height="30"/>
+  </g>
+  <g stroke="#ababab">
+    <path d="M760 266 v-8 M770 266 v-4 M780 266 v-4 M790 266 v-4 M800 266 v-4 M810 266 v-8 M820 266 v-4 M830 266 v-4 M840 266 v-4 M850 266 v-4 M860 266 v-8 M870 266 v-4 M880 266 v-4 M890 266 v-4 M900 266 v-4 M910 266 v-8"/>
+    <path d="M760 266 H910"/>
+  </g>
+  <text x="660" y="288" class="data" font-size="9" fill="#8d8d8d">0011 7777</text>
+
+  <line x1="40" y1="320" x2="920" y2="320" stroke="#fff" stroke-opacity=".3"/>
+
+  <!-- 分隔 -->
+  <text x="40" y="354" class="data tag">06 DIVIDER</text>
+  <text x="124" y="354" class="cjk note">分隔线总是带一个“起点”：短粗段、方点或标签</text>
+  <rect x="40" y="378" width="48" height="4" fill="#18d1ff"/><rect x="88" y="379.5" width="212" height="1" fill="#fff" fill-opacity=".3"/>
+  <rect x="340" y="376" width="8" height="8" fill="#fff"/><rect x="348" y="379.5" width="252" height="1" fill="#fff" fill-opacity=".3"/>
+  <text x="640" y="384" class="cond" font-size="14" fill="#fff">PROFILE</text><rect x="696" y="379.5" width="224" height="1" fill="#fff" fill-opacity=".3"/>
+  <line x1="40" y1="408" x2="300" y2="408" stroke="#b2b2b2" stroke-dasharray="4 4"/>
+  <rect x="340" y="404" width="260" height="8" fill="none" stroke="#fff" stroke-opacity=".3"/>
+  <rect x="340" y="404" width="60" height="8" fill="#fff" fill-opacity=".3"/>
+</svg>

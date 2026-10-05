@@ -1,0 +1,76 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 520" role="img" aria-labelledby="t d">
+  <title id="t">图片构图</title>
+  <desc id="d">立绘出血与幽灵重影、图片压字的渐变遮罩、纵向条带切图三种常见构图。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .wide { font-family: 'Novecento Sans Wide','Novecento Wide','Montserrat','Segoe UI',Arial,sans-serif; font-weight: 700; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <defs>
+    <filter id="b6"><feGaussianBlur stdDeviation="5"/></filter>
+    <filter id="ds" x="-30%" y="-10%" width="150%" height="130%"><feDropShadow dx="-8" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".9"/></filter>
+    <linearGradient id="up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#000"/><stop offset=".25" stop-color="#000" stop-opacity=".7"/><stop offset=".7" stop-color="#000" stop-opacity="0"/></linearGradient>
+    <linearGradient id="left" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset=".6" stop-color="#000" stop-opacity="0"/></linearGradient>
+    <symbol id="fig" viewBox="0 0 100 200"><path d="M50 8 C66 8 76 22 74 40 C73 50 68 56 64 60 C84 70 96 110 98 200 H2 C4 110 16 70 36 60 C32 56 27 50 26 40 C24 22 34 8 50 8 Z"/></symbol>
+    <clipPath id="c1"><rect x="40" y="76" width="420" height="250"/></clipPath>
+  </defs>
+  <rect width="960" height="520" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="519" fill="none" stroke="#333"/>
+
+  <!-- 1 立绘 + 幽灵重影 -->
+  <text x="40" y="44" class="data tag">01 PORTRAIT + GHOST</text>
+  <text x="196" y="44" class="cjk note">立绘出血 + 身后放大去色的重影</text>
+  <rect x="40" y="76" width="420" height="250" fill="#000"/>
+  <g clip-path="url(#c1)">
+    <text x="40" y="310" class="cond" font-size="120" fill="#1d1f20" letter-spacing="-6">RHODES</text>
+    <use href="#fig" x="110" y="60" width="300" height="600" fill="#fff" fill-opacity=".07"/>
+    <use href="#fig" x="290" y="96" width="130" height="260" fill="#8d8d8d" filter="url(#ds)"/>
+    <rect x="40" y="76" width="420" height="250" fill="url(#left)"/>
+  </g>
+  <text x="62" y="150" class="wide" font-size="11" fill="#fff">CODENAME</text>
+  <text x="62" y="186" class="cjk" font-size="32" font-weight="700" fill="#fff">干员代号</text>
+  <rect x="62" y="204" width="120" height="1" fill="#fff" fill-opacity=".5"/>
+  <g fill="#333" stroke="#fff" stroke-opacity=".3"><rect x="62" y="262" width="34" height="44"/><rect x="100" y="262" width="34" height="44"/><rect x="138" y="262" width="34" height="44"/><rect x="176" y="262" width="34" height="44"/></g>
+  <rect x="62" y="258" width="34" height="3" fill="#18d1ff"/>
+  <g class="cjk note">
+    <text x="40" y="350">· 重影：同一张图放大 2–3 倍、去色、不透明度 5–10%</text>
+    <text x="40" y="370">· 主图 drop-shadow 向左下：-0.5rem 0.5rem 1rem #000</text>
+    <text x="40" y="390">· 文字侧加横向黑色渐变，保证白字对比度</text>
+  </g>
+
+  <!-- 2 图上压字 -->
+  <text x="500" y="44" class="data tag">02 SCRIM</text>
+  <text x="566" y="44" class="cjk note">图上压字：渐变遮罩</text>
+  <rect x="500" y="76" width="200" height="250" fill="#5c6a70"/>
+  <circle cx="640" cy="130" r="60" fill="#8fa3ab" filter="url(#b6)"/>
+  <rect x="500" y="76" width="200" height="250" fill="url(#up)"/>
+  <rect x="516" y="252" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" transform="rotate(45 524 260)"/>
+  <text x="544" y="268" class="cjk" font-size="22" font-weight="700" fill="#fff">集成战略</text>
+  <text x="516" y="292" class="cond" font-size="10" fill="#fff" letter-spacing=".8">INTEGRATED STRATEGIES</text>
+  <text x="516" y="306" class="data" font-size="9" fill="#ababab">VIEW MORE &gt;</text>
+  <rect x="516" y="312" width="48" height="1" fill="#fff"/>
+
+  <!-- 3 条带 -->
+  <text x="730" y="44" class="data tag">03 STRIPS</text><text x="804" y="44" class="cjk note">竖条切图</text>
+  <rect x="730" y="76" width="46" height="250" fill="#3e4a52"/>
+  <rect x="778" y="76" width="46" height="250" fill="#5a5148"/>
+  <rect x="826" y="76" width="46" height="250" fill="#40504a"/>
+  <rect x="874" y="76" width="46" height="250" fill="#56505c"/>
+  <rect x="730" y="76" width="190" height="250" fill="url(#up)"/>
+  <g class="cjk note">
+    <text x="500" y="350">· 渐变：#000 → 透明，覆盖下方 30–60%</text>
+    <text x="500" y="370">· 标题组左对齐，下方留一段短横线</text>
+    <text x="500" y="390">· 多入口并排时切成等宽竖条，各取原图局部</text>
+  </g>
+
+  <line x1="40" y1="416" x2="920" y2="416" stroke="#fff" stroke-opacity=".3"/>
+  <text x="40" y="448" class="data tag">04 FOCUS</text>
+  <text x="100" y="448" class="cjk note">焦距控制：背景失焦 → 主体清晰 → 前景边缘再次失焦，三层叠出纵深</text>
+  <rect x="40" y="466" width="270" height="28" fill="#333" filter="url(#b6)"/>
+  <rect x="330" y="466" width="270" height="28" fill="#ababab"/>
+  <rect x="620" y="466" width="300" height="28" fill="#585858" filter="url(#b6)"/>
+  <g class="cjk" font-size="12" text-anchor="middle"><text x="175" y="485" fill="#fff">背景 · blur 1rem</text><text x="465" y="485" fill="#000">主体 · 清晰</text><text x="770" y="485" fill="#fff">前景装饰 · 轻度失焦</text></g>
+</svg>

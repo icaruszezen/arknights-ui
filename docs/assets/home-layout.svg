@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 560" role="img" aria-labelledby="t d">
+  <title id="t">游戏主界面线框</title>
+  <desc id="d">主界面的三层结构：场景与助理立绘、向两侧倾斜的全息面板组、顶部资源条。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .serif { font-family: 'Source Han Serif SC','Noto Serif SC','Songti SC',SimSun,serif; font-weight: 900; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #18d1ff; font-size: 12px; }
+    .lead { stroke: #18d1ff; stroke-width: 1; fill: none; stroke-dasharray: 2 3; }
+  </style>
+  <defs>
+    <radialGradient id="vig" cx=".42" cy=".5" r=".75"><stop offset="0" stop-color="#3a4046"/><stop offset="1" stop-color="#0c0d0e"/></radialGradient>
+  </defs>
+  <rect width="960" height="560" fill="#121212"/>
+
+  <g transform="translate(40 36)">
+    <rect width="720" height="405" fill="url(#vig)"/>
+
+    <!-- 助理立绘占位 -->
+    <path d="M250 405 C250 300 280 250 300 220 C285 200 285 150 320 130 C360 110 400 140 396 190 C394 214 384 226 378 232 C410 262 440 320 440 405 Z" fill="#000" fill-opacity=".35"/>
+    <text x="345" y="330" text-anchor="middle" class="cjk" font-size="11" fill="#8d8d8d">助理立绘</text>
+
+    <!-- 左侧面板组：向右后方倾斜 -->
+    <polygon points="20,70 150,78 150,122 20,118" fill="#424242" fill-opacity=".9"/>
+    <text x="32" y="98" class="cjk" font-size="11" font-weight="700" fill="#fff">Dr. Name</text>
+    <text x="32" y="111" class="data" font-size="8" fill="#ababab">LV 120 · ID 00000000</text>
+    <polygon points="20,270 170,264 170,330 20,340" fill="#000" fill-opacity=".55"/>
+    <text x="32" y="300" class="cjk" font-size="10" fill="#d2d2d2">公告轮播 / 活动入口</text>
+    <polygon points="20,348 92,344 92,384 20,390" fill="#424242" fill-opacity=".9"/>
+    <text x="30" y="368" class="serif" font-size="13" fill="#fff">好友</text>
+    <polygon points="98,344 170,340 170,378 98,384" fill="#424242" fill-opacity=".9"/>
+    <text x="108" y="364" class="serif" font-size="13" fill="#fff">档案</text>
+
+    <!-- 右侧面板组：向左后方倾斜 -->
+    <polygon points="470,92 700,70 700,170 470,176" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="486" y="140" class="serif" font-size="34" fill="#323232">作战</text>
+    <text x="488" y="158" class="cond" font-size="9" fill="#8d8d8d" letter-spacing=".8">TERMINAL</text>
+    <text x="684" y="122" text-anchor="end" class="data" font-size="22" font-weight="700" fill="#323232">131/135</text>
+    <text x="684" y="136" text-anchor="end" class="cond" font-size="8" fill="#8d8d8d">SANITY</text>
+
+    <polygon points="470,182 580,180 580,246 470,244" fill="#424242" fill-opacity=".92"/>
+    <text x="482" y="218" class="serif" font-size="20" fill="#fff">编队</text>
+    <text x="483" y="232" class="cond" font-size="8" fill="#ababab">SQUADS</text>
+    <polygon points="586,180 700,177 700,249 586,246" fill="#424242" fill-opacity=".92"/>
+    <text x="598" y="218" class="serif" font-size="20" fill="#fff">干员</text>
+    <text x="599" y="232" class="cond" font-size="8" fill="#ababab">OPERATOR</text>
+
+    <polygon points="470,250 546,251 546,300 470,298" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="480" y="280" class="serif" font-size="13" fill="#323232">采购中心</text>
+    <polygon points="552,251 624,252 624,302 552,300" fill="#424242" fill-opacity=".92"/>
+    <text x="561" y="281" class="serif" font-size="13" fill="#fff">公开招募</text>
+    <polygon points="630,252 700,254 700,305 630,302" fill="#424242" fill-opacity=".92"/>
+    <text x="638" y="283" class="serif" font-size="13" fill="#fff">干员寻访</text>
+
+    <polygon points="470,304 546,306 546,350 470,346" fill="#424242" fill-opacity=".92"/>
+    <text x="482" y="332" class="serif" font-size="13" fill="#fff">任务</text>
+    <polygon points="552,306 624,308 624,353 552,350" fill="#424242" fill-opacity=".92"/>
+    <text x="564" y="335" class="serif" font-size="13" fill="#fff">基建</text>
+    <polygon points="630,308 700,311 700,357 630,353" fill="#424242" fill-opacity=".92"/>
+    <text x="642" y="338" class="serif" font-size="13" fill="#fff">仓库</text>
+
+    <!-- 顶部资源条 -->
+    <g class="data" font-size="9" fill="#fff">
+      <rect x="400" y="14" width="88" height="18" fill="#000" fill-opacity=".5"/><text x="410" y="27">128,400</text>
+      <rect x="496" y="14" width="88" height="18" fill="#000" fill-opacity=".5"/><text x="506" y="27">6,000</text>
+      <rect x="592" y="14" width="88" height="18" fill="#000" fill-opacity=".5"/><text x="602" y="27">180</text>
+    </g>
+    <g fill="#fff" fill-opacity=".8"><rect x="20" y="14" width="18" height="18"/><rect x="44" y="14" width="18" height="18"/><rect x="68" y="14" width="18" height="18"/></g>
+    <rect width="720" height="405" fill="none" stroke="#333"/>
+  </g>
+
+  <g class="cjk note">
+    <path class="lead" d="M740 150 H790"/><text x="796" y="146">① 右组绕 Y 轴 -10°，</text><text x="796" y="162">   透视距离 30em</text>
+    <path class="lead" d="M740 250 H790"/><text x="796" y="246">② 浅色 = 主行动；</text><text x="796" y="262">   深色 = 其余入口</text>
+    <path class="lead" d="M740 380 H790"/><text x="796" y="376">③ 重磅中文衬线</text><text x="796" y="392">   + 小号英文注脚</text>
+    <path class="lead" d="M120 110 V480 H160"/><text x="166" y="484">④ 左组绕 Y 轴 +10°，与右组形成“环抱”视角，陀螺仪驱动微小摆动</text>
+    <path class="lead" d="M380 370 V506 H420"/><text x="426" y="510">⑤ 中景留给助理立绘；背景做晕影，四周压暗</text>
+    <path class="lead" d="M560 58 V28 H790"/><text x="796" y="32">⑥ 资源条贴顶，半透明黑底</text>
+  </g>
+  <text x="40" y="540" class="cjk" font-size="12" fill="#8d8d8d">结构示意（估计）。倾斜角与透视值取自 mashirozx/arknights-ui 与 ak-ui 的实现；未使用任何官方素材。</text>
+</svg>

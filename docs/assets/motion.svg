@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="t d">
+  <title id="t">动效时序</title>
+  <desc id="d">五档时长的用途，以及一次分屏切换中各元素的入场顺序。</desc>
+  <style>
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+    .lab { fill: #fff; font-size: 13px; }
+    .ms { fill: #18d1ff; font-size: 12px; }
+  </style>
+  <rect width="960" height="420" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="419" fill="none" stroke="#333"/>
+
+  <text x="40" y="44" class="data tag">01 DURATION SCALE</text>
+  <text x="184" y="44" class="cjk note">五档时长（官网实测）；过渡曲线统一使用默认 ease</text>
+  <g>
+    <rect x="200" y="66" width="60" height="14" fill="#18d1ff" fill-opacity=".45"/>
+    <rect x="200" y="92" width="90" height="14" fill="#18d1ff"/>
+    <rect x="200" y="118" width="180" height="14" fill="#18d1ff" fill-opacity=".8"/>
+    <rect x="200" y="144" width="300" height="14" fill="#18d1ff" fill-opacity=".6"/>
+    <rect x="200" y="170" width="600" height="14" fill="#18d1ff" fill-opacity=".35"/>
+  </g>
+  <g class="data ms">
+    <text x="40" y="78">200ms  fast</text><text x="40" y="104">300ms  base</text><text x="40" y="130">600ms  slow</text>
+    <text x="40" y="156">1000ms slower</text><text x="40" y="182">2000ms scene</text>
+  </g>
+  <g class="cjk note">
+    <text x="272" y="78">阴影、轻量位移</text>
+    <text x="302" y="104">颜色 / 透明度 / 悬停对调 —— 占全部过渡的大多数</text>
+    <text x="392" y="130">内容块入场、装饰淡入</text>
+    <text x="512" y="156">标题位移、幽灵字淡入</text>
+    <text x="812" y="182">分屏级大位移</text>
+  </g>
+
+  <line x1="40" y1="212" x2="920" y2="212" stroke="#fff" stroke-opacity=".3"/>
+
+  <text x="40" y="246" class="data tag">02 SECTION ENTRANCE</text>
+  <text x="196" y="246" class="cjk note">一次分屏切换的编排：先骨架、后内容、最后装饰</text>
+  <g stroke="#fff" stroke-opacity=".12">
+    <line x1="200" y1="262" x2="200" y2="388"/><line x1="350" y1="262" x2="350" y2="388"/><line x1="500" y1="262" x2="500" y2="388"/>
+    <line x1="650" y1="262" x2="650" y2="388"/><line x1="800" y1="262" x2="800" y2="388"/>
+  </g>
+  <g class="data note" text-anchor="middle">
+    <text x="200" y="402">0</text><text x="350" y="402">500ms</text><text x="500" y="402">1000ms</text><text x="650" y="402">1500ms</text><text x="800" y="402">2000ms</text>
+  </g>
+  <g class="cjk lab">
+    <text x="40" y="282">背景位移 / 缩放</text>
+    <text x="40" y="308">标题组</text>
+    <text x="40" y="334">列表项（逐项）</text>
+    <text x="40" y="360">幽灵字 / 装饰线</text>
+    <text x="40" y="386">计数器更新</text>
+  </g>
+  <rect x="200" y="270" width="600" height="14" fill="#585858"/>
+  <rect x="260" y="296" width="300" height="14" fill="#fff"/>
+  <g fill="#18d1ff">
+    <rect x="320" y="322" width="90" height="14"/><rect x="341" y="322" width="90" height="14" fill-opacity=".75"/>
+    <rect x="362" y="322" width="90" height="14" fill-opacity=".55"/><rect x="383" y="322" width="90" height="14" fill-opacity=".4"/>
+    <rect x="404" y="322" width="90" height="14" fill-opacity=".25"/>
+  </g>
+  <text x="506" y="334" class="cjk note">间隔 70ms（社区）</text>
+  <rect x="500" y="348" width="300" height="14" fill="#333"/>
+  <rect x="200" y="374" width="90" height="14" fill="#ffd802"/>
+  <text x="302" y="386" class="cjk note">数字先变，用户最先得到“到了哪一屏”的反馈</text>
+</svg>

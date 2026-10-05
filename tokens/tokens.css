@@ -1,0 +1,142 @@
+/*
+ * arknights-ui design tokens
+ * 由 scripts/build-tokens.mjs 从 tokens/tokens.json 生成，请勿手改。
+ * 实测来源：https://ak.hypergryph.com/ (1280x720, root font-size = 100vw / 120)（2026-10-06）
+ * 非官方整理，仅供学习参考。《明日方舟》及相关素材版权归上海鹰角网络科技有限公司所有。
+ */
+:root {
+  /* color */
+  --ark-color-neutral-black: #000000; /* 实测 · 官网页面底色 */
+  --ark-color-neutral-ink-950: #121212; /* 实测 · 近黑面板 */
+  --ark-color-neutral-ink-900: #1d1f20; /* 实测 · 深色面板 / 弹层 */
+  --ark-color-neutral-ink-850: #242424; /* 实测 · 背景巨型幽灵字的字色 */
+  --ark-color-neutral-ink-800: #272727; /* 实测 · 次级深色块 */
+  --ark-color-neutral-ink-700: #333333; /* 实测 · 深灰描边 / 文本 */
+  --ark-color-neutral-gray-600: #585858; /* 实测 · READ MORE 等弱按钮底色 */
+  --ark-color-neutral-gray-500: #8d8d8d; /* 实测 · 中灰描边、次要信息 */
+  --ark-color-neutral-gray-400: #ababab; /* 实测 · 未激活标题文字 */
+  --ark-color-neutral-gray-300: #d2d2d2; /* 实测 · 正文次要文字 */
+  --ark-color-neutral-white: #ffffff; /* 实测 · 主文字、反白块 */
+  --ark-color-neutral-paper: #fdfdfb; /* 社区 · 游戏主界面浅色面板（mashirozx/arknights-ui） */
+  --ark-color-neutral-paper-ink: #323232; /* 社区 · 纸白面板上的文字色（mashirozx/arknights-ui） */
+  --ark-color-neutral-paper-muted: #ebeceb; /* 社区 · 浅色面板的次级底 */
+  --ark-color-neutral-graphite: #424242; /* 社区 · 游戏主界面深色面板 */
+  --ark-color-neutral-graphite-deep: #313131; /* 社区 · 更深一级的石墨灰（ak-ui） */
+  --ark-color-line-hairline: rgba(255, 255, 255, 0.3); /* 实测 · 1px 分隔线的默认颜色 */
+  --ark-color-line-hairline-strong: rgba(255, 255, 255, 0.5); /* 实测 · 描边按钮、强调分隔线 */
+  --ark-color-line-solid: #565656; /* 实测 · 不透明的深灰描边 */
+  --ark-color-signal-info: #18d1ff; /* 实测 · 官网主信号色（青蓝），导航激活、分类、进度 */
+  --ark-color-signal-info-soft: rgba(24, 209, 255, 0.25); /* 实测 · 悬停时的幽灵英文大字 */
+  --ark-color-signal-info-game: #22bbff; /* 社区 · 游戏内蓝色的常用近似（ak-ui、hexo-theme-arknights 均取 #2bf） */
+  --ark-color-signal-info-deep: #0098dc; /* 社区 · 偏深的罗德岛蓝（ak-ui text-color） */
+  --ark-color-signal-action: #ffd802; /* 社区 · 行动 / 警示黄（ak-ui） */
+  --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui） */
+  --ark-color-signal-danger: #e33b3b; /* 社区 · 危险 / 敌方（ak-ui） */
+  --ark-color-signal-success: #46c47c; /* 社区 · 成功（ak-ui 的设计决定，非游戏取色） */
+  --ark-color-tier-1: #9c9c9c; /* 社区 · 材料 / 稀有度一档：灰 */
+  --ark-color-tier-2: #d8dd5a; /* 社区 · 二档：黄绿 */
+  --ark-color-tier-3: #4aabea; /* 社区 · 三档：蓝 */
+  --ark-color-tier-4: #cfc2d1; /* 社区 · 四档：淡紫 */
+  --ark-color-tier-5: #f1c644; /* 社区 · 五档：金 */
+  --ark-color-tier-6: #ff5e19; /* 估计 · 六星以橙色强调，取 accent 的同值 */
+  --ark-color-overlay-scrim: rgba(0, 0, 0, 0.5); /* 实测 · 图片上压字用的半透明黑 */
+  --ark-color-overlay-scrim-strong: rgba(0, 0, 0, 0.8); /* 实测 · 弹层遮罩 */
+  --ark-color-overlay-panel-dark: rgba(66, 66, 66, 0.92); /* 社区 · 半透明深色面板（ak-ui） */
+  --ark-color-overlay-panel-light: rgba(253, 253, 251, 0.9); /* 社区 · 半透明浅色面板（ak-ui） */
+  --ark-color-brand-siren-bg: #09090b; /* 实测 · 塞壬唱片底色 */
+  --ark-color-brand-siren-text: #c6c9ce; /* 实测 · 塞壬唱片主文字（冷灰） */
+  --ark-color-brand-comic-crimson: #b0243b; /* 实测 · 泰拉记事社 / 鹰角漫画站强调红 */
+  --ark-color-brand-comic-yellow: #fff000; /* 实测 · 泰拉记事社 / 鹰角漫画站强调黄 */
+  --ark-color-brand-skland-lime: #c8eb21; /* 实测 · 森空岛主色 */
+  --ark-color-brand-skland-lime-deep: #90c208; /* 实测 · 森空岛文字用深绿 */
+  --ark-color-brand-skland-bg: #f2f2f2; /* 实测 · 森空岛浅色底 */
+  --ark-color-brand-skland-text: #222222; /* 实测 · 森空岛主文字 */
+
+  /* font */
+  --ark-font-family-latin-condensed: "Oswald", "Bahnschrift", "Arial Narrow", "Helvetica Neue", Arial, sans-serif; /* 实测 · 导航、栏目标签、幽灵标题。官网用 Oswald Medium / DemiBold */
+  --ark-font-family-latin-wide: "Novecento Sans Wide", "Novecento Wide", "Montserrat", "Segoe UI", Arial, sans-serif; /* 实测 · 品牌大字、英文名、微文案。官网用 Novecento Sans Wide Medium–UltraBold */
+  --ark-font-family-data: "Bender", "JetBrains Mono", "Roboto Mono", Consolas, monospace; /* 实测 · 日期、计数、编号、READ MORE。官网用 Bender Regular / Bold */
+  --ark-font-family-cjk-sans: "Source Han Sans SC", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", sans-serif; /* 实测 · 所有中文界面文字。官网用思源黑体 Regular–Heavy */
+  --ark-font-family-cjk-serif: "Source Han Serif SC", "Noto Serif SC", "Songti SC", SimSun, serif; /* 社区 · 游戏主界面的大号中文指令、章节标题。塞壬唱片站实测使用思源宋体 */
+  --ark-font-family-latin-serif: "Times New Roman", Georgia, "Noto Serif", serif; /* 社区 · 剧情、档案等正式语境的英文 */
+  --ark-font-size-ghost: 7rem; /* 实测 · 背景幽灵标题（BREAKING NEWS / WORLD） */
+  --ark-font-size-hero: 5.5rem; /* 实测 · 首屏 ARKNIGHTS */
+  --ark-font-size-display: 3.75rem; /* 实测 · 中文大标题、干员中文名 */
+  --ark-font-size-display-latin: 3.125rem; /* 实测 · 与中文大标题成对的英文 */
+  --ark-font-size-h1: 2.5rem; /* 实测 · 设定条目的中文标题 */
+  --ark-font-size-h2: 1.5rem; /* 实测 · 小节英文标签（PROFILE） */
+  --ark-font-size-nav: 1.375rem; /* 实测 · 导航英文 */
+  --ark-font-size-body-lg: 1.25rem; /* 实测 · 按钮中文、英文副标 */
+  --ark-font-size-body: 1.125rem; /* 实测 · 新闻分类、正文 */
+  --ark-font-size-label: 0.875rem; /* 实测 · 导航中文副标、READ MORE */
+  --ark-font-size-caption: 0.75rem; /* 实测 · 注释 */
+  --ark-font-size-micro: 0.375rem; /* 实测 · 纯装饰的微缩英文 */
+  --ark-font-tracking-tight: -0.05em; /* 实测 · 幽灵标题收紧字距 */
+  --ark-font-tracking-cjk-tight: -0.1em; /* 社区 · 干员代号：思源黑体 Heavy、字间距 -100 */
+  --ark-font-tracking-normal: 0; /* 实测 */
+  --ark-font-tracking-wide: 0.1em; /* 实测 · 栏目计数旁的英文标签 */
+  --ark-font-tracking-micro: 0.5em; /* 实测 · 微缩装饰英文拉开字距 */
+  --ark-font-leading-solid: 1; /* 实测 · 标题、标签一律行高 1 */
+  --ark-font-leading-snug: 1.4; /* 实测 */
+  --ark-font-leading-body: 1.6; /* 实测 · 正文段落 */
+  --ark-font-weight-regular: 400; /* 实测 */
+  --ark-font-weight-medium: 500; /* 实测 */
+  --ark-font-weight-bold: 700; /* 实测 */
+  --ark-font-weight-heavy: 900; /* 实测 · 思源黑体 Heavy，用于代号与指令 */
+
+  /* space */
+  --ark-space-1: 0.25rem; /* 社区 */
+  --ark-space-2: 0.5rem; /* 社区 */
+  --ark-space-3: 0.75rem; /* 社区 */
+  --ark-space-4: 1rem; /* 社区 */
+  --ark-space-5: 1.5rem; /* 社区 */
+  --ark-space-6: 2rem; /* 社区 */
+  --ark-space-7: 3rem; /* 估计 */
+  --ark-space-8: 6rem; /* 社区 · 官网新闻行最小高度（ak-ui 官网研究） */
+  --ark-space-9: 9rem; /* 实测 · 官网内容区左边距（1280 宽时为 96px） */
+
+  /* line */
+  --ark-line-hairline: 1px; /* 实测 · 绝大多数分隔线 */
+  --ark-line-strong: 4px; /* 实测 · 激活指示条 */
+  --ark-line-heavy: 0.5rem; /* 实测 · 青蓝色粗边条 */
+
+  /* cut */
+  --ark-cut-sm: 0.375rem; /* 社区 · 标签、小按钮的切角 */
+  --ark-cut-md: 0.75rem; /* 社区 · 卡片切角 */
+  --ark-cut-lg: 1.5rem; /* 社区 · 大面板切角 */
+
+  /* radius */
+  --ark-radius-none: 0; /* 实测 · 默认直角 */
+  --ark-radius-subtle: 2px; /* 社区 · 仅用于消除锯齿感的极小圆角 */
+
+  /* shadow */
+  --ark-shadow-drop: -0.5rem 0.5rem 1rem #000000; /* 实测 · 立绘 drop-shadow，向左下偏移 */
+  --ark-shadow-panel: 0 1rem 2rem rgba(0, 0, 0, 0.32); /* 社区 · 面板投影（ak-ui） */
+  --ark-shadow-hard: 0.2rem 0.15rem 0 rgba(0, 0, 0, 0.6); /* 社区 · 游戏内文字 / 图标的硬边偏移投影 */
+
+  /* blur */
+  --ark-blur-backdrop: 0.5rem; /* 实测 · 毛玻璃 backdrop-filter */
+  --ark-blur-image: 1rem; /* 实测 · 背景图失焦 */
+
+  /* depth */
+  --ark-depth-perspective: 30em; /* 社区 · 主界面透视距离（mashirozx、ak-ui 一致） */
+  --ark-depth-tilt: 10deg; /* 社区 · 左右面板组的 rotateY 角度 */
+  --ark-depth-tilt-scale: 0.9; /* 社区 · 倾斜后整体缩放 */
+
+  /* motion */
+  --ark-motion-duration-fast: 200ms; /* 实测 · 轻量反馈 */
+  --ark-motion-duration-base: 300ms; /* 实测 · 官网绝对主流：颜色、透明度、位移 */
+  --ark-motion-duration-slow: 600ms; /* 实测 · 内容块入场、装饰淡入 */
+  --ark-motion-duration-slower: 1000ms; /* 实测 · 分屏标题位移、幽灵字淡入 */
+  --ark-motion-duration-scene: 2000ms; /* 实测 · 分屏级的大位移 / 缩放 */
+  --ark-motion-easing-standard: ease; /* 实测 · 官网过渡未自定义曲线，全部使用默认 ease */
+  --ark-motion-easing-mechanical: cubic-bezier(0.2, 0, 0, 1); /* 社区 · 更干脆的机械感曲线（ak-ui） */
+  --ark-motion-easing-step: step-end; /* 实测 · 光标闪烁等逐帧效果 */
+  --ark-motion-stagger: 70ms; /* 社区 · 列表逐项入场的间隔（ak-ui） */
+
+  /* pattern */
+  --ark-pattern-dash: repeating-linear-gradient(90deg, #b2b2b2, #b2b2b2 0.25rem, transparent 0, transparent 0.5rem); /* 实测 · 虚线分隔 */
+  --ark-pattern-fade-rule: linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent); /* 实测 · 一端渐隐的细线 */
+  --ark-pattern-hazard: repeating-linear-gradient(-45deg, #ffd802 0 0.5rem, #121212 0.5rem 1rem); /* 估计 · 警戒条纹 */
+  --ark-pattern-halftone: radial-gradient(circle, rgba(255, 255, 255, 0.35) 1px, transparent 1.5px) 0 0 / 0.5rem 0.5rem; /* 估计 · 半调网点 */
+}
