@@ -1,4 +1,5 @@
 import type { ComponentProps } from 'react'
+import { brighterMuted } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
 export type PanelTone = 'graphite' | 'paper' | 'frosted'
@@ -51,9 +52,6 @@ const cutBackground: Record<Exclude<PanelTone, 'frosted'>, string> = {
   graphite: 'before:bg-ark-overlay-panel-dark',
   paper: 'before:bg-ark-overlay-panel-light',
 }
-
-// 半透明的深色面压在较亮的场景上会变浅，gray-400 的次要文字不再够 4.5:1，这里提一档
-const brighterMuted = '[--ark-fg-muted:var(--ark-color-neutral-gray-300)]'
 
 const accents = {
   left: 'border-l-(length:--ark-line-strong) border-ark-signal',

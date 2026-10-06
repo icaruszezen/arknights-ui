@@ -12,6 +12,10 @@ describe('cn', () => {
     expect(cn('tracking-ark-wide', 'tracking-ark-tight')).toBe('tracking-ark-tight')
     expect(cn('leading-ark-solid', 'leading-ark-body')).toBe('leading-ark-body')
     expect(cn('ease-ark-standard', 'ease-ark-mechanical')).toBe('ease-ark-mechanical')
+    expect(cn('animate-ark-spin', 'animate-none')).toBe('animate-none')
+    expect(cn('motion-safe:animate-ark-spin', 'motion-safe:animate-ark-blink')).toBe(
+      'motion-safe:animate-ark-blink',
+    )
   })
 
   it('字号与颜色共用 text- 前缀，但互不覆盖', () => {

@@ -1,5 +1,5 @@
 /*
- * @arknights-ui/react 主题层：tokens、语义变量、Tailwind 主题映射与切角工具类。
+ * @arknights-ui/react 主题层：tokens、语义变量、Tailwind 主题映射、动画，以及切角与斜边工具类。
  *
  * 使用 Tailwind CSS v4 的项目在自己的入口 CSS 里引入本文件，并让 Tailwind 扫描组件产物：
  *   @import "tailwindcss";
@@ -63,6 +63,32 @@
   --color-ark-rule-strong: var(--ark-rule-strong);
   --color-ark-invert: var(--ark-invert);
   --color-ark-on-invert: var(--ark-on-invert);
+
+  /*
+   * 动画。旋转 1s linear、光标 1s step-end 是官网实测；菜单项淡入取 fast 档。
+   * 只动透明度的淡入在 prefers-reduced-motion 下也保留；旋转和闪烁由组件包在 motion-safe: 里。
+   */
+  --animate-ark-spin: ark-spin 1s linear infinite;
+  --animate-ark-blink: ark-blink 1s var(--ark-motion-easing-step) infinite;
+  --animate-ark-fade-in: ark-fade-in var(--ark-motion-duration-fast)
+    var(--ark-motion-easing-standard) both;
+}
+
+/* 写在 @theme 外：不管用的是预编译样式表还是使用方自己的 Tailwind，都会带上 */
+@keyframes ark-spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes ark-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes ark-fade-in {
+  from {
+    opacity: 0;
+  }
 }
 
 /*
@@ -121,6 +147,23 @@
     100% 0,
     100% calc(100% - var(--ark-cut-lg)),
     calc(100% - var(--ark-cut-lg)) 100%,
+    0 100%
+  );
+}
+
+/*
+ * 斜边：整条边倾斜，同样只用 45°，所以水平偏移等于元素自身的高度。
+ * 百分比写不出“自身高度”，由 --ark-slant 给出，默认 2.75rem（44px 高的块）。
+ * ark-slant-r 只斜右边；ark-slant-x 两边都斜，成平行四边形，可以和前一块咬合。
+ */
+@utility ark-slant-r {
+  clip-path: polygon(0 0, 100% 0, calc(100% - var(--ark-slant, 2.75rem)) 100%, 0 100%);
+}
+@utility ark-slant-x {
+  clip-path: polygon(
+    var(--ark-slant, 2.75rem) 0,
+    100% 0,
+    calc(100% - var(--ark-slant, 2.75rem)) 100%,
     0 100%
   );
 }

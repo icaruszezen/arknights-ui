@@ -8,7 +8,7 @@ import {
   useId,
   useState,
 } from 'react'
-import { colorTransition, focusRing, triangleRight } from '../../utils/classes'
+import { colorTransition, focusRing, hitArea, triangleRight } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
 export type TabsVariant = 'block' | 'underline'
@@ -154,7 +154,7 @@ const tabVariants: Record<TabsVariant, string> = {
   block: cn(
     'h-7 px-ark-3 text-ark-fg hover:text-ark-signal-fg',
     'aria-selected:bg-ark-invert aria-selected:text-ark-on-invert',
-    'after:absolute after:inset-x-0 after:top-1/2 after:h-11 after:-translate-y-1/2',
+    hitArea,
   ),
   underline: cn(
     'h-11 min-w-11 px-ark-1 text-ark-fg-muted hover:text-ark-fg aria-selected:text-ark-signal-fg',

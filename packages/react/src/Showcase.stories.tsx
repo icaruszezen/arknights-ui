@@ -7,6 +7,7 @@ import {
   Divider,
   Empty,
   Heading,
+  ListRow,
   Notice,
   Panel,
   Progress,
@@ -30,9 +31,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 const rows = [
-  { category: '活动', date: '2026 // 10 / 03', title: 'SideStory 限时活动即将开启' },
-  { category: '公告', date: '2026 // 09 / 29', title: '09月29日16:00闪断更新公告' },
-  { category: '新闻', date: '2026 // 09 / 21', title: '新增界面主题与首页场景' },
+  { category: '活动', date: '2026-10-03', title: 'SideStory 限时活动即将开启' },
+  { category: '公告', date: '2026-09-29', title: '09月29日16:00闪断更新公告' },
+  { category: '新闻', date: '2026-09-21', title: '新增界面主题与首页场景' },
 ]
 
 function NewsList({ category }: { category?: string }) {
@@ -42,18 +43,9 @@ function NewsList({ category }: { category?: string }) {
     <ul className="m-0 list-none p-0">
       {list.map(row => (
         <li key={row.title}>
-          <div className="grid grid-cols-[4rem_1fr] items-center gap-x-ark-4 py-ark-4">
-            <span className="row-span-2 text-ark-body font-ark-bold text-ark-signal">
-              {row.category}
-            </span>
-            <time className="font-ark-data text-[1rem] leading-ark-solid tracking-[1px] text-ark-fg-muted">
-              {row.date}
-            </time>
-            <span className="pt-ark-2 text-ark-body leading-ark-snug tracking-[2px] text-ark-fg-secondary">
-              {row.title}
-            </span>
-          </div>
-          <Divider />
+          <ListRow category={row.category} date={row.date}>
+            {row.title}
+          </ListRow>
         </li>
       ))}
     </ul>

@@ -24,7 +24,19 @@ const preview: Preview = {
     layout: 'fullscreen',
     controls: { expanded: true },
     docs: { theme: arkTheme },
-    a11y: { test: 'todo' },
+    a11y: {
+      test: 'todo',
+      config: {
+        rules: [
+          {
+            // 背景巨字和微缩英文是纯装饰：对读屏隐藏，对比度有意压到最低。
+            // WCAG 1.4.3 对纯装饰不设对比度要求，这条检查不套用到它们身上
+            id: 'color-contrast',
+            selector: '*:not([data-ark="ghost-title"], [data-ark="micro-text"])',
+          },
+        ],
+      },
+    },
     backgrounds: { options: canvases },
     options: {
       storySort: {

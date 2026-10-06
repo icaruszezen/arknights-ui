@@ -8,19 +8,69 @@
 
 ## 组件
 
-| 组件 | 说明 | 依据 |
-| --- | --- | --- |
-| `Button` | 主 / 次 / 弱三个层级，加上成对使用的浅 / 深色块；双语两行、方向三角、选中态 | [按钮](../../docs/elements/buttons.md) |
-| `Tag` | 实心、描边、中性三种形态，可切角 | [数据展示](../../docs/elements/data-display.md) |
-| `Panel` / `Card` | 石墨、纸白、毛玻璃三种表面；强调边、切角、投影、半调网点 | [面板与卡片](../../docs/elements/panels-and-cards.md) |
-| `Tabs` / `TabList` / `Tab` / `TabPanel` | 反白块与底条两种写法，完整的键盘操作 | [导航](../../docs/elements/navigation.md) |
-| `Stat` | 大号数据体数值，带分母、单位、千分位、前导零 | [数据展示](../../docs/elements/data-display.md) |
-| `Progress` | 细条、可分段的粗条、相对值条 | [数据展示](../../docs/elements/data-display.md) |
-| `Notice` | 左侧色边分级的提示条 | [反馈](../../docs/elements/feedback.md) |
-| `Dialog` | 通栏横带式确认弹窗，基于原生 `<dialog>` | [反馈](../../docs/elements/feedback.md) |
-| `Empty` | 虚线框空状态 | [反馈](../../docs/elements/feedback.md) |
-| `Divider` | 细线、虚线、渐隐线，可带起点或标签 | [装饰元素](../../docs/elements/decorations.md) |
-| `Heading` | 中英成对的双语标题 | [字体与排版](../../docs/foundations/typography.md) |
+通用元素六篇文档里写到的东西都有对应的组件。
+
+**[按钮](../../docs/elements/buttons.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Button` | 主 / 次 / 弱三个层级，加上成对使用的浅 / 深色块；双语两行、方向三角、选中态 |
+| `ActionButton` | 深浅两块拼合的行动按钮：左块写代价，右块写动作 |
+
+**[面板与卡片](../../docs/elements/panels-and-cards.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Panel` / `Card` | 石墨、纸白、毛玻璃三种表面；强调边、切角、投影、半调网点 |
+| `Drawer` | 从右侧滑入的抽屉，不压暗主画面，直接关闭 |
+| `Sheet` | 在当前页面上呼出的毛玻璃浮层 |
+
+**[导航](../../docs/elements/navigation.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Nav` / `NavItem` | 双语顶栏，当前项只变色；竖屏收成全屏菜单 |
+| `BackHome` | 左上角“返回 + 主页”两个斜切块，主页块可以展开一条快捷导航 |
+| `QuickNav` / `QuickNavItem` | 横向的快捷导航条，当前项信号色加底条 |
+| `ResourceBar` / `Resource` | 右上角的资源条，数据体数字压在半透明黑底上 |
+| `Tabs` / `TabList` / `Tab` / `TabPanel` | 反白块与底条两种写法，完整的键盘操作 |
+
+**[数据展示](../../docs/elements/data-display.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Stat` | 大号数据体数值，带分母、单位、千分位、前导零 |
+| `ListRow` | 分类 / 日期 / 标题三栏的新闻行，可以整行是链接 |
+| `Progress` | 细条、可分段的粗条、相对值条 |
+| `RingProgress` | 环形进度，数字居中（等级环） |
+| `Tag` | 实心、描边、中性三种形态，可切角 |
+| `Rating` | 星级，星形或菱形 |
+| `Badge` | 红点与数字角标 |
+
+**[反馈](../../docs/elements/feedback.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Dialog` | 通栏横带式确认弹窗 |
+| `Notice` | 左侧色边分级的提示条 |
+| `Loading` | 细进度条加百分比和状态文字；进度未知时是旋转指示加闪烁光标 |
+| `Empty` | 虚线框空状态 |
+| `RewardGlow` | 奖励图标背后的静态放射光 |
+
+**[装饰元素](../../docs/elements/decorations.md)与[排版](../../docs/foundations/typography.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Heading` | 中英成对的双语标题 |
+| `Divider` | 细线、虚线、渐隐线，可带起点或标签 |
+| `Counter` / `Serial` | `01 // 01 / 05` 式的计数与 `NO.0147` 式的序号 |
+| `DateText` | `2026 // 10 / 03`，输出 `<time>` |
+| `MicroText` | 微缩英文，可竖排 |
+| `GhostTitle` | 背景巨字 |
+| `CornerMarks` | 四个 L 形角标框住内容 |
+| `Callout` | 标注点 + 折线 + 黑底标签，标签可以是链接 |
+| `Barcode` | 条形码，真实的 Code 39 编码 |
+| `Ticks` | 标尺刻度 |
 
 每个组件的属性、示例和交互说明在 Storybook 里：
 
@@ -99,7 +149,19 @@ body {
 
 **稳定的选择器。** 每个组件的根节点带 `data-ark="<名称>"`，可以用来写选择器或做测试定位。
 
-**交互。** 悬停是整块换色，300ms；焦点是外侧 2px 轮廓，切角不会把它裁掉；可见形状再小，点击区也不小于 44px；位移类动效在 `prefers-reduced-motion` 下关闭。
+**交互。** 悬停是整块换色，300ms；焦点是外侧 2px 轮廓，切角不会把它裁掉；可见形状再小，点击区也不小于 44px；位移、旋转、闪烁类动效在 `prefers-reduced-motion` 下关闭，只保留透明度变化。
+
+**弹层。** `Dialog`、`Drawer`、`Sheet` 都基于原生 `<dialog>`，自带焦点圈定和 Esc，关闭后焦点回到触发元素。它们是受控的：
+
+```tsx
+const [open, setOpen] = useState(false)
+
+<Drawer open={open} onOpenChange={setOpen} title="制造站" sub="FACTORY">…</Drawer>
+```
+
+**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。
+
+**固定的位置。** `Nav`、`BackHome`、`ResourceBar`、`GhostTitle`、`Callout` 都不自己定位。文档要求它们“永远在同一个地方”，但放在哪由页面决定，用 `className` 写（如 `fixed top-0 left-0`）。
 
 **服务端组件。** 产物顶部带 `"use client"`，在 React Server Components 项目里可以直接引入。
 
@@ -114,6 +176,16 @@ body {
 | 纸白面板上的信号色文字 | — | 信号色压暗到 45% | 青蓝、黄在浅底上对比度不足。色块和底条不受影响 |
 | 悬停的触发条件 | `(any-hover: hover)` | `(hover: hover)` | 用的是 Tailwind 内置的 `hover:`，意图相同 |
 | `Divider` 的 `fade` | `--ark-pattern-fade-rule` | 从起点向末端渐隐，颜色跟随明暗上下文 | 原取值固定为白色且方向相反 |
+| `MicroText`、`GhostTitle` 的颜色 | 固定的 `#585858`、`#242424` | 次要文字色的 50%、前景色的 14% | 黑底上与原取值相同，放进面板时跟着换 |
+| `Rating` 在纸白面板上 | `--ark-color-tier-5` | 金色压暗到 45% | 金色在浅底上看不清，做法同信号色文字 |
+| `Badge` 的数字 | 未指定 | 红底黑字 | 白字压在 `#e33b3b` 上只有 4.24:1 |
+| `BackHome` 的斜边 | 示意图里画得较缓 | 45° | 几何规范写的是全局只用 45° |
+| `QuickNav` 的英文小字 | 示意图里约 9px | `0.75rem` | 字号阶里可读的最小一档 |
+| `Nav` 的当前项 | 只变色，并建议补一个非颜色标记 | 默认只变色，`indicator` 补一条 4px 条 | 两种都给，由使用方决定 |
+| `Counter` 的英文标签 | DemiBold（600） | Tailwind 自带的 `font-semibold` | token 里没有 600 这一档 |
+| `Drawer` 的遮罩 | 未指定 | 透明，主画面不压暗 | 文档强调抽屉“不完全遮挡”主画面 |
+| `Sheet` 的遮罩 | 可加模糊 | 只压暗，模糊留给浮层自身 | 与整页模糊的 `Dialog` 区分开 |
+| `Barcode` | 条码作为装饰 | 真实的 Code 39 编码 | 装饰写真实内容；字符集因此限于大写字母、数字和少数符号 |
 
 `Empty` 不在表里：文档原先写的 `gray-600` 文字在黑底上只有 2.95:1，这个问题已经在文档里更正并记录，见 [反馈 · 空状态](../../docs/elements/feedback.md#空状态)。
 
@@ -138,7 +210,11 @@ pnpm install
 - 类名只写完整的静态字符串。Tailwind 按纯文本扫描源码，拼出来的类名不会生成样式。
 - 不依赖全局重置。预编译样式表不带 Preflight，元素自带的边距、边框、`box-sizing` 要在类里写全（Storybook 也是这样配置的，看到的就是真实表现）。
 - 颜色只用语义键（`text-ark-fg`、`bg-ark-signal`、`border-ark-rule` 等），它们会跟随明暗上下文。固定语义的颜色（稀有度、提示级别）才直接取调色板。
-- 切角把背景画在 `::before` 上再裁切（`before:ark-cut-tr-md`），不要直接裁根元素。
+- 切角、斜边把背景画在 `::before` 上再裁切（`before:ark-cut-tr-md`、`before:ark-slant-r`），不要直接裁根元素。
+- 弹层用 [`src/utils/useModalDialog.ts`](src/utils/useModalDialog.ts)。点遮罩靠“事件目标是 `<dialog>` 自身”来判断，所以内容要铺满 `<dialog>`，底色、描边都画在里面那一层。
+- 动画只有三个：`animate-ark-spin`、`animate-ark-blink`、`animate-ark-fade-in`，定义在 [`src/styles/theme.css`](src/styles/theme.css)。前两个要包在 `motion-safe:` 里。
+- 属性是联合类型的组件（`Button`、`ActionButton`、`ListRow`），Story 里不要用 `decorators`，否则参数类型会被推成 `never`。
+- Storybook 的无障碍面板不对 `GhostTitle`、`MicroText` 做对比度检查（见 `.storybook/preview.tsx`）。另外 axe 看不到 `::backdrop`，弹层打开时可能误报对比度不足。
 - Storybook 运行期间新建的文件，里面的类可能不会立刻生成样式。保存一次任意已有的源文件，或重启 Storybook。
 
 `tokens.json` 里增删字号、字重、投影后，要同步 [`src/utils/cn.ts`](src/utils/cn.ts) 里登记的键名，测试会提醒。

@@ -1,14 +1,6 @@
-import {
-  type ComponentProps,
-  type MouseEvent,
-  type ReactNode,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-} from 'react'
+import { type ComponentProps, type ReactNode, useId } from 'react'
 import { cn } from '../../utils/cn'
-import { mergeRefs } from '../../utils/mergeRefs'
+import { useModalDialog } from '../../utils/useModalDialog'
 import { Button } from '../Button'
 
 export interface DialogProps
@@ -61,52 +53,24 @@ export function Dialog({
   children,
   ...rest
 }: DialogProps) {
-  const dialogRef = useRef<HTMLDialogElement>(null)
-  const setRef = useMemo(() => mergeRefs(dialogRef, ref), [ref])
+  const { requestClose, dialogProps } = useModalDialog({
+    open,
+    onOpenChange,
+    onDismiss: onCancel,
+    ref,
+    onClick,
+  })
   const titleId = useId()
   const bodyId = useId()
 
-  useEffect(() => {
-    const dialog = dialogRef.current
-    if (!dialog) return
-    if (open && !dialog.open) dialog.showModal()
-    else if (!open && dialog.open) dialog.close()
-  }, [open])
-
-  // 关闭由 open 状态驱动：这里只回调，真正的 close() 交给上面的 effect。
-  // 不等原生 close 事件来回写状态——Chromium 把它排到下一帧才派发，页面不渲染时会一直不来。
-  const requestClose = (reason: 'confirm' | 'cancel') => {
-    // 退场过渡期间 <dialog> 仍留在顶层，此时的点击不应再触发一次回调
-    if (!open) return
-    if (reason === 'confirm') onConfirm?.()
-    else onCancel?.()
-    onOpenChange?.(false)
-  }
-  const handleClick = (event: MouseEvent<HTMLDialogElement>) => {
-    onClick?.(event)
-    // 内容铺满了 <dialog>，目标是它自身时只可能点在遮罩上
-    if (!event.defaultPrevented && event.target === event.currentTarget) requestClose('cancel')
-  }
-
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: 点遮罩关闭的键盘等价操作是 Esc，由 onCancel 处理
     <dialog
       data-ark="dialog"
       data-ark-tone="dark"
       aria-labelledby={title != null ? titleId : bodyId}
       aria-describedby={title != null ? bodyId : undefined}
       {...rest}
-      ref={setRef}
-      // Esc：拦下浏览器的默认关闭，改走同一条状态驱动的路径
-      onCancel={event => {
-        event.preventDefault()
-        requestClose('cancel')
-      }}
-      // 兜底：浏览器绕过 cancel 直接关掉时（如连按两次 Esc），把状态同步回去
-      onClose={() => {
-        if (open) onOpenChange?.(false)
-      }}
-      onClick={handleClick}
+      {...dialogProps}
       className={cn(
         'm-0 my-auto box-border w-full max-w-none border-0 bg-transparent p-0 text-ark-fg',
         'backdrop:bg-ark-overlay-scrim backdrop:backdrop-blur-ark-backdrop',
@@ -136,11 +100,11 @@ export function Dialog({
       </div>
       <div className={cn('grid', hideCancel ? 'grid-cols-1' : 'grid-cols-2')}>
         {!hideCancel && (
-          <Button variant="graphite" block onClick={() => requestClose('cancel')}>
+          <Button variant="graphite" block onClick={() => requestClose(onCancel)}>
             {cancelText}
           </Button>
         )}
-        <Button variant="paper" block onClick={() => requestClose('confirm')}>
+        <Button variant="paper" block onClick={() => requestClose(onConfirm)}>
           {confirmText}
         </Button>
       </div>

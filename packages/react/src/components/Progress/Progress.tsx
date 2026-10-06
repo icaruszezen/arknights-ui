@@ -1,5 +1,6 @@
 import type { ComponentProps } from 'react'
 import { cn } from '../../utils/cn'
+import { clampProgress } from '../../utils/progress'
 
 export type ProgressVariant = 'thin' | 'thick' | 'meter'
 export type ProgressTone = 'signal' | 'action' | 'neutral'
@@ -58,8 +59,7 @@ export function Progress({
   style,
   ...rest
 }: ProgressProps) {
-  const clamped = Math.min(Math.max(value, 0), max)
-  const percent = max > 0 ? (clamped / max) * 100 : 0
+  const { clamped, percent } = clampProgress(value, max)
   const segmented = variant === 'thick' && segments !== undefined && segments > 1
   return (
     <div

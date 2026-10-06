@@ -1,5 +1,5 @@
 import type { ComponentProps, ReactNode } from 'react'
-import { colorTransition, focusRing, triangleRight } from '../../utils/classes'
+import { colorTransition, focusRing, hitArea, triangleRight } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
 export type ButtonVariant = 'primary' | 'secondary' | 'weak' | 'paper' | 'graphite'
@@ -44,8 +44,7 @@ const base = cn(
 
 const regular = 'min-h-11 min-w-11 gap-ark-4 px-ark-5 py-ark-3'
 // 可见形状只有 22px 高，用 ::after 把点击区撑到 44px
-const compact =
-  'gap-ark-2 px-ark-2 py-ark-1 after:absolute after:inset-x-0 after:top-1/2 after:h-11 after:-translate-y-1/2'
+const compact = cn('gap-ark-2 px-ark-2 py-ark-1', hitArea)
 
 const surfaces: Record<ButtonVariant, string> = {
   primary:
@@ -80,8 +79,9 @@ const mainText: Record<ButtonVariant, string> = {
 }
 
 const dataSub = 'font-ark-data text-ark-label leading-ark-solid font-ark-bold'
+// 70%：再淡一档（60%）在纸白块上只有 3.72:1
 const condensedSub =
-  'font-ark-latin-condensed text-ark-caption leading-ark-solid font-ark-medium tracking-ark-wide opacity-60'
+  'font-ark-latin-condensed text-ark-caption leading-ark-solid font-ark-medium tracking-ark-wide opacity-70'
 const subText: Record<ButtonVariant, string> = {
   primary: dataSub,
   secondary: dataSub,

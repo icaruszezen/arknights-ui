@@ -37,6 +37,7 @@ const twMerge = extendTailwindMerge({
       radius: [isArkKey],
       blur: [isArkKey],
       ease: [isArkKey],
+      animate: [isArkKey],
     },
   },
 })
