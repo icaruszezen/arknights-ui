@@ -4,6 +4,8 @@
 
 > **非官方项目。** 本仓库是玩家出于学习目的做的风格研究，与上海鹰角网络科技有限公司无关。《明日方舟》及其 Logo、立绘、界面、字体等素材的版权归鹰角网络及相应权利人所有。本仓库不存放任何官方素材：官方图片一律以外链引用，示意图全部为自绘 SVG。
 
+[![CI](https://github.com/icaruszezen/arknights-ui/actions/workflows/ci.yml/badge.svg)](https://github.com/icaruszezen/arknights-ui/actions/workflows/ci.yml) **在线预览：[组件示例（Storybook）](https://icaruszezen.github.io/arknights-ui/)**
+
 ## 速览
 
 ![色板](docs/assets/color-palette.svg)
@@ -155,6 +157,14 @@ pnpm storybook
 
 组件不含任何官方素材，目前是工作区内的私有包，尚未发布到 npm。接入方式、约定和开发说明见 [packages/react/README.md](packages/react/README.md)。
 
+### 持续集成与在线预览
+
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) 在推送到 `main` 和提交 PR 时，依次执行 lint、类型检查、测试、组件库构建与 Storybook 构建；PR 只做验证。推送到 `main` 且全部通过后，把 Storybook 发布到 GitHub Pages：<https://icaruszezen.github.io/arknights-ui/>。
+
+本地用 `pnpm build-storybook` 可以复现同样的构建，产物在 `packages/react/storybook-static`。
+
+首次使用（包括 Fork 之后）需要在仓库的 **Settings → Pages → Build and deployment → Source** 里选 **GitHub Actions**，否则部署这一步会失败。
+
 ## 数值的可信度
 
 | 标记 | 含义 |
@@ -184,6 +194,8 @@ scripts/
   build-tokens.mjs    tokens.json → tokens.css + tailwind.css
 packages/
   react/              React 组件库（@arknights-ui/react）
+.github/
+  workflows/ci.yml    构建、检查，并把 Storybook 发布到 GitHub Pages
 package.json          pnpm 工作区（packages/* 与 tokens）
 ```
 

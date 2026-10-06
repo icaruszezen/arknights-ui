@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# 同一个 PR 只跑最新一次；main 上的运行排队、不互相取消，保证最后部署的是最新提交
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      # pnpm 版本取自根 package.json 的 packageManager
+      - uses: pnpm/action-setup@v6
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - run: pnpm install --frozen-lockfile
+
+      - run: pnpm lint
+      - run: pnpm typecheck
+      - run: pnpm test
+      - run: pnpm build
+
+      # pnpm build 会重新生成 tokens；与已提交的不一致，说明改了 tokens.json 却没提交生成物
+      - name: 检查 tokens 生成物已提交
+        run: |
+          git diff --exit-code -- tokens || {
+            echo '::error::tokens/tokens.css、tokens/tailwind.css 与 tokens.json 不一致：运行 pnpm tokens 并提交'
+            exit 1
+          }
+
+      - run: pnpm build-storybook
+
+      - if: github.ref == 'refs/heads/main'
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: packages/react/storybook-static
+
+  # 只有 main 上的构建会发布；PR 与其他分支只验证能编译
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5

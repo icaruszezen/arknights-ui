@@ -72,7 +72,7 @@
 | `Barcode` | 条形码，真实的 Code 39 编码 |
 | `Ticks` | 标尺刻度 |
 
-每个组件的属性、示例和交互说明在 Storybook 里：
+每个组件的属性、示例和交互说明在 [Storybook](https://icaruszezen.github.io/arknights-ui/) 里，也可以在本地运行：
 
 ```bash
 pnpm storybook
@@ -200,6 +200,7 @@ pnpm install
 | 命令 | 作用 |
 | --- | --- |
 | `pnpm storybook` | 启动 Storybook（`http://localhost:6006`） |
+| `pnpm build-storybook` | 构建静态 Storybook 到 `storybook-static/`；CI 发布到 GitHub Pages 的就是它 |
 | `pnpm test` | 单元测试（Vitest + Testing Library） |
 | `pnpm typecheck` | 类型检查 |
 | `pnpm lint` | Biome 检查；`pnpm format` 自动修复 |
