@@ -55,6 +55,6 @@
   <!-- 空状态 -->
   <text x="560" y="358" class="data tag">04 EMPTY</text>
   <rect x="560" y="372" width="360" height="48" fill="none" stroke="#585858" stroke-dasharray="4 4"/>
-  <text x="740" y="394" text-anchor="middle" class="cond" font-size="13" fill="#585858" letter-spacing="1">NO DATA</text>
-  <text x="740" y="410" text-anchor="middle" class="cjk" font-size="11" fill="#585858">暂无内容</text>
+  <text x="740" y="394" text-anchor="middle" class="cond" font-size="13" fill="#ababab" letter-spacing="1">NO DATA</text>
+  <text x="740" y="410" text-anchor="middle" class="cjk" font-size="11" fill="#ababab">暂无内容</text>
 </svg>
