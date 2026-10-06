@@ -134,7 +134,7 @@ node scripts/build-tokens.mjs
 
 ## React 组件库
 
-[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。[通用元素](#通用元素) 六篇文档里写到的东西都有对应的组件：
+[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。[通用元素](#通用元素) 六篇文档里写到的东西都有对应的组件，[基础规范](#基础规范) 里能做成组件的部分也有：
 
 | 文档 | 组件 |
 | --- | --- |
@@ -143,7 +143,12 @@ node scripts/build-tokens.mjs
 | 导航 | `Nav` · `BackHome` · `QuickNav` · `ResourceBar` · `Tabs` |
 | 数据展示 | `Stat` · `ListRow` · `Progress` · `RingProgress` · `Tag` · `Rating` · `Badge` |
 | 反馈 | `Dialog` · `Notice` · `Loading` · `Empty` · `RewardGlow` |
-| 装饰元素与排版 | `Heading` · `Divider` · `Counter` / `Serial` · `DateText` · `MicroText` · `GhostTitle` · `CornerMarks` · `Callout` · `Barcode` · `Ticks` |
+| 装饰元素与排版 | `Heading` · `Divider` · `Counter` / `Serial` · `DateText` · `MicroText` · `GhostTitle` · `CornerMarks` · `Callout` · `Barcode` · `Ticks` · `Prose` |
+| 图标与符号 | `Icon` / `Watermark` · `IconTitle` |
+| 底纹 | `Pattern` · `Glitch` |
+| 图片 | `Portrait` · `Scrim` · `StripGallery` |
+| 布局与层级 | `Shell` · `ScrollHint` · `TiltGroup` · `PanelGrid` · `Parallax` |
+| 动效 | `Stagger` · `CountUp` |
 
 本地预览（需要 Node.js 22.18+ 与 pnpm 10）：
 

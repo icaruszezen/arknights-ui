@@ -58,10 +58,11 @@ const accents = {
   bottom: 'border-b-(length:--ark-line-strong) border-ark-signal',
 }
 
+// 与 Pattern 共用同一个工具类：网点取当前文字色，纸白面上自动是深色的
 const halftoneLayer = cn(
   'after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:-z-1 after:h-2/5',
-  'after:[background:var(--ark-pattern-halftone)]',
-  'after:[mask-image:linear-gradient(to_top_right,#000,transparent_60%)]',
+  'after:ark-pattern-halftone',
+  'after:[--ark-pattern-fade:linear-gradient(to_top_right,#000,transparent_60%)]',
 )
 
 /**
@@ -94,8 +95,7 @@ export function Panel({
         solid && cut ? [cutLayer, cutBackground[tone]] : flat[tone],
         solid && accent && accents[accent],
         solid && elevated && 'drop-shadow-ark-panel',
-        // 网点 token 是白点，纸白面上反相成黑点
-        halftone && [halftoneLayer, tone === 'paper' && 'after:invert'],
+        halftone && halftoneLayer,
         className,
       )}
     />

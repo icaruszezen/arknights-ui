@@ -48,4 +48,11 @@ describe('Stat', () => {
     render(<Stat label="Cost" value={18} unit="理智" />)
     expect(screen.getByRole('definition')).toHaveTextContent('18理智')
   })
+
+  it('value 是节点时原样放在主数值的位置，分母照常', () => {
+    render(<Stat label="Sanity" value={<span data-testid="rolling">131</span>} max={135} />)
+    const rolling = screen.getByTestId('rolling')
+    expect(rolling.parentElement?.tagName).toBe('B')
+    expect(screen.getByRole('definition')).toHaveTextContent('131/135')
+  })
 })

@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
+import { Pattern } from '../Pattern'
 
 export type NoticeLevel = 'info' | 'warning' | 'error'
 
@@ -53,9 +54,9 @@ export function Notice({ level = 'info', title, className, children, ...rest }: 
       )}
     >
       {level === 'warning' && (
-        <span
-          aria-hidden="true"
-          className="absolute top-0 right-0 left-[calc(var(--ark-line-strong)*-1)] h-1.5 bg-(image:--ark-pattern-hazard)"
+        <Pattern
+          variant="hazard"
+          className="absolute top-0 right-0 left-[calc(var(--ark-line-strong)*-1)] h-1.5 w-auto"
         />
       )}
       <svg

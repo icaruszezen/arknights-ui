@@ -46,6 +46,15 @@ export function MenuIcon(props: IconProps) {
   )
 }
 
+/** 向下：一道 16 × 6 的粗折线，滚动提示用。 */
+export function ChevronDownIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 9l8 6 8-6" stroke="currentColor" strokeWidth="2.5" />
+    </Icon>
+  )
+}
+
 /** 五角星，实心。 */
 export function StarIcon(props: IconProps) {
   return (

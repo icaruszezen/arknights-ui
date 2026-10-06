@@ -21,6 +21,7 @@ import {
   ResourceBar,
   RewardGlow,
   RingProgress,
+  Scrim,
   Sheet,
   Stat,
   Tag,
@@ -55,10 +56,7 @@ export const Game: Story = {
     return (
       <div className="relative isolate -m-ark-6 min-h-screen overflow-hidden">
         {/* 图上压字：只在文字所在的一侧加黑色到透明的渐变，场景其余部分保持原样 */}
-        <div
-          aria-hidden="true"
-          className="absolute inset-y-0 left-0 -z-1 w-3/4 bg-linear-to-r from-ark-neutral-black/85 to-transparent"
-        />
+        <Scrim side="left" className="right-auto -z-1 w-3/4 from-ark-neutral-black/85" />
         <GhostTitle className="absolute bottom-ark-4 left-ark-7 -z-1">Guard</GhostTitle>
         <MicroText vertical className="absolute right-ark-2 bottom-ark-7">
           {'ARKNIGHTS-UI // UNOFFICIAL'}

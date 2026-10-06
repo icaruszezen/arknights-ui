@@ -6,8 +6,11 @@ export type StatSize = 'sm' | 'md' | 'lg'
 export interface StatProps extends Omit<ComponentProps<'dl'>, 'children'> {
   /** 标签。英文会显示为窄体大写小字。 */
   label: ReactNode
-  /** 当前值。数字自动加千分位逗号，字符串原样输出。 */
-  value: number | string
+  /**
+   * 当前值。数字自动加千分位逗号，字符串原样输出。
+   * 也可以放一个节点，比如 `<CountUp value={131} />`，它会原样渲染在主数值的位置。
+   */
+  value: ReactNode
   /** 上限。写成 `131/135`：当前值大而亮，分母小而灰。 */
   max?: number | string
   /** 单位，跟在数值后面。 */
@@ -90,7 +93,9 @@ export function Stat({
             tone === 'signal' ? 'text-ark-signal-fg' : 'text-ark-fg',
           )}
         >
-          {formatStatValue(value, pad)}
+          {typeof value === 'number' || typeof value === 'string'
+            ? formatStatValue(value, pad)
+            : value}
         </b>
         {max !== undefined && (
           <span className={cn('font-ark-regular text-ark-fg-muted', restSize[size])}>

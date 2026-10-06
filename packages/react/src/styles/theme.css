@@ -72,6 +72,30 @@
   --animate-ark-blink: ark-blink 1s var(--ark-motion-easing-step) infinite;
   --animate-ark-fade-in: ark-fade-in var(--ark-motion-duration-fast)
     var(--ark-motion-easing-standard) both;
+
+  /*
+   * 入场：位移 1rem 加淡入，取 slow 档（内容块入场）。文字自左、图片自右。
+   * 减少动效时组件换成只动透明度的 ark-fade-in。
+   */
+  --animate-ark-enter-left: ark-enter-left var(--ark-motion-duration-slow)
+    var(--ark-motion-easing-standard) both;
+  --animate-ark-enter-right: ark-enter-right var(--ark-motion-duration-slow)
+    var(--ark-motion-easing-standard) both;
+  --animate-ark-enter-up: ark-enter-up var(--ark-motion-duration-slow)
+    var(--ark-motion-easing-standard) both;
+
+  /* 滚动提示：2s 往复（官网实测 1.5–2s） */
+  --animate-ark-bob: ark-bob 2s var(--ark-motion-easing-standard) infinite;
+
+  /*
+   * 故障：逐帧、只播一次。时长由 --ark-glitch-duration 给出，Glitch 组件把它限制在 1s 以内。
+   * 三段分别给内容本身、横条层、色块层。
+   */
+  --animate-ark-glitch: ark-glitch var(--ark-glitch-duration, 600ms) var(--ark-motion-easing-step);
+  --animate-ark-glitch-bars: ark-glitch-bars var(--ark-glitch-duration, 600ms)
+    var(--ark-motion-easing-step) both;
+  --animate-ark-glitch-mosaic: ark-glitch-mosaic var(--ark-glitch-duration, 600ms)
+    var(--ark-motion-easing-step) both;
 }
 
 /* 写在 @theme 外：不管用的是预编译样式表还是使用方自己的 Tailwind，都会带上 */
@@ -87,6 +111,134 @@
 }
 @keyframes ark-fade-in {
   from {
+    opacity: 0;
+  }
+}
+@keyframes ark-enter-left {
+  from {
+    opacity: 0;
+    translate: -1rem 0;
+  }
+}
+@keyframes ark-enter-right {
+  from {
+    opacity: 0;
+    translate: 1rem 0;
+  }
+}
+@keyframes ark-enter-up {
+  from {
+    opacity: 0;
+    translate: 0 1rem;
+  }
+}
+@keyframes ark-bob {
+  50% {
+    translate: 0 0.375rem;
+  }
+}
+
+/*
+ * 故障的三段关键帧。配合 step-end：每一帧的取值保持到下一帧。
+ * 内容整块被裁成一条横带只出现三次（0%、10%、32%），之后只剩越来越小的横向错位。
+ */
+@keyframes ark-glitch {
+  0% {
+    clip-path: inset(38% 0 34% 0);
+    translate: -0.75rem 0;
+  }
+  10% {
+    clip-path: inset(6% 0 68% 0);
+    translate: 0.5rem 0;
+  }
+  20% {
+    clip-path: inset(0);
+    translate: -0.25rem 0;
+  }
+  32% {
+    clip-path: inset(58% 0 8% 0);
+    translate: 0.375rem 0;
+  }
+  44% {
+    clip-path: inset(0);
+    translate: 0 0;
+  }
+  58% {
+    clip-path: inset(0);
+    translate: -0.125rem 0;
+  }
+  70%,
+  100% {
+    clip-path: inset(0);
+    translate: 0 0;
+  }
+}
+@keyframes ark-glitch-bars {
+  0% {
+    background-position:
+      12% 18%,
+      80% 30%,
+      96% 30%,
+      30% 66%;
+    opacity: 1;
+  }
+  12% {
+    background-position:
+      60% 42%,
+      10% 54%,
+      44% 54%,
+      85% 12%;
+  }
+  26% {
+    background-position:
+      5% 74%,
+      70% 82%,
+      20% 22%,
+      55% 36%;
+  }
+  40% {
+    background-position:
+      88% 8%,
+      24% 48%,
+      78% 48%,
+      8% 90%;
+    opacity: 0.7;
+  }
+  56% {
+    background-position:
+      40% 60%,
+      92% 16%,
+      6% 70%,
+      66% 28%;
+    opacity: 0.4;
+  }
+  70%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes ark-glitch-mosaic {
+  0% {
+    top: 20%;
+    left: 12%;
+    opacity: 1;
+  }
+  14% {
+    top: 48%;
+    left: 58%;
+  }
+  30% {
+    top: 64%;
+    left: 30%;
+    scale: -1 1;
+  }
+  46% {
+    top: 12%;
+    left: 70%;
+    opacity: 0.6;
+  }
+  60%,
+  100% {
     opacity: 0;
   }
 }
@@ -166,4 +318,267 @@
     calc(100% - var(--ark-slant, 2.75rem)) 100%,
     0 100%
   );
+}
+
+/*
+ * 底纹。形状走遮罩、颜色取 currentColor：跟随明暗上下文，也能用 text-* 换色。
+ * --ark-pattern-fade 是叠在形状上的一张渐隐遮罩，默认不渐隐；在同一个元素上设置它，
+ * 底纹就朝那个方向渐疏。一个面上最多叠两种底纹。
+ *
+ * 规则包在 @supports 里：不支持遮罩相交的浏览器整条不生效，只是没有底纹，
+ * 而不是露出一整块前景色。
+ *
+ * 前景色是用一张纯色渐变铺的，而不是 background-color：无障碍检查工具（axe）不认识遮罩，
+ * 会把 background-color 当成一整块实底，给压在底纹上的文字误报对比度不足。
+ */
+/* 半调网点：形状与浓度取自 --ark-pattern-halftone（1px 圆点、0.5rem 间距、35%） */
+@utility ark-pattern-halftone {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      var(--ark-pattern-halftone);
+  }
+}
+/*
+ * 噪点：低密度、高颗粒（估计）。feTurbulence 的参数沿用 docs/assets/patterns.svg，
+ * 只留透明通道；颜色矩阵把平均浓度压到约 10%（文档的范围是 10–20%）。
+ */
+@utility ark-pattern-grain {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='7' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 -0.15'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")
+      0 0 / 10rem 10rem;
+  }
+}
+/*
+ * 斜线网格：方格加两条对角线，1px（估计）。文档给的浓度是 5–15%，
+ * 这里按示意图取方格 8%、对角线 14%。四层共用同一个格距，对角线才会正好穿过格点。
+ */
+@utility ark-pattern-grid {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      linear-gradient(
+        45deg,
+        transparent calc(50% - 0.5px),
+        rgb(0 0 0 / 0.14) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      )
+      0 0 / var(--ark-pattern-cell, 3.5rem) var(--ark-pattern-cell, 3.5rem),
+      linear-gradient(
+        -45deg,
+        transparent calc(50% - 0.5px),
+        rgb(0 0 0 / 0.14) calc(50% - 0.5px) calc(50% + 0.5px),
+        transparent calc(50% + 0.5px)
+      )
+      0 0 / var(--ark-pattern-cell, 3.5rem) var(--ark-pattern-cell, 3.5rem),
+      linear-gradient(to right, rgb(0 0 0 / 0.08) 1px, transparent 1px) 0 0 /
+      var(--ark-pattern-cell, 3.5rem) var(--ark-pattern-cell, 3.5rem),
+      linear-gradient(to bottom, rgb(0 0 0 / 0.08) 1px, transparent 1px) 0 0 /
+      var(--ark-pattern-cell, 3.5rem) var(--ark-pattern-cell, 3.5rem);
+  }
+}
+/* 扫描线：1px 线、3px 空，10%（估计） */
+@utility ark-pattern-scanline {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      repeating-linear-gradient(to bottom, rgb(0 0 0 / 0.1) 0 1px, transparent 1px 4px);
+  }
+}
+/* 警戒条纹：黄黑是固定语义，直接用 token 当背景，不走遮罩 */
+@utility ark-pattern-hazard {
+  background: var(--ark-pattern-hazard);
+  mask-image: var(--ark-pattern-fade, none);
+}
+/* 同色深浅相间的警戒条纹：45°，条宽 6px（估计），35% */
+@utility ark-pattern-hazard-mono {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      repeating-linear-gradient(-45deg, rgb(0 0 0 / 0.35) 0 0.375rem, transparent 0.375rem 0.75rem);
+  }
+}
+
+/*
+ * 透视面板组（社区取值）：perspective(30em) rotateY(±10deg) scale(0.9)。
+ * --ark-tilt-base 是这一组的基础倾角，--ark-tilt-x / --ark-tilt-y 是摆动时叠加上去的几度。
+ */
+@utility ark-tilt {
+  transform: perspective(var(--ark-depth-perspective)) rotateX(var(--ark-tilt-x, 0deg))
+    rotateY(calc(var(--ark-tilt-base, 0deg) + var(--ark-tilt-y, 0deg)))
+    scale(var(--ark-depth-tilt-scale));
+}
+
+/*
+ * 视差图层：位移 = 视点偏移 × 远近 × 幅度，方向与视点相反（视点往右，近处的东西往左让）。
+ * --ark-parallax-x / -y 由 Parallax 写在容器上（-1 到 1），--ark-parallax-depth 写在图层上。
+ */
+@utility ark-parallax-layer {
+  translate: calc(
+      var(--ark-parallax-x, 0) *
+      var(--ark-parallax-depth, 0) *
+      var(--ark-parallax-range, 2rem) *
+      -1
+    )
+    calc(
+      var(--ark-parallax-y, 0) *
+      var(--ark-parallax-depth, 0) *
+      var(--ark-parallax-range, 2rem) *
+      -1
+    );
+}
+
+/*
+ * 故障的两层叠加。横条层：几段 6px 高的横条，其中一段是信号色；色块层：1rem 网格上的几个
+ * 信号色方块，浓淡不一（画法同 docs/assets/patterns.svg 的“马赛克 / 故障”一格）。
+ * 位置由关键帧逐帧改。
+ */
+@utility ark-glitch-bars {
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--ark-fg) 80%, transparent),
+      color-mix(in srgb, var(--ark-fg) 80%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-fg) 50%, transparent),
+      color-mix(in srgb, var(--ark-fg) 50%, transparent)
+    ),
+    linear-gradient(var(--ark-signal), var(--ark-signal)),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-fg) 30%, transparent),
+      color-mix(in srgb, var(--ark-fg) 30%, transparent)
+    );
+  background-repeat: no-repeat;
+  background-size:
+    46% 0.375rem,
+    34% 0.375rem,
+    12% 0.375rem,
+    40% 0.375rem;
+}
+@utility ark-glitch-mosaic {
+  background-image:
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 90%, transparent),
+      color-mix(in srgb, var(--ark-signal) 90%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 40%, transparent),
+      color-mix(in srgb, var(--ark-signal) 40%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 70%, transparent),
+      color-mix(in srgb, var(--ark-signal) 70%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 25%, transparent),
+      color-mix(in srgb, var(--ark-signal) 25%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 15%, transparent),
+      color-mix(in srgb, var(--ark-signal) 15%, transparent)
+    ),
+    linear-gradient(
+      color-mix(in srgb, var(--ark-signal) 50%, transparent),
+      color-mix(in srgb, var(--ark-signal) 50%, transparent)
+    );
+  background-repeat: no-repeat;
+  background-position:
+    0 0,
+    1rem 0,
+    2rem 1rem,
+    0 1rem,
+    3rem 0,
+    1rem 2rem;
+  background-size:
+    1rem 1rem,
+    1rem 1rem,
+    1rem 1rem,
+    1rem 1rem,
+    2rem 1rem,
+    3rem 1rem;
+}
+
+/*
+ * 档案类长文本：中文宋体配英文衬线，行高明显大于界面正文的 1.6（1.9 是估计值）。
+ * 字体栈先英文后中文，中间不能夹通用族名（否则中文落不到宋体上），所以在这里重新拼一份。
+ * 后代选择器都包在 :where() 里，特异性为 0：使用方写在子元素上的类可以直接覆盖。
+ * 不依赖全局重置，段落、标题、列表的边距在这里写全。
+ */
+@utility ark-prose {
+  font-family: "Times New Roman", Georgia, "Noto Serif", var(--ark-font-family-cjk-serif);
+  line-height: 1.9;
+
+  :where(& :is(p, ul, ol, blockquote, figure, h2, h3, h4)) {
+    margin: 0;
+  }
+  :where(& * + :is(p, ul, ol, blockquote, figure)) {
+    margin-top: 1em;
+  }
+  /* 档案条目用细线分节 */
+  :where(& h2) {
+    padding-top: 1em;
+    border-top: var(--ark-line-hairline) solid var(--ark-rule);
+    font-size: var(--ark-font-size-h2);
+    font-weight: var(--ark-font-weight-bold);
+    line-height: var(--ark-font-leading-snug);
+  }
+  :where(& * + h2) {
+    margin-top: 2.5em;
+  }
+  :where(& :is(h3, h4)) {
+    font-size: var(--ark-font-size-body-lg);
+    font-weight: var(--ark-font-weight-bold);
+    line-height: var(--ark-font-leading-snug);
+  }
+  :where(& * + :is(h3, h4)) {
+    margin-top: 1.75em;
+  }
+  :where(& :is(h2, h3, h4) + *) {
+    margin-top: 0.75em;
+  }
+  :where(& :is(ul, ol)) {
+    padding-left: 1.5em;
+  }
+  :where(& li + li) {
+    margin-top: 0.25em;
+  }
+  :where(& blockquote) {
+    padding-left: 1em;
+    border-left: var(--ark-line-strong) solid var(--ark-signal);
+    color: var(--ark-fg-secondary);
+  }
+  :where(& hr) {
+    height: var(--ark-line-hairline);
+    margin: 2em 0;
+    border: 0;
+    background: var(--ark-rule);
+  }
+  :where(& a) {
+    color: color-mix(in srgb, var(--ark-signal) var(--ark-signal-fg-mix), black);
+    text-underline-offset: 0.2em;
+  }
+  :where(& :is(strong, b)) {
+    font-weight: var(--ark-font-weight-bold);
+  }
+}
+/* 二级标题自动编号：01、02…，数据体、信号色 */
+@utility ark-prose-numbered {
+  counter-reset: ark-prose;
+
+  :where(& h2) {
+    counter-increment: ark-prose;
+  }
+  :where(& h2)::before {
+    margin-right: 0.5em;
+    font-family: var(--ark-font-family-data);
+    color: color-mix(in srgb, var(--ark-signal) var(--ark-signal-fg-mix), black);
+    content: counter(ark-prose, decimal-leading-zero);
+  }
 }

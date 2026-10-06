@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { CountUp } from '../CountUp'
 import { Stat } from './Stat'
 
 const meta = {
@@ -25,6 +26,14 @@ export const Counter: Story = {
 
 export const WithUnit: Story = {
   args: { label: 'Cost', value: 18, max: undefined, unit: '理智' },
+}
+
+/**
+ * `value` 也可以是一个节点。放一个 `CountUp` 进去，主数值就从 0 滚到目标值，
+ * 分母、单位照常跟在后面。
+ */
+export const Rolling: Story = {
+  args: { value: <CountUp value={131} /> },
 }
 
 export const Sizes: Story = {

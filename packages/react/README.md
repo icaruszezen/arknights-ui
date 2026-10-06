@@ -8,7 +8,7 @@
 
 ## 组件
 
-通用元素六篇文档里写到的东西都有对应的组件。
+通用元素六篇文档里写到的东西都有对应的组件，基础规范里能做成组件的部分也有。
 
 **[按钮](../../docs/elements/buttons.md)**
 
@@ -71,6 +71,47 @@
 | `Callout` | 标注点 + 折线 + 黑底标签，标签可以是链接 |
 | `Barcode` | 条形码，真实的 Code 39 编码 |
 | `Ticks` | 标尺刻度 |
+| `Prose` | 档案类长文本：中文宋体配英文衬线，行高更大，可给小标题自动编号 |
+
+**[图标与符号](../../docs/foundations/iconography.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Icon` | 图标的画板：正方形、单色，可选方框或三角框。图形由使用方传入 |
+| `Watermark` | 把一个标识放大、压低不透明度，垫在面板的留白处 |
+| `IconTitle` | 图标 + 中文粗字 + 英文小字的入口组合 |
+
+**[底纹](../../docs/foundations/texture-and-pattern.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Pattern` | 半调网点、噪点、警戒条纹、斜线网格、扫描线，可朝一个方向渐疏 |
+| `Glitch` | 故障：横向错位加色块，只在转场时播一次，不超过 1 秒 |
+
+**[图片](../../docs/foundations/imagery.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Portrait` | 立绘容器：出血、幽灵重影、向左下的投影 |
+| `Scrim` | 只压文字一侧的黑色渐变遮罩 |
+| `StripGallery` / `Strip` | 等宽竖带切图，底部压黑，每条是一个入口 |
+
+**[布局与层级](../../docs/foundations/layout-and-depth.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Shell` | 固定骨架：顶栏、右栏、背景巨字、滚动提示，换屏只换内容 |
+| `ScrollHint` | 底部的滚动提示，也可以是“去下一屏”的入口 |
+| `TiltGroup` | 透视面板组，可随指针摆动，竖屏取消 |
+| `PanelGrid` / `PanelGridItem` | 大小不一的矩形错位拼合 |
+| `Parallax` / `ParallaxLayer` | 多层视差，跟指针或跟滚动 |
+
+**[动效](../../docs/foundations/motion.md)**
+
+| 组件 | 说明 |
+| --- | --- |
+| `Stagger` | 逐项入场，每一项比前一项晚 70ms |
+| `CountUp` | 数字滚动，可以直接放进 `Stat` |
 
 每个组件的属性、示例和交互说明在 [Storybook](https://icaruszezen.github.io/arknights-ui/) 里，也可以在本地运行：
 
@@ -127,7 +168,7 @@ body {
 }
 ```
 
-字体不随包分发。字体栈里依次是官网实际使用的字体和开源替代品，按需自行加载，授权见 [字体与排版 · 字体授权](../../docs/foundations/typography.md#字体授权)。没有加载时会回退到系统字体，版式比例不变。其中 `Heading` 的 `serif` 需要思源宋体或 Noto Serif SC 的 Heavy 字重才有“重磅”的效果。
+字体不随包分发。字体栈里依次是官网实际使用的字体和开源替代品，按需自行加载，授权见 [字体与排版 · 字体授权](../../docs/foundations/typography.md#字体授权)。没有加载时会回退到系统字体，版式比例不变。其中 `Heading` 的 `serif` 需要思源宋体或 Noto Serif SC 的 Heavy 字重才有“重磅”的效果；`Prose` 的正文用的也是这套宋体。
 
 ## 约定
 
@@ -159,9 +200,15 @@ const [open, setOpen] = useState(false)
 <Drawer open={open} onOpenChange={setOpen} title="制造站" sub="FACTORY">…</Drawer>
 ```
 
-**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。
+**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。`Pattern`、`Watermark`，以及不放内容的 `Scrim`、不带链接的 `ScrollHint` 同样是装饰。`Icon` 默认也是，给了 `label` 才会被读到。
 
-**固定的位置。** `Nav`、`BackHome`、`ResourceBar`、`GhostTitle`、`Callout` 都不自己定位。文档要求它们“永远在同一个地方”，但放在哪由页面决定，用 `className` 写（如 `fixed top-0 left-0`）。
+**固定的位置。** `Nav`、`BackHome`、`ResourceBar`、`GhostTitle`、`Callout` 都不自己定位。文档要求它们“永远在同一个地方”，但放在哪由页面决定，用 `className` 写（如 `fixed top-0 left-0`）。`Pattern`、`Portrait`、`ScrollHint` 也是这样。例外有三个：`Scrim` 默认铺满父元素，`Watermark` 默认贴在面板的一侧，`Shell` 默认铺满视口——它本身就是那副固定的骨架。
+
+**底纹的颜色。** 除了黄黑的警戒条纹，底纹都取当前的文字色：放进纸白面板自动变深，也可以用 `text-*` 换成信号色。`Panel` 的 `halftone` 走的是同一套。
+
+**图片与图标。** 组件库不带任何图片和图标。`Icon`、`Watermark`、`Portrait`、`Strip` 的图都由使用方提供，请使用原创或已获授权的素材。Storybook 里看到的是代码画的占位图。
+
+**动效。** 入场、数字滚动、故障、视差、摆动都遵守 `prefers-reduced-motion`：减少动效时 `Stagger` 只淡入，`CountUp` 直接显示最终值，`Glitch`、`Parallax` 和 `TiltGroup` 的摆动不启动。跟指针走的效果在触屏设备上也不启用。
 
 **服务端组件。** 产物顶部带 `"use client"`，在 React Server Components 项目里可以直接引入。
 
@@ -186,6 +233,16 @@ const [open, setOpen] = useState(false)
 | `Drawer` 的遮罩 | 未指定 | 透明，主画面不压暗 | 文档强调抽屉“不完全遮挡”主画面 |
 | `Sheet` 的遮罩 | 可加模糊 | 只压暗，模糊留给浮层自身 | 与整页模糊的 `Dialog` 区分开 |
 | `Barcode` | 条码作为装饰 | 真实的 Code 39 编码 | 装饰写真实内容；字符集因此限于大写字母、数字和少数符号 |
+| 底纹的颜色 | 白或黑，固定 | 取当前文字色 | 放进面板时跟着明暗上下文换，也能换成信号色。警戒条纹的黄黑除外 |
+| 斜线网格的浓度 | 白 5–15% | 方格 8%、对角线 14%；`Shell` 里再减半 | 取自示意图。铺满整屏时要压到“细看才有” |
+| 噪点、扫描线、斜线网格的取值 | 只有参数范围，没有 token | 写在主题层的工具类里 | 没有改动 `tokens.json` |
+| `Glitch` 的马赛克 | 局部画面被打成色块 | 叠一层信号色的色块，不对画面本身做像素化 | CSS 没有像素化滤镜，SVG 滤镜在大面积上开销大 |
+| `TiltGroup` 的摆动 | 陀螺仪 / 鼠标 | 只跟指针 | iOS 上读陀螺仪要先弹权限请求，不该由一个装饰效果发起 |
+| 透视、拼合、条带的窄屏处理 | 窄屏取消倾斜、纵向堆叠 | 按竖屏（`orientation: portrait`）切换 | 与 `Nav` 一致：官网按方向而不是按宽度切换 |
+| `Icon` 的三角外框 | 全局只用 45° | 近等边三角形 | 沿用示意图里徽记外框的画法；45° 的三角太扁，放不下图形 |
+| `Prose` 的行高 | “明显大于界面文字” | 1.9 | 文档没有给数值 |
+| `Shell` 的右栏 | 未测量 | 宽 14rem，可用 `--ark-shell-rail` 改 | 按线框里右栏占屏宽的比例折算到 1920 基准 |
+| `Shell` 的整体缩放 | 根字号 `100vw / 120`，整站等比缩放 | 不改根字号 | 组件不设置页面级样式；需要等比缩放时由页面自己设根字号 |
 
 `Empty` 不在表里：文档原先写的 `gray-600` 文字在黑底上只有 2.95:1，这个问题已经在文档里更正并记录，见 [反馈 · 空状态](../../docs/elements/feedback.md#空状态)。
 
@@ -213,8 +270,12 @@ pnpm install
 - 颜色只用语义键（`text-ark-fg`、`bg-ark-signal`、`border-ark-rule` 等），它们会跟随明暗上下文。固定语义的颜色（稀有度、提示级别）才直接取调色板。
 - 切角、斜边把背景画在 `::before` 上再裁切（`before:ark-cut-tr-md`、`before:ark-slant-r`），不要直接裁根元素。
 - 弹层用 [`src/utils/useModalDialog.ts`](src/utils/useModalDialog.ts)。点遮罩靠“事件目标是 `<dialog>` 自身”来判断，所以内容要铺满 `<dialog>`，底色、描边都画在里面那一层。
-- 动画只有三个：`animate-ark-spin`、`animate-ark-blink`、`animate-ark-fade-in`，定义在 [`src/styles/theme.css`](src/styles/theme.css)。前两个要包在 `motion-safe:` 里。
-- 属性是联合类型的组件（`Button`、`ActionButton`、`ListRow`），Story 里不要用 `decorators`，否则参数类型会被推成 `never`。
+- 动画都定义在 [`src/styles/theme.css`](src/styles/theme.css)：`animate-ark-spin`、`animate-ark-blink`、`animate-ark-fade-in`，入场的 `animate-ark-enter-left` / `-right` / `-up`，滚动提示的 `animate-ark-bob`，故障的 `animate-ark-glitch`（及 `-bars`、`-mosaic`）。只动透明度的 `fade-in` 可以直接用，其余都要包在 `motion-safe:` 里。
+- 底纹、透视、视差图层、长文本的样式也是主题层里的工具类（`ark-pattern-*`、`ark-tilt`、`ark-parallax-layer`、`ark-prose`），和 `ark-cut-*` 一样可以带变体（`after:ark-pattern-halftone`）。复杂的 CSS 写成工具类，组件里只引用类名。
+- JS 驱动的动效用 `src/utils/` 里的三个 hook：`useReducedMotion`、`useInView`、`useOffset`。监听挂在 effect 里，通过 CSS 变量改样式，不走 React 状态。
+- 属性是联合类型的组件（`Button`、`ActionButton`、`ListRow`、`Strip`、`ScrollHint`），Story 里不要用 `decorators`，否则参数类型会被推成 `never`。
+- Story 里的图片用 [`.storybook/art.ts`](.storybook/art.ts) 生成的占位图，不要引入任何图片文件。
+- 测试里要控制 `matchMedia`、`IntersectionObserver` 的结果时，用 [`src/internal/testing.ts`](src/internal/testing.ts) 里的替身。数字滚动、指针跟随这类按帧走的逻辑，用假定时器时要把 `requestAnimationFrame` 和 `performance` 一起列进 `toFake`。
 - Storybook 的无障碍面板不对 `GhostTitle`、`MicroText` 做对比度检查（见 `.storybook/preview.tsx`）。另外 axe 看不到 `::backdrop`，弹层打开时可能误报对比度不足。
 - Storybook 运行期间新建的文件，里面的类可能不会立刻生成样式。保存一次任意已有的源文件，或重启 Storybook。
 

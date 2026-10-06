@@ -52,12 +52,18 @@ describe('Panel', () => {
     expect(panel.className).not.toContain('drop-shadow')
   })
 
-  it('纸白面上的半调网点反相成深色', () => {
-    const { rerender } = render(<Panel data-testid="panel" halftone />)
-    expect(screen.getByTestId('panel')).not.toHaveClass('after:invert')
+  it('半调网点画在 ::after 上，颜色跟随明暗上下文', () => {
+    const { rerender } = render(<Panel data-testid="panel" />)
+    expect(screen.getByTestId('panel').className).not.toContain('ark-pattern')
 
-    rerender(<Panel data-testid="panel" tone="paper" halftone />)
-    expect(screen.getByTestId('panel')).toHaveClass('after:invert')
+    // 与 Pattern 共用工具类：网点取当前文字色，纸白面上不需要再反相
+    for (const tone of ['graphite', 'paper'] as const) {
+      rerender(<Panel data-testid="panel" tone={tone} halftone />)
+      const panel = screen.getByTestId('panel')
+      expect(panel).toHaveClass('after:ark-pattern-halftone', 'after:-z-1')
+      expect(panel.className).toContain('after:[--ark-pattern-fade:')
+      expect(panel).not.toHaveClass('after:invert')
+    }
   })
 })
 
