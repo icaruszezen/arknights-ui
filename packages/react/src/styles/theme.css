@@ -1,0 +1,126 @@
+/*
+ * @arknights-ui/react 主题层：tokens、语义变量、Tailwind 主题映射与切角工具类。
+ *
+ * 使用 Tailwind CSS v4 的项目在自己的入口 CSS 里引入本文件，并让 Tailwind 扫描组件产物：
+ *   @import "tailwindcss";
+ *   @import "@arknights-ui/react/theme.css";
+ *   @source "../node_modules/@arknights-ui/react/dist";
+ * 不使用 Tailwind 的项目改用预编译的 @arknights-ui/react/styles.css。
+ */
+@import "@arknights-ui/tokens/tokens.css" layer(theme);
+@import "@arknights-ui/tokens/tailwind.css";
+
+/*
+ * 语义层。组件只引用这一层，不直接取调色板。
+ * - 信号色：每个场景只有一个。在任意子树上覆盖 --ark-signal 即可换色。
+ * - 明暗上下文：纸白面板设 data-ark-tone="light"，前景、细线、反白块随之翻转。
+ */
+@layer theme {
+  :root {
+    --ark-signal: var(--ark-color-signal-info);
+    --ark-on-signal: var(--ark-color-neutral-black);
+  }
+
+  :root,
+  [data-ark-tone="dark"] {
+    --ark-fg: var(--ark-color-neutral-white);
+    --ark-fg-secondary: var(--ark-color-neutral-gray-300);
+    /* 最暗只到 gray-400：再暗一档的 gray-500 在石墨面板上只有约 3.3:1 */
+    --ark-fg-muted: var(--ark-color-neutral-gray-400);
+    --ark-rule: var(--ark-color-line-hairline);
+    --ark-rule-strong: var(--ark-color-line-hairline-strong);
+    --ark-invert: var(--ark-color-neutral-white);
+    --ark-on-invert: var(--ark-color-neutral-black);
+    --ark-signal-fg-mix: 100%;
+  }
+
+  [data-ark-tone="light"] {
+    --ark-fg: var(--ark-color-neutral-paper-ink);
+    /* 纸白面上能满足 4.5:1 的灰只有 gray-600，两档次要文字在这里合为一档 */
+    --ark-fg-secondary: var(--ark-color-neutral-gray-600);
+    --ark-fg-muted: var(--ark-color-neutral-gray-600);
+    --ark-rule: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 20%, transparent);
+    --ark-rule-strong: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 50%, transparent);
+    --ark-invert: var(--ark-color-neutral-paper-ink);
+    --ark-on-invert: var(--ark-color-neutral-paper);
+    /* 45%：半透明纸白压在黑底上会变暗，青蓝、蓝、黄、橙四种信号色在这个比例下都过 4.5:1 */
+    --ark-signal-fg-mix: 45%;
+  }
+}
+
+@theme inline {
+  --color-ark-signal: var(--ark-signal);
+  --color-ark-on-signal: var(--ark-on-signal);
+  /*
+   * 信号色用作文字或描边时的取值：深色面上就是信号色本身，纸白面上压暗以保证对比度。
+   * 混色写在类里而不是存成变量，这样在子树上覆盖 --ark-signal 后仍然跟着变。
+   */
+  --color-ark-signal-fg: color-mix(in srgb, var(--ark-signal) var(--ark-signal-fg-mix), black);
+  --color-ark-fg: var(--ark-fg);
+  --color-ark-fg-secondary: var(--ark-fg-secondary);
+  --color-ark-fg-muted: var(--ark-fg-muted);
+  --color-ark-rule: var(--ark-rule);
+  --color-ark-rule-strong: var(--ark-rule-strong);
+  --color-ark-invert: var(--ark-invert);
+  --color-ark-on-invert: var(--ark-on-invert);
+}
+
+/*
+ * 切角：只切一个角，全局只用 45°。
+ * clip-path 会连同焦点轮廓和投影一起裁掉，所以组件把背景画在 ::before 上再裁切
+ * （before:ark-cut-tr-md），根元素保持完整。
+ */
+@utility ark-cut-tr-sm {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--ark-cut-sm)) 0,
+    100% var(--ark-cut-sm),
+    100% 100%,
+    0 100%
+  );
+}
+@utility ark-cut-tr-md {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--ark-cut-md)) 0,
+    100% var(--ark-cut-md),
+    100% 100%,
+    0 100%
+  );
+}
+@utility ark-cut-tr-lg {
+  clip-path: polygon(
+    0 0,
+    calc(100% - var(--ark-cut-lg)) 0,
+    100% var(--ark-cut-lg),
+    100% 100%,
+    0 100%
+  );
+}
+@utility ark-cut-br-sm {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--ark-cut-sm)),
+    calc(100% - var(--ark-cut-sm)) 100%,
+    0 100%
+  );
+}
+@utility ark-cut-br-md {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--ark-cut-md)),
+    calc(100% - var(--ark-cut-md)) 100%,
+    0 100%
+  );
+}
+@utility ark-cut-br-lg {
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(100% - var(--ark-cut-lg)),
+    calc(100% - var(--ark-cut-lg)) 100%,
+    0 100%
+  );
+}

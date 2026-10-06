@@ -1,6 +1,6 @@
 # arknights-ui
 
-《明日方舟》设计风格指导文档：调研官网、游戏界面、宣传物料与社区开源项目，整理成一套按模块细分的设计规范，并附可直接使用的 Design Tokens。
+《明日方舟》设计风格指导文档：调研官网、游戏界面、宣传物料与社区开源项目，整理成一套按模块细分的设计规范，并附可直接使用的 Design Tokens，以及按这套规范实现的 React 组件库。
 
 > **非官方项目。** 本仓库是玩家出于学习目的做的风格研究，与上海鹰角网络科技有限公司无关。《明日方舟》及其 Logo、立绘、界面、字体等素材的版权归鹰角网络及相应权利人所有。本仓库不存放任何官方素材：官方图片一律以外链引用，示意图全部为自绘 SVG。
 
@@ -103,6 +103,51 @@ node scripts/build-tokens.mjs
 
 每个 token 带有 `source` 字段，标明数值的可信度。
 
+### 配合 Tailwind CSS v4
+
+脚本同时生成 [`tokens/tailwind.css`](tokens/tailwind.css)，把 token 映射成 Tailwind 的主题变量。键名统一带 `ark-` 前缀，不会覆盖 Tailwind 的默认主题。它的值都指向 `--ark-*` 变量，所以要和 `tokens.css` 一起引入：
+
+```css
+@import "tailwindcss";
+@import "./tokens/tokens.css";
+@import "./tokens/tailwind.css";
+```
+
+```html
+<div class="bg-ark-neutral-ink-900 p-ark-5 font-ark-cjk-sans text-ark-neutral-white">
+  <span class="font-ark-data text-ark-label tracking-ark-wide">NO.0147</span>
+</div>
+```
+
+| token | 类名示例 |
+| --- | --- |
+| `color.*` | `bg-ark-signal-info`、`text-ark-neutral-gray-300`、`border-ark-line-hairline`、`bg-ark-tier-5` |
+| `font.family.*` / `font.size.*` / `font.weight.*` | `font-ark-data`、`text-ark-label`、`font-ark-heavy` |
+| `font.tracking.*` / `font.leading.*` | `tracking-ark-wide`、`leading-ark-solid` |
+| `space.*` | `p-ark-5`、`gap-ark-2` |
+| `shadow.*` / `blur.*` / `radius.*` | `drop-shadow-ark-panel`、`backdrop-blur-ark-backdrop`、`rounded-ark-subtle` |
+| `motion.easing.*` | `ease-ark-mechanical` |
+
+时长、线宽、切角、底纹没有对应的主题命名空间，在类名里用变量简写直接引用，例如 `duration-(--ark-motion-duration-base)`、`bg-(image:--ark-pattern-dash)`。
+
+## React 组件库
+
+[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。第一批是 11 个基础组件：
+
+`Button` · `Tag` · `Panel` / `Card` · `Tabs` · `Stat` · `Progress` · `Notice` · `Dialog` · `Empty` · `Divider` · `Heading`
+
+本地预览（需要 Node.js 22.18+ 与 pnpm 10）：
+
+```bash
+pnpm install
+```
+
+```bash
+pnpm storybook
+```
+
+组件不含任何官方素材，目前是工作区内的私有包，尚未发布到 npm。接入方式、约定和开发说明见 [packages/react/README.md](packages/react/README.md)。
+
 ## 数值的可信度
 
 | 标记 | 含义 |
@@ -127,13 +172,17 @@ docs/
 tokens/
   tokens.json         Design Tokens 数据源
   tokens.css          生成的 CSS 变量
+  tailwind.css        生成的 Tailwind CSS v4 主题映射
 scripts/
-  build-tokens.mjs    tokens.json → tokens.css
+  build-tokens.mjs    tokens.json → tokens.css + tailwind.css
+packages/
+  react/              React 组件库（@arknights-ui/react）
+package.json          pnpm 工作区（packages/* 与 tokens）
 ```
 
 ## 版权与许可
 
-- 本仓库的**原创内容**（文档文字、自绘 SVG、tokens、脚本）以 [MIT License](LICENSE) 发布。
+- 本仓库的**原创内容**（文档文字、自绘 SVG、tokens、脚本、组件库代码）以 [MIT License](LICENSE) 发布。
 - 《明日方舟》的名称、Logo、立绘、界面设计、文案等属于**上海鹰角网络科技有限公司**及相应权利人，不在上述许可范围内。
 - 文档中引用的分析文章与开源项目，观点与代码属于各自作者，已在各篇“来源”中注明。
 - 文档提到的字体各有授权条款，本仓库不分发任何字体文件，使用前请自行确认。

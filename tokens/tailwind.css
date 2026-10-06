@@ -1,0 +1,135 @@
+/*
+ * arknights-ui design tokens · Tailwind CSS v4 主题映射
+ * 由 scripts/build-tokens.mjs 从 tokens/tokens.json 生成，请勿手改。
+ * 需与 tokens.css 一起引入：这里的值全部指向 --ark-* 变量。
+ * 键名统一带 ark- 前缀，不会覆盖 Tailwind 的默认主题，例如
+ * bg-ark-signal-info、text-ark-body、font-ark-data、p-ark-4。
+ * 非官方整理，仅供学习参考。《明日方舟》及相关素材版权归上海鹰角网络科技有限公司所有。
+ */
+@theme inline {
+  /* color */
+  --color-ark-neutral-black: var(--ark-color-neutral-black);
+  --color-ark-neutral-ink-950: var(--ark-color-neutral-ink-950);
+  --color-ark-neutral-ink-900: var(--ark-color-neutral-ink-900);
+  --color-ark-neutral-ink-850: var(--ark-color-neutral-ink-850);
+  --color-ark-neutral-ink-800: var(--ark-color-neutral-ink-800);
+  --color-ark-neutral-ink-700: var(--ark-color-neutral-ink-700);
+  --color-ark-neutral-gray-600: var(--ark-color-neutral-gray-600);
+  --color-ark-neutral-gray-500: var(--ark-color-neutral-gray-500);
+  --color-ark-neutral-gray-400: var(--ark-color-neutral-gray-400);
+  --color-ark-neutral-gray-300: var(--ark-color-neutral-gray-300);
+  --color-ark-neutral-white: var(--ark-color-neutral-white);
+  --color-ark-neutral-paper: var(--ark-color-neutral-paper);
+  --color-ark-neutral-paper-ink: var(--ark-color-neutral-paper-ink);
+  --color-ark-neutral-paper-muted: var(--ark-color-neutral-paper-muted);
+  --color-ark-neutral-graphite: var(--ark-color-neutral-graphite);
+  --color-ark-neutral-graphite-deep: var(--ark-color-neutral-graphite-deep);
+  --color-ark-line-hairline: var(--ark-color-line-hairline);
+  --color-ark-line-hairline-strong: var(--ark-color-line-hairline-strong);
+  --color-ark-line-solid: var(--ark-color-line-solid);
+  --color-ark-signal-info: var(--ark-color-signal-info);
+  --color-ark-signal-info-soft: var(--ark-color-signal-info-soft);
+  --color-ark-signal-info-game: var(--ark-color-signal-info-game);
+  --color-ark-signal-info-deep: var(--ark-color-signal-info-deep);
+  --color-ark-signal-action: var(--ark-color-signal-action);
+  --color-ark-signal-accent: var(--ark-color-signal-accent);
+  --color-ark-signal-danger: var(--ark-color-signal-danger);
+  --color-ark-signal-success: var(--ark-color-signal-success);
+  --color-ark-tier-1: var(--ark-color-tier-1);
+  --color-ark-tier-2: var(--ark-color-tier-2);
+  --color-ark-tier-3: var(--ark-color-tier-3);
+  --color-ark-tier-4: var(--ark-color-tier-4);
+  --color-ark-tier-5: var(--ark-color-tier-5);
+  --color-ark-tier-6: var(--ark-color-tier-6);
+  --color-ark-overlay-scrim: var(--ark-color-overlay-scrim);
+  --color-ark-overlay-scrim-strong: var(--ark-color-overlay-scrim-strong);
+  --color-ark-overlay-panel-dark: var(--ark-color-overlay-panel-dark);
+  --color-ark-overlay-panel-light: var(--ark-color-overlay-panel-light);
+  --color-ark-brand-siren-bg: var(--ark-color-brand-siren-bg);
+  --color-ark-brand-siren-text: var(--ark-color-brand-siren-text);
+  --color-ark-brand-comic-crimson: var(--ark-color-brand-comic-crimson);
+  --color-ark-brand-comic-yellow: var(--ark-color-brand-comic-yellow);
+  --color-ark-brand-skland-lime: var(--ark-color-brand-skland-lime);
+  --color-ark-brand-skland-lime-deep: var(--ark-color-brand-skland-lime-deep);
+  --color-ark-brand-skland-bg: var(--ark-color-brand-skland-bg);
+  --color-ark-brand-skland-text: var(--ark-color-brand-skland-text);
+
+  /* font */
+  --font-ark-latin-condensed: var(--ark-font-family-latin-condensed);
+  --font-ark-latin-wide: var(--ark-font-family-latin-wide);
+  --font-ark-data: var(--ark-font-family-data);
+  --font-ark-cjk-sans: var(--ark-font-family-cjk-sans);
+  --font-ark-cjk-serif: var(--ark-font-family-cjk-serif);
+  --font-ark-latin-serif: var(--ark-font-family-latin-serif);
+
+  /* text */
+  --text-ark-ghost: var(--ark-font-size-ghost);
+  --text-ark-hero: var(--ark-font-size-hero);
+  --text-ark-display: var(--ark-font-size-display);
+  --text-ark-display-latin: var(--ark-font-size-display-latin);
+  --text-ark-h1: var(--ark-font-size-h1);
+  --text-ark-h2: var(--ark-font-size-h2);
+  --text-ark-nav: var(--ark-font-size-nav);
+  --text-ark-body-lg: var(--ark-font-size-body-lg);
+  --text-ark-body: var(--ark-font-size-body);
+  --text-ark-label: var(--ark-font-size-label);
+  --text-ark-caption: var(--ark-font-size-caption);
+  --text-ark-micro: var(--ark-font-size-micro);
+
+  /* font-weight */
+  --font-weight-ark-regular: var(--ark-font-weight-regular);
+  --font-weight-ark-medium: var(--ark-font-weight-medium);
+  --font-weight-ark-bold: var(--ark-font-weight-bold);
+  --font-weight-ark-heavy: var(--ark-font-weight-heavy);
+
+  /* tracking */
+  --tracking-ark-tight: var(--ark-font-tracking-tight);
+  --tracking-ark-cjk-tight: var(--ark-font-tracking-cjk-tight);
+  --tracking-ark-normal: var(--ark-font-tracking-normal);
+  --tracking-ark-wide: var(--ark-font-tracking-wide);
+  --tracking-ark-micro: var(--ark-font-tracking-micro);
+
+  /* leading */
+  --leading-ark-solid: var(--ark-font-leading-solid);
+  --leading-ark-snug: var(--ark-font-leading-snug);
+  --leading-ark-body: var(--ark-font-leading-body);
+
+  /* spacing */
+  --spacing-ark-1: var(--ark-space-1);
+  --spacing-ark-2: var(--ark-space-2);
+  --spacing-ark-3: var(--ark-space-3);
+  --spacing-ark-4: var(--ark-space-4);
+  --spacing-ark-5: var(--ark-space-5);
+  --spacing-ark-6: var(--ark-space-6);
+  --spacing-ark-7: var(--ark-space-7);
+  --spacing-ark-8: var(--ark-space-8);
+  --spacing-ark-9: var(--ark-space-9);
+
+  /* radius */
+  --radius-ark-none: var(--ark-radius-none);
+  --radius-ark-subtle: var(--ark-radius-subtle);
+
+  /* shadow */
+  --shadow-ark-drop: var(--ark-shadow-drop);
+  --shadow-ark-panel: var(--ark-shadow-panel);
+  --shadow-ark-hard: var(--ark-shadow-hard);
+
+  /* drop-shadow */
+  --drop-shadow-ark-drop: var(--ark-shadow-drop);
+  --drop-shadow-ark-panel: var(--ark-shadow-panel);
+  --drop-shadow-ark-hard: var(--ark-shadow-hard);
+
+  /* text-shadow */
+  --text-shadow-ark-drop: var(--ark-shadow-drop);
+  --text-shadow-ark-panel: var(--ark-shadow-panel);
+  --text-shadow-ark-hard: var(--ark-shadow-hard);
+
+  /* blur */
+  --blur-ark-backdrop: var(--ark-blur-backdrop);
+  --blur-ark-image: var(--ark-blur-image);
+
+  /* ease */
+  --ease-ark-standard: var(--ark-motion-easing-standard);
+  --ease-ark-mechanical: var(--ark-motion-easing-mechanical);
+  --ease-ark-step: var(--ark-motion-easing-step);
+}

@@ -1,0 +1,11 @@
+/*
+ * Storybook 专用入口。与 dist/styles.css 一样不带 Preflight，
+ * 这样在这里看到的就是“没有全局重置”时的真实表现；另外扫描 stories 里的布局类。
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "../src/styles/theme.css";
+
+@source "../src";
+@source "./";

@@ -1,0 +1,23 @@
+{
+  "name": "arknights-ui",
+  "private": true,
+  "description": "《明日方舟》设计风格指导文档、Design Tokens 与 React 组件库（非官方）",
+  "license": "MIT",
+  "type": "module",
+  "packageManager": "pnpm@10.28.2",
+  "engines": {
+    "node": ">=22.18.0"
+  },
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "storybook": "pnpm --filter @arknights-ui/react storybook",
+    "build": "pnpm tokens && pnpm --filter @arknights-ui/react build",
+    "test": "pnpm --filter @arknights-ui/react test",
+    "typecheck": "pnpm --filter @arknights-ui/react typecheck",
+    "lint": "biome check",
+    "format": "biome check --write"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2.5.15"
+  }
+}

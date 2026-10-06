@@ -1,0 +1,17 @@
+{
+  "name": "@arknights-ui/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "description": "《明日方舟》风格 Design Tokens：CSS 变量与 Tailwind CSS v4 主题映射（非官方）",
+  "license": "MIT",
+  "type": "module",
+  "files": ["tokens.json", "tokens.css", "tailwind.css"],
+  "exports": {
+    "./tokens.json": "./tokens.json",
+    "./tokens.css": "./tokens.css",
+    "./tailwind.css": "./tailwind.css"
+  },
+  "scripts": {
+    "build": "node ../scripts/build-tokens.mjs"
+  }
+}

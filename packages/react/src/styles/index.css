@@ -1,0 +1,12 @@
+/*
+ * 预编译入口，产出 dist/styles.css，给不使用 Tailwind 的项目。
+ * 不引入 Preflight：组件自己写全重置，不改动使用方页面的全局样式。
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "./theme.css";
+
+@source "../";
+@source not "../**/*.stories.tsx";
+@source not "../**/*.test.{ts,tsx}";
