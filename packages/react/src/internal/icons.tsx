@@ -46,6 +46,24 @@ export function MenuIcon(props: IconProps) {
   )
 }
 
+/** 加号：空位，表示“这里可以放一个”。 */
+export function PlusIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M12 4v16M4 12h16" stroke="currentColor" strokeWidth="2" />
+    </Icon>
+  )
+}
+
+/** 暂停：两条竖条。 */
+export function PauseIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M8.5 5v14M15.5 5v14" stroke="currentColor" strokeWidth="3" />
+    </Icon>
+  )
+}
+
 /** 向下：一道 16 × 6 的粗折线，滚动提示用。 */
 export function ChevronDownIcon(props: IconProps) {
   return (

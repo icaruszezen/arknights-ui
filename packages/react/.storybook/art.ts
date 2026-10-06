@@ -55,6 +55,23 @@ export function scene(sky = '#465560', ground = '#1c2226', light = '#aebcc4'): s
   )
 }
 
+/**
+ * 道具占位图：一块切了右上角的铭牌，上面几条几何线。透明底，正方形。
+ *
+ * @param body 铭牌的颜色
+ * @param accent 色块的颜色
+ */
+export function item(body = '#9aa3a8', accent = '#18d1ff'): string {
+  return toDataUri(
+    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+      <path d="M14 14h54l18 18v54H14z" fill="${body}"/>
+      <path d="M14 62h72v24H14z" fill="#000" fill-opacity=".22"/>
+      <path d="M26 28h30v6H26zM26 40h18v6H26z" fill="#000" fill-opacity=".35"/>
+      <path d="M58 70h20v6H58z" fill="${accent}"/>
+    </svg>`,
+  )
+}
+
 /** 四张色调不同的场景，给条带切图用。 */
 export const scenes = [
   scene('#3e4a52', '#161b1e', '#9fb1ba'),

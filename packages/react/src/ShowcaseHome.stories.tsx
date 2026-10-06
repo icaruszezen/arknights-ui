@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { ReactNode } from 'react'
 import { figure, scene } from '../.storybook/art'
 import {
-  Badge,
   CountUp,
+  EntryGrid,
+  EntryPanel,
   Heading,
   Panel,
   PanelGrid,
@@ -17,11 +17,10 @@ import {
   Serial,
   Stat,
   TiltGroup,
-  Watermark,
 } from './index'
 
-// 不是组件，只是把第三批组件按游戏主界面的编排拼在一起：
-// 场景和助理做成视差，左右两组面板向内倾斜、随指针轻微摆动，面板大小不一地拼合。
+// 不是组件，只是把组件按游戏主界面的编排拼在一起：
+// 场景和助理做成视差，左右两组面板向内倾斜、随指针轻微摆动；右组用 EntryGrid 排成一、二、三、三。
 // 图片全部是代码画的占位图。
 const meta = {
   title: '示例/主界面',
@@ -39,32 +38,6 @@ const emblem = (
     <path d="M12 2 23 21H1zM12 9l-5 9h10z" fill="currentColor" fillRule="evenodd" />
   </svg>
 )
-
-// 入口面板：重磅中文衬线贴左下，英文小注脚在其下方，其余留白
-function Entry({
-  sub,
-  tone,
-  size = 'sm',
-  className,
-  children,
-  extra,
-}: {
-  sub: string
-  tone?: 'paper'
-  size?: 'sm' | 'md'
-  className?: string
-  children: ReactNode
-  extra?: ReactNode
-}) {
-  return (
-    <Panel tone={tone} className={`flex flex-col justify-end p-ark-4 ${className ?? ''}`}>
-      {extra}
-      <Heading as="h2" size={size} sub={sub} serif>
-        {children}
-      </Heading>
-    </Panel>
-  )
-}
 
 export const Home: Story = {
   name: '主界面',
@@ -105,70 +78,57 @@ export const Home: Story = {
               </Panel>
             </PanelGridItem>
             <PanelGridItem span="1/2">
-              <Entry sub="FRIENDS">好友</Entry>
+              <EntryPanel href="#friends" sub="Friends">
+                好友
+              </EntryPanel>
             </PanelGridItem>
             <PanelGridItem span="1/2">
-              <Entry sub="ARCHIVES">档案</Entry>
+              <EntryPanel href="#archives" sub="Archives">
+                档案
+              </EntryPanel>
             </PanelGridItem>
           </PanelGrid>
           {/* 投影性质的面板上叠一层扫描线 */}
           <Pattern variant="scanline" className="absolute inset-0" />
         </TiltGroup>
 
-        {/* 右组：主要入口，一、二、三、三；作战最大最亮 */}
+        {/* 右组：主要入口，一、二、三、三；作战最大最亮。入口的字号跟着所在的行走 */}
         <TiltGroup side="right" sway className="relative w-[32rem] portrait:w-auto">
-          <PanelGrid>
-            <PanelGridItem rows={2}>
-              <Entry
-                sub="TERMINAL"
-                tone="paper"
-                size="md"
-                className="overflow-hidden"
-                extra={
-                  <>
-                    <Watermark className="h-[130%]">{emblem}</Watermark>
-                    <Stat
-                      label="Sanity"
-                      value={<CountUp value={131} />}
-                      max={135}
-                      size="sm"
-                      className="absolute top-ark-4 right-ark-4 justify-items-end"
-                    />
-                  </>
-                }
-              >
-                作战
-              </Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/2">
-              <Entry sub="SQUADS">编队</Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/2">
-              <Entry sub="OPERATOR">干员</Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Entry sub="STORE" tone="paper">
-                采购中心
-              </Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Entry sub="RECRUIT">公开招募</Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Entry sub="HEADHUNT">干员寻访</Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Badge dot label="有可领取的奖励">
-                <Entry sub="MISSION">任务</Entry>
-              </Badge>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Entry sub="BASE">基建</Entry>
-            </PanelGridItem>
-            <PanelGridItem span="1/3">
-              <Entry sub="DEPOT">仓库</Entry>
-            </PanelGridItem>
-          </PanelGrid>
+          <EntryGrid>
+            <EntryPanel
+              href="#terminal"
+              tone="paper"
+              sub="Terminal"
+              watermark={emblem}
+              aside={<Stat label="Sanity" value={<CountUp value={131} />} max={135} size="sm" />}
+            >
+              作战
+            </EntryPanel>
+            <EntryPanel href="#squads" sub="Squads">
+              编队
+            </EntryPanel>
+            <EntryPanel href="#operator" sub="Operator">
+              干员
+            </EntryPanel>
+            <EntryPanel href="#store" tone="paper" sub="Store">
+              采购中心
+            </EntryPanel>
+            <EntryPanel href="#recruit" sub="Recruit">
+              公开招募
+            </EntryPanel>
+            <EntryPanel href="#headhunt" sub="Headhunt">
+              干员寻访
+            </EntryPanel>
+            <EntryPanel href="#mission" sub="Mission" badge badgeLabel="有可领取的奖励">
+              任务
+            </EntryPanel>
+            <EntryPanel href="#base" sub="Base">
+              基建
+            </EntryPanel>
+            <EntryPanel href="#depot" sub="Depot">
+              仓库
+            </EntryPanel>
+          </EntryGrid>
           <Pattern variant="scanline" className="absolute inset-0" />
         </TiltGroup>
       </div>

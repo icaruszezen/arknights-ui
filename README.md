@@ -150,6 +150,19 @@ node scripts/build-tokens.mjs
 | 布局与层级 | `Shell` · `ScrollHint` · `TiltGroup` · `PanelGrid` · `Parallax` |
 | 动效 | `Stagger` · `CountUp` |
 
+[场景模块](#场景模块) 的八篇各有一组场景组件，把上面这些通用组件按模块的编排拼好：
+
+| 文档 | 组件 |
+| --- | --- |
+| 官网 | `Carousel` · `OperatorShowcase` · `ThumbnailStrip` · `WorldEntryList` |
+| 游戏 · 主界面 | `EntryPanel` · `EntryGrid` |
+| 游戏 · 干员 | `OperatorCard` · `ClassFilter` · `AttributeList` · `SkillSlot` · `Codename` |
+| 游戏 · 作战 | `StageMap` / `StageNode` · `SquadSlot` · `CostMeter` · `DeployCard` · `UnitBar` · `HudCounter` |
+| 游戏 · 基建 | `RoomCard` · `OperatorAvatar` · `MoodBar` · `Countdown` |
+| 游戏 · 寻访与采购中心 | `Banner` · `ProductCard` |
+| 游戏 · 剧情 | `DialogueBox` · `StoryControls` · `ChapterTitle` |
+| 宣传物料 | `NumberedSection` · `KeyValue` · `TimeRange` |
+
 本地预览（需要 Node.js 22.18+ 与 pnpm 10）：
 
 ```bash
