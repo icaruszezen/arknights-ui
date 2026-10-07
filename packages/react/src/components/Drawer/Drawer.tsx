@@ -4,10 +4,19 @@ import { brighterMuted } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 import { useModalDialog } from '../../utils/useModalDialog'
 
+export type DrawerTone = 'graphite' | 'paper'
+
 export interface DrawerProps
   extends Omit<ComponentProps<'dialog'>, 'open' | 'title' | 'onCancel' | 'onClose'> {
   /** 是否打开。受控：请在 `onOpenChange` 里更新它。 */
   open: boolean
+  /**
+   * 表面。
+   * - `graphite`：石墨灰，默认的深色抽屉
+   * - `paper`：纸白，游戏内基建的进驻信息就是这种；里面的子组件自动换成深色前景
+   * @default 'graphite'
+   */
+  tone?: DrawerTone
   /** 抽屉请求关闭时调用（点了关闭、按 Esc、点主画面）。 */
   onOpenChange?: (open: boolean) => void
   /** 标题，同时是抽屉的名称。省略时请给 `aria-label`。 */
@@ -24,7 +33,7 @@ export interface DrawerProps
 }
 
 /**
- * 抽屉从右侧滑入，压住一部分主画面，但不完全遮挡：详情不占满屏，背后的内容仍然可见，
+ * 抽屉从右侧滑入，压住一部分主画面，但不完全遮挡：详情不占满屏，背后的内容被压暗但仍然可见，
  * 用户始终知道自己在哪。关闭时原路退回。
  *
  * 抽屉直接关闭——点关闭、按 Esc、点主画面都行，没有二次确认：
@@ -35,6 +44,7 @@ export interface DrawerProps
 export function Drawer({
   open,
   onOpenChange,
+  tone = 'graphite',
   title,
   sub,
   footer,
@@ -51,15 +61,15 @@ export function Drawer({
   return (
     <dialog
       data-ark="drawer"
-      data-ark-tone="dark"
+      data-ark-tone={tone === 'paper' ? 'light' : 'dark'}
       aria-labelledby={title != null ? titleId : undefined}
       {...rest}
       {...dialogProps}
       className={cn(
         // 贴右、满高。宽度约为屏宽的 40%，不窄于 22.5rem；窄屏上也给主画面留出 3rem
         'fixed inset-y-0 right-0 left-auto m-0 box-border h-full max-h-none w-[min(100vw-3rem,max(40vw,22.5rem))] max-w-none overflow-hidden border-0 bg-transparent p-0 text-ark-fg',
-        // 遮罩透明：主画面不压暗，点它就关
-        'backdrop:bg-transparent',
+        // 主画面压暗但不模糊（实机的写法），点它就关
+        'backdrop:bg-ark-overlay-scrim',
         // 退场过渡期间不拦截点击，下层页面立刻可用
         'pointer-events-none open:pointer-events-auto',
         // 自右向左平移，退场原路返回
@@ -73,8 +83,10 @@ export function Drawer({
       {/* 内容铺满 <dialog>：强调边和底色画在这一层，点在它们上面不会被当成点了遮罩 */}
       <div
         className={cn(
-          'box-border flex h-full flex-col border-l-(length:--ark-line-strong) border-ark-signal bg-ark-overlay-panel-dark font-ark-cjk-sans',
-          brighterMuted,
+          'box-border flex h-full flex-col border-l-(length:--ark-line-strong) border-ark-signal font-ark-cjk-sans',
+          tone === 'paper'
+            ? 'bg-ark-overlay-panel-light'
+            : ['bg-ark-overlay-panel-dark', brighterMuted],
         )}
       >
         <OverlayHeader

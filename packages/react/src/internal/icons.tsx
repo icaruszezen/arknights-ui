@@ -10,11 +10,11 @@ function Icon(props: IconProps) {
   return <svg aria-hidden="true" viewBox="0 0 24 24" fill="none" {...props} />
 }
 
-/** 返回：向左的粗折线。 */
+/** 返回：向左的细折线，占满画板的高度（实机的返回箭头又高又细）。 */
 export function BackIcon(props: IconProps) {
   return (
     <Icon {...props}>
-      <path d="M15 4 7 12l8 8" stroke="currentColor" strokeWidth="3" />
+      <path d="M16 2 6 12l10 10" stroke="currentColor" strokeWidth="1.5" />
     </Icon>
   )
 }
@@ -69,6 +69,44 @@ export function ChevronDownIcon(props: IconProps) {
   return (
     <Icon {...props}>
       <path d="M4 9l8 6 8-6" stroke="currentColor" strokeWidth="2.5" />
+    </Icon>
+  )
+}
+
+/**
+ * 向右的折线箭头，实心：两段 45° 的斜边，左端竖直切平。画板是 1:2 的竖长条，
+ * 官网按钮和分类标签右端的箭头就是这个比例（0.5rem 宽）。
+ */
+export function ChevronRightIcon(props: IconProps) {
+  return (
+    <Icon viewBox="0 0 7 14" {...props}>
+      <path d="M0 0 7 7 0 14v-4l3-3-3-3z" fill="currentColor" />
+    </Icon>
+  )
+}
+
+/** 圆圈里一个对勾：游戏内“确认”的固定图形。对勾是镂空的，露出按钮自己的底色。 */
+export function CheckCircleIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM6.08 13.42l4.42 4.42 7.92-7.92-1.84-1.84-6.08 6.08-2.58-2.58z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </Icon>
+  )
+}
+
+/** 圆圈里一个叉：游戏内“取消”的固定图形。同样是镂空的。 */
+export function CloseCircleIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20zM14.62 16.46 12 13.84l-2.62 2.62-1.84-1.84L10.16 12 7.54 9.38l1.84-1.84L12 10.16l2.62-2.62 1.84 1.84L13.84 12l2.62 2.62z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
     </Icon>
   )
 }

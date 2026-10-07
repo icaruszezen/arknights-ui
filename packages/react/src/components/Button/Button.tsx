@@ -1,8 +1,16 @@
 import type { ComponentProps, ReactNode } from 'react'
-import { colorTransition, focusRing, hitArea, triangleRight } from '../../utils/classes'
+import { CheckCircleIcon, ChevronRightIcon, CloseCircleIcon } from '../../internal/icons'
+import { colorTransition, focusRing, hitArea } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
-export type ButtonVariant = 'primary' | 'secondary' | 'weak' | 'paper' | 'graphite'
+export type ButtonVariant =
+  | 'primary'
+  | 'secondary'
+  | 'weak'
+  | 'confirm'
+  | 'cancel'
+  | 'paper'
+  | 'graphite'
 
 interface ButtonOwnProps {
   /**
@@ -10,15 +18,21 @@ interface ButtonOwnProps {
    * - `primary`：信号色实心块，一屏只放一个
    * - `secondary`：1px 描边，并列的次要操作
    * - `weak`：灰底小条，只放一行小号英文（READ MORE）
-   * - `paper` / `graphite`：浅 / 深色块，成对出现时确认用浅、取消用深
+   * - `confirm` / `cancel`：游戏内成对出现的确认与取消——确认是暗红块，取消是黑色块
+   * - `paper` / `graphite`：浅 / 深色块，跟着所在面板的明暗用
    * @default 'secondary'
    */
   variant?: ButtonVariant
   /** 第二行文字，通常是英文。它给色块加一条水平的底线。 */
   sub?: ReactNode
-  /** 右侧的方向三角，表示点了会跳转。 */
+  /**
+   * 文字左边的图标。它对读屏隐藏：含义由文字给出。
+   * `confirm` 默认是圆圈对勾，`cancel` 默认是圆圈叉；传 `null` 去掉。
+   */
+  icon?: ReactNode
+  /** 右端的折线箭头，表示点了会跳转。 */
   arrow?: boolean
-  /** 选中态：信号色描边加底部 4px 条，同时输出 `aria-pressed`。仅 `<button>` 有效。 */
+  /** 选中态：整块明暗对调，同时输出 `aria-pressed`。仅 `<button>` 有效。 */
   selected?: boolean
   /** 切掉右上角。仅 `weak` 有效。 */
   cut?: boolean
@@ -43,8 +57,20 @@ const base = cn(
 )
 
 const regular = 'min-h-11 min-w-11 gap-ark-4 px-ark-5 py-ark-3'
-// 可见形状只有 22px 高，用 ::after 把点击区撑到 44px
-const compact = cn('gap-ark-2 px-ark-2 py-ark-1', hitArea)
+// 官网实测：14.375rem × 3.75rem 的长条，文字贴左（1rem），箭头贴右（1.75rem）
+const wide = 'min-h-[3.75rem] min-w-[14.375rem] gap-ark-4 py-ark-2 pr-[1.75rem] pl-ark-4'
+// 官网实测：7.625rem × 1.5rem。可见形状只有 24px 高，用 ::after 把点击区撑到 44px
+const compact = cn('h-6 min-w-[7.625rem] gap-ark-2 px-[0.625rem] py-0', hitArea)
+
+const sizes: Record<ButtonVariant, string> = {
+  primary: wide,
+  secondary: regular,
+  weak: compact,
+  confirm: regular,
+  cancel: regular,
+  paper: regular,
+  graphite: regular,
+}
 
 const surfaces: Record<ButtonVariant, string> = {
   primary:
@@ -52,10 +78,16 @@ const surfaces: Record<ButtonVariant, string> = {
   secondary: cn(
     'justify-center border border-ark-rule-strong bg-transparent text-ark-fg',
     'hover:border-ark-invert hover:bg-ark-invert hover:text-ark-on-invert',
-    'aria-pressed:border-ark-signal-fg aria-pressed:text-ark-signal-fg aria-pressed:shadow-[inset_0_-4px_0_var(--ark-signal)]',
-    'aria-pressed:hover:border-ark-invert aria-pressed:hover:text-ark-on-invert',
+    // 选中是整块明暗对调（实机的“代理指挥”）；已经反白的块悬停时换成信号色
+    'aria-pressed:border-ark-invert aria-pressed:bg-ark-invert aria-pressed:text-ark-on-invert',
+    'aria-pressed:hover:border-ark-signal aria-pressed:hover:bg-ark-signal aria-pressed:hover:text-ark-on-signal',
   ),
-  weak: 'bg-ark-neutral-gray-600 text-ark-neutral-gray-300 hover:bg-ark-invert hover:text-ark-on-invert',
+  weak: 'justify-between bg-ark-neutral-gray-600 text-ark-neutral-gray-300 hover:bg-ark-invert hover:text-ark-on-invert',
+  // 暗红和黑是固定语义（实机弹窗取色），不跟随可替换的信号色，也不跟随明暗上下文
+  confirm:
+    'justify-center bg-ark-signal-confirm text-ark-neutral-white hover:bg-ark-neutral-white hover:text-ark-neutral-black',
+  cancel:
+    'justify-center bg-ark-neutral-ink-950 text-ark-neutral-white hover:bg-ark-neutral-white hover:text-ark-neutral-black',
   paper:
     'justify-center bg-ark-neutral-paper text-ark-neutral-paper-ink hover:bg-ark-signal hover:text-ark-on-signal',
   graphite:
@@ -64,18 +96,21 @@ const surfaces: Record<ButtonVariant, string> = {
 
 // 切角时背景搬到 ::before 上裁切，根元素不裁，焦点轮廓才不会缺一个角
 const weakCut = cn(
-  'isolate bg-transparent text-ark-neutral-gray-300 hover:text-ark-on-invert disabled:bg-transparent',
+  'isolate justify-between bg-transparent text-ark-neutral-gray-300 hover:text-ark-on-invert disabled:bg-transparent',
   'before:absolute before:inset-0 before:-z-1 before:bg-ark-neutral-gray-600 before:ark-cut-tr-sm',
   'before:transition-colors before:duration-(--ark-motion-duration-base) before:ease-ark-standard',
   'hover:before:bg-ark-invert disabled:before:bg-ark-neutral-ink-700',
 )
 
+const blockText = 'font-ark-cjk-sans text-ark-body leading-ark-solid font-ark-bold'
 const mainText: Record<ButtonVariant, string> = {
   primary: 'font-ark-cjk-sans text-ark-body-lg leading-ark-solid font-ark-bold',
   secondary: 'font-ark-cjk-sans text-[1rem] leading-ark-solid font-ark-regular',
   weak: 'font-ark-data text-ark-label leading-ark-solid font-ark-bold',
-  paper: 'font-ark-cjk-sans text-ark-body leading-ark-solid font-ark-bold',
-  graphite: 'font-ark-cjk-sans text-ark-body leading-ark-solid font-ark-bold',
+  confirm: blockText,
+  cancel: blockText,
+  paper: blockText,
+  graphite: blockText,
 }
 
 const dataSub = 'font-ark-data text-ark-label leading-ark-solid font-ark-bold'
@@ -86,14 +121,24 @@ const subText: Record<ButtonVariant, string> = {
   primary: dataSub,
   secondary: dataSub,
   weak: dataSub,
+  confirm: condensedSub,
+  cancel: condensedSub,
   paper: condensedSub,
   graphite: condensedSub,
+}
+
+// 实机里确认与取消各有固定的图形，文字可有可无
+const defaultIcon: Partial<Record<ButtonVariant, ReactNode>> = {
+  confirm: <CheckCircleIcon />,
+  cancel: <CloseCircleIcon />,
 }
 
 const leftAligned: Record<ButtonVariant, boolean> = {
   primary: true,
   secondary: false,
   weak: true,
+  confirm: false,
+  cancel: false,
   paper: false,
   graphite: false,
 }
@@ -102,11 +147,13 @@ const leftAligned: Record<ButtonVariant, boolean> = {
  * 按钮是一块色面，不是一个胶囊：直角、平涂，悬停时整块换色。
  *
  * 一屏只放一个 `primary`。点了会花掉什么，直接写在按钮文字里。
+ * 确认与取消成对出现时用 `confirm` 和 `cancel`：取消在左、确认在右，位置固定。
  */
 export function Button(props: ButtonProps) {
   const {
     variant = 'secondary',
     sub,
+    icon,
     arrow = false,
     selected,
     cut = false,
@@ -118,26 +165,47 @@ export function Button(props: ButtonProps) {
 
   const classes = cn(
     base,
-    variant === 'weak' ? compact : regular,
+    sizes[variant],
     variant === 'weak' && cut ? weakCut : surfaces[variant],
     block && 'flex w-full',
     className,
   )
 
+  const text = (
+    <span
+      className={cn(
+        'grid gap-ark-1',
+        leftAligned[variant] ? 'justify-items-start text-left' : 'justify-items-center text-center',
+      )}
+    >
+      <span className={mainText[variant]}>{children}</span>
+      {sub != null && <span className={subText[variant]}>{sub}</span>}
+    </span>
+  )
+
+  const glyph = icon === undefined ? defaultIcon[variant] : icon
+
   const content = (
     <>
-      <span
-        className={cn(
-          'grid gap-ark-1',
-          leftAligned[variant]
-            ? 'justify-items-start text-left'
-            : 'justify-items-center text-center',
-        )}
-      >
-        <span className={mainText[variant]}>{children}</span>
-        {sub != null && <span className={subText[variant]}>{sub}</span>}
-      </span>
-      {arrow && <span aria-hidden="true" className={triangleRight} />}
+      {glyph != null && glyph !== false ? (
+        // 图标紧挨着文字，比文字到箭头的距离近
+        <span className="inline-flex items-center gap-ark-2">
+          <span
+            aria-hidden="true"
+            className="grid size-6 shrink-0 place-items-center [&>svg]:block [&>svg]:size-full"
+          >
+            {glyph}
+          </span>
+          {text}
+        </span>
+      ) : (
+        text
+      )}
+      {arrow && (
+        <ChevronRightIcon
+          className={cn('ml-auto shrink-0', variant === 'weak' ? 'h-3.5 w-[0.4375rem]' : 'h-4 w-2')}
+        />
+      )}
     </>
   )
 

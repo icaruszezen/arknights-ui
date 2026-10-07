@@ -32,6 +32,7 @@
   --ark-color-signal-action: #ffd802; /* 社区 · 行动 / 警示黄（ak-ui） */
   --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui） */
   --ark-color-signal-danger: #e33b3b; /* 社区 · 危险 / 敌方（ak-ui） */
+  --ark-color-signal-confirm: #731111; /* 社区 · 游戏内弹窗、寻访的确认块（暗红）。对 MAA 的实机裁图（1280×720）取色 */
   --ark-color-signal-success: #46c47c; /* 社区 · 成功（ak-ui 的设计决定，非游戏取色） */
   --ark-color-tier-1: #9c9c9c; /* 社区 · 材料 / 稀有度一档：灰 */
   --ark-color-tier-2: #d8dd5a; /* 社区 · 二档：黄绿 */

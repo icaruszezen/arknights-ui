@@ -195,8 +195,9 @@ export const Base: Story = {
           </div>
         </div>
 
-        {/* 类型色贯穿到底：同一个类加到抽屉上，强调边和进度条跟着换色 */}
+        {/* 类型色贯穿到底：同一个类加到抽屉上，强调边和进度条跟着换色。基建的抽屉是纸白的 */}
         <Drawer
+          tone="paper"
           open={current !== undefined}
           onOpenChange={() => setOpen(null)}
           title={current?.title}

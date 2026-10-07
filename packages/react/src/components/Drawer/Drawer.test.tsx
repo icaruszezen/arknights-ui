@@ -152,14 +152,29 @@ describe('Drawer', () => {
     expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(false)
   })
 
-  it('主画面不压暗；石墨半透明的面，左缘一条信号色强调边', () => {
+  it('tone="paper" 是纸白的面，并切到浅色上下文', () => {
+    render(
+      <Drawer open tone="paper" title="进驻信息">
+        {body}
+      </Drawer>,
+    )
+    const drawer = getDrawer()
+    expect(drawer).toHaveAttribute('data-ark-tone', 'light')
+    expect(drawer.firstElementChild).toHaveClass('bg-ark-overlay-panel-light')
+    expect(drawer.firstElementChild).not.toHaveClass('bg-ark-overlay-panel-dark')
+    // 提亮次要文字是给半透明深色面用的
+    expect(drawer.firstElementChild?.className).not.toContain('--ark-fg-muted')
+  })
+
+  it('主画面压暗但不模糊；石墨半透明的面，左缘一条信号色强调边', () => {
     render(
       <Drawer open title="制造站">
         {body}
       </Drawer>,
     )
     const drawer = getDrawer()
-    expect(drawer).toHaveClass('backdrop:bg-transparent', 'bg-transparent')
+    expect(drawer).toHaveClass('backdrop:bg-ark-overlay-scrim', 'bg-transparent')
+    expect(drawer.className).not.toContain('backdrop:backdrop-blur')
     expect(drawer).toHaveAttribute('data-ark-tone', 'dark')
     // 内容铺满 <dialog>，底色与强调边都在里面那一层
     expect(drawer.children).toHaveLength(1)

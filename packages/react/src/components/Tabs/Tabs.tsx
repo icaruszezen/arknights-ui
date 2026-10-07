@@ -8,10 +8,11 @@ import {
   useId,
   useState,
 } from 'react'
-import { colorTransition, focusRing, hitArea, triangleRight } from '../../utils/classes'
+import { ChevronRightIcon } from '../../internal/icons'
+import { colorTransition, focusRing, hitArea } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
-export type TabsVariant = 'block' | 'underline'
+export type TabsVariant = 'block' | 'underline' | 'segment'
 
 interface TabsContextValue {
   value: string | undefined
@@ -34,8 +35,9 @@ function useTabs(component: string): TabsContextValue {
 
 interface TabsOwnProps {
   /**
-   * - `block`：选中项变成实心反白块，其余只留文字
+   * - `block`：选中项变成信号色实心块、右端一个折线箭头，其余只留文字（官网新闻分类）
    * - `underline`：选中项信号色文字 + 4px 底条，其余文字变灰
+   * - `segment`：每一项都有底块，连成一条；选中项明暗对调（游戏内仓库的分类）
    * @default 'block'
    */
   variant?: TabsVariant
@@ -127,11 +129,7 @@ export function TabList({ className, onKeyDown, ...rest }: TabListProps) {
       role="tablist"
       {...rest}
       onKeyDown={handleKeyDown}
-      className={cn(
-        'box-border flex items-center',
-        variant === 'underline' ? 'gap-ark-5 border-b border-ark-rule' : 'gap-ark-1',
-        className,
-      )}
+      className={cn('box-border flex items-center', listVariants[variant], className)}
     />
   )
 }
@@ -139,6 +137,13 @@ export function TabList({ className, onKeyDown, ...rest }: TabListProps) {
 export interface TabProps extends Omit<ComponentProps<'button'>, 'value'> {
   /** 与对应 `TabPanel` 相同的标识。 */
   value: string
+}
+
+const listVariants: Record<TabsVariant, string> = {
+  block: 'gap-ark-4',
+  underline: 'gap-ark-5 border-b border-ark-rule',
+  // 块与块之间只留 2px 的缝
+  segment: 'gap-0.5',
 }
 
 const tabBase = cn(
@@ -150,10 +155,17 @@ const tabBase = cn(
 )
 
 const tabVariants: Record<TabsVariant, string> = {
-  // 反白块可见高度 28px，用 ::after 把点击区撑到 44px
+  // 官网实测：5.625rem × 1.25rem 的块，文字贴左、箭头贴右，选中是信号色底加黑字。
+  // 可见高度只有 20px，用 ::after 把点击区撑到 44px
   block: cn(
-    'h-7 px-ark-3 text-ark-fg hover:text-ark-signal-fg',
-    'aria-selected:bg-ark-invert aria-selected:text-ark-on-invert',
+    'h-5 min-w-[5.625rem] justify-start pr-ark-2 pl-0.5 text-[1rem] text-ark-fg hover:text-ark-signal-fg',
+    'aria-selected:bg-ark-signal aria-selected:text-ark-on-signal aria-selected:hover:text-ark-on-signal',
+    hitArea,
+  ),
+  // 可见高度 36px（实机裁图约 34px），同样把点击区撑到 44px
+  segment: cn(
+    'h-9 bg-ark-fg/10 px-ark-4 text-[1rem] text-ark-fg-secondary hover:bg-ark-fg/20 hover:text-ark-fg',
+    'aria-selected:bg-ark-invert aria-selected:text-ark-on-invert aria-selected:hover:bg-ark-invert aria-selected:hover:text-ark-on-invert',
     hitArea,
   ),
   underline: cn(
@@ -188,7 +200,8 @@ export function Tab({ value, className, onClick, children, ...rest }: TabProps) 
     >
       {children}
       {tabs.variant === 'block' && selected && (
-        <span aria-hidden="true" className={cn(triangleRight, 'text-ark-signal')} />
+        // 箭头跟着文字的颜色，贴在块的右端
+        <ChevronRightIcon className="ml-auto h-3.5 w-[0.4375rem] shrink-0" />
       )}
     </button>
   )

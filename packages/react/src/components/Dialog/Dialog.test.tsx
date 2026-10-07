@@ -190,6 +190,32 @@ describe('Dialog', () => {
     )
     const buttons = screen.getAllByRole('button', { hidden: true })
     expect(buttons.map(button => button.textContent)).toEqual(['知道了'])
+    // 纯告知的弹窗是一个黑色块
+    expect(buttons[0]).toHaveClass('bg-ark-neutral-ink-950')
+  })
+
+  it('内容带是纸白的明暗上下文，按钮是黑色块与暗红块', () => {
+    render(<Dialog open>{message}</Dialog>)
+    expect(screen.getByText(message).closest('[data-ark-tone="light"]')).not.toBeNull()
+    expect(getButton('取消')).toHaveClass('bg-ark-neutral-ink-950')
+    expect(getButton('确认')).toHaveClass('bg-ark-signal-confirm')
+  })
+
+  it('两个按钮各带一个对读屏隐藏的图形', () => {
+    render(<Dialog open>{message}</Dialog>)
+    expect(getButton('取消').querySelector('[aria-hidden="true"] svg')).not.toBeNull()
+    expect(getButton('确认').querySelector('[aria-hidden="true"] svg')).not.toBeNull()
+  })
+
+  it('confirmVariant="signal" 把确认块换成信号色', () => {
+    render(
+      <Dialog open confirmVariant="signal">
+        {message}
+      </Dialog>,
+    )
+    const confirm = getButton('确认')
+    expect(confirm).toHaveClass('bg-ark-signal')
+    expect(confirm).not.toHaveClass('bg-ark-signal-confirm')
   })
 
   it('detail 渲染在正文之外，不计入名称', () => {

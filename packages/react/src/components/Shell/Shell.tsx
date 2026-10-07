@@ -41,7 +41,7 @@ const faintRule = 'border-ark-fg/15'
  * 用户不需要重新找路——导航永远在上面，“第几屏 / 共几屏”永远在右边。
  *
  * 它铺满视口（`h-dvh`），内容区自己滚动。右栏三个槽位（`actions`、`counter`、`aside`）
- * 都不给时不画右栏。右栏的宽度由 `--ark-shell-rail` 决定，默认 14rem。
+ * 都不给时不画右栏。右栏的宽度由 `--ark-shell-rail` 决定，默认 15rem（官网约 14.75rem）。
  * 内容区左起 9rem，与背景巨字同一条左边线。
  *
  * 竖屏时右栏挪到底部排成一行，内容区的左边距收窄。导航请自己用 `Nav` 的折叠。
@@ -77,7 +77,7 @@ export function Shell({
         // 三行：顶栏、内容、压着背景巨字的底带。竖屏多一行给右栏
         'grid-rows-[6rem_minmax(0,1fr)_7rem] portrait:grid-rows-[4rem_minmax(0,1fr)_4rem_auto]',
         hasRail
-          ? 'grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,14rem)] portrait:grid-cols-1'
+          ? 'grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,15rem)] portrait:grid-cols-1'
           : 'grid-cols-1',
         className,
       )}

@@ -51,7 +51,7 @@ export interface NavProps extends ComponentProps<'nav'> {
 /**
  * 顶部一排双语导航：英文窄体是视觉主体，中文小字是说明。当前项只变颜色。
  *
- * 竖屏时折叠为菜单按钮，展开后是全屏菜单，项目放大成大号列表并逐项淡入——
+ * 竖屏时折叠为菜单按钮，展开后是全屏菜单：一项一行，英文贴左、中文贴右，逐项自右滑入——
  * 窄屏重新编排，而不是把横排缩小到看不清。
  *
  * 子元素是若干个 `NavItem`。请用 `aria-label` 说明这是哪一组导航。
@@ -142,12 +142,14 @@ export function Nav({
             <div className="box-border flex min-h-full flex-col p-ark-5">
               <CloseButton label={closeLabel} onClick={() => requestClose()} className="self-end" />
               <NavContext value={{ layout: 'menu', indicator, close: () => requestClose() }}>
-                <ul className="m-0 grid list-none gap-ark-5 p-0 pt-ark-6 pl-ark-4">
+                {/* 一项一行，行与行之间只有底部的一条细线，不留空隙 */}
+                <ul className="m-0 grid list-none p-0 pt-ark-4 pl-ark-4">
                   {items.map(({ key, child, index }) => (
                     <li
                       key={key}
-                      // 逐项淡入：每一项比前一项晚 70ms
-                      className="animate-ark-fade-in"
+                      // 逐项自右滑入并淡入（官网实测 200ms），每一项比前一项晚 70ms；
+                      // 减少动效时只淡入
+                      className="motion-safe:animate-ark-enter-right motion-safe:[animation-duration:var(--ark-motion-duration-fast)] motion-reduce:animate-ark-fade-in"
                       style={{ animationDelay: `calc(var(--ark-motion-stagger) * ${index})` }}
                     >
                       {child}
@@ -183,11 +185,12 @@ const layouts = {
     indicator:
       'after:absolute after:inset-x-0 after:bottom-0 after:h-(--ark-line-strong) after:bg-ark-signal',
   },
-  // 全屏菜单：放大成一行，英文 2.25rem、中文 1.75rem
+  // 全屏菜单（官网实测）：一行 7.5rem 高、底部一条细线，英文 2.25rem 贴左、中文 1.75rem 贴右；
+  // 中文下面压一条 0.375rem 的粗条，骑在这一行的底线上，颜色跟着文字走
   menu: {
-    root: 'inline-flex min-h-11 items-baseline gap-ark-3',
+    root: 'flex h-30 items-center justify-between gap-ark-4 border-b border-ark-rule',
     main: 'text-[2.25rem] leading-ark-solid',
-    sub: 'text-[1.75rem] leading-ark-solid',
+    sub: 'relative flex h-full items-center text-[1.75rem] leading-ark-solid after:absolute after:inset-x-0 after:-bottom-[0.1875rem] after:h-1.5 after:bg-current',
     indicator:
       'after:absolute after:inset-y-0 after:-left-ark-4 after:w-(--ark-line-strong) after:bg-ark-signal',
   },

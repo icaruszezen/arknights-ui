@@ -51,7 +51,7 @@ describe('Shell', () => {
   it('有右栏时它的宽度由变量决定，竖屏挪到底部', () => {
     render(<Shell data-testid="shell" counter={<p>01</p>} />)
     expect(screen.getByTestId('shell')).toHaveClass(
-      'grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,14rem)]',
+      'grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,15rem)]',
       'portrait:grid-cols-1',
     )
     expect(screen.getByRole('complementary')).toHaveClass(

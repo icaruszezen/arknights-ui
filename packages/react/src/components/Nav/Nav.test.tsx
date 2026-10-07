@@ -119,11 +119,27 @@ describe('Nav', () => {
       expect.stringContaining('* 1)'),
       expect.stringContaining('* 2)'),
     ])
-    for (const item of items) expect(item).toHaveClass('animate-ark-fade-in')
+    // 自右滑入只在允许动效时进行，减少动效时只淡入
+    for (const item of items) {
+      expect(item).toHaveClass(
+        'motion-safe:animate-ark-enter-right',
+        'motion-reduce:animate-ark-fade-in',
+      )
+    }
 
     const link = within(getMenu()).getByRole('link', { name: 'INDEX 首页' })
     expect(within(link).getByText('INDEX')).toHaveClass('text-[2.25rem]')
     expect(within(link).getByText('首页')).toHaveClass('text-[1.75rem]')
+  })
+
+  it('菜单里一项一行：7.5rem 高、底部细线、中英两端对齐，中文下压一条粗条', async () => {
+    const user = userEvent.setup()
+    render(<Site collapse="always" />)
+    await user.click(getMenuButton())
+
+    const link = within(getMenu()).getByRole('link', { name: 'INDEX 首页' })
+    expect(link).toHaveClass('h-30', 'justify-between', 'border-b', 'border-ark-rule')
+    expect(within(link).getByText('首页')).toHaveClass('after:h-1.5', 'after:bg-current')
   })
 
   it('点菜单里的一项之后关闭，并保留使用方的 onClick', async () => {

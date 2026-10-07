@@ -96,13 +96,18 @@ describe('Carousel', () => {
     expect(screen.getByRole('button', { name: '上一张' })).toBeEnabled()
   })
 
-  it('进度条涨到几分之几，对读屏隐藏；位置由计数读出', () => {
+  it('进度条上一段信号色停在当前页的位置，对读屏隐藏；位置由计数读出', () => {
     render(<Gallery defaultIndex={1} />)
     const carousel = screen.getByRole('region')
     const progress = carousel.querySelector('[data-ark="progress"]')
     expect(progress).toHaveAttribute('aria-hidden', 'true')
     expect(progress).toHaveAttribute('aria-valuenow', '2')
     expect(progress).toHaveAttribute('aria-valuemax', '3')
+    // 官网实测：轨道与进度同高，进度段只占当前这一页（三页里的第二页）
+    expect(progress).toHaveClass('h-2', 'bg-ark-neutral-gray-400')
+    const segment = progress?.lastElementChild as HTMLElement
+    expect(segment.style.left).toMatch(/^33\.3/)
+    expect(segment.style.width).toMatch(/^33\.3/)
 
     const counter = carousel.querySelector('[data-ark="counter"]') as HTMLElement
     expect(within(counter).getByText('2 / 3')).toHaveClass('sr-only')

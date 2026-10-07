@@ -54,7 +54,7 @@ function Demo({ trigger, ...props }: Omit<SheetProps, 'open'> & { trigger: strin
 
 /**
  * 在当前页面上呼出的毛玻璃浮层：黑 50% 加模糊，1px 细描边，不切角、没有投影。
- * 四周的页面只压暗，浮层盖住的部分被模糊，用户能看出自己没有离开原来的页面。
+ * 下层整页被压暗并模糊，用户能看出自己没有离开原来的页面。
  */
 export const Default: Story = {
   render: ({ open: _open, ...args }) => (
@@ -71,6 +71,27 @@ export const Default: Story = {
         <Divider variant="dash" />
         <Stat label="Block" value={2} size="sm" orientation="horizontal" />
         <Stat label="Redeploy" value={70} unit="s" size="sm" orientation="horizontal" />
+      </div>
+    </Demo>
+  ),
+}
+
+/**
+ * 不透明的面：游戏内采购、兑换的弹层不是毛玻璃，而是实心的石墨或纸白。
+ * 纸白的浮层里，子组件自动换成深色前景。
+ */
+export const Opaque: Story = {
+  args: { tone: 'paper', title: '兑换物资', sub: 'EXCHANGE' },
+  render: ({ open: _open, ...args }) => (
+    <Demo trigger="兑换" {...args}>
+      <div className="grid gap-ark-4 text-ark-label leading-ark-body text-ark-fg-secondary">
+        <div className="flex gap-ark-2">
+          <Tag variant="solid">聚合剂</Tag>
+          <Tag>已有 5</Tag>
+        </div>
+        <p className="m-0">精密穿戴装备中常用的材料，多作为隔绝涂层使用。</p>
+        <Divider variant="dash" />
+        <Stat label="Price" value={100} size="sm" orientation="horizontal" />
       </div>
     </Demo>
   ),

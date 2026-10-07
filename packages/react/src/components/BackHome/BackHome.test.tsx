@@ -54,17 +54,23 @@ describe('BackHome', () => {
     expect(screen.getByRole('link', { name: '主页' })).toHaveAttribute('href', '/')
   })
 
-  it('可见形状画在 ::before 上裁出斜边，根元素不裁切', () => {
+  it('是两个并排的直角矩形：返回深灰、主页稍浅，没有斜边', () => {
     render(<BackHome />)
     const back = screen.getByRole('button', { name: '返回' })
     const home = screen.getByRole('button', { name: '主页' })
-    expect(back).toHaveClass('before:ark-slant-r')
-    expect(home).toHaveClass('before:ark-slant-x')
+    expect(back).toHaveClass('bg-ark-neutral-graphite-deep')
+    expect(home).toHaveClass('bg-ark-neutral-graphite')
     for (const button of [back, home]) {
-      expect(button.className).not.toMatch(/(^|\s)ark-slant-/)
-      // 点击区跟着可见形状走：根元素不接收指针事件，裁切后的 ::before 接收
-      expect(button).toHaveClass('pointer-events-none', 'before:pointer-events-auto')
+      expect(button.className).not.toContain('ark-slant-')
+      // 矩形不重叠，点击区就是元素自身
+      expect(button).not.toHaveClass('pointer-events-none')
     }
+  })
+
+  it('展开时主页块描一圈白边，不换底色', () => {
+    render(<WithNav defaultExpanded />)
+    expect(getToggle().className).toContain('aria-expanded:shadow-[inset_0_0_0_2px')
+    expect(getToggle()).toHaveClass('bg-ark-neutral-graphite')
   })
 
   it('没有 children 时主页不是展开开关', () => {

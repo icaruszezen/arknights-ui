@@ -51,12 +51,22 @@ function Demo({ trigger, ...props }: Omit<DrawerProps, 'open'> & { trigger: stri
 }
 
 /**
- * 从右侧滑入，占屏宽的四成左右，左侧的主画面保持原样。
+ * 从右侧滑入，占屏宽的四成左右，左侧的主画面被压暗但仍然看得见。
  * 点关闭、按 Esc 或者点主画面都直接关，没有二次确认。
  */
 export const Default: Story = {
   render: ({ open: _open, ...args }) => (
     <Demo trigger="查看制造站" {...args}>
+      <Facility />
+    </Demo>
+  ),
+}
+
+/** 纸白的抽屉：游戏内基建的进驻信息就是这种。里面的子组件自动换成深色前景。 */
+export const Paper: Story = {
+  args: { tone: 'paper', title: '进驻信息', sub: 'STATIONED' },
+  render: ({ open: _open, ...args }) => (
+    <Demo trigger="查看进驻信息" {...args}>
       <Facility />
     </Demo>
   ),

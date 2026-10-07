@@ -26,7 +26,7 @@
 
 | 元素 | 写法 | 可信度 |
 | --- | --- | --- |
-| 计数 | `NN // NN / NN`，大数字 Bender Bold 信号色，其余白色小号 | 实测 |
+| 计数 | `NN // NN / NN`：大数字 Novecento Sans Wide DemiBold `5.4rem`、信号色；“// 当前 / 总数” Bender Regular `1.125rem`、白色，在数字右侧；栏目名 Novecento Sans Wide DemiBold `1.125rem`、字距 `0.1em`，在数字下面 | 实测 |
 | 日期 | `YYYY // MM / DD`，Bender Regular，字距 `1px` | 实测 |
 | 序号 | `NO.0147`、`VOL.69`，数据体 | 估计 |
 | 微缩英文 | Novecento Sans Wide Medium，`0.375rem`，字距 `0.5em`，`#585858`–`#ababab` | 实测 |
@@ -49,8 +49,10 @@
 ```
 
 ```css
-.ark-counter b { font: 700 3.5rem/1 var(--ark-font-family-data); color: var(--ark-color-signal-info); }
-.ark-counter [lang="en"] { font: 600 0.75rem/1 var(--ark-font-family-latin-wide);
+.ark-counter b { font: 600 5.4rem/0.8 var(--ark-font-family-latin-wide); color: var(--ark-color-signal-info); }
+.ark-counter span { font: 400 var(--ark-font-size-body)/1 var(--ark-font-family-data); }
+.ark-counter [lang="en"] { display: block;
+                           font: 600 var(--ark-font-size-body)/1 var(--ark-font-family-latin-wide);
                            letter-spacing: var(--ark-font-tracking-wide); }
 .ark-date { font: 400 1rem/1 var(--ark-font-family-data); letter-spacing: 1px; }
 .ark-micro { font: 500 var(--ark-font-size-micro)/1 var(--ark-font-family-latin-wide);
@@ -99,6 +101,6 @@
 
 ## 来源
 
-- 官网计算样式实测（2026-10-06）
+- 官网计算样式实测（2026-10-06）；右栏计数的字体与字号在 2026-10-07 重新读取并更正（原先写的是“大数字 Bender Bold”）
 - [ak-ui · Design language](https://ak-ui.yyj.moe/en/guide/design-language.html)（强度分级、常见失败模式）
 - [我在明日方舟里面学平面设计](https://zhuanlan.zhihu.com/p/145684354)

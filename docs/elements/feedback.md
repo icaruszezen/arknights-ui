@@ -4,9 +4,9 @@
 
 ## 特征拆解
 
-**1. 通栏横带式弹窗。** 游戏内的确认弹窗不是居中的圆角卡片，而是一条横贯屏幕的深色带：中间写问题，下方是左右对开的两个大按钮。上下两侧露出被压暗的原页面。
+**1. 通栏横带式弹窗。** 游戏内的确认弹窗不是居中的圆角卡片，而是一条横贯屏幕的浅色带：深色字写问题，后果（“返还 5 理智”“获得部分奖励”）用橙色标出，下方是左右对开的两个大按钮。上下两侧露出被压暗的原页面。
 
-**2. 按钮对开，位置固定。** 取消在左（深色块），确认在右（浅色块），各占一半宽度。全游戏一致，形成肌肉记忆。
+**2. 按钮对开，位置固定。** 取消在左（黑色块、圆圈叉），确认在右（暗红块、圆圈对勾），各占一半宽度。按钮上可以只有图形，也可以写出具体动作（“放弃行动”“继续结算”）。只有一个按钮的告知弹窗是一整条黑色块加圆圈对勾。全游戏一致，形成肌肉记忆。
 
 **3. 次级系统在原页面上呼出。** 签到、邮件、设置等不跳转新页面，而是在当前页面上以浮层形式出现，背景模糊。用户始终知道自己在哪。
 
@@ -22,16 +22,21 @@
 
 ## 规范
 
-### 弹窗（估计）
+### 弹窗
 
-| 项 | 值 |
-| --- | --- |
-| 遮罩 | `--ark-color-overlay-scrim` 至 `--ark-color-overlay-scrim-strong`，可加 `backdrop-filter: blur(0.5rem)` |
-| 内容带 | 通栏，`--ark-color-neutral-graphite-deep` 约 95% 不透明，上沿 1–2px 亮线 |
-| 文字 | 居中，中文 `1rem–1.125rem`；补充数值用数据体小字 |
-| 按钮 | 两块等宽：左 `--ark-color-neutral-graphite` 白字，右 `--ark-color-neutral-paper` 深字 |
-| 按钮高度 | 不低于 44px |
-| 入场 | 内容带纵向展开或淡入，`--ark-motion-duration-base` |
+| 项 | 值 | 可信度 |
+| --- | --- | --- |
+| 遮罩 | `--ark-color-overlay-scrim` 至 `--ark-color-overlay-scrim-strong`，可加 `backdrop-filter: blur(0.5rem)` | 估计 |
+| 内容带 | 通栏，浅色（裁图取色 `#fcfcfc`–`#e4e4e4`，取 `--ark-color-neutral-paper`），上面有很淡的斜线底纹 | 社区（实机裁图） |
+| 文字 | 居中，深色（`--ark-color-neutral-paper-ink`），中文 `1rem–1.125rem`；补充数值用数据体小字 | 社区（实机裁图） |
+| 后果的高亮 | 橙色粗体。`--ark-color-signal-accent` 在纸白上只有约 3:1，压暗到 70% 再用 | 社区（实机裁图）；压暗是本仓库的决定 |
+| 取消 | 左半，黑色块（裁图取色 `#0c0c0c`，取 `--ark-color-neutral-ink-950`），白色圆圈叉 | 社区（实机裁图） |
+| 确认 | 右半，暗红块（`--ark-color-signal-confirm`，`#731111`），白色圆圈对勾 | 社区（实机裁图） |
+| 只有一个按钮 | 一整条黑色块，圆圈对勾 | 社区（实机裁图） |
+| 按钮高度 | 实机约为屏高的 10%（720p 下 72px）；网页上不低于 44px | 社区（实机裁图） |
+| 入场 | 内容带纵向展开或淡入，`--ark-motion-duration-base` | 估计 |
+
+> **这一节在 2026-10-07 按实机更正。** 原先写的是“深色内容带、左石墨右纸白的按钮”，那是凭印象归纳的。对照实机裁图后发现内容带是浅色的，按钮是黑与暗红，并且各有固定的图形。
 
 ### 提示条
 
@@ -90,13 +95,15 @@
 
 ```css
 .ark-dialog { width: 100vw; max-width: none; margin: auto 0; padding: 0; border: 0;
-              background: var(--ark-color-neutral-graphite-deep); color: #fff; text-align: center; }
+              background: var(--ark-color-neutral-paper); color: var(--ark-color-neutral-paper-ink);
+              text-align: center; }
 .ark-dialog::backdrop { background: var(--ark-color-overlay-scrim);
                         backdrop-filter: blur(var(--ark-blur-backdrop)); }
 .ark-dialog form { display: grid; grid-template-columns: 1fr 1fr; }
-.ark-dialog button { min-height: 2.75rem; border: 0; font: 700 1rem/1 var(--ark-font-family-cjk-sans); }
-.ark-dialog button[value="cancel"] { background: var(--ark-color-neutral-graphite); color: #fff; }
-.ark-dialog button[value="ok"]     { background: var(--ark-color-neutral-paper); color: var(--ark-color-neutral-paper-ink); }
+.ark-dialog button { min-height: 2.75rem; border: 0; color: #fff;
+                     font: 700 1rem/1 var(--ark-font-family-cjk-sans); }
+.ark-dialog button[value="cancel"] { background: var(--ark-color-neutral-ink-950); }
+.ark-dialog button[value="ok"]     { background: var(--ark-color-signal-confirm); }
 ```
 
 ## 示意图
@@ -110,6 +117,7 @@
 | 浮层与层级简化 | [UI/UX 分析（GameRes）](https://www.gameres.com/849200.html) | “过场衔接技巧与系统结构”一节 |
 | 抽屉关闭逻辑、可点击区域不明显 | [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154) | “不足 2”“不足 3” |
 | 弹层的社区实现 | [ak-ui · Components](https://ak-ui.yyj.moe/en/components/) | Dialog、Notice、Loading |
+| 确认弹窗的实机裁图 | [MAA · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | `Battle/BattleFlag/PrtsErrorConfirm`（整条内容带与两个按钮）、`PopupCancel`、`PopupConfirm`、`OfflineConfirm` |
 
 ## Do / Don't
 
@@ -126,5 +134,6 @@
 
 - [《明日方舟》UI/UX 分析——藏在好看背后的先进性](https://www.gameres.com/849200.html)
 - [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154)
-- 官网样式表实测（2026-10-06）；游戏内弹窗结构为观察归纳
+- 官网样式表实测（2026-10-06）
+- 游戏内弹窗取自 [MAA](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 的实机裁图（1280 × 720），色值为裁图取色（2026-10-07）
 - 空状态的对比度：axe-core 检查与 WCAG 2 对比度公式计算（2026-10-06）

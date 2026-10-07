@@ -28,6 +28,16 @@ describe('ActionButton', () => {
         开始行动
       </ActionButton>,
     )
+    // 默认是上下结构：先读到动作，再读到代价
+    expect(screen.getByRole('button')).toHaveAccessibleName('开始行动 MISSION START SANITY -18')
+  })
+
+  it('inline 布局里代价在前', () => {
+    render(
+      <ActionButton layout="inline" cost={-18} costLabel="SANITY" sub="MISSION START">
+        开始行动
+      </ActionButton>,
+    )
     expect(screen.getByRole('button')).toHaveAccessibleName('SANITY -18 开始行动 MISSION START')
   })
 
@@ -39,9 +49,27 @@ describe('ActionButton', () => {
     expect(screen.getByText('×1')).toBeInTheDocument()
   })
 
-  it('由两块拼成：左块是代价，取右块的底色压暗', () => {
+  it('默认上下拼成两块：上面主色写动作，下面一条深色带写代价', () => {
     render(<ActionButton cost={-18}>开始行动</ActionButton>)
-    const [costBlock, actionBlock] = screen.getByRole('button').children
+    const button = screen.getByRole('button')
+    expect(button).toHaveClass('flex-col')
+    const [actionBlock, costStrip] = button.children
+    expect(actionBlock).toHaveTextContent('开始行动')
+    expect(actionBlock).toHaveClass('bg-(--ark-action)')
+    expect(costStrip).toHaveTextContent('-18')
+    // 代价带是固定的深色，不跟着主色块换色
+    expect(costStrip).toHaveClass('bg-ark-neutral-ink-800', 'text-ark-neutral-white')
+  })
+
+  it('inline 布局左右拼成两块：左块是代价，取右块的底色压暗', () => {
+    render(
+      <ActionButton layout="inline" cost={-18}>
+        开始行动
+      </ActionButton>,
+    )
+    const button = screen.getByRole('button')
+    expect(button).not.toHaveClass('flex-col')
+    const [costBlock, actionBlock] = button.children
     expect(costBlock).toHaveTextContent('-18')
     expect(costBlock?.className).toContain('color-mix(in_srgb,var(--ark-action)_80%,black)')
     expect(actionBlock).toHaveTextContent('开始行动')

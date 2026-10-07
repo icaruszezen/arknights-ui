@@ -2,7 +2,7 @@ import type { ComponentProps } from 'react'
 import { cn } from '../../utils/cn'
 import { clampProgress } from '../../utils/progress'
 
-export type ProgressVariant = 'thin' | 'thick' | 'meter'
+export type ProgressVariant = 'thin' | 'thick' | 'rail' | 'meter'
 export type ProgressTone = 'signal' | 'action' | 'neutral'
 
 export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children'> {
@@ -14,21 +14,29 @@ export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children'> {
    */
   max?: number
   /**
-   * - `thin`：1px 轨道 + 4px 进度（轮播、加载）
-   * - `thick`：0.5rem 高，可分段（经验、制造进度）
+   * - `thin`：1px 轨道 + 4px 进度（加载）
+   * - `thick`：0.5rem 高，深色轨道，可分段（经验、制造进度）
+   * - `rail`：0.5rem 高，中灰轨道与进度同高（官网轮播下面那一条，实测）
    * - `meter`：2px 相对值条，不读数字也能比较高低
    * @default 'thin'
    */
   variant?: ProgressVariant
-  /** 进度的颜色。默认 `thin`、`thick` 用信号色，`meter` 用前景色。 */
+  /** 进度的颜色。默认 `meter` 用前景色，其余用信号色。 */
   tone?: ProgressTone
   /** 用 2px 细缝切成几段。仅 `thick`。 */
   segments?: number
+  /**
+   * 只画末尾这么长的一段（与 `value` 同单位），而不是从头画到 `value`。
+   * 轮播用它标出“当前是第几页”：`value` 是页码，`span` 是 1。
+   */
+  span?: number
 }
 
 const track: Record<ProgressVariant, string> = {
   thin: 'h-(--ark-line-strong)',
   thick: 'h-2 bg-ark-neutral-ink-700',
+  // #ababab，官网实测
+  rail: 'h-2 bg-ark-neutral-gray-400',
   meter: 'h-0.5 bg-ark-fg/25',
 }
 
@@ -41,6 +49,7 @@ const fill: Record<ProgressTone, string> = {
 const defaultTone: Record<ProgressVariant, ProgressTone> = {
   thin: 'signal',
   thick: 'signal',
+  rail: 'signal',
   meter: 'neutral',
 }
 
@@ -55,12 +64,15 @@ export function Progress({
   variant = 'thin',
   tone = defaultTone[variant],
   segments,
+  span,
   className,
   style,
   ...rest
 }: ProgressProps) {
   const { clamped, percent } = clampProgress(value, max)
   const segmented = variant === 'thick' && segments !== undefined && segments > 1
+  // 只画一段时，起点是 value 往回退 span；退过头就从 0 开始
+  const start = span === undefined ? 0 : clampProgress(clamped - span, max).percent
   return (
     <div
       data-ark="progress"
@@ -86,10 +98,14 @@ export function Progress({
       )}
       <span
         className={cn(
-          'absolute inset-y-0 left-0 transition-[width] duration-(--ark-motion-duration-base) ease-ark-standard motion-reduce:transition-none',
+          'absolute inset-y-0 left-0 transition-[width,left] duration-(--ark-motion-duration-base) ease-ark-standard motion-reduce:transition-none',
           fill[tone],
         )}
-        style={{ width: `${percent}%` }}
+        style={
+          span === undefined
+            ? { width: `${percent}%` }
+            : { left: `${start}%`, width: `${percent - start}%` }
+        }
       />
     </div>
   )

@@ -12,7 +12,7 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * 深浅两块拼合：左边一块深色写代价，右边一块主色写动作。
+ * 上下两块拼合：上面一块主色写动作，下面一条深色带写代价（实机“开始行动”的写法）。
  * 点了会花掉什么，直接印在按钮上。
  */
 export const Default: Story = {}
@@ -20,6 +20,25 @@ export const Default: Story = {}
 /** 代价的标签可以省略，只留一个数字。 */
 export const CostOnly: Story = {
   args: { costLabel: undefined, sub: undefined },
+}
+
+/** 左右拼合：左边一块深色写代价，右边一块主色写动作。高度放不下两行时用。 */
+export const Inline: Story = {
+  args: { layout: 'inline' },
+}
+
+/**
+ * 实机的配色：把信号色换成游戏里的蓝，主色块上的字换成白色。
+ * 白字压在这个蓝上是 3.2:1，只够大号粗体用，所以不是默认值。
+ */
+export const GameBlue: Story = {
+  args: {
+    sub: undefined,
+    style: {
+      '--ark-signal': 'var(--ark-color-signal-info-deep)',
+      '--ark-on-signal': 'var(--ark-color-neutral-white)',
+    } as CSSProperties,
+  },
 }
 
 /**
@@ -44,7 +63,7 @@ export const Pair: Story = {
   ),
 }
 
-/** 禁用时两块一起变灰，仍然是一深一浅。 */
+/** 禁用时主色块变灰，代价带上的字也压暗。 */
 export const States: Story = {
   render: () => (
     <div className="grid w-fit gap-ark-4">

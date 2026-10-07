@@ -82,8 +82,8 @@ const control = cn(
 )
 
 /**
- * 轮播：一张 16:9 的大图，下面一条细进度条——1px 的轨道上一段 4px 的信号色，
- * 走到第几张就涨到几分之几。同级之间切换用水平位移。
+ * 轮播：一张 16:9 的大图，下面一条 0.5rem 高的进度条——中灰的轨道上一段同高的信号色，
+ * 停在当前这一张的位置。同级之间切换用水平位移。
  *
  * 子元素每个是一张幻灯片，通常用 `CarouselSlide`，也可以放任意内容。
  * 需要一个名称：请传 `aria-label`。比例由 `--ark-carousel-ratio` 决定，默认 `16 / 9`。
@@ -245,9 +245,11 @@ export function Carousel({
       </div>
 
       <div className="flex items-center gap-ark-4">
-        {/* 位置已经由计数读出，进度条只是它的图形 */}
+        {/* 位置已经由计数读出，这一条只是它的图形：中灰轨道上一段信号色，停在当前页的位置 */}
         <Progress
           aria-hidden="true"
+          variant="rail"
+          span={1}
           value={current + 1}
           max={Math.max(count, 1)}
           className="min-w-0 grow basis-0"

@@ -34,6 +34,7 @@
   --color-ark-signal-action: var(--ark-color-signal-action);
   --color-ark-signal-accent: var(--ark-color-signal-accent);
   --color-ark-signal-danger: var(--ark-color-signal-danger);
+  --color-ark-signal-confirm: var(--ark-color-signal-confirm);
   --color-ark-signal-success: var(--ark-color-signal-success);
   --color-ark-tier-1: var(--ark-color-tier-1);
   --color-ark-tier-2: var(--ark-color-tier-2);

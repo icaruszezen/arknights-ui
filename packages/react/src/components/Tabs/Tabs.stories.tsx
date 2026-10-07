@@ -19,7 +19,10 @@ const news = [
   ['news', '新闻'],
 ] as const
 
-/** 反白块：选中项变成实心块，其余只留文字。官网新闻分类的写法。 */
+/**
+ * 实心块：选中项变成信号色的块，黑字，右端一个折线箭头；其余只留文字，悬停变信号色。
+ * 官网新闻分类的写法，尺寸是实测值。
+ */
 export const Block: Story = {
   render: args => (
     <Tabs {...args}>
@@ -72,6 +75,32 @@ export const Underline: Story = {
           筛选：{label}
         </TabPanel>
       ))}
+    </Tabs>
+  ),
+}
+
+const depot = [
+  ['all', '全部'],
+  ['consumable', '消耗品'],
+  ['basic', '基础物品'],
+  ['material', '养成材料'],
+] as const
+
+/**
+ * 分段块：每一项都有底块，连成一条，选中项明暗对调。游戏内仓库分类的写法。
+ * 放进纸白面板时选中项是深色块，和实机一致。
+ */
+export const Segment: Story = {
+  args: { variant: 'segment', defaultValue: 'material' },
+  render: args => (
+    <Tabs {...args}>
+      <TabList aria-label="仓库分类">
+        {depot.map(([value, label]) => (
+          <Tab key={value} value={value}>
+            {label}
+          </Tab>
+        ))}
+      </TabList>
     </Tabs>
   ),
 }

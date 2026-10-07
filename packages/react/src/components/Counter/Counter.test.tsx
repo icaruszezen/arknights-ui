@@ -37,12 +37,25 @@ describe('Counter', () => {
     expect(screen.getByTestId('counter').querySelector('b')).toHaveClass('text-ark-signal-fg')
   })
 
-  it('sm 把大数字缩到小节标签的字号', () => {
+  it('md 的大数字是宽体 5.4rem（官网实测），sm 缩到小节标签的字号并改用数据体', () => {
     const { rerender } = render(<Counter data-testid="counter" value={1} total={5} />)
-    expect(screen.getByTestId('counter').querySelector('b')).toHaveClass('text-[3.5rem]')
+    expect(screen.getByTestId('counter').querySelector('b')).toHaveClass(
+      'font-ark-latin-wide',
+      'text-[5.4rem]',
+      'font-semibold',
+    )
 
     rerender(<Counter data-testid="counter" value={1} total={5} size="sm" />)
-    expect(screen.getByTestId('counter').querySelector('b')).toHaveClass('text-ark-h2')
+    expect(screen.getByTestId('counter').querySelector('b')).toHaveClass(
+      'font-ark-data',
+      'text-ark-h2',
+    )
+  })
+
+  it('md 的名称另起一行、1.125rem；“当前 / 总数”也是 1.125rem', () => {
+    render(<Counter value={1} total={5} label="INFORMATION" />)
+    expect(screen.getByText('INFORMATION')).toHaveClass('col-span-2', 'text-ark-body')
+    expect(screen.getByText('// 01 / 05')).toHaveClass('text-ark-body')
   })
 })
 

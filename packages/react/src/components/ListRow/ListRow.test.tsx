@@ -19,6 +19,19 @@ describe('ListRow', () => {
     expect(screen.getByText(title)).toHaveClass('tracking-[2px]')
   })
 
+  it('官网实测：标题是粗体，日期与标题同色，两行贴得很近', () => {
+    render(
+      <ListRow data-testid="row" category="活动" date="2026-10-03">
+        {title}
+      </ListRow>,
+    )
+    expect(screen.getByText(title)).toHaveClass('font-ark-bold', 'text-ark-fg-secondary')
+    const date = screen.getByText('2026 // 10 / 03')
+    expect(date).toHaveClass('text-ark-fg-secondary')
+    expect(date).not.toHaveClass('text-ark-fg-muted')
+    expect(screen.getByTestId('row')).toHaveClass('gap-y-0.5')
+  })
+
   it('行与行之间只有一条细线', () => {
     render(<ListRow data-testid="row">{title}</ListRow>)
     const row = screen.getByTestId('row')

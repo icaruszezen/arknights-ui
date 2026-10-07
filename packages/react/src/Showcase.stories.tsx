@@ -90,7 +90,7 @@ export const Information: Story = {
             <Button variant="primary" sub="READ MORE" arrow>
               更多情报
             </Button>
-            <Button variant="weak" arrow cut>
+            <Button variant="weak" arrow>
               VIEW MORE
             </Button>
           </div>

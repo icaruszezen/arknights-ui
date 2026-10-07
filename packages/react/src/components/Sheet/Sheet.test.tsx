@@ -128,15 +128,38 @@ describe('Sheet', () => {
     expect(sheet.firstElementChild?.className).not.toContain('backdrop-blur')
   })
 
-  it('遮罩只压暗，不模糊', () => {
+  it('遮罩把整页压暗并模糊', () => {
     render(
       <Sheet open title="职业详情">
         {body}
       </Sheet>,
     )
-    const sheet = getSheet()
-    expect(sheet).toHaveClass('backdrop:bg-ark-overlay-scrim')
-    expect(sheet.className).not.toContain('backdrop:backdrop-blur')
+    expect(getSheet()).toHaveClass(
+      'backdrop:bg-ark-overlay-scrim',
+      'backdrop:backdrop-blur-ark-backdrop',
+    )
+  })
+
+  it('tone="graphite" / "paper" 是不透明的面，没有细描边', () => {
+    const { rerender } = render(
+      <Sheet open tone="graphite" title="采购">
+        {body}
+      </Sheet>,
+    )
+    expect(getSheet()).toHaveClass('bg-ark-neutral-graphite')
+    // 浮层自身不再是毛玻璃（遮罩上的模糊是另一个类）
+    expect(getSheet().className.split(/\s+/)).not.toContain('backdrop-blur-ark-backdrop')
+    expect(getSheet()).not.toHaveClass('bg-ark-overlay-scrim')
+    expect(getSheet().firstElementChild).not.toHaveClass('border')
+
+    rerender(
+      <Sheet open tone="paper" title="采购">
+        {body}
+      </Sheet>,
+    )
+    expect(getSheet()).toHaveClass('bg-ark-neutral-paper')
+    expect(getSheet()).toHaveAttribute('data-ark-tone', 'light')
+    expect(getSheet().firstElementChild?.className).not.toContain('--ark-fg-muted')
   })
 
   it('放大只在允许动效时进行，透明度始终过渡', () => {

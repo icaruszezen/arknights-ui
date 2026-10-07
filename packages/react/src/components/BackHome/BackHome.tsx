@@ -42,28 +42,26 @@ export interface BackHomeProps extends ComponentProps<'div'> {
   children?: ReactNode
 }
 
-// 可见的形状画在 ::before 上再裁出斜边；根元素不裁，焦点轮廓才是完整的。
-// 两块咬合处的包围盒是重叠的，所以根元素不接收指针事件，只让裁切后的 ::before 接收：
-// 点击区和看到的形状一致，点在返回块的斜角上不会误触主页。
+// 实机里是两个并排的直角矩形，没有斜边。宽度按 1280×720 的实机裁图折算：
+// 返回约 142 × 45px，主页约 208 × 45px。竖屏放不下这么宽，各收窄一档。
 const block = cn(
-  'pointer-events-none relative isolate m-0 box-border inline-flex h-11 shrink-0 cursor-pointer appearance-none items-center border-0 bg-transparent p-0 text-ark-neutral-white no-underline select-none',
-  'before:pointer-events-auto before:absolute before:inset-0 before:-z-1',
-  'before:transition-colors before:duration-(--ark-motion-duration-base) before:ease-ark-standard',
-  'hover:text-ark-neutral-black hover:before:bg-ark-neutral-white',
+  'relative m-0 box-border inline-flex h-11 shrink-0 cursor-pointer appearance-none items-center border-0 p-0 text-ark-neutral-white no-underline select-none',
+  'hover:bg-ark-neutral-white hover:text-ark-neutral-black',
   colorTransition,
   focusRing,
 )
 
-// 返回：左边贴着屏幕边缘是直的，右边整条斜边
-const backBlock = 'w-26 pl-ark-4 before:bg-ark-neutral-graphite-deep before:ark-slant-r'
-// 主页：平行四边形，往左缩进 2.5rem 与返回块咬合，中间留 4px 的缝
+// 返回：深灰（#313131，实机取色），细线箭头贴左
+const backBlock = 'w-36 bg-ark-neutral-graphite-deep pl-ark-5 portrait:w-24'
+// 主页：稍浅、更宽的一块，图标居中；与返回块之间留 2px 的缝
 const homeBlock = cn(
-  '-ml-10 w-28 justify-center gap-ark-1 before:bg-ark-neutral-graphite before:ark-slant-x',
-  'aria-expanded:text-ark-neutral-black aria-expanded:before:bg-ark-neutral-white',
+  'ml-0.5 w-52 justify-center gap-ark-1 bg-ark-neutral-graphite portrait:w-32',
+  // 展开时描一圈 2px 的白边，不换底色
+  'aria-expanded:shadow-[inset_0_0_0_2px_var(--ark-color-neutral-white)]',
 )
 
 /**
- * 所有二级页面左上角的两个斜切色块：返回箭头和主页图标。位置、大小从不改变，
+ * 所有二级页面左上角的两个并排色块：返回箭头和主页图标。位置、大小从不改变，
  * 用户不需要重新找路。定位交给使用方（通常是 `fixed top-0 left-0`）。
  *
  * 把一条 `QuickNav` 作为子元素传入，主页块就成了它的开关：点一下展开，
@@ -108,8 +106,8 @@ export function BackHome({
     return () => document.removeEventListener('pointerdown', onPointerDown)
   }, [expanded, onExpandedChange])
 
-  const backContent = <BackIcon className="size-6" />
-  const homeContent = <HomeIcon className="size-5" />
+  const backContent = <BackIcon className="size-8" />
+  const homeContent = <HomeIcon className="size-6" />
 
   return (
     // biome-ignore lint/a11y/noStaticElementInteractions: 只是接住里面的按钮、链接冒泡上来的 Esc，用来收起展开的内容；它自己不可聚焦
@@ -177,8 +175,8 @@ export function BackHome({
           onClick={event => {
             if ((event.target as Element).closest('a')) change(false)
           }}
-          // 左缘对齐主页块的左下角（4rem），像是从它下面拉出来的；右边至少给视口留 1rem
-          className="absolute top-full left-16 z-10 w-max max-w-[calc(100vw-5rem)] animate-ark-fade-in pt-ark-1"
+          // 从两个色块的下面拉出来，左缘对齐；右边至少给视口留 1rem
+          className="absolute top-full left-0 z-10 w-max max-w-[calc(100vw-1rem)] animate-ark-fade-in pt-ark-1"
         >
           {children}
         </div>

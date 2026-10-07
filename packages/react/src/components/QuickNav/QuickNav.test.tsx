@@ -64,14 +64,60 @@ describe('QuickNav', () => {
     expect(screen.getByRole('link', { name: '基建' })).toHaveAttribute('aria-current', 'location')
   })
 
-  it('当前项是信号色加底条，不只靠颜色区分', () => {
+  it('每一项是轴线上的一个节点，节点对读屏隐藏', () => {
+    render(<Systems />)
+    const link = screen.getByRole('link', { name: '首页 HOME' })
+    // 轴线画在每一项自己身上
+    expect(link).toHaveClass('before:top-1/2', 'before:h-px')
+    const node = link.querySelector('span[aria-hidden="true"]')
+    expect(node).toHaveClass('rounded-full', 'row-start-2')
+  })
+
+  it('当前项是信号色，节点外多两圈同心圆，不只靠颜色区分', () => {
     render(<Systems />)
     const current = screen.getByRole('link', { name: '干员 OPERATOR' })
-    expect(current).toHaveClass('text-ark-signal-fg', 'after:bg-ark-signal')
+    expect(current).toHaveClass('text-ark-signal-fg')
+    expect(current.querySelector('span[aria-hidden="true"]')).toHaveClass(
+      'before:rounded-full',
+      'outline-1',
+    )
 
     const other = screen.getByRole('link', { name: '首页 HOME' })
     expect(other).toHaveClass('text-ark-fg')
-    expect(other.className).not.toContain('after:bg-ark-signal')
+    expect(other.querySelector('span[aria-hidden="true"]')).not.toHaveClass('outline-1')
+  })
+
+  it('英文小字可以不给：实机里只有中文名称', () => {
+    render(
+      <QuickNav aria-label="快捷导航">
+        <QuickNavItem href="#base">基建</QuickNavItem>
+      </QuickNav>,
+    )
+    expect(screen.getByRole('link')).toHaveAccessibleName('基建')
+  })
+
+  it('icon 对读屏隐藏，不计入名称', () => {
+    render(
+      <QuickNav aria-label="快捷导航">
+        <QuickNavItem href="#base" icon={<svg data-testid="glyph" />}>
+          基建
+        </QuickNavItem>
+      </QuickNav>,
+    )
+    expect(screen.getByRole('link')).toHaveAccessibleName('基建')
+    expect(screen.getByTestId('glyph').parentElement).toHaveAttribute('aria-hidden', 'true')
+  })
+
+  it('名称上下交错：列表项带 group，名称按奇偶换行与方向', () => {
+    render(<Systems />)
+    for (const item of screen.getAllByRole('listitem')) {
+      expect(item).toHaveClass('group/quick-nav')
+    }
+    const label = screen.getByText('首页').closest('span[class*="row-start-3"]')
+    expect(label).toHaveClass(
+      'group-even/quick-nav:row-start-1',
+      'group-even/quick-nav:flex-col-reverse',
+    )
   })
 
   it('转发 ref 与其余属性到链接上', () => {

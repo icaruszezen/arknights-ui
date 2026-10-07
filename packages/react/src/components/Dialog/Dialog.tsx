@@ -1,4 +1,5 @@
 import { type ComponentProps, type ReactNode, useId } from 'react'
+import { CheckCircleIcon } from '../../internal/icons'
 import { cn } from '../../utils/cn'
 import { useModalDialog } from '../../utils/useModalDialog'
 import { Button } from '../Button'
@@ -14,27 +15,35 @@ export interface DialogProps
   /** 正文下方的补充数值，数据体小字，如 `SANITY 12/135 → 92/135`。 */
   detail?: ReactNode
   /**
-   * 右侧浅色块上的文字。
+   * 右侧确认块上的文字。
    * @default '确认'
    */
   confirmText?: ReactNode
   /**
-   * 左侧深色块上的文字。
+   * 左侧黑色块上的文字。
    * @default '取消'
    */
   cancelText?: ReactNode
+  /**
+   * 确认块的颜色。
+   * - `confirm`：暗红，游戏内弹窗的写法
+   * - `signal`：信号色，页面里建设性的确认（编队、升级）
+   * @default 'confirm'
+   */
+  confirmVariant?: 'confirm' | 'signal'
   /** 点确认时调用，随后以 `onOpenChange(false)` 请求关闭。 */
   onConfirm?: () => void
   /** 点取消、按 Esc 或点遮罩时调用，随后以 `onOpenChange(false)` 请求关闭。 */
   onCancel?: () => void
-  /** 只留一个确认按钮（纯告知）。 */
+  /** 只留一个确认按钮（纯告知）。此时它是黑色块。 */
   hideCancel?: boolean
 }
 
 /**
  * 确认弹窗是横贯屏幕的一条带，不是悬在中间的一个盒子：上下露出被压暗的原页面。
  *
- * 按钮对开、位置固定：取消在左（深色块），确认在右（浅色块）。
+ * 内容带是纸白的，深色字；正文里用 `<em>` 标出后果（“返还 5 理智”），它会显示成橙色粗体。
+ * 按钮对开、位置固定：取消在左（黑色块、圆圈叉），确认在右（暗红块、圆圈对勾）。
  * 基于原生 `<dialog>`：自带焦点圈定、Esc 关闭，关闭后焦点回到触发元素。
  */
 export function Dialog({
@@ -44,6 +53,7 @@ export function Dialog({
   detail,
   confirmText = '确认',
   cancelText = '取消',
+  confirmVariant = 'confirm',
   onConfirm,
   onCancel,
   hideCancel = false,
@@ -83,7 +93,15 @@ export function Dialog({
         className,
       )}
     >
-      <div className="box-border border-t-2 border-ark-neutral-white/20 bg-ark-neutral-graphite-deep/95 px-ark-6 py-ark-6 text-center font-ark-cjk-sans">
+      {/* 实机的内容带是浅色的：在这里切到纸白的明暗上下文，里面的文字跟着换成深色 */}
+      <div
+        data-ark-tone="light"
+        className={cn(
+          'box-border bg-ark-neutral-paper px-ark-6 py-ark-6 text-center font-ark-cjk-sans text-ark-fg',
+          // 橙色压暗到 70%：原色在纸白上只有约 3:1
+          '[&_em]:font-ark-bold [&_em]:text-[color:color-mix(in_srgb,var(--ark-color-signal-accent)_70%,black)] [&_em]:not-italic',
+        )}
+      >
         {title != null && (
           <h2 id={titleId} className="m-0 mb-ark-3 text-ark-body-lg leading-ark-snug font-ark-bold">
             {title}
@@ -99,14 +117,34 @@ export function Dialog({
         )}
       </div>
       <div className={cn('grid', hideCancel ? 'grid-cols-1' : 'grid-cols-2')}>
-        {!hideCancel && (
-          <Button variant="graphite" block onClick={() => requestClose(onCancel)}>
-            {cancelText}
+        {hideCancel ? (
+          // 纯告知的弹窗只有一个黑色块，图形仍是对勾
+          <Button
+            variant="cancel"
+            icon={<CheckCircleIcon />}
+            block
+            onClick={() => requestClose(onConfirm)}
+          >
+            {confirmText}
           </Button>
+        ) : (
+          <>
+            <Button variant="cancel" block onClick={() => requestClose(onCancel)}>
+              {cancelText}
+            </Button>
+            <Button
+              variant="confirm"
+              block
+              onClick={() => requestClose(onConfirm)}
+              className={cn(
+                confirmVariant === 'signal' &&
+                  'bg-ark-signal text-ark-on-signal hover:bg-ark-neutral-white hover:text-ark-neutral-black',
+              )}
+            >
+              {confirmText}
+            </Button>
+          </>
         )}
-        <Button variant="paper" block onClick={() => requestClose(onConfirm)}>
-          {confirmText}
-        </Button>
       </div>
     </dialog>
   )

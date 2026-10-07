@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
+import { type GlyphName, glyphs } from '../.storybook/glyphs'
 import {
   ActionButton,
   BackHome,
@@ -39,14 +40,14 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-const systems = [
-  ['home', '首页', 'HOME'],
-  ['terminal', '作战', 'TERMINAL'],
-  ['squads', '编队', 'SQUADS'],
-  ['operator', '干员', 'OPERATOR'],
-  ['base', '基建', 'BASE'],
-  ['store', '采购', 'STORE'],
-] as const
+const systems: readonly (readonly [string, string, GlyphName])[] = [
+  ['home', '首页', 'diamond'],
+  ['squads', '编队', 'blocks'],
+  ['operator', '干员', 'peak'],
+  ['terminal', '作战', 'target'],
+  ['base', '基建', 'frame'],
+  ['store', '采购中心', 'shield'],
+]
 
 export const Game: Story = {
   name: '游戏界面',
@@ -64,8 +65,13 @@ export const Game: Story = {
 
         <BackHome className="absolute top-0 left-0">
           <QuickNav aria-label="快捷导航">
-            {systems.map(([id, label, sub]) => (
-              <QuickNavItem key={id} href={`#${id}`} sub={sub} current={id === 'operator'}>
+            {systems.map(([id, label, glyph]) => (
+              <QuickNavItem
+                key={id}
+                href={`#${id}`}
+                icon={glyphs[glyph]}
+                current={id === 'operator'}
+              >
                 {label}
               </QuickNavItem>
             ))}

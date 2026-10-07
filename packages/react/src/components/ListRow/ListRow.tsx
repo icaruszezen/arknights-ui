@@ -19,7 +19,8 @@ type ListRowAsAnchor = ListRowOwnProps &
 export type ListRowProps = ListRowAsDiv | ListRowAsAnchor
 
 const base = cn(
-  'group relative m-0 box-border grid min-h-ark-8 content-center items-center gap-x-ark-4 gap-y-ark-2 border-b border-ark-rule py-ark-4 font-ark-cjk-sans text-ark-fg',
+  // 日期和标题贴得很近：官网实测两行之间只有 0.125rem
+  'group relative m-0 box-border grid min-h-ark-8 content-center items-center gap-x-ark-4 gap-y-0.5 border-b border-ark-rule py-ark-4 font-ark-cjk-sans text-ark-fg',
   // 竖屏：排成一行，日期移到标题右侧
   'portrait:min-h-ark-7 portrait:py-ark-3',
 )
@@ -61,14 +62,15 @@ export function ListRow(props: ListRowProps) {
         <DateText
           value={date}
           className={cn(
-            'text-ark-fg-muted portrait:row-start-1 portrait:text-ark-caption',
+            // 日期与标题同色（官网实测 #d2d2d2），不比标题更暗
+            'text-ark-fg-secondary portrait:row-start-1 portrait:text-ark-caption',
             layout.date,
           )}
         />
       )}
       <span
         className={cn(
-          'line-clamp-2 text-ark-body leading-ark-snug tracking-[2px] text-ark-fg-secondary portrait:row-start-1 portrait:text-[1rem]',
+          'line-clamp-2 text-ark-body leading-ark-snug font-ark-bold tracking-[2px] text-ark-fg-secondary portrait:row-start-1 portrait:text-[1rem]',
           linked && ['group-hover:text-ark-fg', colorTransition],
           layout.title,
         )}

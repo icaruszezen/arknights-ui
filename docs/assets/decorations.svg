@@ -15,12 +15,13 @@
   <!-- 编号 -->
   <text x="40" y="44" class="data tag">01 COUNTER</text>
   <text x="124" y="44" class="cjk note">编号永远带前导零和总数</text>
-  <text x="40" y="112" class="data" font-size="56" font-weight="700" fill="#18d1ff">01</text>
-  <text x="112" y="86" class="data" font-size="16" fill="#fff">// 01 / 05</text>
-  <text x="112" y="110" class="wide" font-size="12" fill="#fff" letter-spacing="1.2">INFORMATION</text>
-  <text x="40" y="146" class="data" font-size="14" fill="#ababab" letter-spacing="1">2026 // 10 / 03</text>
-  <text x="200" y="146" class="data" font-size="14" fill="#ababab">NO.0147</text>
-  <text x="290" y="146" class="data" font-size="14" fill="#ababab">VOL.69</text>
+  <!-- 官网右栏：大数字是宽体 5.4rem，不是数据体 -->
+  <text x="40" y="108" class="wide" font-size="60" font-weight="600" fill="#18d1ff">01</text>
+  <text x="132" y="90" class="data" font-size="16" fill="#fff">// 01 / 05</text>
+  <text x="40" y="130" class="wide" font-size="15" font-weight="600" fill="#fff" letter-spacing="1.5">INFORMATION</text>
+  <text x="40" y="158" class="data" font-size="14" fill="#ababab" letter-spacing="1">2026 // 10 / 03</text>
+  <text x="200" y="158" class="data" font-size="14" fill="#ababab">NO.0147</text>
+  <text x="290" y="158" class="data" font-size="14" fill="#ababab">VOL.69</text>
 
   <!-- 角标 -->
   <text x="400" y="44" class="data tag">02 CORNER MARK</text>

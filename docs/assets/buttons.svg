@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 420" role="img" aria-labelledby="t d">
   <title id="t">按钮解剖</title>
-  <desc id="d">主按钮、次按钮、弱按钮、游戏内确认按钮的结构与状态。</desc>
+  <desc id="d">主按钮、次按钮、弱按钮、游戏内行动按钮与确认 / 取消的结构与状态。</desc>
   <style>
     .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
     .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
@@ -12,16 +12,16 @@
   <rect width="960" height="420" fill="#121212"/>
   <rect x="0.5" y="0.5" width="959" height="419" fill="none" stroke="#333"/>
 
-  <!-- 主按钮解剖 -->
+  <!-- 主按钮解剖：官网实测 14.375rem × 3.75rem -->
   <text x="40" y="44" class="data tag">01 PRIMARY</text>
   <text x="130" y="44" class="cjk note">实心青蓝块 + 黑字 + 双语两行</text>
-  <rect x="40" y="76" width="220" height="72" fill="#18d1ff"/>
-  <text x="60" y="110" class="cjk" font-size="20" font-weight="700" fill="#000">更多情报</text>
-  <text x="60" y="130" class="data" font-size="12" font-weight="700" fill="#000">READ MORE</text>
-  <polygon points="228,104 240,112 228,120" fill="#000"/>
-  <path class="lead" d="M100 76 V64 H300"/><text x="306" y="68" class="cjk note">中文 1.25rem / Bold</text>
-  <path class="lead" d="M120 134 V164 H300"/><text x="306" y="168" class="cjk note">英文 0.875rem / 伪等宽</text>
-  <path class="lead" d="M234 112 H300"/><text x="306" y="116" class="cjk note">右侧三角：方向性</text>
+  <rect x="40" y="82" width="230" height="60" fill="#18d1ff"/>
+  <text x="56" y="110" class="cjk" font-size="20" font-weight="700" fill="#000">更多情报</text>
+  <text x="56" y="128" class="data" font-size="14" font-weight="700" fill="#000">READ MORE</text>
+  <path d="M234 104l8 8-8 8v-4.5l3.5-3.5-3.5-3.5z" fill="#000"/>
+  <path class="lead" d="M96 82 V66 H300"/><text x="306" y="70" class="cjk note">中文 1.25rem / Bold</text>
+  <path class="lead" d="M120 132 V164 H300"/><text x="306" y="168" class="cjk note">英文 0.875rem / 伪等宽</text>
+  <path class="lead" d="M246 112 H300"/><text x="306" y="116" class="cjk note">右端折线箭头：方向性</text>
 
   <!-- 状态 -->
   <text x="540" y="44" class="data tag">02 STATES</text>
@@ -37,40 +37,43 @@
   <text x="598" y="153" text-anchor="middle" class="cjk" font-size="14" fill="#fff">描边</text>
   <rect x="668" y="128" width="116" height="40" fill="#fff"/>
   <text x="726" y="153" text-anchor="middle" class="cjk" font-size="14" fill="#000">描边 · 悬停</text>
-  <rect x="796" y="128" width="116" height="40" fill="none" stroke="#18d1ff"/>
-  <rect x="796" y="164" width="116" height="4" fill="#18d1ff"/>
-  <text x="854" y="153" text-anchor="middle" class="cjk" font-size="14" fill="#18d1ff">选中</text>
+  <rect x="796" y="128" width="116" height="40" fill="#fff"/>
+  <text x="854" y="153" text-anchor="middle" class="cjk" font-size="14" fill="#000">选中 · 整块对调</text>
 
   <line x1="40" y1="204" x2="920" y2="204" stroke="#fff" stroke-opacity=".3"/>
 
-  <!-- 弱按钮 -->
+  <!-- 弱按钮与分类标签：官网实测 -->
   <text x="40" y="240" class="data tag">03 CHIP</text>
   <text x="100" y="240" class="cjk note">弱按钮：灰底小条，只放英文</text>
-  <polygon points="40,262 132,262 140,270 140,282 40,282" fill="#585858"/>
-  <text x="50" y="276" class="data" font-size="11" font-weight="700" fill="#d2d2d2">READ MORE</text>
-  <polygon points="124,268 130,272 124,276" fill="#d2d2d2"/>
-  <rect x="156" y="262" width="56" height="20" fill="#fff"/>
-  <text x="184" y="276" text-anchor="middle" class="cjk" font-size="11" font-weight="700" fill="#000">最新</text>
-  <text x="240" y="276" text-anchor="middle" class="cjk" font-size="11" font-weight="700" fill="#fff">公告</text>
-  <text x="288" y="276" text-anchor="middle" class="cjk" font-size="11" font-weight="700" fill="#fff">活动</text>
+  <rect x="40" y="260" width="122" height="24" fill="#585858"/>
+  <text x="50" y="277" class="data" font-size="13" font-weight="700" fill="#d2d2d2">READ MORE</text>
+  <path d="M146 265l7 7-7 7v-4l3-3-3-3z" fill="#d2d2d2"/>
+  <rect x="40" y="306" width="90" height="20" fill="#18d1ff"/>
+  <text x="44" y="321" class="cjk" font-size="14" font-weight="700" fill="#000">最新</text>
+  <path d="M116 309l7 7-7 7v-4l3-3-3-3z" fill="#000"/>
+  <text x="150" y="321" class="cjk" font-size="14" font-weight="700" fill="#fff">公告</text>
+  <text x="256" y="321" class="cjk" font-size="14" font-weight="700" fill="#fff">活动</text>
+  <text x="40" y="346" class="cjk note">分类标签：选中是信号色块 + 黑字</text>
 
-  <!-- 游戏内确认 -->
-  <text x="400" y="240" class="data tag">04 IN-GAME ACTION</text>
-  <text x="530" y="240" class="cjk note">游戏内行动按钮：深浅两块拼合，代价写在按钮里（估计）</text>
-  <rect x="400" y="262" width="240" height="64" fill="#0098dc"/>
-  <rect x="400" y="262" width="64" height="64" fill="#0075a8"/>
-  <text x="432" y="290" text-anchor="middle" class="data" font-size="11" fill="#fff">SANITY</text>
-  <text x="432" y="314" text-anchor="middle" class="data" font-size="22" font-weight="700" fill="#fff">-18</text>
-  <text x="484" y="296" class="cjk" font-size="22" font-weight="700" fill="#fff">开始行动</text>
-  <text x="484" y="314" class="cond" font-size="12" fill="#fff" fill-opacity=".8" letter-spacing="1">MISSION START</text>
+  <!-- 游戏内行动按钮：实机裁图 207 × 74 -->
+  <text x="400" y="240" class="data tag">04 IN-GAME</text>
+  <text x="484" y="240" class="cjk note">行动按钮上下拼合，代价写在下面的深色带里；确认 / 取消位置固定</text>
+  <rect x="400" y="260" width="207" height="52" fill="#0098dc"/>
+  <rect x="400" y="312" width="207" height="22" fill="#232323"/>
+  <text x="503" y="296" text-anchor="middle" class="cjk" font-size="26" font-weight="700" fill="#fff">开始行动</text>
+  <text x="560" y="328" text-anchor="end" class="data" font-size="11" fill="#fff">SANITY</text>
+  <text x="596" y="328" text-anchor="end" class="data" font-size="14" font-weight="700" fill="#fff">-18</text>
 
-  <rect x="668" y="262" width="120" height="64" fill="#fdfdfb"/>
-  <text x="728" y="292" text-anchor="middle" class="cjk" font-size="18" font-weight="700" fill="#323232">确认</text>
-  <text x="728" y="310" text-anchor="middle" class="cond" font-size="11" fill="#8d8d8d" letter-spacing="1">CONFIRM</text>
-  <rect x="800" y="262" width="120" height="64" fill="#424242"/>
-  <text x="860" y="292" text-anchor="middle" class="cjk" font-size="18" font-weight="700" fill="#fff">取消</text>
-  <text x="860" y="310" text-anchor="middle" class="cond" font-size="11" fill="#ababab" letter-spacing="1">CANCEL</text>
+  <rect x="640" y="260" width="140" height="52" fill="#121212"/>
+  <circle cx="682" cy="286" r="10" fill="#fff"/>
+  <path d="M677.5 281.5l9 9M686.5 281.5l-9 9" stroke="#121212" stroke-width="2.8" fill="none"/>
+  <text x="700" y="292" class="cjk" font-size="18" font-weight="700" fill="#fff">取消</text>
+  <rect x="780" y="260" width="140" height="52" fill="#731111"/>
+  <circle cx="822" cy="286" r="10" fill="#fff"/>
+  <path d="M817 286.5l3.5 3.5 7-7" stroke="#731111" stroke-width="2.8" fill="none"/>
+  <text x="840" y="292" class="cjk" font-size="18" font-weight="700" fill="#fff">确认</text>
+  <text x="640" y="332" class="cjk note">取消 = 黑色块在左，确认 = 暗红块在右</text>
 
-  <text x="40" y="370" class="cjk note">共同点：直角、无渐变、无圆角；按钮是一块“色面”而不是一个“胶囊”。最小点击区 44 × 44px，即使可见形状更小。</text>
-  <text x="40" y="392" class="cjk note">上排取自官网实测；下排游戏内样式为示意，色值来自社区项目。</text>
+  <text x="40" y="376" class="cjk note">共同点：直角、无渐变；按钮是一块“色面”而不是一个“胶囊”。最小点击区 44 × 44px，即使可见形状更小。</text>
+  <text x="40" y="398" class="cjk note">上排与 03 取自官网实测；04 取自游戏实机裁图（1280 × 720），色值为裁图取色。</text>
 </svg>

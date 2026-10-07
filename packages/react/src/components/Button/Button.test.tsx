@@ -28,17 +28,56 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveAccessibleName('更多情报 READ MORE')
   })
 
-  it('方向三角对读屏隐藏', () => {
+  it('折线箭头对读屏隐藏，并贴在右端', () => {
     render(<Button arrow>更多情报</Button>)
     const button = screen.getByRole('button', { name: '更多情报' })
-    expect(button.querySelector('[aria-hidden="true"]')).not.toBeNull()
+    const arrow = button.querySelector('svg[aria-hidden="true"]')
+    expect(arrow).not.toBeNull()
+    expect(arrow).toHaveClass('ml-auto')
+    expect(button.lastElementChild).toBe(arrow)
   })
 
-  it('selected 输出 aria-pressed', () => {
+  it('primary 是官网实测的长条：最小宽 14.375rem、高 3.75rem', () => {
+    render(<Button variant="primary">更多情报</Button>)
+    expect(screen.getByRole('button')).toHaveClass('min-w-[14.375rem]', 'min-h-[3.75rem]')
+  })
+
+  it('selected 输出 aria-pressed，样式是整块明暗对调', () => {
     const { rerender } = render(<Button selected>筛选</Button>)
-    expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'true')
+    const button = screen.getByRole('button')
+    expect(button).toHaveAttribute('aria-pressed', 'true')
+    expect(button).toHaveClass('aria-pressed:bg-ark-invert', 'aria-pressed:text-ark-on-invert')
     rerender(<Button selected={false}>筛选</Button>)
     expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false')
+  })
+
+  it('confirm 是暗红块、cancel 是黑色块，各带一个对读屏隐藏的默认图标', () => {
+    render(
+      <>
+        <Button variant="cancel">取消</Button>
+        <Button variant="confirm">确认</Button>
+      </>,
+    )
+    const cancel = screen.getByRole('button', { name: '取消' })
+    const confirm = screen.getByRole('button', { name: '确认' })
+    expect(cancel).toHaveClass('bg-ark-neutral-ink-950')
+    expect(confirm).toHaveClass('bg-ark-signal-confirm')
+    expect(cancel.querySelector('[aria-hidden="true"] svg')).not.toBeNull()
+    expect(confirm.querySelector('[aria-hidden="true"] svg')).not.toBeNull()
+  })
+
+  it('icon 传 null 去掉默认图标，传节点则换成自己的', () => {
+    const { rerender } = render(
+      <Button variant="confirm" icon={null}>
+        继续结算
+      </Button>,
+    )
+    expect(screen.getByRole('button').querySelector('svg')).toBeNull()
+
+    rerender(<Button icon={<svg data-testid="own" />}>筛选</Button>)
+    const button = screen.getByRole('button', { name: '筛选' })
+    expect(screen.getByTestId('own').parentElement).toHaveAttribute('aria-hidden', 'true')
+    expect(button).toContainElement(screen.getByTestId('own'))
   })
 
   it('点击时调用 onClick，禁用时不调用', async () => {

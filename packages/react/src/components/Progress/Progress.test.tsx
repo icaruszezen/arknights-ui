@@ -60,6 +60,30 @@ describe('Progress', () => {
     expect(bar.style.maskSize).toContain('/ 4')
   })
 
+  it('rail 是 0.5rem 高的中灰轨道，进度与轨道同高', () => {
+    render(<Progress aria-label="轮播" variant="rail" value={2} max={5} />)
+    const bar = screen.getByRole('progressbar')
+    expect(bar).toHaveClass('h-2', 'bg-ark-neutral-gray-400')
+    expect(bar.children).toHaveLength(1)
+    expect(bar.lastElementChild).toHaveClass('inset-y-0', 'bg-ark-signal')
+  })
+
+  it('span 只画末尾一段：轮播用它标出当前页的位置', () => {
+    const { rerender } = render(
+      <Progress aria-label="轮播" variant="rail" value={2} max={5} span={1} />,
+    )
+    const fill = () => screen.getByRole('progressbar').lastElementChild as HTMLElement
+    expect(fill().style.left).toBe('20%')
+    expect(fill().style.width).toBe('20%')
+    // 读屏读到的仍然是位置本身
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '2')
+
+    // span 比 value 还大时从头画起，不出现负的起点
+    rerender(<Progress aria-label="轮播" variant="rail" value={1} max={5} span={3} />)
+    expect(fill().style.left).toBe('0%')
+    expect(fill().style.width).toBe('20%')
+  })
+
   it('meter 默认用前景色，其余默认用信号色', () => {
     const { rerender } = render(<Progress aria-label="攻击" variant="meter" value={72} />)
     expect(screen.getByRole('progressbar').lastElementChild).toHaveClass('bg-ark-fg')

@@ -17,17 +17,17 @@
   <rect x="40" y="60" width="480" height="188" fill="#000"/>
   <g>
     <text x="60" y="110" class="cjk" font-size="15" font-weight="700" fill="#18d1ff">活动</text>
-    <text x="120" y="94" class="data" font-size="13" fill="#ababab" letter-spacing="1">2026 // 10 / 03</text>
-    <text x="120" y="118" class="cjk" font-size="15" fill="#d2d2d2" letter-spacing="2">SideStory 限时活动即将开启</text>
+    <text x="120" y="94" class="data" font-size="13" fill="#d2d2d2" letter-spacing="1">2026 // 10 / 03</text>
+    <text x="120" y="116" class="cjk" font-size="15" font-weight="700" fill="#d2d2d2" letter-spacing="2">SideStory 限时活动即将开启</text>
     <line x1="60" y1="140" x2="500" y2="140" stroke="#fff" stroke-opacity=".3"/>
     <text x="60" y="190" class="cjk" font-size="15" font-weight="700" fill="#18d1ff">公告</text>
-    <text x="120" y="174" class="data" font-size="13" fill="#ababab" letter-spacing="1">2026 // 09 / 29</text>
-    <text x="120" y="198" class="cjk" font-size="15" fill="#d2d2d2" letter-spacing="2">09月29日16:00闪断更新公告</text>
+    <text x="120" y="174" class="data" font-size="13" fill="#d2d2d2" letter-spacing="1">2026 // 09 / 29</text>
+    <text x="120" y="196" class="cjk" font-size="15" font-weight="700" fill="#d2d2d2" letter-spacing="2">09月29日16:00闪断更新公告</text>
     <line x1="60" y1="220" x2="500" y2="220" stroke="#fff" stroke-opacity=".3"/>
   </g>
   <path class="lead" d="M76 200 V268 H40"/><text x="40" y="286" class="cjk note">分类：青蓝，1.125rem Bold</text>
   <path class="lead" d="M258 166 H372 V258"/><text x="236" y="272" class="cjk note">日期：伪等宽，“//” 与 “/” 混用，字距 1px</text>
-  <path class="lead" d="M400 204 V306 H384"/><text x="236" y="310" class="cjk note">标题：字距 2px，最多两行</text>
+  <path class="lead" d="M400 204 V306 H384"/><text x="236" y="310" class="cjk note">标题：Bold，字距 2px，最多两行</text>
 
   <text x="560" y="44" class="data tag">02 VALUE</text>
   <text x="626" y="44" class="cjk note">大数字 + 小单位 + 分母</text>
@@ -38,12 +38,16 @@
   <text x="820" y="86" class="data" font-size="14" fill="#fff">// 05</text>
 
   <text x="560" y="172" class="data tag">03 PROGRESS</text>
-  <rect x="560" y="188" width="360" height="4" fill="#fff" fill-opacity=".3"/>
-  <rect x="560" y="188" width="150" height="4" fill="#18d1ff"/>
-  <rect x="560" y="206" width="360" height="10" fill="#333"/>
-  <rect x="560" y="206" width="250" height="10" fill="#ffd802"/>
-  <g fill="#121212"><rect x="630" y="206" width="2" height="10"/><rect x="702" y="206" width="2" height="10"/><rect x="774" y="206" width="2" height="10"/><rect x="846" y="206" width="2" height="10"/></g>
-  <text x="920" y="234" text-anchor="end" class="data" font-size="12" fill="#ababab">EXP 2,480 / 3,600</text>
+  <!-- 官网轮播：轨道与进度同高，进度段停在当前页 -->
+  <rect x="560" y="184" width="360" height="8" fill="#ababab"/>
+  <rect x="632" y="184" width="72" height="8" fill="#18d1ff"/>
+  <!-- 加载：1px 轨道 + 4px 进度 -->
+  <rect x="560" y="205.5" width="360" height="1" fill="#fff" fill-opacity=".3"/>
+  <rect x="560" y="204" width="150" height="4" fill="#18d1ff"/>
+  <rect x="560" y="220" width="360" height="10" fill="#333"/>
+  <rect x="560" y="220" width="250" height="10" fill="#ffd802"/>
+  <g fill="#121212"><rect x="630" y="220" width="2" height="10"/><rect x="702" y="220" width="2" height="10"/><rect x="774" y="220" width="2" height="10"/><rect x="846" y="220" width="2" height="10"/></g>
+  <text x="920" y="248" text-anchor="end" class="data" font-size="12" fill="#ababab">EXP 2,480 / 3,600</text>
 
   <text x="560" y="276" class="data tag">04 TAG / STAR</text>
   <polygon points="560,292 624,292 630,298 630,314 560,314" fill="#fff"/>

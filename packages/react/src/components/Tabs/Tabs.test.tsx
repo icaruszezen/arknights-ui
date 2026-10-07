@@ -170,11 +170,35 @@ describe('Tabs', () => {
     expect(screen.getByRole('tabpanel').id).toBe(controls)
   })
 
-  it('block 变体只在选中项上显示方向三角', () => {
+  it('block 变体只在选中项上显示折线箭头，箭头贴右', () => {
     render(<News />)
     const marked = screen.getAllByRole('tab').filter(tab => tab.querySelector('[aria-hidden]'))
     expect(marked).toHaveLength(1)
     expect(marked[0]).toHaveTextContent('最新')
+    expect(marked[0]?.querySelector('svg')).toHaveClass('ml-auto')
+  })
+
+  it('block 变体的选中项是信号色底（官网实测），不是反白', () => {
+    render(<News />)
+    const tab = selectedTab()
+    expect(tab).toHaveClass('aria-selected:bg-ark-signal', 'aria-selected:text-ark-on-signal')
+    expect(tab.className).not.toContain('aria-selected:bg-ark-invert')
+  })
+
+  it('segment 变体每一项都有底块，选中项明暗对调', () => {
+    render(
+      <Tabs variant="segment" defaultValue="all">
+        <TabList aria-label="仓库分类">
+          <Tab value="all">全部</Tab>
+          <Tab value="material">养成材料</Tab>
+        </TabList>
+      </Tabs>,
+    )
+    expect(screen.getByRole('tablist')).toHaveClass('gap-0.5')
+    for (const tab of screen.getAllByRole('tab')) {
+      expect(tab).toHaveClass('bg-ark-fg/10', 'aria-selected:bg-ark-invert')
+      expect(tab.querySelector('svg')).toBeNull()
+    }
   })
 
   it('脱离 Tabs 使用时报错', () => {
