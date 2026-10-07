@@ -28,6 +28,20 @@ describe('Codename', () => {
     )
   })
 
+  it('serif：中文换成宋体 Heavy、不收字距，英文大小写混排、常规字重', () => {
+    render(
+      <Codename serif sub="SilverAsh">
+        干员代号
+      </Codename>,
+    )
+    const heading = screen.getByRole('heading')
+    expect(heading).toHaveClass('font-ark-cjk-serif', 'font-ark-heavy', 'tracking-ark-normal')
+    expect(heading).not.toHaveClass('font-ark-cjk-sans', 'tracking-ark-cjk-tight')
+    const sub = screen.getByText('SilverAsh')
+    expect(sub).toHaveClass('font-ark-cjk-sans', 'font-ark-regular')
+    expect(sub).not.toHaveClass('uppercase', 'font-ark-latin-wide')
+  })
+
   it('三档字号，英文约为代号的三分之一', () => {
     const { rerender } = render(
       <Codename size="sm" sub="Codename">

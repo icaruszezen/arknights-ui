@@ -53,7 +53,8 @@ const nodes = stages.map(({ cost: _cost, level: _level, name, value, ...stage })
 
 /**
  * 一条横向延伸的路线：主线在中间，支线向上下分叉，分叉的那一段是 45° 的折线。
- * 已通关、当前、未解锁三态用明暗区分；通向未解锁关卡的连线是暗的虚线。点一个节点选中它。
+ * 节点是白色的横条，左端的六边形标出进度：实心是已通关，空心是当前要打的；
+ * 未解锁的是暗的虚线框，通向它的连线也是暗的虚线。点一个节点选中它，选中的那条变成黑底白字。
  */
 export const Default: Story = {
   args: { defaultValue: '1-5', 'aria-label': '第一章' },
@@ -107,11 +108,14 @@ export const WithDetail: Story = {
   },
 }
 
-/** `StageNode` 也可以单独当关卡标签用。三种进度：已通关、当前、未解锁。 */
+/**
+ * `StageNode` 也可以单独当关卡标签用。三种进度：已通关、当前、未解锁；
+ * `caption` 是编号上方那行极小的英文。
+ */
 export const Nodes: Story = {
   render: () => (
     <div className="flex gap-ark-6 pb-ark-5">
-      <StageNode value="1-5" name="已通关">
+      <StageNode value="1-5" name="已通关" caption="OPERATION">
         1-5
       </StageNode>
       <StageNode value="1-6" state="current" name="当前">

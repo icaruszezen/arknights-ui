@@ -32,33 +32,42 @@
     <polygon points="98,344 170,340 170,378 98,384" fill="#424242" fill-opacity=".9"/>
     <text x="108" y="364" class="serif" font-size="13" fill="#fff">档案</text>
 
-    <!-- 右侧面板组：向左后方倾斜 -->
+    <!-- 右侧面板组：向左后方倾斜。底色照实机的现行界面：纸白为主，一行蓝，仓库是石墨 -->
     <polygon points="470,92 700,70 700,170 470,176" fill="#fdfdfb" fill-opacity=".95"/>
-    <text x="486" y="140" class="serif" font-size="34" fill="#323232">作战</text>
-    <text x="488" y="158" class="cond" font-size="9" fill="#8d8d8d" letter-spacing=".8">TERMINAL</text>
-    <text x="684" y="122" text-anchor="end" class="data" font-size="22" font-weight="700" fill="#323232">131/135</text>
-    <text x="684" y="136" text-anchor="end" class="cond" font-size="8" fill="#8d8d8d">SANITY</text>
+    <!-- 理智：一块灰底的大数字，下面一条黑底 -->
+    <rect x="482" y="102" width="62" height="40" fill="#d2d2d2"/>
+    <text x="513" y="132" text-anchor="middle" class="data" font-size="26" font-weight="700" fill="#323232">131</text>
+    <rect x="482" y="142" width="62" height="14" fill="#323232"/>
+    <text x="513" y="152.5" text-anchor="middle" class="cjk" font-size="8" fill="#fff">理智/135</text>
+    <!-- 入口名贴左上，下面一行同语言的小字 -->
+    <text x="556" y="130" class="serif" font-size="30" fill="#323232">终端</text>
+    <rect x="556" y="138" width="24" height="12" fill="#323232"/><text x="568" y="147" text-anchor="middle" class="cjk" font-size="8" fill="#fff">当前</text>
+    <text x="584" y="147.5" class="cjk" font-size="8" fill="#585858">全部完成</text>
+    <!-- 终端面板下缘的橙色条 -->
+    <rect x="600" y="172" width="100" height="3" fill="#ff5e19"/>
 
-    <polygon points="470,182 580,180 580,246 470,244" fill="#424242" fill-opacity=".92"/>
-    <text x="482" y="218" class="serif" font-size="20" fill="#fff">编队</text>
-    <text x="483" y="232" class="cond" font-size="8" fill="#ababab">SQUADS</text>
-    <polygon points="586,180 700,177 700,249 586,246" fill="#424242" fill-opacity=".92"/>
-    <text x="598" y="218" class="serif" font-size="20" fill="#fff">干员</text>
-    <text x="599" y="232" class="cond" font-size="8" fill="#ababab">OPERATOR</text>
+    <polygon points="470,182 580,180 580,246 470,244" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="482" y="208" class="serif" font-size="20" fill="#323232">编队</text>
+    <polygon points="586,180 700,177 700,249 586,246" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="598" y="208" class="serif" font-size="20" fill="#323232">干员</text>
+    <text x="599" y="222" class="cjk" font-size="8" fill="#585858">角色管理</text>
 
-    <polygon points="470,250 546,251 546,300 470,298" fill="#fdfdfb" fill-opacity=".95"/>
-    <text x="480" y="280" class="serif" font-size="13" fill="#323232">采购中心</text>
-    <polygon points="552,251 624,252 624,302 552,300" fill="#424242" fill-opacity=".92"/>
-    <text x="561" y="281" class="serif" font-size="13" fill="#fff">公开招募</text>
-    <polygon points="630,252 700,254 700,305 630,302" fill="#424242" fill-opacity=".92"/>
-    <text x="638" y="283" class="serif" font-size="13" fill="#fff">干员寻访</text>
+    <polygon points="470,250 546,251 546,300 470,298" fill="#0da1d1"/>
+    <text x="508" y="281" text-anchor="middle" class="serif" font-size="13" fill="#fff">采购中心</text>
+    <polygon points="552,251 624,252 624,302 552,300" fill="#0da1d1"/>
+    <text x="588" y="282" text-anchor="middle" class="serif" font-size="13" fill="#fff">公开招募</text>
+    <polygon points="630,252 700,254 700,305 630,302" fill="#0da1d1"/>
+    <text x="665" y="284" text-anchor="middle" class="serif" font-size="13" fill="#fff">干员寻访</text>
 
-    <polygon points="470,304 546,306 546,350 470,346" fill="#424242" fill-opacity=".92"/>
-    <text x="482" y="332" class="serif" font-size="13" fill="#fff">任务</text>
-    <polygon points="552,306 624,308 624,353 552,350" fill="#424242" fill-opacity=".92"/>
-    <text x="564" y="335" class="serif" font-size="13" fill="#fff">基建</text>
+    <polygon points="470,304 546,306 546,350 470,346" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="480" y="324" class="serif" font-size="13" fill="#323232">任务</text>
+    <polygon points="552,306 624,308 624,353 552,350" fill="#fdfdfb" fill-opacity=".95"/>
+    <text x="562" y="326" class="serif" font-size="13" fill="#323232">基建</text>
+    <!-- 基建面板里的计数色块 -->
+    <rect x="600" y="314" width="20" height="11" fill="#a32339"/><text x="610" y="322.5" text-anchor="middle" class="data" font-size="8" fill="#fff">1</text>
+    <rect x="600" y="327" width="20" height="11" fill="#18d1ff"/><text x="610" y="335.5" text-anchor="middle" class="data" font-size="8" fill="#000">10</text>
     <polygon points="630,308 700,311 700,357 630,353" fill="#424242" fill-opacity=".92"/>
-    <text x="642" y="338" class="serif" font-size="13" fill="#fff">仓库</text>
+    <text x="640" y="329" class="serif" font-size="13" fill="#fff">仓库</text>
 
     <!-- 顶部资源条 -->
     <g class="data" font-size="9" fill="#fff">
@@ -72,11 +81,11 @@
 
   <g class="cjk note">
     <path class="lead" d="M740 150 H790"/><text x="796" y="146">① 右组绕 Y 轴 -10°，</text><text x="796" y="162">   透视距离 30em</text>
-    <path class="lead" d="M740 250 H790"/><text x="796" y="246">② 浅色 = 主行动；</text><text x="796" y="262">   深色 = 其余入口</text>
-    <path class="lead" d="M740 380 H790"/><text x="796" y="376">③ 重磅中文衬线</text><text x="796" y="392">   + 小号英文注脚</text>
+    <path class="lead" d="M740 250 H790"/><text x="796" y="246">② 三种底：纸白为主，</text><text x="796" y="262">   一行蓝，仓库是石墨</text>
+    <path class="lead" d="M740 380 H790"/><text x="796" y="376">③ 入口名是重磅衬线，</text><text x="796" y="392">   贴左上；下面一行</text><text x="796" y="408">   同语言的灰色小字</text>
     <path class="lead" d="M120 110 V480 H160"/><text x="166" y="484">④ 左组绕 Y 轴 +10°，与右组形成“环抱”视角，陀螺仪驱动微小摆动</text>
     <path class="lead" d="M380 370 V506 H420"/><text x="426" y="510">⑤ 中景留给助理立绘；背景做晕影，四周压暗</text>
     <path class="lead" d="M560 58 V28 H790"/><text x="796" y="32">⑥ 资源条贴顶，半透明黑底</text>
   </g>
-  <text x="40" y="540" class="cjk" font-size="12" fill="#8d8d8d">结构示意（估计）。倾斜角与透视值取自 mashirozx/arknights-ui 与 ak-ui 的实现；未使用任何官方素材。</text>
+  <text x="40" y="540" class="cjk" font-size="12" fill="#8d8d8d">结构示意。右组的底色与文字位置照现行界面的实机截图；倾斜角与透视值取自 mashirozx/arknights-ui 与 ak-ui 的实现；未使用任何官方素材。</text>
 </svg>

@@ -54,15 +54,30 @@ describe('OperatorShowcase', () => {
     expect(scrim).toHaveClass('bg-linear-to-r', '-z-1')
   })
 
-  it('简介压在半透明的黑底上', () => {
+  it('简介压在不透明的黑底上：1.125rem、行高 1.4、灰字，左右各留 3.75rem', () => {
     render(
       <OperatorShowcase name="干员代号" src="/a.png">
         <p>简介文字</p>
       </OperatorShowcase>,
     )
     const box = screen.getByText('简介文字').parentElement
-    expect(box).toHaveClass('bg-ark-neutral-black/50')
+    expect(box).toHaveClass(
+      'bg-ark-neutral-black',
+      'px-[3.75rem]',
+      'text-ark-body',
+      'leading-ark-snug',
+      'text-ark-fg-muted',
+    )
+    expect(box).not.toHaveClass('bg-ark-neutral-black/50')
     expect(box).toHaveAttribute('data-ark-tone', 'dark')
+  })
+
+  it('文字区宽 33.625rem，徽记高 5rem', () => {
+    render(<OperatorShowcase data-testid="showcase" name="干员代号" src="/a.png" emblem={emblem} />)
+    expect(screen.getByTestId('showcase').querySelector('[data-ark="stagger"]')).toHaveClass(
+      'max-w-[33.625rem]',
+    )
+    expect(screen.getByTestId('emblem').parentElement).toHaveClass('text-[5rem]')
   })
 
   it('徽记、小字信息、背景巨字和底栏各有自己的位置', () => {

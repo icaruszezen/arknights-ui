@@ -73,3 +73,57 @@ describe('MoodBar', () => {
     expect(fill()).toHaveClass('transition-[width]', 'motion-reduce:transition-none')
   })
 })
+
+describe('MoodBar labeled', () => {
+  const cells = () => Array.from(screen.getByRole('progressbar').children) as HTMLElement[]
+  const labeledFill = () =>
+    screen.getByRole('progressbar').querySelector('[data-ark="mood-bar-fill"]') as HTMLElement
+
+  it('1.5rem 高的三格：白底深字的名称、轨道、写着 15/24 的数值格', () => {
+    render(<MoodBar variant="labeled" value={15} />)
+    const bar = screen.getByRole('progressbar', { name: '心情' })
+    expect(bar).toHaveAttribute('data-variant', 'labeled')
+    expect(bar).toHaveClass('h-6', 'grid-cols-[auto_minmax(0,1fr)_auto]')
+    expect(bar).toHaveAttribute('aria-valuenow', '15')
+
+    const [name, track, value] = cells()
+    expect(name).toHaveTextContent('心情')
+    expect(name).toHaveClass('bg-ark-neutral-white', 'text-ark-neutral-black', 'font-ark-bold')
+    expect(track).toHaveClass('bg-ark-neutral-gray-600')
+    expect(value).toHaveTextContent('15/24')
+    expect(value).toHaveClass('bg-ark-neutral-gray-600', 'text-ark-neutral-white', 'font-ark-data')
+  })
+
+  it('填充是白色的，和名称那一格连成一片', () => {
+    render(<MoodBar variant="labeled" value={15} />)
+    expect(labeledFill()).toHaveClass('bg-ark-neutral-white')
+    expect(labeledFill().style.width).toBe('62.5%')
+    expect(labeledFill().parentElement).toBe(cells()[1])
+  })
+
+  it('当前值比分母大一号', () => {
+    render(<MoodBar variant="labeled" value={15} />)
+    expect(screen.getByText('15')).toHaveClass('text-[1rem]')
+    expect(screen.getByText('/24')).toHaveClass('text-ark-caption')
+  })
+
+  it('低于阈值时填充转红并换成斜纹，名称那一格不变', () => {
+    render(<MoodBar variant="labeled" value={4} />)
+    expect(screen.getByRole('progressbar')).toHaveAttribute('data-low')
+    expect(labeledFill().className).toContain('--ark-color-signal-danger')
+    expect(cells()[0]).toHaveClass('bg-ark-neutral-white')
+  })
+
+  it('label 换名称，字符串同时是默认的可访问名称', () => {
+    const { rerender } = render(<MoodBar variant="labeled" value={15} label="Mood" />)
+    expect(screen.getByRole('progressbar', { name: 'Mood' })).toHaveTextContent('Mood')
+
+    rerender(<MoodBar variant="labeled" value={15} label="Mood" aria-label="占位干员甲的心情" />)
+    expect(screen.getByRole('progressbar', { name: '占位干员甲的心情' })).toBeInTheDocument()
+  })
+
+  it('默认是细条', () => {
+    render(<MoodBar value={15} />)
+    expect(screen.getByRole('progressbar')).toHaveAttribute('data-variant', 'thin')
+  })
+})

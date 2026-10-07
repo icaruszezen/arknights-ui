@@ -15,7 +15,8 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * 巨大的英文标题用拉丁衬线大写、收紧字距；中文标题较小、字重更低；上面是章节编号。
+ * 巨大的英文标题用拉丁衬线大写、收紧字距；中文标题较小、字重更低；上面是章节编号——
+ * 一个描边的小方框，`EP` 在上、数字在下，和实机各章封面上的画法一样。
  * 没有加载别的字体时，英文落在系统的 Times New Roman 或 Georgia 上。
  */
 export const Default: Story = {}

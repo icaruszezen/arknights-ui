@@ -20,7 +20,19 @@ describe('WorldEntryList', () => {
     expect(within(list).getAllByRole('listitem')).toHaveLength(2)
   })
 
-  it('左缩进逐条递增，形成阶梯；竖屏取消', () => {
+  it('没有阶梯缩进：各条左缘对齐', () => {
+    render(
+      <WorldEntryList>
+        <WorldEntry>源石</WorldEntry>
+        <WorldEntry>感染者</WorldEntry>
+      </WorldEntryList>,
+    )
+    for (const item of screen.getAllByRole('listitem')) {
+      expect(item.className).not.toMatch(/(^|\s)(portrait:)?ml-/)
+    }
+  })
+
+  it('入场逐条自左滑入，每条晚 200ms；减少动效时只淡入', () => {
     render(
       <WorldEntryList>
         <WorldEntry>源石</WorldEntry>
@@ -36,15 +48,28 @@ describe('WorldEntryList', () => {
     ])
     for (const item of items) {
       expect(item).toHaveClass(
-        'ml-[calc(var(--ark-entry-step,2rem)*var(--ark-entry-index))]',
-        'portrait:ml-0',
+        'motion-safe:animate-ark-enter-left',
+        'motion-safe:[animation-duration:0.8s]',
+        'motion-safe:[animation-delay:calc(var(--ark-entry-index)*200ms)]',
+        'motion-reduce:animate-ark-fade-in',
       )
     }
+  })
+
+  it('stagger={false} 不做入场', () => {
+    render(
+      <WorldEntryList stagger={false}>
+        <WorldEntry>源石</WorldEntry>
+      </WorldEntryList>,
+    )
+    const item = screen.getByRole('listitem')
+    expect(item.className).not.toContain('animate-')
+    expect(item.style.getPropertyValue('--ark-entry-index')).toBe('')
   })
 })
 
 describe('WorldEntry', () => {
-  it('中文粗黑 2.5rem 加英文副标，下方一条细线', () => {
+  it('6rem 高，中文粗黑 2.5rem 和英文宽体 1.25rem 排在同一行、贴底，下方一条实线', () => {
     render(
       <WorldEntry data-testid="entry" sub="ORIGINIUM">
         源石
@@ -53,9 +78,22 @@ describe('WorldEntry', () => {
     const entry = screen.getByTestId('entry')
     expect(entry.tagName).toBe('DIV')
     expect(entry).toHaveAttribute('data-ark', 'world-entry')
-    expect(entry).toHaveClass('border-b', 'border-ark-rule')
-    expect(screen.getByText('源石')).toHaveClass('text-ark-h1', 'font-ark-bold')
-    expect(screen.getByText('ORIGINIUM')).toHaveClass('font-ark-latin-wide')
+    expect(entry).toHaveClass('flex', 'h-24', 'items-end', 'border-b', 'border-ark-fg', 'pb-ark-3')
+    const zh = screen.getByText('源石')
+    const en = screen.getByText('ORIGINIUM')
+    expect(zh).toHaveClass('text-ark-h1', 'font-ark-bold')
+    expect(en).toHaveClass('font-ark-latin-wide', 'text-ark-body-lg', 'font-ark-bold', 'ml-ark-5')
+    // 同一行：英文紧跟在中文后面，是它的兄弟
+    expect(zh.nextElementSibling).toBe(en)
+  })
+
+  it('默认是灰的', () => {
+    render(
+      <WorldEntry data-testid="entry" sub="ORIGINIUM">
+        源石
+      </WorldEntry>,
+    )
+    expect(screen.getByTestId('entry')).toHaveClass('text-ark-fg-muted')
   })
 
   it('给了 href 是链接，名称来自中文和英文', () => {
@@ -68,25 +106,36 @@ describe('WorldEntry', () => {
     expect(link).toHaveAttribute('href', '#originium')
   })
 
-  it('是链接时悬停文字变色并位移，背后浮现信号色的巨字', () => {
+  it('是链接时悬停文字变成前景色并右移 2rem，背后贴着右端浮现信号色的巨字', () => {
     render(
       <WorldEntry href="#originium" sub="ORIGINIUM">
         源石
       </WorldEntry>,
     )
     const link = screen.getByRole('link')
-    const heading = link.querySelector('[data-ark="heading"]')
-    expect(heading).toHaveClass(
-      'group-hover:text-ark-signal-fg',
-      'motion-safe:group-hover:translate-x-ark-4',
-    )
-    // 位移只在允许动效时发生
-    expect(heading?.className).not.toMatch(/(^|\s)group-hover:translate-x-/)
+    for (const text of [screen.getByText('源石'), within(link).getAllByText('ORIGINIUM')[1]]) {
+      expect(text).toHaveClass(
+        'group-hover:text-ark-fg',
+        'motion-safe:group-hover:translate-x-ark-6',
+      )
+      // 变的是明暗，不是信号色；位移只在允许动效时发生
+      expect(text?.className).not.toContain('text-ark-signal-fg')
+      expect(text?.className.split(' ')).not.toContain('group-hover:translate-x-ark-6')
+    }
 
     const ghost = link.querySelector('[data-ark="ghost-title"]')
     expect(ghost).toHaveTextContent('ORIGINIUM')
     expect(ghost).toHaveAttribute('aria-hidden', 'true')
-    expect(ghost).toHaveClass('text-ark-signal/25', 'opacity-0', 'group-hover:opacity-100', '-z-1')
+    expect(ghost).toHaveClass(
+      'text-ark-signal/25',
+      'opacity-0',
+      'group-hover:opacity-100',
+      '-z-1',
+      'right-ark-3',
+      'bottom-ark-3',
+      'font-ark-latin-wide',
+      'text-[4.5rem]',
+    )
   })
 
   it('键盘聚焦时有同样的反馈', () => {
@@ -99,8 +148,9 @@ describe('WorldEntry', () => {
     expect(link.querySelector('[data-ark="ghost-title"]')).toHaveClass(
       'group-focus-visible:opacity-100',
     )
-    expect(link.querySelector('[data-ark="heading"]')).toHaveClass(
-      'group-focus-visible:text-ark-signal-fg',
+    expect(screen.getByText('源石')).toHaveClass(
+      'group-focus-visible:text-ark-fg',
+      'motion-safe:group-focus-visible:translate-x-ark-6',
     )
   })
 

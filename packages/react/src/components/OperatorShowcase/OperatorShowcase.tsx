@@ -43,7 +43,7 @@ export interface OperatorShowcaseProps extends Omit<ComponentProps<'section'>, '
  * 官网干员屏的编排：左边是档案式的文字——小标签、英文名、中文名、徽记、简介，
  * 右边是出血的立绘，身后是同一张图放大去色的重影。只在文字一侧加遮罩。
  *
- * `children` 是简介，压在一块半透明的黑底上。文字逐项自左入场，立绘自右入场；
+ * `children` 是简介，压在一块不透明的黑底上。文字逐项自左入场，立绘自右入场；
  * 换干员时给它换一个 `key`，入场会重播。
  *
  * 根元素需要一个高度（如 `h-[32rem]` 或铺满父元素），立绘占右侧五分之三。
@@ -91,24 +91,26 @@ export function OperatorShowcase({
         )}
       />
       <Scrim side="left" className="-z-1 portrait:hidden" />
-      <Stagger className="grid max-w-md content-center justify-items-start gap-ark-4 portrait:max-w-none">
+      <Stagger className="grid max-w-[33.625rem] content-center justify-items-start gap-ark-4 portrait:max-w-none">
         {label != null && <Divider label={label} variant="fade" className="w-64 max-w-full" />}
-        <div className="flex items-end gap-ark-4">
+        <div className="flex items-end gap-ark-5">
           {/* 官网实测：中文名是 Bold、不收字距，英文名 1.25rem 对中文名 3.75rem */}
           <Codename as={nameAs} size="lg" sub={sub} className="font-ark-bold tracking-ark-normal">
             {name}
           </Codename>
           {emblem != null && (
-            <span className="flex shrink-0 text-[3.5rem] leading-ark-solid">{emblem}</span>
+            // 徽记高 5rem，离名字 1.5rem（官网实测）
+            <span className="flex shrink-0 text-[5rem] leading-ark-solid">{emblem}</span>
           )}
         </div>
         {meta != null && (
           <p className="m-0 text-ark-label leading-ark-snug text-ark-fg-secondary">{meta}</p>
         )}
         {children != null && (
+          // 官网实测：不透明的黑底，1.125rem、行高 1.4、#ababab，左右各留 3.75rem
           <div
             data-ark-tone="dark"
-            className="box-border bg-ark-neutral-black/50 p-ark-4 text-ark-label leading-ark-body text-ark-fg-secondary"
+            className="box-border bg-ark-neutral-black px-[3.75rem] pt-[0.875rem] pb-[1.125rem] text-ark-body leading-ark-snug text-ark-fg-muted portrait:px-ark-4"
           >
             {children}
           </div>

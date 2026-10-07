@@ -27,11 +27,16 @@ describe('ChapterTitle', () => {
     expect(sub.previousElementSibling).toHaveAttribute('aria-hidden', 'true')
   })
 
-  it('编号补前导零到两位，用数据体和信号色，前面带 EPISODE', () => {
+  it('编号是一个描边的小方框：上面反白的 EP，下面是补到两位的数字', () => {
     render(<ChapterTitle number={8}>The Long Night</ChapterTitle>)
     const number = screen.getByText('08')
-    expect(number).toHaveClass('font-ark-data', 'font-ark-bold', 'text-ark-signal-fg')
-    expect(screen.getByText('EPISODE')).toHaveClass('font-ark-latin-condensed', 'text-ark-fg-muted')
+    const box = number.parentElement
+    expect(box).toHaveClass('border', 'border-current', 'font-ark-data', 'font-ark-bold')
+    const label = screen.getByText('EP')
+    expect(label).toHaveClass('bg-ark-invert', 'text-ark-on-invert')
+    expect(label.nextElementSibling).toBe(number)
+    // 编号不再是信号色
+    expect(number).not.toHaveClass('text-ark-signal-fg')
   })
 
   it('字符串编号原样输出，numberLabel 可以改也可以去掉', () => {
@@ -48,7 +53,8 @@ describe('ChapterTitle', () => {
         The Long Night
       </ChapterTitle>,
     )
-    expect(screen.queryByText('EPISODE')).not.toBeInTheDocument()
+    expect(screen.queryByText('EP')).not.toBeInTheDocument()
+    expect(screen.getByText('08').parentElement?.children).toHaveLength(1)
   })
 
   it('DOM 里英文标题在最前，编号在视觉上排到上面', () => {
@@ -61,7 +67,7 @@ describe('ChapterTitle', () => {
     expect(heading.firstElementChild).toHaveTextContent('The Long Night')
     expect(heading.firstElementChild).toHaveClass('order-2')
     expect(screen.getByText('08').parentElement).toHaveClass('order-1')
-    expect(heading).toHaveAccessibleName('The Long Night 长夜 EPISODE 08')
+    expect(heading).toHaveAccessibleName('The Long Night 长夜 EP 08')
   })
 
   it('caption 是对标题的再一次表述，对读屏隐藏', () => {

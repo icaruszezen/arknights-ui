@@ -123,44 +123,44 @@
 | --- | --- |
 | `Carousel` / `CarouselSlide` | 16:9 轮播，下面一条进度条，信号色的一段停在当前页；可以自动轮播，带暂停 |
 | `OperatorShowcase` | 干员屏的编排：档案式的文字，加出血的立绘和重影 |
-| `ThumbnailStrip` / `Thumbnail` | 缩略图切换，当前项上方一条信号色短条；可以竖排 |
-| `WorldEntryList` / `WorldEntry` | 阶梯缩进的名词条目，悬停时背后浮现巨型英文 |
+| `ThumbnailStrip` / `Thumbnail` | 带白框的缩略图切换，名字写在左下角，当前项右上角探出一块信号色三角；可以竖排 |
+| `WorldEntryList` / `WorldEntry` | 名词条目：中英同一行，逐条自左入场；悬停时由灰变白并右移，背后浮现巨型英文 |
 
 **[游戏 · 主界面](../../docs/modules/game/home.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `EntryPanel` | 入口面板：重磅的中文衬线贴左下，英文注脚，右上角的提醒标记 |
+| `EntryPanel` | 入口面板：重磅的中文衬线贴左上，下面一行灰色小字；石墨、纸白、信号色三种底；右上角的提醒标记 |
 | `EntryGrid` | 右面板组“一、二、三、三”的四行编排，入口的字号跟着所在的行走 |
 
 **[游戏 · 干员](../../docs/modules/game/operator.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `OperatorCard` | 竖长的胸像卡片，信息压在四角；星数加底边色条双重编码稀有度 |
-| `ClassFilter` / `ClassFilterItem` | 职业筛选：图标一排，当前项反白 |
-| `AttributeList` / `Attribute` | 属性表：标签在左、数值右对齐，下方 2px 的相对值条 |
-| `SkillSlot` | 技能格：黑色半透明方块，选中的换成信号色描边 |
-| `Codename` | 代号排版：Heavy、字距 -0.1em，英文小字在上 |
+| `OperatorCard` | 竖长的胸像卡片：星级紧跟职业图标，等级在圆环里，代号右对齐压在斜切的名字带上；星数、网点的颜色、底边色条三处编码稀有度 |
+| `ClassFilter` / `ClassFilterItem` | 职业筛选：图标一排，或贴右的一竖列；当前项是信号色实底 |
+| `AttributeList` / `Attribute` | 属性表：小图标加数值，数值背后一条半透明的相对值条；可以排成两列 |
+| `SkillSlot` | 技能格：黑色半透明方块，选中的右上角一块信号色三角加对勾 |
+| `Codename` | 代号排版：Heavy、字距 -0.1em，英文小字在上；`serif` 是游戏内详情页的宋体写法 |
 
 **[游戏 · 作战](../../docs/modules/game/battle.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `StageMap` / `StageNode` | 关卡地图：带编号的节点用细线相连，支线以 45° 折线分叉 |
+| `StageMap` / `StageNode` | 关卡地图：白色的编号横条用 3px 白线相连，左端的六边形标出进度，选中的变黑底白字；支线以 45° 折线分叉 |
 | `SquadSlot` | 编队里的一个位置：放一张干员卡片，空位是带加号的虚线框 |
-| `CostMeter` | 费用：全屏最大的数字，上方的细条是回复进度 |
-| `DeployCard` | 可部署干员卡：左上角写费用，选中上浮，费用不足或冷却时压暗 |
+| `CostMeter` | 费用：全屏最大的数字，前面是图标，底板下缘的细条是回复进度，再下面一条写剩余可部署数 |
+| `DeployCard` | 可部署干员卡：顶部并排职业图标和费用，选中上浮，费用不足或冷却时压暗 |
 | `UnitBar` | 单位头顶的生命条和技力条 |
-| `HudCounter` / `HudCounterItem` | 顶部正中的战况：敌方击杀数与我方生命点数 |
+| `HudCounter` / `HudCounterItem` | 顶部正中的战况：直角矩形的底板，橙色准星配击杀数，蓝色的塔配生命点数 |
 
 **[游戏 · 基建](../../docs/modules/game/base.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `RoomCard` | 房间卡片：类型色描边，房间就是入口 |
+| `RoomCard` | 房间卡片：左侧一条类型色粗边，标题后面是等级的小竖条；有待处理时整张被类型色圈起来 |
 | `OperatorAvatar` | 头像格：右下角的加成图标与圆环，底边的心情条 |
-| `MoodBar` | 心情条，低于阈值时转红并换成斜纹 |
+| `MoodBar` | 心情条：头像下的细条，或进驻信息里带字的粗条；低于阈值时转红并换成斜纹 |
 | `Countdown` | 数据体的 `HH:MM:SS` 倒计时，可以自己走 |
 
 **[游戏 · 寻访与采购中心](../../docs/modules/game/gacha-and-store.md)**
@@ -168,22 +168,22 @@
 | 组件 | 说明 |
 | --- | --- |
 | `Banner` | 卡池横幅：多层视差，标题与规则在一侧，行动按钮在对面的下角 |
-| `ProductCard` | 商品卡片：价格带、售罄、限时角标、库存与限购 |
+| `ProductCard` | 商品卡片：顶部的名称带、居中的价格带、右上角的剩余数量、斜盖的售罄章、限时角标 |
 
 **[游戏 · 剧情](../../docs/modules/game/story.md)**
 
 | 组件 | 说明 |
 | --- | --- |
 | `DialogueBox` | 没有框的文字区：底部一片黑色渐变，说话人在左、正文在右 |
-| `StoryControls` / `StoryControl` | 角落里的一组半透明小按钮 |
-| `ChapterTitle` | 章节标题：拉丁衬线大写的英文，加较轻的中文和章节编号 |
+| `StoryControls` / `StoryControl` | 角落里的一组半透明小按钮；`shape="square"` 是作战界面倍速、暂停那种方块 |
+| `ChapterTitle` | 章节标题：拉丁衬线大写的英文，加较轻的中文，和一个小方框里的章节编号 |
 
 **[宣传物料](../../docs/modules/promotional.md)**
 
 | 组件 | 说明 |
 | --- | --- |
 | `NumberedSection` | 编号小节：数据体的两位数字、小节名、一条细线 |
-| `KeyValueList` / `KeyValue` | 键值对：键偏灰，值用粗体或主题色 |
+| `KeyValueList` / `KeyValue` | 键值对：键粗体，值常规字重，要强调的值上主题色 |
 | `TimeRange` | `10月03日 16:00 - 10月17日 03:59`，数字用数据体 |
 
 每个组件的属性、示例和交互说明在 [Storybook](https://icaruszezen.github.io/arknights-ui/) 里，也可以在本地运行：
@@ -286,9 +286,9 @@ const [open, setOpen] = useState(false)
 
 **逐个摆位的子元素。** `EntryGrid`、`Carousel`、`StageMap`、`WorldEntryList` 会把每个子元素各放进一格。子元素要直接写在里面或者传数组；包一层 Fragment 或自定义组件就只算一个。
 
-**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。`Pattern`、`Watermark`，以及不放内容的 `Scrim`、不带链接的 `ScrollHint` 同样是装饰。`Icon` 默认也是，给了 `label` 才会被读到。场景组件里，`ChapterTitle` 的 `caption`、`AttributeList` 的相对值条、`Carousel` 的进度条都是对已有信息的第二次表述，同样对读屏隐藏。
+**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。`Pattern`、`Watermark`，以及不放内容的 `Scrim`、不带链接的 `ScrollHint` 同样是装饰。`Icon` 默认也是，给了 `label` 才会被读到。场景组件里，`ChapterTitle` 的 `caption`、`StageNode` 的 `caption`、`AttributeList` 的相对值条、`Carousel` 的进度条都是对已有信息的第二次表述，同样对读屏隐藏。
 
-**只给读屏的文字。** 有几处画面上只有图形和数字，名称另外读给读屏：`DeployCard` 的干员名和“费用不足”“再部署冷却”，`HudCounterItem` 的“击杀”“生命点数”，`StageNode` 的“已通关”“当前”“未解锁”，`OperatorCard` 的精英化阶段。想换一种说法时用各自的 `label` 类属性，或者直接给 `aria-label`。
+**只给读屏的文字。** 有几处画面上只有图形和数字，名称另外读给读屏：`DeployCard` 的干员名和“费用不足”“再部署冷却”，`HudCounterItem` 的“击杀”“生命点数”，`CostMeter` 的“费用”，`StageNode` 的“已通关”“当前”“未解锁”，`OperatorCard` 的精英化阶段，`RoomCard` 的等级。想换一种说法时用各自的 `label` 类属性，或者直接给 `aria-label`。还有几处是实机上只有图标、组件默认仍然显示名称的：给了 `icon` 的 `Attribute`、开了 `iconOnly` 的 `ClassFilter`、开了 `hideLabel` 的 `Thumbnail`，这时名称只读给读屏。
 
 **固定的位置。** `Nav`、`BackHome`、`ResourceBar`、`GhostTitle`、`Callout` 都不自己定位。文档要求它们“永远在同一个地方”，但放在哪由页面决定，用 `className` 写（如 `fixed top-0 left-0`）。`Pattern`、`Portrait`、`ScrollHint` 也是这样，作战和剧情的 `HudCounter`、`CostMeter`、`UnitBar`、`StoryControls` 同理。例外有四个：`Scrim` 默认铺满父元素，`Watermark` 默认贴在面板的一侧，`DialogueBox` 默认贴在父元素的底边，`Shell` 默认铺满视口——它本身就是那副固定的骨架。
 
@@ -346,22 +346,42 @@ const [open, setOpen] = useState(false)
 | `Carousel` 的自动轮播 | 官网自动轮播 | 默认关闭；打开后带暂停按钮 | 自动更新的内容要能暂停（WCAG 2.2.2） |
 | `OperatorShowcase` 的中文名 | 代号 Heavy、字距 -0.1em | Bold、不收字距 | 这是官网的实测值；`Codename` 默认是游戏里的写法 |
 | `EntryPanel` 的悬停 | 游戏内没有悬停 | 石墨变浅灰、纸白变信号色，字换成深色 | 与成对的 `Button` 一致：悬停整块换色 |
-| `EntryPanel` 的文字投影 | `5px 5px 0 #8b8b8b`（大标题） | 只给纸白面板最大的一档，取 `gray-500` | 小一些的字上 5px 的偏移会糊成一片 |
+| `EntryPanel` 的文字投影 | 社区复刻给大标题 `5px 5px 0 #8b8b8b` | 只有石墨面板上的入口名带硬投影 | 实机的纸白面板和蓝色面板上没有投影 |
+| `EntryPanel` 的蓝 | 实机是蓝底白字（`#0da1d1`，约 3:1） | `tone="signal"`：信号色配它自己的前景色 | 同 `ActionButton` |
+| `EntryPanel` 右上角的数值 | 实机的理智是入口名左边一块带底的大数字 | `aside` 放在右上角 | 入口名贴左上，右上角是剩下的空处 |
 | `EntryGrid` 的行高 | 最大 / 中 / 小 | 基准行高的 2 倍、1.5 倍、1 倍 | 文档只给了相对大小，按线框折算 |
-| `StageMap` 的连线 | 细线相连，支线向上下分叉 | 支线是“水平 → 45° → 水平”的折线；通向未解锁关卡的是暗的虚线 | 全局只用 45°；虚线是明暗之外的第二种标记 |
+| `StageMap` 的连线 | 实机是两点之间直连的白线，角度任意 | 支线是“水平 → 45° → 水平”的折线；通向未解锁关卡的是暗的虚线 | 连线不测量 DOM，固定成 45° 才画得准；虚线是明暗之外的第二种标记 |
+| `StageNode` 的六边形 | 实机压在白条的左端 | 压在一格黑底上 | 信号色在白底上不到 2:1 |
+| `StageNode` 选中 | 黑底白字 | 再加一圈 1px 的白边 | 实机的地图是亮的；压在深色背景上时黑条的边界会消失 |
+| `StageNode` 右端的缩略图 | 实机每个节点右端有一个圆形的掉落图 | 没有 | 组件库不带图片 |
 | `StageMap` 的列距 | 未指定 | 固定为行距的 2 倍 | 连线不测量 DOM，比例固定才能保证斜线是 45° |
-| `HudCounter`、`CostMeter` 的斜边 | 示意图里画得较缓 | 45° | 几何规范写的是全局只用 45° |
-| `HudCounter` 的分母 | 示意图里与当前值同大 | 小而灰 | 数据展示的规则：当前值大而亮，分母小而灰 |
+| `HudCounter` 的图标 | 实机的击杀图标下面压着一行极小的 `ENEMY` | 没有这行字 | 太小，读不清；名称另外读给读屏 |
+| `DeployCard` 的色线 | 实机的卡片顶端和底边各有一条色线 | 没有 | 黄、蓝、绿各自代表什么没有弄清 |
 | `DeployCard` 的干员名 | 卡面上没有文字 | 名字和状态只读给读屏 | 卡面太小放不下；图标不能没有名称 |
-| `RoomCard` 发电站的绿 | 绿，没有色值 | `--ark-color-signal-success` | token 里唯一的绿 |
+| `RoomCard` 的提醒 | 实机是右上角一个圆形的图标气泡，加一圈类型色的光晕 | 一圈类型色描边，加橙色的角或计数色块 | 沿用 `Badge`；不做光晕 |
+| `RoomCard`、`ProductCard` 的圆角 | 实机的房间卡片、商品卡片、购买按钮都有小圆角 | 直角 | 整套规范默认直角；“不用圆角”的措辞留到重测文档时一起定 |
 | `OperatorAvatar` 的圆环 | 圆环表达效果优劣 | 走过的比例是 `buffLevel / buffMax`，默认分三级 | 文档没有给档位 |
 | `MoodBar` 的阈值 | 低于阈值转红 | 默认是上限的四分之一；低的时候同时换成斜纹 | 文档没有给数值；状态不只靠颜色区分 |
+| `MoodBar` 带字款的灰 | 实机没填到的部分是中灰 | `gray-600` | 白字压在中灰上不到 4.5:1 |
 | `Countdown` 超过一天 | `HH:MM:SS` | 小时不封顶（`51:00:09`），可以用 `format` 改写 | 文档没有说 |
-| `ProductCard` 的售罄 | 整体压暗并盖上标记 | 只压暗商品图和价格，标记是一条不旋转的横带 | 名字和库存仍然要读得清；全局只用 45°，印章式的小角度不在这套语言里 |
+| `ProductCard` 的售罄 | 整张卡片褪色，斜盖一条暗红的带 | 商品图和价格带褪色，名称带换成灰底深字；斜带照做（−12°） | 名字仍然要读得清 |
+| `ProductCard` 的默认表面 | 实机的商品卡片是白的 | 默认石墨，`tone="paper"` 换成纸白 | 同 `Drawer`：石墨是其余所有东西的默认容器 |
+| `ProductCard` 的限时角标 | 商店里没有取到限时商品的图 | 橙色的小标签 | 估计。实机上见到的限时标记只有主界面上绿色圆头的小块 |
 | `Banner` 的行动按钮 | 两个并排 | 放在文字对面的下角，放不下时折行 | 文档没有给位置 |
 | `DialogueBox` 的字号 | 说话人较小 | 说话人 1rem，正文 1.25rem | 文档没有给数值 |
 | `ChapterTitle` 的字体 | Didot、Bodoni、Trajan 一类 | 英文衬线的字体栈，用 `--ark-chapter-font` 换 | 这些字体不随包分发 |
 | `ClassFilter`、`ThumbnailStrip` 的语义 | 未指定 | 单选组，方向键切换 | 同一时刻只有一个当前项 |
+| `ClassFilter`、`AttributeList` 的名称 | 实机只有图标，没有文字 | 默认显示名称；`iconOnly`、给了 `icon` 才只读给读屏 | 组件库不带图标；图标不能没有名称 |
+| `ClassFilter` 的选中 | 实机是蓝色（旧版弹层是蓝色实底白字） | 信号色实底配它自己的前景色 | 同 `ActionButton` |
+| `OperatorCard` 的底边色条 | 实机只有左下角一小段稀有度色的箭头纹 | 一整条 4px 的色条 | 星数之外的第二种编码，卡片很小时也看得清 |
+| `OperatorCard` 的精英化 | 实机是一枚徽记 | `E1`、`E2` 的小标 | 组件库不带图标 |
+| `SkillSlot` 的描边 | 实机的当前技能只有右上角的蓝色三角加对勾 | 三角之外保留一圈信号色描边 | 格子里的图形由使用方给，颜色不可控时描边更稳 |
+| `Thumbnail` 的白框 | 官网的白框在图片后面，从立绘透明的地方露出来 | 压在图片上面 | 使用方的图不一定有透明底 |
+| `Thumbnail` 切换时的闪白 | 官网换人时缩略图闪一下白 | 没有 | 闪烁类的动效能省则省 |
+| `WorldEntryList` 的入场 | 官网是整条从屏幕外滑进来（`translateX(-100%)`，0.8s） | 沿用入场动效的 1rem 位移，时长照 0.8s | 列表不一定贴着屏幕的左边 |
+| `Carousel` 的翻页按钮和计数 | 官网的轮播上没有 | 有 | 键盘和读屏需要 |
+| `KeyValue` 的强调色 | 读到的那篇公告用红色（`#c0392b`） | `tone="signal"`，跟随信号色 | 每期一个主题色 |
+| `NumberedSection` 的编号 | 公告正文用“一、”“二、” | 默认是数据体的 `01`；`number` 也接受字符串 | `01` 式的编号是界面语言的延伸，没有实机出处 |
 | `TimeRange` 的年份 | 模板里不带年份 | 默认不带，`year` 打开 | 跨年的活动需要 |
 
 `Empty` 不在表里：文档原先写的 `gray-600` 文字在黑底上只有 2.95:1，这个问题已经在文档里更正并记录，见 [反馈 · 空状态](../../docs/elements/feedback.md#空状态)。
@@ -388,7 +408,7 @@ pnpm install
 - 类名只写完整的静态字符串。Tailwind 按纯文本扫描源码，拼出来的类名不会生成样式。
 - 不依赖全局重置。预编译样式表不带 Preflight，元素自带的边距、边框、`box-sizing` 要在类里写全（Storybook 也是这样配置的，看到的就是真实表现）。
 - 颜色只用语义键（`text-ark-fg`、`bg-ark-signal`、`border-ark-rule` 等），它们会跟随明暗上下文。固定语义的颜色（稀有度、提示级别）才直接取调色板。
-- 切角、斜边把背景画在 `::before` 上再裁切（`before:ark-cut-tr-md`、`before:ark-slant-r`），不要直接裁根元素。斜边有四种：`ark-slant-r`、`ark-slant-x`，以及 HUD 底板用的 `ark-slant-l`（只斜左边）和 `ark-slant-in`（倒梯形）；水平偏移取 `--ark-slant`，要设成元素自身的高度才是 45°。
+- 切角、斜边把背景画在 `::before` 上再裁切（`before:ark-cut-tr-md`、`before:[clip-path:…]`），不要直接裁根元素。主题层里还有四个 45° 斜边的工具类（`ark-slant-r`、`ark-slant-x`、`ark-slant-l`、`ark-slant-in`），水平偏移取 `--ark-slant`。对过实机之后已经没有组件在用它们——返回 / 主页和作战 HUD 的底板都是直角矩形——留给使用方做装饰。
 - 根元素可能是 `<button>` 的组件（`OperatorCard`、`EntryPanel`、`DeployCard`、`SkillSlot`），里面只放 `<span>`、`<img>` 这类行内元素，不套根是 `<div>` 的组件。内容槽开放的卡片（`RoomCard`、`ProductCard`）把点击区做成盖在上面的一层空按钮或空链接，用 `aria-labelledby` 取名。
 - 有“当前项”的组件用 [`src/utils/useControllableState.ts`](src/utils/useControllableState.ts) 处理受控 / 非受控；单选组的上下文和方向键处理在 [`src/internal/radioGroup.tsx`](src/internal/radioGroup.tsx)。
 - 按子元素逐个摆位的组件用 `toItems()`。它不展开 Fragment，测试和 Story 里要传数组。`StageMap` 还会读子元素的属性来算位置和连线，所以节点必须是直接子元素。

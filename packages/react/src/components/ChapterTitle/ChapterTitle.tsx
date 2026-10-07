@@ -17,8 +17,8 @@ export interface ChapterTitleProps extends ComponentProps<'h2'> {
   /** 章节编号。数字补前导零到两位，字符串和节点原样输出。 */
   number?: ReactNode
   /**
-   * 编号前面的英文小字。
-   * @default 'EPISODE'
+   * 编号上面的英文小字，反白写在编号的小方框里。传 `null` 去掉。
+   * @default 'EP'
    */
   numberLabel?: ReactNode
   /**
@@ -55,7 +55,8 @@ const aligns: Record<ChapterTitleAlign, string> = {
 
 /**
  * 章节标题：每一章的“电影片头”。巨大的英文标题用拉丁衬线大写、收紧字距，
- * 下面是较小、较轻的中文标题，上面是章节编号。`children` 是英文标题。
+ * 下面是较小、较轻的中文标题，上面是章节编号——一个描边的小方框，`EP` 在上、数字在下。
+ * `children` 是英文标题。
  *
  * 剧情界面把控件藏到最少，把字体的表现力放到最大：同一套骨架，换一款标题字就换了一种气质。
  * 英文标题的字体由 `--ark-chapter-font` 决定，默认是英文衬线的字体栈——
@@ -67,7 +68,7 @@ export function ChapterTitle({
   as = 'h2',
   sub,
   number,
-  numberLabel = 'EPISODE',
+  numberLabel = 'EP',
   caption,
   size = 'lg',
   align = 'left',
@@ -111,13 +112,14 @@ export function ChapterTitle({
         </span>
       )}
       {number != null && (
-        <span className="order-1 flex items-baseline gap-ark-2 leading-ark-solid">
+        // 实机各章封面上的画法：一个描边的小方框，上面反白的 EP，下面是编号，都是前景色
+        <span className="order-1 inline-grid border border-current text-center font-ark-data leading-ark-solid font-ark-bold">
           {numberLabel != null && (
-            <span className="font-ark-latin-condensed text-ark-label font-ark-medium tracking-ark-wide text-ark-fg-muted uppercase">
+            <span className="bg-ark-invert px-ark-1 py-0.5 text-ark-caption text-ark-on-invert uppercase">
               {numberLabel}
             </span>
           )}
-          <span className="font-ark-data text-ark-h2 font-ark-bold text-ark-signal-fg">
+          <span className="px-ark-1 py-0.5 text-ark-body-lg">
             {typeof number === 'number' ? formatStatValue(number, 2) : number}
           </span>
         </span>

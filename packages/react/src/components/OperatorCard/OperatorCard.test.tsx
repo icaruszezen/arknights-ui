@@ -44,57 +44,97 @@ describe('OperatorCard', () => {
     expect(name).toHaveTextContent('干员代号Codename')
   })
 
-  it('稀有度双重编码：星数加底边色条', () => {
+  it('稀有度三处编码：星数、名字带上方的网点、底边色条', () => {
     render(
       <OperatorCard data-testid="card" rarity={6}>
         干员代号
       </OperatorCard>,
     )
+    const card = screen.getByTestId('card')
     expect(screen.getByRole('img', { name: '6 星' })).toBeInTheDocument()
-    const bar = screen.getByTestId('card').querySelector('.bg-ark-tier-6')
+    const bar = card.querySelector('.bg-ark-tier-6')
     expect(bar).toHaveAttribute('aria-hidden', 'true')
     expect(bar).toHaveClass('bottom-0', 'h-(--ark-line-strong)')
+    // 网点取稀有度色，自下而上渐隐，垫在名字带后面
+    const glow = card.querySelector('.ark-pattern-halftone')
+    expect(glow).toHaveAttribute('aria-hidden', 'true')
+    expect(glow).toHaveClass('text-ark-tier-6', 'bottom-0', '-z-1')
+    expect(glow?.className).toContain('--ark-pattern-fade:linear-gradient(to_top')
   })
 
-  it('卡片是一个容器：窄到放不下时星级下移一行，不压住职业图标', () => {
+  it('星级紧跟在左上角的职业图标后面，放不下时自己换行', () => {
     render(
       <OperatorCard data-testid="card" rarity={6} classIcon={icon}>
         干员代号
       </OperatorCard>,
     )
-    expect(screen.getByTestId('card')).toHaveClass('@container')
-    expect(screen.getByRole('img', { name: '6 星' })).toHaveClass(
-      'top-ark-2',
-      'right-ark-2',
-      '@max-[8.5rem]:top-10',
-    )
+    const row = screen.getByTestId('class-icon').parentElement?.parentElement
+    expect(row).toHaveClass('absolute', 'top-0', 'left-0', 'flex-wrap')
+    const stars = screen.getByRole('img', { name: '6 星' })
+    expect(stars.parentElement).toBe(row)
+    expect(stars.previousElementSibling).toBe(screen.getByTestId('class-icon').parentElement)
+    // 不再钉在右上角
+    expect(stars).not.toHaveClass('right-ark-2')
   })
 
-  it('不给稀有度就没有星和色条', () => {
+  it('不给稀有度就没有星、网点和色条', () => {
     render(<OperatorCard data-testid="card">干员代号</OperatorCard>)
     expect(screen.queryByRole('img')).not.toBeInTheDocument()
-    expect(screen.getByTestId('card').innerHTML).not.toContain('bg-ark-tier-')
+    expect(screen.getByTestId('card').innerHTML).not.toContain('ark-tier-')
   })
 
   it('职业图标在左上角的黑底方块里', () => {
     render(<OperatorCard classIcon={icon}>干员代号</OperatorCard>)
-    expect(screen.getByTestId('class-icon').parentElement).toHaveClass(
-      'top-0',
-      'left-0',
-      'size-8',
-      'bg-ark-neutral-black',
-    )
+    const chip = screen.getByTestId('class-icon').parentElement
+    expect(chip).toHaveClass('size-8', 'bg-ark-neutral-black')
+    expect(chip?.parentElement).toHaveClass('top-0', 'left-0')
   })
 
-  it('等级用数据体，精英化阶段写成 E2 并给读屏完整的说法', () => {
+  it('等级写在黑底的圆环里：一圈星级的黄，LV 在数字上方', () => {
+    render(<OperatorCard level={90}>干员代号</OperatorCard>)
+    const number = screen.getByText('90')
+    expect(number).toHaveClass('font-ark-data', 'font-ark-bold')
+    const ring = number.parentElement
+    expect(ring).toHaveClass(
+      'size-12',
+      'rounded-full',
+      'bg-ark-neutral-black',
+      'shadow-[inset_0_0_0_0.1875rem_var(--ark-color-tier-star)]',
+    )
+    expect(ring?.firstElementChild).toHaveTextContent('LV')
+    expect(ring?.lastElementChild).toBe(number)
+  })
+
+  it('精英化阶段写成 E2，在圆环上方，并给读屏完整的说法', () => {
     render(
       <OperatorCard level={90} elite={2}>
         干员代号
       </OperatorCard>,
     )
-    expect(screen.getByText('90')).toHaveClass('font-ark-data', 'font-ark-bold')
-    expect(screen.getByText('E2')).toHaveAttribute('aria-hidden', 'true')
+    const tag = screen.getByText('E2')
+    expect(tag).toHaveAttribute('aria-hidden', 'true')
     expect(screen.getByText('精英化阶段 2')).toHaveClass('sr-only')
+    expect(tag.parentElement?.nextElementSibling).toBe(screen.getByText('90').parentElement)
+  })
+
+  it('代号右对齐，压在一条上缘左高右低的近黑色带上', () => {
+    render(
+      <OperatorCard data-testid="card" level={90}>
+        干员代号
+      </OperatorCard>,
+    )
+    const card = screen.getByTestId('card')
+    const band = card.querySelector('[data-ark="operator-card-band"]')
+    // 落差按卡片的宽度算，底色画在 ::before 上再裁
+    expect(card).toHaveClass('@container')
+    expect(band).toHaveClass(
+      'before:bg-ark-neutral-ink-900',
+      'before:[clip-path:polygon(0_0,100%_20cqw,100%_100%,0_100%)]',
+    )
+    expect(band?.className.split(' ').some(token => token.startsWith('[clip-path'))).toBe(false)
+    expect(band?.querySelector('[data-ark="codename"]')).toHaveClass('items-end', 'text-right')
+    // 不再压黑色渐变
+    expect(card.innerHTML).not.toContain('linear-gradient(to_top,var(--ark-color-neutral-black)')
   })
 
   it('精英化阶段为 0 时不显示', () => {

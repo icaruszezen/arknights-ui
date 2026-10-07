@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { figure } from '../.storybook/art'
-import { type GlyphName, glyphs } from '../.storybook/glyphs'
+import { glyphs } from '../.storybook/glyphs'
 import {
   BackHome,
   Badge,
@@ -21,7 +21,7 @@ import {
 } from './index'
 
 // 不是组件，只是把基建相关的组件按游戏里的编排拼在一起：
-// 一艘船的剖面图，每个房间一种颜色；点房间，详情从右侧的抽屉滑入，背后的房间仍然可见。
+// 基建的总览，每个房间左侧一条类型色的粗边；点房间，详情从右侧的抽屉滑入，背后的房间仍然可见。
 // 图片全部是代码画的占位图。
 const meta = {
   title: '示例/基建',
@@ -37,7 +37,7 @@ interface Room {
   kind: RoomKind
   title: string
   sub: string
-  glyph: GlyphName
+  status: string
   level: number
   crew: number
   span: string
@@ -53,7 +53,7 @@ const rooms: Room[] = [
     kind: 'neutral',
     title: '控制中枢',
     sub: 'Control Center',
-    glyph: 'frame',
+    status: '运转中',
     level: 5,
     crew: 3,
     span: 'col-span-6',
@@ -63,7 +63,7 @@ const rooms: Room[] = [
     kind: 'factory',
     title: '制造站',
     sub: 'Factory',
-    glyph: 'blocks',
+    status: '生产中',
     level: 3,
     crew: 3,
     span: 'col-span-2',
@@ -76,7 +76,7 @@ const rooms: Room[] = [
     kind: 'trading',
     title: '贸易站',
     sub: 'Trading Post',
-    glyph: 'bars',
+    status: '获取中',
     level: 3,
     crew: 2,
     span: 'col-span-2',
@@ -88,7 +88,7 @@ const rooms: Room[] = [
     kind: 'power',
     title: '发电站',
     sub: 'Power Plant',
-    glyph: 'slashes',
+    status: '发电中',
     level: 3,
     crew: 1,
     span: 'col-span-2',
@@ -100,7 +100,7 @@ const rooms: Room[] = [
     kind: 'factory',
     title: '制造站',
     sub: 'Factory',
-    glyph: 'blocks',
+    status: '生产中',
     level: 2,
     crew: 2,
     span: 'col-span-3',
@@ -112,7 +112,7 @@ const rooms: Room[] = [
     kind: 'neutral',
     title: '宿舍',
     sub: 'Dormitory',
-    glyph: 'target',
+    status: '休息中',
     level: 2,
     crew: 3,
     span: 'col-span-3',
@@ -174,9 +174,8 @@ export const Base: Story = {
                 key={room.id}
                 kind={room.kind}
                 title={room.title}
-                sub={room.sub}
+                status={room.status}
                 level={room.level}
-                icon={glyphs[room.glyph]}
                 badge={room.ready}
                 badgeLabel="有可收取的产出"
                 onClick={() => setOpen(room.id)}
@@ -211,11 +210,16 @@ export const Base: Story = {
               <Stat label="Level" value={current.level} max={5} size="sm" />
               <Divider label="CREW" variant="fade" />
               <Crew count={current.crew} size="size-14" />
-              <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-x-ark-3 gap-y-ark-2 text-ark-label">
+              {/* 进驻信息里的心情是带字的粗条：左端写“心情”，右端写当前值和上限 */}
+              <div className="grid gap-ark-3 text-ark-label">
                 {moods.slice(0, current.crew).map((mood, index) => (
-                  <div key={mood} className="col-span-2 grid grid-cols-subgrid items-center">
-                    <span>{`占位干员 ${index + 1}`}</span>
-                    <MoodBar value={mood} aria-label={`占位干员 ${index + 1} 的心情`} />
+                  <div key={mood} className="grid gap-ark-1">
+                    <span className="font-ark-bold">{`占位干员 ${index + 1}`}</span>
+                    <MoodBar
+                      variant="labeled"
+                      value={mood}
+                      aria-label={`占位干员 ${index + 1} 的心情`}
+                    />
                   </div>
                 ))}
               </div>

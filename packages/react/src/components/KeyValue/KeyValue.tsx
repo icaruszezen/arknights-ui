@@ -30,7 +30,7 @@ export interface KeyValueProps extends ComponentProps<'div'> {
   /** 键，如“活动时间”。后面的冒号由组件补。 */
   label: ReactNode
   /**
-   * 值的颜色。值默认是粗体；最要紧的那一项（通常是时间）可以换成主题色。
+   * 值的颜色。值默认是常规字重的前景色；最要紧的那一项（通常是时间、主要奖励）可以换成主题色。
    * @default 'default'
    */
   tone?: KeyValueTone
@@ -42,8 +42,9 @@ const tones: Record<KeyValueTone, string> = {
 }
 
 /**
- * 一行键值对：键偏灰，值用粗体或主题色。`children` 是值，可以放一个 `TimeRange`。
- * 只能放在 `KeyValueList` 里。
+ * 一行键值对：键是粗体、带冒号，值是常规字重——官方公告正文就是这样写的
+ * （`<strong>活动时间：</strong>10月09日 12:00 - …`）。要强调的值用 `tone="signal"` 上色。
+ * `children` 是值，可以放一个 `TimeRange`。只能放在 `KeyValueList` 里。
  */
 export function KeyValue({ label, tone = 'default', className, children, ...rest }: KeyValueProps) {
   return (
@@ -56,8 +57,10 @@ export function KeyValue({ label, tone = 'default', className, children, ...rest
         className,
       )}
     >
-      <dt className="m-0 whitespace-nowrap text-ark-fg-muted after:content-['：']">{label}</dt>
-      <dd className={cn('m-0 font-ark-bold', tones[tone])}>{children}</dd>
+      <dt className="m-0 font-ark-bold whitespace-nowrap text-ark-fg after:content-['：']">
+        {label}
+      </dt>
+      <dd className={cn('m-0 font-ark-regular', tones[tone])}>{children}</dd>
     </div>
   )
 }

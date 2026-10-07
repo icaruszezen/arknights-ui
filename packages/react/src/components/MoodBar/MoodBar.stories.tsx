@@ -22,10 +22,18 @@ export const Low: Story = {
   args: { value: 4 },
 }
 
-/** 进驻名单里的一列：名字、心情条、数值。数字用数据体，分母小而灰。 */
+/**
+ * `variant="labeled"`：实机进驻信息里那种带字的粗条。左端白底写“心情”，和白色的填充连成一片；
+ * 右端一格写当前值和上限。
+ */
+export const Labeled: Story = {
+  args: { variant: 'labeled', value: 15, className: 'w-64' },
+}
+
+/** 进驻名单：每个人一条带字的心情条。心情低的那一条填充转红。 */
 export const InList: Story = {
   render: () => (
-    <Panel className="grid w-72 gap-ark-3">
+    <Panel className="grid w-80 gap-ark-3">
       {(
         [
           ['占位干员甲', 24],
@@ -33,13 +41,9 @@ export const InList: Story = {
           ['占位干员丙', 3],
         ] as const
       ).map(([name, mood]) => (
-        <div key={name} className="grid grid-cols-[5rem_minmax(0,1fr)_auto] items-center gap-ark-3">
-          <span className="text-ark-label leading-ark-solid">{name}</span>
-          <MoodBar value={mood} aria-label={`${name}的心情`} />
-          <span className="font-ark-data text-ark-label leading-ark-solid">
-            <b className="font-ark-bold">{mood}</b>
-            <span className="text-ark-caption text-ark-fg-muted">/24</span>
-          </span>
+        <div key={name} className="grid gap-ark-1">
+          <span className="text-ark-label leading-ark-solid font-ark-bold">{name}</span>
+          <MoodBar variant="labeled" value={mood} aria-label={`${name}的心情`} />
         </div>
       ))}
     </Panel>

@@ -31,6 +31,20 @@ export const Sizes: Story = {
 }
 
 /**
+ * 游戏内干员详情页的写法：中文代号是宋体 Heavy、不收字距，上面的英文名大小写混排、常规字重，
+ * 再上面是一排白色的星。需要加载思源宋体或 Noto Serif SC 的 Heavy 字重才有“重磅”的效果。
+ */
+export const Serif: Story = {
+  args: { serif: true, size: 'lg', sub: 'Codename' },
+  render: args => (
+    <div className="grid justify-items-start gap-ark-2">
+      <Rating value={6} className="text-ark-neutral-white" />
+      <Codename {...args} />
+    </div>
+  ),
+}
+
+/**
  * 官网干员屏量出来的是另一种写法：中文名 Bold、不收字距。
  * 用 `className` 覆盖字重和字距就行，大小关系（1.25rem : 3.75rem）不变。
  */

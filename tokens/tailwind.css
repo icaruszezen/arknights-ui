@@ -44,6 +44,11 @@
   --color-ark-tier-5: var(--ark-color-tier-5);
   --color-ark-tier-6: var(--ark-color-tier-6);
   --color-ark-tier-star: var(--ark-color-tier-star);
+  --color-ark-facility-factory: var(--ark-color-facility-factory);
+  --color-ark-facility-trading: var(--ark-color-facility-trading);
+  --color-ark-facility-power: var(--ark-color-facility-power);
+  --color-ark-side-enemy: var(--ark-color-side-enemy);
+  --color-ark-side-life: var(--ark-color-side-life);
   --color-ark-overlay-scrim: var(--ark-color-overlay-scrim);
   --color-ark-overlay-scrim-strong: var(--ark-color-overlay-scrim-strong);
   --color-ark-overlay-panel-dark: var(--ark-color-overlay-panel-dark);

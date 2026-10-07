@@ -15,7 +15,7 @@ type Story = StoryObj<typeof meta>
 /** 黑色半透明方块 + 1px 细描边。图形是演示用的自绘几何图形。 */
 export const Default: Story = {}
 
-/** 当前选中的那一格：信号色描边加粗一圈，左下角的小字跟着变色。 */
+/** 当前选中的那一格：右上角一块信号色的三角加对勾，描边换成信号色，左下角的小字跟着变色。 */
 export const Selected: Story = {
   args: { selected: true, rank: 'M3' },
 }

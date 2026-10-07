@@ -28,7 +28,7 @@
   --ark-color-signal-info: #18d1ff; /* 实测 · 官网主信号色（青蓝），导航激活、分类、进度 */
   --ark-color-signal-info-soft: rgba(24, 209, 255, 0.25); /* 实测 · 悬停时的幽灵英文大字 */
   --ark-color-signal-info-game: #22bbff; /* 社区 · 游戏内蓝色的常用近似（ak-ui、hexo-theme-arknights 均取 #2bf） */
-  --ark-color-signal-info-deep: #0098dc; /* 社区 · 偏深的罗德岛蓝（ak-ui text-color） */
+  --ark-color-signal-info-deep: #0098dc; /* 社区 · 偏深的罗德岛蓝（ak-ui text-color）。作战里我方生命图标的蓝边取色是 #08a0f0，接近这个值 */
   --ark-color-signal-action: #ffd802; /* 社区 · 行动 / 警示黄（ak-ui） */
   --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui）。与主界面实机截图取色一致：提醒用的菱形与面板上的橙色条 */
   --ark-color-signal-danger: #e33b3b; /* 社区 · 危险 / 敌方（ak-ui） */
@@ -42,6 +42,11 @@
   --ark-color-tier-5: #f1c644; /* 社区 · 五档：金 */
   --ark-color-tier-6: #ff5e19; /* 估计 · 六星以橙色强调，取 accent 的同值 */
   --ark-color-tier-star: #f1d94a; /* 社区 · 干员卡片上星级的黄。对机核文章里的实机截图取色 */
+  --ark-color-facility-factory: #ffcc00; /* 社区 · 基建·制造站的类型色。MAA 的纯色实机裁图（1280×720） */
+  --ark-color-facility-trading: #33ccff; /* 社区 · 基建·贸易站的类型色。MAA 的纯色实机裁图（1280×720） */
+  --ark-color-facility-power: #ccff66; /* 社区 · 基建·发电站的类型色。MAA 的纯色实机裁图（1280×720） */
+  --ark-color-side-enemy: #ff7800; /* 社区 · 作战顶部击杀计数的图标（橙）。对 Terra Wiki 的作战实机截图（2140×1080）取色；MAA 的裁图量化后是 #ff8000 */
+  --ark-color-side-life: #e88080; /* 社区 · 作战顶部生命点数的数字（浅红）。对 Terra Wiki 的作战实机截图取色，机核文章的截图里同样是这个颜色 */
   --ark-color-overlay-scrim: rgba(0, 0, 0, 0.5); /* 实测 · 图片上压字用的半透明黑 */
   --ark-color-overlay-scrim-strong: rgba(0, 0, 0, 0.8); /* 实测 · 弹层遮罩 */
   --ark-color-overlay-panel-dark: rgba(66, 66, 66, 0.92); /* 社区 · 半透明深色面板（ak-ui） */

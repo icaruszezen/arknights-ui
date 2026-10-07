@@ -2,8 +2,10 @@ import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 import { Attribute, AttributeList } from './AttributeList'
 
+const icon = <svg aria-hidden="true" data-testid="icon" viewBox="0 0 24 24" />
+
 describe('AttributeList', () => {
-  it('是一个描述列表：标签在 dt，数值在 dd', () => {
+  it('是一个描述列表：名称在 dt，数值在 dd', () => {
     render(
       <AttributeList data-testid="list">
         <Attribute label="生命上限" value={2480} />
@@ -19,20 +21,69 @@ describe('AttributeList', () => {
       '612',
     ])
   })
+
+  it('默认一列：名称一列、数值一列，所有项共用', () => {
+    render(
+      <AttributeList data-testid="list">
+        <Attribute data-testid="row" label="攻击" value={612} />
+      </AttributeList>,
+    )
+    expect(screen.getByTestId('list')).toHaveClass('grid-cols-[auto_minmax(0,1fr)]')
+    const row = screen.getByTestId('row')
+    expect(row).toHaveClass('col-span-2', 'grid-cols-subgrid')
+    expect(row.className).not.toContain('col-start-')
+  })
+
+  it('columns={2} 排成两列，中间夹一条空列', () => {
+    render(
+      <AttributeList data-testid="list" columns={2}>
+        <Attribute data-testid="row" label="攻击" value={612} />
+      </AttributeList>,
+    )
+    expect(screen.getByTestId('list')).toHaveClass(
+      'grid-cols-[auto_minmax(0,1fr)_1rem_auto_minmax(0,1fr)]',
+    )
+    expect(screen.getByTestId('row')).toHaveClass('odd:col-start-1', 'even:col-start-4')
+  })
 })
 
 describe('Attribute', () => {
-  it('标签在左、偏灰，数值右对齐、数据体粗体', () => {
+  it('没有图标时名称显示在左边、偏灰，数值用数据体、左对齐', () => {
     render(
       <AttributeList>
         <Attribute data-testid="row" label="防御" value={402} />
       </AttributeList>,
     )
-    const row = screen.getByTestId('row')
-    expect(row).toHaveAttribute('data-ark', 'attribute')
-    expect(row).toHaveClass('grid-cols-[minmax(0,1fr)_auto]')
+    expect(screen.getByTestId('row')).toHaveAttribute('data-ark', 'attribute')
     expect(screen.getByRole('term')).toHaveClass('font-ark-regular', 'text-ark-fg-secondary')
-    expect(screen.getByRole('definition')).toHaveClass('font-ark-data', 'font-ark-bold')
+    expect(screen.getByText('防御')).not.toHaveClass('sr-only')
+    const value = screen.getByRole('definition')
+    expect(value).toHaveClass('font-ark-data', 'font-ark-regular')
+    expect(value.className).not.toContain('justify-end')
+  })
+
+  it('给了图标：黑底白色的小方块，名称只读给读屏', () => {
+    render(
+      <AttributeList>
+        <Attribute label="生命上限" value={2480} icon={icon} />
+      </AttributeList>,
+    )
+    const chip = screen.getByTestId('icon').parentElement
+    expect(chip).toHaveAttribute('aria-hidden', 'true')
+    expect(chip).toHaveClass('size-6', 'bg-ark-neutral-black', 'text-ark-neutral-white')
+    expect(screen.getByText('生命上限')).toHaveClass('sr-only')
+    // 名称仍然在 dt 里
+    expect(screen.getByRole('term')).toHaveTextContent('生命上限')
+  })
+
+  it('showLabel 把名称和图标一起显示', () => {
+    render(
+      <AttributeList>
+        <Attribute label="生命上限" value={2480} icon={icon} showLabel />
+      </AttributeList>,
+    )
+    expect(screen.getByText('生命上限')).not.toHaveClass('sr-only')
+    expect(screen.getByTestId('icon')).toBeInTheDocument()
   })
 
   it('字符串和节点原样输出，单位跟在后面', () => {
@@ -47,7 +98,7 @@ describe('Attribute', () => {
     expect(trust).toContainElement(screen.getByTestId('trust'))
   })
 
-  it('给了 meter 才画相对值条，宽度写在变量里', () => {
+  it('给了 meter 才在数值背后垫相对值条，宽度写在变量里', () => {
     render(
       <AttributeList>
         <Attribute data-testid="with" label="生命上限" value={2480} meter={0.76} />
@@ -56,16 +107,21 @@ describe('Attribute', () => {
     )
     const withMeter = screen.getByTestId('with')
     expect(withMeter.style.getPropertyValue('--ark-attribute-meter')).toBe('76%')
-    expect(withMeter).toHaveClass(
-      'before:h-0.5',
-      'before:bg-ark-fg/25',
-      'after:h-0.5',
+    const [bar, plain] = screen.getAllByRole('definition')
+    // 轨道铺满数值那一格，填充从左边画起；都垫在数字后面
+    expect(bar).toHaveClass(
+      'isolate',
+      'before:inset-0',
+      'before:-z-1',
+      'before:bg-ark-fg/10',
+      'after:inset-y-0',
+      'after:-z-1',
       'after:w-(--ark-attribute-meter)',
+      'after:bg-ark-fg/30',
     )
 
-    const withoutMeter = screen.getByTestId('without')
-    expect(withoutMeter.style.getPropertyValue('--ark-attribute-meter')).toBe('')
-    expect(withoutMeter.className).not.toContain('after:')
+    expect(screen.getByTestId('without').style.getPropertyValue('--ark-attribute-meter')).toBe('')
+    expect(plain?.className).not.toContain('after:')
   })
 
   it('meter 被限制在 0 到 1 之间', () => {
@@ -82,7 +138,7 @@ describe('Attribute', () => {
   it('相对值条不另加元素：一组里只有 dt 和 dd', () => {
     render(
       <AttributeList>
-        <Attribute data-testid="row" label="攻击" value={612} meter={0.5} />
+        <Attribute data-testid="row" label="攻击" value={612} meter={0.5} icon={icon} />
       </AttributeList>,
     )
     expect(Array.from(screen.getByTestId('row').children).map(child => child.tagName)).toEqual([
@@ -94,9 +150,9 @@ describe('Attribute', () => {
   it('相对值条的过渡在减少动效时关闭', () => {
     render(
       <AttributeList>
-        <Attribute data-testid="row" label="攻击" value={612} meter={0.5} />
+        <Attribute label="攻击" value={612} meter={0.5} />
       </AttributeList>,
     )
-    expect(screen.getByTestId('row')).toHaveClass('motion-reduce:after:transition-none')
+    expect(screen.getByRole('definition')).toHaveClass('motion-reduce:after:transition-none')
   })
 })

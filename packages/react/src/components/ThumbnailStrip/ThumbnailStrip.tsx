@@ -1,12 +1,10 @@
-import { type ComponentProps, createContext, useContext } from 'react'
+import type { ComponentProps } from 'react'
 import { handleRadioGroupKeyDown, RadioGroupContext, useRadioItem } from '../../internal/radioGroup'
 import { focusRing } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 import { useControllableState } from '../../utils/useControllableState'
 
 export type ThumbnailStripOrientation = 'horizontal' | 'vertical'
-
-const OrientationContext = createContext<ThumbnailStripOrientation>('horizontal')
 
 export interface ThumbnailStripProps extends Omit<ComponentProps<'div'>, 'defaultValue'> {
   /** 当前项。受控：请在 `onValueChange` 里更新它。 */
@@ -17,22 +15,21 @@ export interface ThumbnailStripProps extends Omit<ComponentProps<'div'>, 'defaul
   onValueChange?: (value: string) => void
   /**
    * 排列方向。
-   * - `horizontal`：横排，当前项上方一条短条（官网干员屏左下角）
-   * - `vertical`：竖排，短条在左侧（寻访界面侧边的卡池缩略条）
+   * - `horizontal`：横排（官网干员屏左下角）
+   * - `vertical`：竖排（寻访界面侧边的卡池缩略条）
    * @default 'horizontal'
    */
   orientation?: ThumbnailStripOrientation
 }
 
-// 留出短条的位置：4px 的条加 4px 的缝
 const layouts: Record<ThumbnailStripOrientation, string> = {
-  horizontal: 'flex-row pt-ark-2',
-  vertical: 'flex-col pl-ark-2',
+  horizontal: 'flex-row',
+  vertical: 'flex-col',
 }
 
 /**
- * 缩略图条：几张小图排成一排，用来切换旁边的主图。当前项不靠边框标记，
- * 而是在它上方加一条信号色的短条。
+ * 缩略图条：几张带白框的小图排成一排，用来切换旁边的主图。当前项不靠边框标记，
+ * 而是从它的右上角后面探出一块信号色的三角。
  *
  * 子元素是若干个 `Thumbnail`，同一时刻只有一个当前项。它是一个单选组：
  * Tab 进到当前项，方向键移动并立即切换。请用 `aria-label` 说明切换的是什么。
@@ -51,19 +48,22 @@ export function ThumbnailStrip({
   })
   return (
     <RadioGroupContext value={{ value: current, select }}>
-      <OrientationContext value={orientation}>
-        <div
-          data-ark="thumbnail-strip"
-          role="radiogroup"
-          aria-orientation={orientation}
-          {...rest}
-          onKeyDown={event => {
-            onKeyDown?.(event)
-            handleRadioGroupKeyDown(event)
-          }}
-          className={cn('box-border inline-flex gap-ark-2', layouts[orientation], className)}
-        />
-      </OrientationContext>
+      <div
+        data-ark="thumbnail-strip"
+        role="radiogroup"
+        aria-orientation={orientation}
+        {...rest}
+        onKeyDown={event => {
+          onKeyDown?.(event)
+          handleRadioGroupKeyDown(event)
+        }}
+        className={cn(
+          // 三角往上探出 0.5rem、往右探出 0.375rem：上、右两边给它留出位置
+          'box-border inline-flex gap-ark-2 pt-ark-2 pr-[0.375rem]',
+          layouts[orientation],
+          className,
+        )}
+      />
     </RadioGroupContext>
   )
 }
@@ -73,8 +73,13 @@ export interface ThumbnailProps extends Omit<ComponentProps<'button'>, 'value' |
   value: string
   /** 图片地址。 */
   src: string
-  /** 这一项的名称，读屏会念出来（缩略图上没有文字）。 */
+  /** 这一项的名称：写在缩略图的左下角，同时是它的可访问名称。 */
   label: string
+  /**
+   * 不把名称写在图上，只读给读屏。图上已经有字（卡池的标题标识）时用。
+   * @default false
+   */
+  hideLabel?: boolean
   /**
    * 取原图的哪一块：图片的 `object-position`，如 `'50% 20%'`。
    * @default 脸落在上三分之一
@@ -82,41 +87,37 @@ export interface ThumbnailProps extends Omit<ComponentProps<'button'>, 'value' |
   position?: string
 }
 
-// 短条画在 ::before 上，贴在缩略图之外；当前项才显示
-const bar = cn(
-  'before:absolute before:bg-ark-signal before:opacity-0 aria-checked:before:opacity-100',
+// 当前项的标记：直角边 2rem 的三角，垫在缩略图后面，只露出探到框外的那一角（官网实测）
+const mark = cn(
+  'before:absolute before:-top-ark-2 before:right-[-0.375rem] before:-z-1 before:size-8 before:bg-ark-signal before:[clip-path:polygon(0_0,100%_0,100%_100%)]',
+  'before:opacity-0 aria-checked:before:opacity-100',
   'before:transition-opacity before:duration-(--ark-motion-duration-base) before:ease-ark-standard',
 )
-const bars: Record<ThumbnailStripOrientation, string> = {
-  horizontal: 'before:inset-x-0 before:-top-ark-2 before:h-(--ark-line-strong)',
-  vertical: 'before:inset-y-0 before:-left-ark-2 before:w-(--ark-line-strong)',
-}
 
 /**
- * 一张缩略图，3:4。非当前项压暗、降低饱和度，悬停时恢复。
- * 默认 4rem 宽，用 `w-*` 调。只能放在 `ThumbnailStrip` 里。
+ * 一张缩略图：`7.125rem × 11.25rem`，一圈 `0.625rem` 的白框，名称写在左下角。
+ * 尺寸是官网干员屏的实测值，用 `w-*`、`h-*` 调。只能放在 `ThumbnailStrip` 里。
  */
 export function Thumbnail({
   value,
   src,
   label,
+  hideLabel = false,
   position,
   className,
   onClick,
   ...rest
 }: ThumbnailProps) {
-  const orientation = useContext(OrientationContext)
   const { radioProps } = useRadioItem(value, 'Thumbnail', 'ThumbnailStrip', onClick)
   return (
     <button
       data-ark="thumbnail"
-      aria-label={label}
       {...rest}
       {...radioProps}
       className={cn(
-        'group relative m-0 box-border block aspect-[3/4] w-16 shrink-0 cursor-pointer appearance-none border-0 bg-ark-neutral-ink-900 p-0',
-        bar,
-        bars[orientation],
+        // isolate：三角用 -z-1 垫在图片后面，又不会掉到按钮自己的后面去
+        'relative isolate m-0 box-border block h-[11.25rem] w-[7.125rem] shrink-0 cursor-pointer appearance-none border-0 bg-transparent p-0 text-left text-ark-neutral-white',
+        mark,
         focusRing,
         className,
       )}
@@ -125,12 +126,23 @@ export function Thumbnail({
         src={src}
         alt=""
         style={position === undefined ? undefined : { objectPosition: position }}
-        className={cn(
-          'm-0 block size-full max-w-none border-0 object-cover object-[50%_15%] select-none',
-          'opacity-50 saturate-[0.7] group-hover:opacity-100 group-aria-checked:opacity-100 group-aria-checked:saturate-100',
-          'transition-[opacity,filter] duration-(--ark-motion-duration-base) ease-ark-standard',
-        )}
+        className="absolute inset-0 m-0 block size-full max-w-none border-0 bg-ark-neutral-ink-900 object-cover object-[50%_15%] select-none"
       />
+      {/* 白框压在图片上面，对读屏没有意义 */}
+      <span
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 border-[0.625rem] border-solid border-ark-neutral-white"
+      />
+      <span
+        className={cn(
+          hideLabel
+            ? 'sr-only'
+            : // 名称压在图上：上面一个小方点，四周一圈黑色的晕，白字才读得清
+              'absolute bottom-ark-4 left-ark-4 grid max-w-[calc(100%-2rem)] gap-ark-2 font-ark-cjk-sans text-[1rem] leading-ark-solid font-ark-medium [text-shadow:0_0_0.5rem_#000,0_0_0.5rem_#000] before:size-[0.375rem] before:bg-current',
+        )}
+      >
+        {label}
+      </span>
     </button>
   )
 }

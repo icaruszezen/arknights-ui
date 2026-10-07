@@ -47,13 +47,12 @@
 
   <!-- 游戏内指令 -->
   <text x="40" y="424" class="data tag">05 COMMAND</text>
-  <text x="150" y="424" class="cjk note">游戏主界面：重磅中文衬线 + 小号英文注脚（社区）</text>
+  <text x="150" y="424" class="cjk note">游戏主界面：重磅中文衬线贴左上 + 同语言的灰色小字（实机截图）</text>
   <rect x="40" y="444" width="300" height="116" fill="#fdfdfb"/>
-  <text x="60" y="512" class="serif" font-size="52" fill="#323232">作战</text>
-  <text x="62" y="540" class="cond" font-size="14" fill="#8d8d8d" letter-spacing="1">TERMINAL</text>
+  <text x="60" y="504" class="serif" font-size="52" fill="#323232">干员</text>
+  <text x="62" y="530" class="cjk" font-size="16" fill="#585858">角色管理</text>
   <rect x="352" y="444" width="180" height="116" fill="#424242"/>
-  <text x="368" y="504" class="serif" font-size="34" fill="#fff">编队</text>
-  <text x="370" y="528" class="cond" font-size="12" fill="#ababab" letter-spacing="1">SQUADS</text>
+  <text x="368" y="492" class="serif" font-size="34" fill="#fff">仓库</text>
 
   <!-- 微文案 -->
   <text x="580" y="424" class="data tag">06 MICRO</text>

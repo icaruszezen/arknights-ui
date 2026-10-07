@@ -203,7 +203,8 @@ function Shelf({ products, onBuy }: { products: Product[]; onBuy: (name: string)
             price={product.price}
             currency={glyphs.diamond}
             currencyLabel="合成玉"
-            // 决策信息就地给全：库存、限购、限时还剩多久
+            // 实机的商品卡片是白的。决策信息就地给全：已有多少、还能买多少、限时还剩多久
+            tone="paper"
             stock={product.stock}
             limit={product.limit}
             limited={

@@ -42,15 +42,35 @@ describe('SkillSlot', () => {
     expect(screen.getByRole('button', { name: '强力击' })).toBeInTheDocument()
   })
 
-  it('选中：信号色描边并加粗一圈，按钮输出 aria-pressed', () => {
+  it('选中：信号色描边，右上角一块信号色三角加对勾，按钮输出 aria-pressed', () => {
     render(
       <SkillSlot label="技能 3" selected onClick={() => {}}>
         {glyph}
       </SkillSlot>,
     )
     const button = screen.getByRole('button', { pressed: true })
-    expect(button).toHaveClass('border-ark-signal', 'shadow-[inset_0_0_0_1px_var(--ark-signal)]')
+    expect(button).toHaveClass('border-ark-signal')
     expect(button).not.toHaveClass('border-ark-rule')
+    expect(button.className).not.toContain('shadow-[inset')
+
+    const mark = button.querySelector('[data-ark="skill-slot-mark"]')
+    expect(mark).toHaveAttribute('aria-hidden', 'true')
+    expect(mark).toHaveClass(
+      'top-0',
+      'right-0',
+      'size-6',
+      'bg-ark-signal',
+      'text-ark-on-signal',
+      '[clip-path:polygon(0_0,100%_0,100%_100%)]',
+    )
+    expect(mark?.querySelector('svg')).toBeInTheDocument()
+    // 标记是装饰，不进入名称
+    expect(button).toHaveAccessibleName('技能 3')
+  })
+
+  it('没选中时没有角标', () => {
+    render(<SkillSlot data-testid="slot">{glyph}</SkillSlot>)
+    expect(screen.getByTestId('slot').querySelector('[data-ark="skill-slot-mark"]')).toBeNull()
   })
 
   it('展示用的方格选中时带 data-selected', () => {

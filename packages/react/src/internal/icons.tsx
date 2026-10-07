@@ -141,3 +141,62 @@ export function DiamondIcon(props: IconProps) {
     </Icon>
   )
 }
+
+/** 对勾：一道折线，不带圆圈。压在技能格右上角的色块里。 */
+export function CheckIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4.5 12.5 10 18 19.5 7" stroke="currentColor" strokeWidth="3" />
+    </Icon>
+  )
+}
+
+/** 准星：一个圆加四道刻线，中间一个方点。作战顶部击杀计数的默认图形。 */
+export function CrosshairIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="6.5" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 1.5v5M12 17.5v5M1.5 12h5M17.5 12h5" stroke="currentColor" strokeWidth="2" />
+      <path d="M10.5 10.5h3v3h-3z" fill="currentColor" />
+    </Icon>
+  )
+}
+
+/** 塔：三个垛口、一段塔身、一层底座。作战顶部生命点数的默认图形。 */
+export function TowerIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M5 21h14v-2.5h-2V11h2V3h-3v2.5h-2.5V3h-3v2.5H8V3H5v8h2v7.5H5z" fill="currentColor" />
+    </Icon>
+  )
+}
+
+/** 菱形里镂空一个 C：费用的默认图形。C 由直线和 45° 斜线拼成。 */
+export function CostIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path
+        d="M12 1.5 22.5 12 12 22.5 1.5 12zM15.25 7.5h-4L8.75 10v4l2.5 2.5h4v-2.2h-3l-1.2-1.2v-2.2l1.2-1.2h3z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </Icon>
+  )
+}
+
+/** 尖角朝上的正六边形：关卡节点左端的通关标记。`hollow` 只画描边。 */
+export function HexagonIcon({ hollow = false, ...props }: IconProps & { hollow?: boolean }) {
+  return (
+    <Icon {...props}>
+      {hollow ? (
+        <path
+          d="M12 3.2 19.6 7.6v8.8L12 20.8 4.4 16.4V7.6z"
+          stroke="currentColor"
+          strokeWidth="2.5"
+        />
+      ) : (
+        <path d="M12 1.5 21.1 6.75v10.5L12 22.5 2.9 17.25V6.75z" fill="currentColor" />
+      )}
+    </Icon>
+  )
+}

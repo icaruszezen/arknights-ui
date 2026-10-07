@@ -59,6 +59,34 @@ export const glyphs = {
       <path d="M4 3h16v10l-8 8-8-8z" fill="currentColor" />
     </svg>
   ),
+  /** 向右的实心三角：播放、一倍速 */
+  play: (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M6 4 20 12 6 20z" fill="currentColor" />
+    </svg>
+  ),
+  /** 两个向右的实心三角：快进、二倍速 */
+  forward: (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M2 5 12 12 2 19zM12 5l10 7-10 7z" fill="currentColor" />
+    </svg>
+  ),
+  /** 两条竖条：暂停 */
+  pause: (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path d="M6 4h4v16H6zM14 4h4v16h-4z" fill="currentColor" />
+    </svg>
+  ),
+  /** 八边形套方孔：设置 */
+  gear: (
+    <svg aria-hidden="true" viewBox="0 0 24 24">
+      <path
+        d="M8.5 3h7L21 8.5v7L15.5 21h-7L3 15.5v-7zM9 9v6h6V9z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
+  ),
   /** 中心一个方点的方框 */
   target: (
     <svg aria-hidden="true" viewBox="0 0 24 24" fill="none">

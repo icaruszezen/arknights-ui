@@ -1,5 +1,4 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
-import type { CSSProperties } from 'react'
 import { WorldEntry, WorldEntryList } from './WorldEntryList'
 
 // 世界观里的通用名词，只借来演示版式
@@ -22,8 +21,9 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * 官网“设定”屏的条目：纵向排列，左缩进逐条递增。悬停任一条：文字变成信号色并向右位移，
- * 背后浮现一行 25% 信号色的巨型英文。用键盘聚焦也是一样。
+ * 官网“设定”屏的条目：纵向排列，左缘对齐，中文和英文在同一行。入场时逐条自左滑入，
+ * 每条晚 200ms（刷新这个示例可以重看）。悬停任一条：文字从灰变白并向右位移，
+ * 背后贴着右端浮现一行 25% 信号色的巨型英文。用键盘聚焦也是一样。
  */
 export const Default: Story = {
   render: args => (
@@ -37,25 +37,17 @@ export const Default: Story = {
   ),
 }
 
-/** 每一级缩进由 `--ark-entry-step` 决定，设成 0 就是一条直线。 */
-export const Step: Story = {
+/** `stagger={false}` 关掉入场，条目直接出现。 */
+export const WithoutEntrance: Story = {
+  args: { stagger: false },
   render: args => (
-    <div className="grid max-w-4xl grid-cols-2 gap-ark-7">
-      {(['3.5rem', '0rem'] as const).map(step => (
-        <WorldEntryList
-          {...args}
-          key={step}
-          aria-label={`缩进 ${step}`}
-          style={{ '--ark-entry-step': step } as CSSProperties}
-        >
-          {entries.slice(0, 4).map(entry => (
-            <WorldEntry key={entry.id} href={`#${entry.id}`} sub={entry.en}>
-              {entry.zh}
-            </WorldEntry>
-          ))}
-        </WorldEntryList>
+    <WorldEntryList {...args} aria-label="设定" className="max-w-2xl">
+      {entries.slice(0, 4).map(entry => (
+        <WorldEntry key={entry.id} href={`#${entry.id}`} sub={entry.en}>
+          {entry.zh}
+        </WorldEntry>
       ))}
-    </div>
+    </WorldEntryList>
   ),
 }
 

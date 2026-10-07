@@ -13,7 +13,7 @@ import { RoomCard, type RoomKind, roomSignal } from './RoomCard'
 const meta = {
   title: '场景/基建/RoomCard',
   component: RoomCard,
-  args: { title: '制造站', sub: 'Factory', level: 3, kind: 'factory', className: 'w-72' },
+  args: { title: '制造站', level: 3, status: '生产中', kind: 'factory', className: 'w-72' },
 } satisfies Meta<typeof RoomCard>
 
 export default meta
@@ -43,11 +43,10 @@ const crew = (count: number, buffLevel: number) => (
 )
 
 /**
- * 一个房间：2px 的类型色描边，标题行是图标、设施名、英文和等级，下面是它的现状。
- * 进度条和头像右下角的圆环都跟着类型色走。
+ * 一个房间：深色的实底，左侧一条类型色的粗边。标题后面的小竖条是等级，下面一行类型色的小字
+ * 是它现在在做什么，再下面是它的现状。进度条和头像右下角的圆环都跟着类型色走。
  */
 export const Default: Story = {
-  args: { icon: glyphs.blocks },
   render: args => (
     <RoomCard {...args}>
       {crew(2, 3)}
@@ -56,29 +55,59 @@ export const Default: Story = {
   ),
 }
 
-/** 类型色：制造站黄、贸易站蓝、发电站绿，其余设施用中性色。 */
+/** 类型色取自实机：制造站黄、贸易站蓝、发电站黄绿，其余设施用中性色。 */
 export const Kinds: Story = {
   render: () => (
     <div className="grid w-[38rem] grid-cols-2 gap-ark-1">
       {(
         [
-          ['factory', '制造站', 'Factory', 'blocks'],
-          ['trading', '贸易站', 'Trading Post', 'bars'],
-          ['power', '发电站', 'Power Plant', 'slashes'],
-          ['neutral', '宿舍', 'Dormitory', 'frame'],
+          ['factory', '制造站', '生产中'],
+          ['trading', '贸易站', '获取中'],
+          ['power', '发电站', '发电中'],
+          ['neutral', '宿舍', '休息中'],
         ] as const
-      ).map(([kind, title, sub, glyph]) => (
-        <RoomCard key={kind} kind={kind} title={title} sub={sub} level={3} icon={glyphs[glyph]}>
-          <Progress aria-label={`${title}进度`} variant="thick" value={45} />
+      ).map(([kind, title, status]) => (
+        <RoomCard key={kind} kind={kind} title={title} status={status} level={3}>
+          <Progress aria-label={`${title}进度`} variant="thick" value={45} segments={5} />
         </RoomCard>
       ))}
     </div>
   ),
 }
 
-/** `src` 给房间垫一张内景图，压暗之后文字仍然读得清。右上角的橙色标记表示有可收取的产出。 */
+/**
+ * 有待处理的事时整张卡片被类型色圈起来：`badge` 为真是右上角一个橙色的角，数字是计数色块。
+ * 平时只有左侧那条粗边。
+ */
+export const Attention: Story = {
+  render: () => (
+    <div className="grid w-[38rem] grid-cols-2 gap-ark-1">
+      <RoomCard kind="trading" title="贸易站" status="获取中" level={3} />
+      <RoomCard
+        kind="trading"
+        title="贸易站"
+        status="获取中"
+        level={3}
+        badge
+        badgeLabel="有可交付的订单"
+      />
+      <RoomCard kind="factory" title="制造站" status="生产中" level={2} badge={3} />
+    </div>
+  ),
+}
+
+/**
+ * `src` 给房间垫一张内景图，压暗之后文字仍然读得清。需要中英成对或者一个图标时，
+ * `sub` 和 `icon` 仍然可用——实机的总览上没有这两样。
+ */
 export const WithScene: Story = {
-  args: { src: scenes[1], icon: glyphs.blocks, badge: true, badgeLabel: '有可收取的产出' },
+  args: {
+    src: scenes[1],
+    icon: glyphs.blocks,
+    sub: 'Factory',
+    badge: true,
+    badgeLabel: '有可收取的产出',
+  },
   render: args => <RoomCard {...args}>{crew(3, 3)}</RoomCard>,
 }
 
@@ -90,15 +119,15 @@ export const OpensDrawer: Story = {
   render: function Base() {
     const [open, setOpen] = useState<RoomKind | null>(null)
     const rooms = [
-      { kind: 'factory', title: '制造站', sub: 'Factory', glyph: 'blocks', output: '赤金' },
+      { kind: 'factory', title: '制造站', sub: 'Factory', status: '生产中', output: '赤金' },
       {
         kind: 'trading',
         title: '贸易站',
         sub: 'Trading Post',
-        glyph: 'bars',
+        status: '获取中',
         output: '龙门币订单',
       },
-      { kind: 'power', title: '发电站', sub: 'Power Plant', glyph: 'slashes', output: '无人机' },
+      { kind: 'power', title: '发电站', sub: 'Power Plant', status: '发电中', output: '无人机' },
     ] as const
     const current = rooms.find(room => room.kind === open)
     return (
@@ -108,9 +137,8 @@ export const OpensDrawer: Story = {
             key={room.kind}
             kind={room.kind}
             title={room.title}
-            sub={room.sub}
+            status={room.status}
             level={3}
-            icon={glyphs[room.glyph]}
             onClick={() => setOpen(room.kind)}
           >
             {crew(2, 2)}

@@ -77,7 +77,7 @@ export const StageSelect: Story = {
             {/* 把列表画成地图：关卡之间的先后与分支用空间位置来表达 */}
             <StageMap aria-label="第一章" value={current} onValueChange={setCurrent}>
               {stages.map(({ cost: _cost, level: _level, name, value, ...rest }) => (
-                <StageNode key={value} value={value} name={name} {...rest}>
+                <StageNode key={value} value={value} name={name} caption="OPERATION" {...rest}>
                   {value}
                 </StageNode>
               ))}
@@ -181,15 +181,25 @@ export const Hud: Story = {
           <HudCounterItem side="ally" label="生命点数" value={3} />
         </HudCounter>
 
-        {/* 控制键成组靠右上 */}
+        {/* 设置在左上，倍速和暂停成组靠右上：都是 5rem 的方块 */}
+        <StoryControls aria-label="作战设置" className="absolute top-ark-3 left-ark-3">
+          <StoryControl shape="square" icon={glyphs.gear} aria-label="设置" />
+        </StoryControls>
         <StoryControls aria-label="作战控制" className="absolute top-ark-3 right-ark-3">
-          <StoryControl onClick={() => setSpeed(speed === 1 ? 2 : 1)} className="font-ark-data">
+          <StoryControl
+            shape="square"
+            icon={speed === 1 ? glyphs.play : glyphs.forward}
+            onClick={() => setSpeed(speed === 1 ? 2 : 1)}
+          >
             {`${speed}X`}
           </StoryControl>
-          <StoryControl pressed={paused} onClick={() => setPaused(!paused)}>
-            暂停
-          </StoryControl>
-          <StoryControl>设置</StoryControl>
+          <StoryControl
+            shape="square"
+            icon={glyphs.pause}
+            aria-label="暂停"
+            pressed={paused}
+            onClick={() => setPaused(!paused)}
+          />
         </StoryControls>
 
         {/* 底部卡带：比当前费用贵的卡自动压暗 */}
@@ -210,12 +220,12 @@ export const Hud: Story = {
           ))}
         </ul>
 
-        {/* 费用是全屏最大的数字 */}
+        {/* 费用是全屏最大的数字，贴右边，压在卡带上方 */}
         <CostMeter
           value={cost}
           progress={0.65}
           deployable={6}
-          className="absolute right-0 bottom-0"
+          className="absolute right-0 bottom-36"
         />
       </div>
     )

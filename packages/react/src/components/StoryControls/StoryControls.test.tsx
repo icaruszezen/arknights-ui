@@ -62,6 +62,31 @@ describe('StoryControl', () => {
     expect(screen.getByTestId('icon').parentElement).toHaveAttribute('aria-hidden', 'true')
   })
 
+  it('square 是 5rem 见方的方块：文字在上、图标在下，不需要再撑点击区', () => {
+    render(
+      <StoryControl shape="square" icon={icon}>
+        2X
+      </StoryControl>,
+    )
+    const button = screen.getByRole('button', { name: '2X' })
+    expect(button).toHaveAttribute('data-shape', 'square')
+    expect(button).toHaveClass('size-20', 'flex-col-reverse', 'font-ark-data', 'text-ark-h2')
+    expect(button).not.toHaveClass('h-7', 'after:h-11')
+    expect(screen.getByTestId('icon').parentElement).toHaveClass('size-7')
+  })
+
+  it('默认是横条', () => {
+    render(<StoryControl>跳过</StoryControl>)
+    expect(screen.getByRole('button')).toHaveAttribute('data-shape', 'bar')
+  })
+
+  it('只放图标时名称来自 aria-label', () => {
+    render(<StoryControl shape="square" icon={icon} aria-label="暂停" />)
+    expect(screen.getByRole('button', { name: '暂停' })).toContainElement(
+      screen.getByTestId('icon'),
+    )
+  })
+
   it('禁用时不响应', async () => {
     const user = userEvent.setup()
     const onClick = vi.fn()

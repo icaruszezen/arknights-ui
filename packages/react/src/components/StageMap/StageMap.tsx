@@ -7,7 +7,8 @@ import {
   type ReactNode,
   useContext,
 } from 'react'
-import { colorTransition, focusRing, thinScrollbar, triangleRight } from '../../utils/classes'
+import { HexagonIcon } from '../../internal/icons'
+import { colorTransition, focusRing, thinScrollbar } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 import { useControllableState } from '../../utils/useControllableState'
 
@@ -84,11 +85,11 @@ export interface StageMapProps extends Omit<ComponentProps<'div'>, 'defaultValue
 }
 
 /**
- * 关卡地图：关卡不是一张列表，而是一条横向延伸的路线——每一关是一个带编号的小方块，
- * 之间用细线相连，支线向上下分叉。关卡之间的先后与分支用空间位置来表达。
+ * 关卡地图：关卡不是一张列表，而是一条横向延伸的路线——每一关是一条带编号的白色横条，
+ * 之间用 3px 的白线相连，支线向上下分叉。关卡之间的先后与分支用空间位置来表达。
  *
  * 子元素是若干个 `StageNode`，必须是直接子元素：各自用 `col`、`row` 说明自己在哪，
- * 用 `from` 说明从哪一关连过来。已通关的连线是亮的实线，通向未解锁关卡的是暗的虚线。
+ * 用 `from` 说明从哪一关连过来。已通关的连线是实白线，通向未解锁关卡的是暗的虚线。
  * 行距由 `--ark-stage-pitch` 决定，默认 5rem，列距是它的两倍。放不下时横向滚动。
  *
  * 选中一关不会离开这一页：详情放在旁边的面板里，“开始行动”的代价直接写在按钮上。
@@ -160,9 +161,10 @@ export function StageMap({
                 d={edge.d}
                 // 线宽和虚线按屏幕像素算，不跟着这张图一起放大
                 vectorEffect="non-scaling-stroke"
-                strokeWidth={1.5}
+                // 实机的连线约 3px，实白
+                strokeWidth={3}
                 strokeDasharray={edge.locked ? '4 4' : undefined}
-                className={edge.locked ? 'stroke-ark-fg/30' : 'stroke-ark-fg/70'}
+                className={edge.locked ? 'stroke-ark-fg/30' : 'stroke-ark-fg'}
               />
             ))}
           </svg>
@@ -201,13 +203,15 @@ export interface StageNodeProps extends Omit<ComponentProps<'button'>, 'value' |
   /** 从哪一关（或哪几关）连过来：填它们的 `value`。 */
   from?: string | readonly string[]
   /**
-   * 进度，用明暗区分。
-   * - `cleared`：已通关，石墨底
-   * - `current`：当前要打的那一关，反白，带一个方向三角
-   * - `locked`：未解锁，最暗、虚线描边，默认不可选
+   * 进度，用左端的六边形和明暗区分。
+   * - `cleared`：已通关，白底深字，六边形是实心的信号色
+   * - `current`：当前要打的那一关，白底深字，六边形是空心的
+   * - `locked`：未解锁，最暗、虚线描边，没有六边形，默认不可选
    * @default 'cleared'
    */
   state?: StageState
+  /** 编号上方的一行极小的英文，如 `OPERATION`。纯装饰，对读屏隐藏。 */
+  caption?: ReactNode
   /** 中文关卡名，写在编号下方。编号是主要文字，它是副题。 */
   name?: ReactNode
   /** 选中。放在 `StageMap` 里时由地图决定，不用给。 */
@@ -223,27 +227,31 @@ const stateLabels: Record<StageState, string> = {
 }
 
 const base = cn(
-  'relative m-0 box-border inline-flex h-9 min-w-20 cursor-pointer appearance-none items-center justify-center gap-ark-2 border px-ark-3 font-ark-data text-ark-body leading-ark-solid font-ark-bold whitespace-nowrap select-none',
-  // 选中：信号色描边加底部 4px 条，和 Button 的选中态一样
-  'aria-pressed:border-ark-signal aria-pressed:shadow-[inset_0_-4px_0_var(--ark-signal)]',
+  'relative m-0 box-border inline-flex h-9 min-w-24 cursor-pointer appearance-none items-stretch border border-transparent p-0 font-ark-data text-ark-body leading-ark-solid font-ark-bold whitespace-nowrap select-none',
+  // 选中：整条明暗对调，变成黑底白字（实机的做法）。实机的地图是亮的，黑条自己就看得清；
+  // 这里再描一圈白边，压在深色背景上时条的边界才不会消失
+  'aria-pressed:border-ark-neutral-white aria-pressed:bg-ark-neutral-black aria-pressed:text-ark-neutral-white',
   colorTransition,
   focusRing,
 )
 
-// 节点是压在地图上的实心小块，明暗是固定的三档，不跟随所在面板的明暗上下文。
+// 已通关和当前都是白底深字，靠左端的六边形区分；悬停整块换成信号色
+const open =
+  'bg-ark-neutral-white text-ark-neutral-black not-disabled:hover:bg-ark-signal not-disabled:hover:text-ark-on-signal'
+
+// 节点是压在地图上的实心横条，明暗是固定的，不跟随所在面板的明暗上下文。
 // 实心的底同时把从节点中心出发的连线盖住
 const states: Record<StageState, string> = {
-  cleared:
-    'border-ark-neutral-gray-500 bg-ark-neutral-graphite text-ark-neutral-white not-disabled:hover:bg-ark-neutral-white not-disabled:hover:text-ark-neutral-black',
-  current:
-    'border-ark-neutral-white bg-ark-neutral-white text-ark-neutral-black not-disabled:hover:border-ark-signal not-disabled:hover:bg-ark-signal not-disabled:hover:text-ark-on-signal',
-  // 虚线描边：明暗之外的第二种标记
+  cleared: open,
+  current: open,
+  // 未解锁没有实机出处（估计）：最暗，虚线描边是明暗之外的第二种标记
   locked:
     'border-dashed border-ark-neutral-gray-600 bg-ark-neutral-ink-900 text-ark-neutral-gray-500',
 }
 
 /**
- * 一个关卡节点：小矩形加数据体的编号（`1-7`、`TR-1`），`children` 是编号。
+ * 一个关卡节点：一条白色的横条，左端一个六边形的通关标记，右边是数据体的编号
+ * （`1-7`、`TR-1`）。`children` 是编号。选中时整条变成黑底白字。
  *
  * 通常放在 `StageMap` 里，由地图负责摆位、连线和选中；也可以单独当一个关卡标签用。
  */
@@ -253,6 +261,7 @@ export function StageNode({
   row: _row,
   from: _from,
   state = 'cleared',
+  caption,
   name,
   selected = false,
   stateLabel = stateLabels[state],
@@ -278,8 +287,29 @@ export function StageNode({
       }}
       className={cn(base, states[state], 'disabled:cursor-not-allowed', className)}
     >
-      {children}
-      {state === 'current' && <span aria-hidden="true" className={triangleRight} />}
+      {state !== 'locked' && (
+        // 六边形压在一格黑底上：信号色在白条上不够清楚，在黑底上才醒目
+        <span
+          data-ark="stage-node-mark"
+          className={cn(
+            'grid w-8 shrink-0 place-items-center bg-ark-neutral-black',
+            state === 'cleared' ? 'text-ark-signal' : 'text-ark-neutral-white',
+          )}
+        >
+          <HexagonIcon hollow={state === 'current'} className="block size-4" />
+        </span>
+      )}
+      <span className="grid grow content-center justify-items-start gap-0.5 px-ark-3">
+        {caption != null && (
+          <span
+            aria-hidden="true"
+            className="font-ark-latin-condensed text-[0.5rem] leading-ark-solid font-ark-medium tracking-ark-wide uppercase opacity-70"
+          >
+            {caption}
+          </span>
+        )}
+        <span>{children}</span>
+      </span>
       {name != null && (
         <span
           className={cn(

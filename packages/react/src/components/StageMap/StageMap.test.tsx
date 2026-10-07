@@ -28,7 +28,8 @@ function Chapter(props: StageMapProps) {
 }
 
 const map = () => screen.getByRole('group')
-const paths = () => Array.from(map().querySelectorAll('path'))
+// 连线画在地图里的第一张 SVG 上；节点里六边形的路径不算
+const paths = () => Array.from(map().querySelector('svg')?.querySelectorAll('path') ?? [])
 const node = (name: RegExp) => screen.getByRole('button', { name })
 const cellStyle = (name: RegExp) => node(name).parentElement?.getAttribute('style') ?? ''
 
@@ -96,10 +97,11 @@ describe('StageMap', () => {
     expect(branch).toHaveAttribute('d', 'M3 1.5H3.5L4.5 0.5V0.5H5')
   })
 
-  it('通向未解锁关卡的连线是暗的虚线，其余是亮的实线', () => {
+  it('通向未解锁关卡的连线是暗的虚线，其余是 3px 的实白线', () => {
     render(<Chapter />)
     const [first, , , toLockedA, toLockedB] = paths()
-    expect(first).toHaveClass('stroke-ark-fg/70')
+    expect(first).toHaveClass('stroke-ark-fg')
+    expect(first).toHaveAttribute('stroke-width', '3')
     expect(first).not.toHaveAttribute('stroke-dasharray')
     for (const path of [toLockedA, toLockedB]) {
       expect(path).toHaveClass('stroke-ark-fg/30')
@@ -194,26 +196,61 @@ describe('StageNode', () => {
     )
   })
 
-  it('三种进度用明暗区分，并读给读屏', () => {
+  it('已通关和当前都是白底深字，未解锁是最暗的虚线框；进度读给读屏', () => {
     render(<Chapter />)
-    expect(node(/^1-2 已通关$/)).toHaveClass('bg-ark-neutral-graphite')
+    expect(node(/^1-2 已通关$/)).toHaveClass('bg-ark-neutral-white', 'text-ark-neutral-black')
     expect(node(/^1-3 当前$/)).toHaveClass('bg-ark-neutral-white', 'text-ark-neutral-black')
     expect(node(/^1-4 未解锁$/)).toHaveClass('bg-ark-neutral-ink-900', 'border-dashed')
     expect(node(/^1-1 孤岛 已通关$/)).toHaveAttribute('data-state', 'cleared')
   })
 
-  it('当前要打的那一关带一个方向三角', () => {
+  it('左端的六边形区分进度：已通关实心信号色，当前空心，未解锁没有', () => {
     render(<Chapter />)
-    expect(node(/^1-3/).querySelector('[aria-hidden="true"]')).toBeInTheDocument()
-    expect(node(/^1-2/).querySelector('[aria-hidden="true"]')).toBeNull()
+    const mark = (name: RegExp) => node(name).querySelector('[data-ark="stage-node-mark"]')
+    const cleared = mark(/^1-2/)
+    expect(cleared).toHaveClass('bg-ark-neutral-black', 'text-ark-signal')
+    expect(cleared?.querySelector('path')).toHaveAttribute('fill', 'currentColor')
+
+    const current = mark(/^1-3/)
+    expect(current).toHaveClass('text-ark-neutral-white')
+    // 空心：只有描边
+    expect(current?.querySelector('path')).toHaveAttribute('stroke', 'currentColor')
+    expect(current?.querySelector('path')).not.toHaveAttribute('fill')
+
+    expect(mark(/^1-4/)).toBeNull()
   })
 
-  it('选中是信号色描边加底部 4px 条', () => {
+  it('选中整条明暗对调，变成黑底白字', () => {
     render(<Chapter defaultValue="1-2" />)
-    expect(node(/^1-2/)).toHaveClass(
-      'aria-pressed:border-ark-signal',
-      'aria-pressed:shadow-[inset_0_-4px_0_var(--ark-signal)]',
+    const selected = node(/^1-2/)
+    expect(selected).toHaveAttribute('aria-pressed', 'true')
+    expect(selected).toHaveClass(
+      'aria-pressed:bg-ark-neutral-black',
+      'aria-pressed:text-ark-neutral-white',
+      // 一圈白边：压在深色背景上时黑条的边界不会消失
+      'aria-pressed:border-ark-neutral-white',
     )
+    expect(selected.className).not.toContain('aria-pressed:border-ark-signal')
+  })
+
+  it('悬停整块换成信号色', () => {
+    render(<Chapter />)
+    expect(node(/^1-2/)).toHaveClass(
+      'not-disabled:hover:bg-ark-signal',
+      'not-disabled:hover:text-ark-on-signal',
+    )
+  })
+
+  it('caption 是编号上方极小的英文，纯装饰，不进入名称', () => {
+    render(
+      <StageNode value="1-7" caption="OPERATION">
+        1-7
+      </StageNode>,
+    )
+    const caption = screen.getByText('OPERATION')
+    expect(caption).toHaveAttribute('aria-hidden', 'true')
+    expect(caption).toHaveClass('text-[0.5rem]', 'uppercase')
+    expect(screen.getByRole('button', { name: '1-7 已通关' })).toBeInTheDocument()
   })
 
   it('可以单独使用，选中由自己的属性决定', async () => {

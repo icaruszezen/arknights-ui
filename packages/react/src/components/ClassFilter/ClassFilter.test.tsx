@@ -127,14 +127,44 @@ describe('ClassFilter', () => {
 
   it('放不下时横向滚动，四周留出焦点轮廓的位置', () => {
     render(<Filter defaultValue="all" />)
-    expect(screen.getByRole('radiogroup')).toHaveClass('overflow-x-auto', 'max-w-full', 'p-ark-1')
+    const group = screen.getByRole('radiogroup')
+    expect(group).toHaveClass('overflow-x-auto', 'max-w-full', 'p-ark-1')
+    expect(group).toHaveAttribute('aria-orientation', 'horizontal')
+  })
+
+  it('vertical 排成一竖列，放不下时纵向滚动', () => {
+    render(<Filter defaultValue="all" orientation="vertical" />)
+    const group = screen.getByRole('radiogroup')
+    expect(group).toHaveAttribute('aria-orientation', 'vertical')
+    expect(group).toHaveClass('flex-col', 'overflow-y-auto', 'max-h-full')
+    expect(group).not.toHaveClass('overflow-x-auto')
+  })
+
+  it('iconOnly 时名称只读给读屏，仍然是单选按钮的名称', () => {
+    render(<Filter defaultValue="all" iconOnly />)
+    const guard = screen.getByRole('radio', { name: '近卫' })
+    expect(guard.lastElementChild).toHaveClass('sr-only')
+    expect(guard).toContainElement(screen.getByTestId('icon'))
   })
 })
 
 describe('ClassFilterItem', () => {
-  it('当前项整块反白', () => {
+  it('当前项是信号色的实底，悬停变色只给没选中的项', () => {
     render(<Filter defaultValue="all" />)
-    expect(checked()).toHaveClass('aria-checked:bg-ark-invert', 'aria-checked:text-ark-on-invert')
+    expect(checked()).toHaveClass(
+      'aria-checked:bg-ark-signal',
+      'aria-checked:text-ark-on-signal',
+      'not-aria-checked:hover:text-ark-signal-fg',
+    )
+    expect(checked().className).not.toContain('aria-checked:bg-ark-invert')
+  })
+
+  it('名称默认显示在图标下面', () => {
+    render(<Filter defaultValue="all" />)
+    expect(screen.getByRole('radio', { name: '近卫' }).lastElementChild).toHaveClass(
+      'text-ark-caption',
+      'font-ark-bold',
+    )
   })
 
   it('图标对读屏隐藏，名称来自文字', () => {

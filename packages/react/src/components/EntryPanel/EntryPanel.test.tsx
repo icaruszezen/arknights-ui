@@ -32,20 +32,29 @@ describe('EntryPanel', () => {
     expect(screen.getByRole('link', { name: '作战 Terminal' })).toHaveAttribute('href', '#terminal')
   })
 
-  it('中文是重磅衬线，英文注脚是窄体大写小字', () => {
-    render(<EntryPanel sub="Squads">编队</EntryPanel>)
-    expect(screen.getByText('编队')).toHaveClass('font-ark-cjk-serif', 'font-ark-heavy')
-    expect(screen.getByText('Squads')).toHaveClass(
-      'font-ark-latin-condensed',
-      'tracking-ark-wide',
-      'uppercase',
-      'text-ark-fg-muted',
-    )
+  it('入口名是重磅衬线，下面是一行灰色的小字，不强制大写', () => {
+    render(<EntryPanel sub="角色管理">干员</EntryPanel>)
+    expect(screen.getByText('干员')).toHaveClass('font-ark-cjk-serif', 'font-ark-heavy')
+    const sub = screen.getByText('角色管理')
+    expect(sub).toHaveClass('font-ark-regular', 'text-ark-fg-muted')
+    expect(sub).not.toHaveClass('uppercase', 'font-ark-latin-condensed', 'tracking-ark-wide')
   })
 
-  it('内容贴左下，其余留白', () => {
+  it('内容默认贴左上，其余留白', () => {
     render(<EntryPanel>编队</EntryPanel>)
-    expect(screen.getByRole('button')).toHaveClass('flex-col', 'justify-end', 'text-left')
+    const panel = screen.getByRole('button')
+    expect(panel).toHaveClass('flex-col', 'justify-start', 'text-left')
+    expect(panel).not.toHaveClass('justify-end')
+  })
+
+  it('align 换位置：居中，或者贴左下', () => {
+    const { rerender } = render(<EntryPanel align="center">采购中心</EntryPanel>)
+    expect(screen.getByRole('button')).toHaveClass('items-center', 'justify-center', 'text-center')
+    expect(screen.getByText('采购中心').parentElement).toHaveClass('justify-items-center')
+
+    rerender(<EntryPanel align="bottom">编队</EntryPanel>)
+    expect(screen.getByRole('button')).toHaveClass('justify-end')
+    expect(screen.getByRole('button')).not.toHaveClass('justify-start')
   })
 
   it('三档字号，英文约为中文的三分之一', () => {
@@ -78,6 +87,23 @@ describe('EntryPanel', () => {
     expect(panel).not.toHaveClass('bg-ark-overlay-panel-dark')
   })
 
+  it('信号色面板：实底，字跟着信号色自己的前景色走，按浅色上下文算', () => {
+    render(
+      <EntryPanel tone="signal" sub="限时">
+        采购中心
+      </EntryPanel>,
+    )
+    const panel = screen.getByRole('button')
+    expect(panel).toHaveAttribute('data-ark-tone', 'light')
+    expect(panel).toHaveClass(
+      'bg-ark-signal',
+      '[--ark-fg:var(--ark-on-signal)]',
+      '[--ark-fg-muted:var(--ark-on-signal)]',
+      'not-disabled:hover:bg-ark-neutral-white',
+    )
+    expect(screen.getByText('采购中心').className).not.toContain('text-shadow')
+  })
+
   it('悬停整块换色，改的是语义变量；禁用时不响应', () => {
     const { rerender } = render(<EntryPanel>编队</EntryPanel>)
     expect(screen.getByRole('button')).toHaveClass(
@@ -96,7 +122,7 @@ describe('EntryPanel', () => {
     expect(screen.getByRole('button')).toHaveClass('disabled:cursor-not-allowed')
   })
 
-  it('石墨面板上的中文带硬投影；纸白面板只给最大的一档', () => {
+  it('只有石墨面板上的入口名带硬投影，纸白面板上没有', () => {
     const { rerender } = render(<EntryPanel>编队</EntryPanel>)
     expect(screen.getByText('编队')).toHaveClass('text-shadow-ark-hard')
 
@@ -105,10 +131,10 @@ describe('EntryPanel', () => {
 
     rerender(
       <EntryPanel tone="paper" size="lg">
-        作战
+        终端
       </EntryPanel>,
     )
-    expect(screen.getByText('作战').className).toContain('[text-shadow:0.3125rem_0.3125rem_0_')
+    expect(screen.getByText('终端').className).not.toContain('text-shadow')
   })
 
   it('badge 是橙色的提醒标记，中心压在右上角；给了 badgeLabel 才会被读到', () => {

@@ -21,6 +21,7 @@ import {
 
 // 不是组件，只是把组件按游戏主界面的编排拼在一起：
 // 场景和助理做成视差，左右两组面板向内倾斜、随指针轻微摆动；右组用 EntryGrid 排成一、二、三、三。
+// 右组各面板的底色照实机的现行界面：纸白为主，采购与招募是蓝色，仓库是石墨。
 // 图片全部是代码画的占位图。
 const meta = {
   title: '示例/主界面',
@@ -78,12 +79,10 @@ export const Home: Story = {
               </Panel>
             </PanelGridItem>
             <PanelGridItem span="1/2">
-              <EntryPanel href="#friends" sub="Friends">
-                好友
-              </EntryPanel>
+              <EntryPanel href="#friends">好友</EntryPanel>
             </PanelGridItem>
             <PanelGridItem span="1/2">
-              <EntryPanel href="#archives" sub="Archives">
+              <EntryPanel href="#archives" badge badgeLabel="有新的档案">
                 档案
               </EntryPanel>
             </PanelGridItem>
@@ -92,42 +91,40 @@ export const Home: Story = {
           <Pattern variant="scanline" className="absolute inset-0" />
         </TiltGroup>
 
-        {/* 右组：主要入口，一、二、三、三；作战最大最亮。入口的字号跟着所在的行走 */}
+        {/* 右组：主要入口，一、二、三、三；终端最大。入口的字号跟着所在的行走 */}
         <TiltGroup side="right" sway className="relative w-[32rem] portrait:w-auto">
           <EntryGrid>
             <EntryPanel
               href="#terminal"
               tone="paper"
-              sub="Terminal"
+              sub="当前 · 全部完成"
               watermark={emblem}
-              aside={<Stat label="Sanity" value={<CountUp value={131} />} max={135} size="sm" />}
+              aside={<Stat label="理智" value={<CountUp value={131} />} max={135} size="sm" />}
             >
-              作战
+              终端
             </EntryPanel>
-            <EntryPanel href="#squads" sub="Squads">
+            <EntryPanel href="#squads" tone="paper">
               编队
             </EntryPanel>
-            <EntryPanel href="#operator" sub="Operator">
+            <EntryPanel href="#operator" tone="paper" sub="角色管理">
               干员
             </EntryPanel>
-            <EntryPanel href="#store" tone="paper" sub="Store">
+            <EntryPanel href="#store" tone="signal" align="center">
               采购中心
             </EntryPanel>
-            <EntryPanel href="#recruit" sub="Recruit">
+            <EntryPanel href="#recruit" tone="signal" align="center">
               公开招募
             </EntryPanel>
-            <EntryPanel href="#headhunt" sub="Headhunt">
+            <EntryPanel href="#headhunt" tone="signal" align="center">
               干员寻访
             </EntryPanel>
-            <EntryPanel href="#mission" sub="Mission" badge badgeLabel="有可领取的奖励">
+            <EntryPanel href="#mission" tone="paper">
               任务
             </EntryPanel>
-            <EntryPanel href="#base" sub="Base">
+            <EntryPanel href="#base" tone="paper" badge={10} badgeLabel="10 条基建通知">
               基建
             </EntryPanel>
-            <EntryPanel href="#depot" sub="Depot">
-              仓库
-            </EntryPanel>
+            <EntryPanel href="#depot">仓库</EntryPanel>
           </EntryGrid>
           <Pattern variant="scanline" className="absolute inset-0" />
         </TiltGroup>

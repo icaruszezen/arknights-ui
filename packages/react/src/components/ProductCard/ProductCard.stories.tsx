@@ -26,18 +26,18 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 带投影的卡片：上面是商品图，中间是商品名，底部一条深色带写货币和价格。 */
+/** 带投影的卡片：顶部一条深色带写商品名，中间是商品图，底部一条居中的价格带。 */
 export const Default: Story = {}
 
 /**
- * 做决定所需的信息就地给全：自己已有多少（库存）、还能买几次（限购）。
- * 不用为了查一个数来回跳转。
+ * 做决定所需的信息就地给全：还能买多少写在商品图右上角的小块里（“剩余”），
+ * 自己已有多少写在图下面（“已有”）。不用为了查一个数来回跳转。
  */
 export const WithStock: Story = {
-  args: { stock: 12, limit: '2/5' },
+  args: { stock: 12, limit: 15 },
 }
 
-/** 限时角标：橙色的小标签加剩余时间。橙色只在这种小面积、高浓度的地方出现。 */
+/** 限时角标：商品图左上角橙色的小标签加剩余时间。橙色只在这种小面积、高浓度的地方出现。 */
 export const Limited: Story = {
   args: {
     limited: (
@@ -49,12 +49,15 @@ export const Limited: Story = {
   },
 }
 
-/** 售罄：商品图和价格压暗，盖上一条横带，不再可点。名字和库存仍然读得清。 */
+/**
+ * 售罄：整张卡片褪色，中间斜盖一条暗红的带，不再可点。名字仍然读得清。
+ * 这条带是全套语言里少数不走 45° 的地方——它是一枚印章。
+ */
 export const SoldOut: Story = {
-  args: { soldOut: true, limit: '0/5', onClick: () => {} },
+  args: { soldOut: true, limit: 0, onClick: () => {} },
 }
 
-/** 石墨与纸白两种表面。价格带是固定的深色。 */
+/** 石墨与纸白两种表面。实机的商品卡片是白的；名称带和价格带是固定的深色。 */
 export const Tones: Story = {
   render: args => (
     <div className="flex items-start gap-ark-4">
@@ -123,6 +126,7 @@ export const Shelf: Story = {
                 limit={product.limit}
                 limited={product.limited ? '限时 2天' : undefined}
                 soldOut={product.soldOut}
+                tone="paper"
                 onClick={() => setPending(product.name)}
               >
                 {product.name}

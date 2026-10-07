@@ -40,11 +40,33 @@ const items = (
 )
 
 /**
- * 图标排成一排，当前项整块反白。Tab 进到选中项，左右方向键移动并立即切换。
- * 图标下面的名称不能省：只放图标就得让人猜。
+ * 图标排成一排，当前项是信号色的实底。Tab 进到选中项，方向键移动并立即切换。
+ * 图标下面的名称默认显示：只放图标就得让人猜。
  */
 export const Default: Story = {
   render: args => <ClassFilter {...args}>{items}</ClassFilter>,
+}
+
+/**
+ * 实机干员列表里的写法：贴在右边的一竖列，只有图标。`iconOnly` 把名称收起来，
+ * 它们仍然读给读屏；“全部”没有图标，所以这里也给了它一个。
+ */
+export const Vertical: Story = {
+  args: { orientation: 'vertical', iconOnly: true },
+  render: args => (
+    <div className="flex h-[30rem] justify-end">
+      <ClassFilter {...args}>
+        <ClassFilterItem value="all" icon={glyphs.blocks}>
+          全部
+        </ClassFilterItem>
+        {classes.map(item => (
+          <ClassFilterItem key={item.id} value={item.id} icon={glyphs[item.glyph]}>
+            {item.name}
+          </ClassFilterItem>
+        ))}
+      </ClassFilter>
+    </div>
+  ),
 }
 
 /** 放不下时横向滚动，而不是把每一项缩小到看不清。 */

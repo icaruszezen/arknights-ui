@@ -27,14 +27,17 @@ const thumbnails = operators.map(operator => (
 ))
 
 /**
- * 官网干员屏左下角的四张缩略图：当前项上方一条信号色短条，其余压暗。
- * Tab 进到当前项，方向键切换。
+ * 官网干员屏左下角的缩略图：每张一圈白框，名称写在左下角；当前项从右上角后面探出一块
+ * 信号色的三角，其余的不压暗。尺寸是官网的实测值。Tab 进到当前项，方向键切换。
  */
 export const Default: Story = {
   render: args => <ThumbnailStrip {...args}>{thumbnails}</ThumbnailStrip>,
 }
 
-/** 竖排时短条在左侧。寻访界面侧边的卡池缩略条是这种排法。 */
+/**
+ * 竖排。寻访界面侧边的卡池缩略条是这种排法：图上已经有卡池的标题标识，
+ * 用 `hideLabel` 把名称收起来，只读给读屏。
+ */
 export const Vertical: Story = {
   render: args => (
     <ThumbnailStrip {...args} orientation="vertical" defaultValue="0" aria-label="卡池">
@@ -45,7 +48,8 @@ export const Vertical: Story = {
           value={String(index)}
           src={scene}
           label={`卡池 ${index + 1}`}
-          className="aspect-[16/9] w-28"
+          hideLabel
+          className="h-20 w-36"
           position="50% 50%"
         />
       ))}

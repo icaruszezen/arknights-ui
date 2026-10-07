@@ -1,4 +1,5 @@
 import type { ComponentProps, MouseEventHandler, ReactNode } from 'react'
+import { CheckIcon } from '../../internal/icons'
 import { colorTransition, focusRing } from '../../utils/classes'
 import { cn } from '../../utils/cn'
 
@@ -8,7 +9,7 @@ interface SkillSlotOwnProps {
    * 图片自己带 `alt` 时可以不给。
    */
   label?: string
-  /** 当前选中：换成信号色描边并加粗一圈。是按钮时同时输出 `aria-pressed`。 */
+  /** 当前选中：右上角压一块信号色的三角加对勾，描边换成信号色。是按钮时同时输出 `aria-pressed`。 */
   selected?: boolean
   /** 左下角的小字：等级、专精（`RANK 7`、`M3`）。选中时跟着变成信号色。 */
   rank?: ReactNode
@@ -29,8 +30,8 @@ export type SkillSlotProps = SkillSlotAsButton | SkillSlotAsBlock
 const base =
   'relative isolate m-0 box-border inline-grid size-16 shrink-0 place-items-center overflow-hidden border border-ark-rule bg-ark-neutral-black/50 p-0 text-ark-fg'
 
-// 选中：信号色描边，里面再压一圈 1px——颜色之外线也变粗了
-const selectedFrame = 'border-ark-signal shadow-[inset_0_0_0_1px_var(--ark-signal)]'
+// 选中：信号色描边。颜色之外的标记是右上角那块三角和对勾（实机上当前装备的技能就是这样标的）
+const selectedFrame = 'border-ark-signal'
 
 const interactive = cn(
   'cursor-pointer appearance-none select-none hover:border-ark-fg hover:bg-ark-neutral-black/80',
@@ -40,7 +41,7 @@ const interactive = cn(
 )
 
 /**
- * 技能格：黑色半透明的方块加 1px 细描边，当前选中的那一格换成信号色描边。
+ * 技能格：黑色半透明的方块加 1px 细描边，当前选中的那一格右上角压一块信号色的三角和对勾。
  * 技能、模组这类“几选一”的东西都用它，并排时留 4–8px 的缝。
  *
  * 它是图标的外框，不带任何图形——图形由使用方放进来，请使用原创或已获授权的素材。
@@ -58,6 +59,16 @@ export function SkillSlot(props: SkillSlotProps) {
       {children != null && (
         <span className="absolute inset-0 -z-1 grid place-items-center [&>img]:block [&>img]:size-full [&>img]:object-cover [&>svg]:block [&>svg]:size-1/2">
           {children}
+        </span>
+      )}
+      {selected && (
+        // 直角边 1.5rem 的三角，贴着右上角
+        <span
+          aria-hidden="true"
+          data-ark="skill-slot-mark"
+          className="absolute top-0 right-0 size-6 bg-ark-signal text-ark-on-signal [clip-path:polygon(0_0,100%_0,100%_100%)]"
+        >
+          <CheckIcon className="absolute top-0.5 right-0.5 block size-3" />
         </span>
       )}
       {rank != null && (

@@ -61,7 +61,7 @@
     <rect x="206" y="60" width="426" height="278" fill="#1d1f20"/>
     <path d="M206 338 L632 60 M206 60 L632 338" stroke="#fff" stroke-opacity=".08"/>
     <text x="419" y="204" text-anchor="middle" class="cjk" font-size="11" fill="#585858">KEY VISUAL · 16:9 出血到右栏</text>
-    <rect x="354" y="337" width="110" height="3" fill="#18d1ff"/><rect x="464" y="337" width="168" height="3" fill="#fff" fill-opacity=".5"/>
+    <rect x="354" y="337" width="278" height="3" fill="#ababab"/><rect x="354" y="337" width="56" height="3" fill="#18d1ff"/>
 
     <!-- 滚动提示 -->
     <polygon points="352,392 360,398 368,392 360,395" fill="#fff" fill-opacity=".7"/>
@@ -74,8 +74,8 @@
     <path class="lead" d="M712 232 H780"/><text x="786" y="228">② 右栏：竖线 + 栏目计数</text><text x="786" y="244">   “01 // 01 / 05”</text>
     <path class="lead" d="M400 400 H780"/><text x="786" y="396">③ 幽灵标题：7rem，#242424，</text><text x="786" y="412">   与内容底边重叠</text>
     <path class="lead" d="M200 180 V470 H260"/><text x="266" y="474">④ 内容区左起 9rem；列表与大图不等分，图片一侧出血</text>
-    <path class="lead" d="M450 378 V500 H500"/><text x="506" y="504">⑤ 轮播进度：4px 青蓝段 + 灰轨</text>
+    <path class="lead" d="M450 378 V500 H500"/><text x="506" y="504">⑤ 轮播进度：0.5rem 高的中灰轨道，上面一段同高的青蓝停在当前页</text>
     <path class="lead" d="M80 300 V530 H140"/><text x="146" y="534">⑥ 背景：近黑底 + 斜线网格 + 左下角半调网点</text>
   </g>
-  <text x="40" y="576" class="cjk" font-size="12" fill="#8d8d8d">线框根据 2026-10-06 官网实测绘制；灰块代表官方图片与文字，未使用任何官方素材。</text>
+  <text x="40" y="576" class="cjk" font-size="12" fill="#8d8d8d">线框根据 2026-10-06 官网实测绘制，轮播进度条于 2026-10-07 按样式表改正；灰块代表官方图片与文字，未使用任何官方素材。</text>
 </svg>

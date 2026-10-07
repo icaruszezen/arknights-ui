@@ -17,10 +17,10 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 左上角黑底写费用，右下角是职业图标。卡面上没有名字，名字只给读屏。 */
+/** 顶部并排两格：浅灰底的职业图标，黑底的费用。卡面上没有名字，名字只给读屏。 */
 export const Default: Story = {}
 
-/** 状态用明暗、颜色、数字三重表达：选中上浮加描边；费用不足变暗、数字变红；冷却时盖上倒计时。 */
+/** 状态用明暗和数字表达：选中上浮加描边；费用不足变暗、数字变灰；冷却时盖上倒计时。 */
 export const States: Story = {
   render: args => (
     <div className="flex items-end gap-ark-4">

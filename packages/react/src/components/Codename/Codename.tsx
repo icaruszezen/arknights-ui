@@ -17,6 +17,12 @@ export interface CodenameProps extends ComponentProps<'h2'> {
    * @default 'md'
    */
   size?: CodenameSize
+  /**
+   * 换成游戏内干员详情页的写法：中文代号用宋体 Heavy、不收字距，
+   * 英文名是大小写混排的常规字重，不强制大写。
+   * @default false
+   */
+  serif?: boolean
 }
 
 const mainSize: Record<CodenameSize, string> = {
@@ -39,16 +45,18 @@ const gap: Record<CodenameSize, string> = {
 }
 
 /**
- * 干员代号的排版：思源黑体 Heavy，字距收紧到 -0.1em；英文名小字在上，中文代号在下。
- * 这条约定自开服以来没有变过——字体、字重、字距多年如一，是品牌感的来源。
+ * 干员代号的排版：英文名小字在上，中文代号在下。同一个名字在三处有三种写法——
  *
- * 官网干员屏的中文名是 Bold、不收字距，需要那种写法时用
- * `className="font-ark-bold tracking-ark-normal"` 覆盖。
+ * - 默认：思源黑体 Heavy，字距收紧到 -0.1em。干员介绍图和卡片上的写法，
+ *   这条约定自开服以来没有变过
+ * - `serif`：宋体 Heavy、不收字距，英文大小写混排。游戏内干员详情页的写法
+ * - 官网干员屏：黑体 Bold、不收字距，用 `className="font-ark-bold tracking-ark-normal"` 覆盖
  */
 export function Codename({
   as = 'h2',
   sub,
   size = 'md',
+  serif = false,
   className,
   children,
   ...rest
@@ -61,7 +69,10 @@ export function Codename({
       {...rest}
       className={cn(
         // DOM 里代号在前，读屏先读到它；视觉上英文在上，用 flex 方向调
-        'm-0 box-border flex flex-col-reverse font-ark-cjk-sans font-ark-heavy tracking-ark-cjk-tight text-ark-fg',
+        'm-0 box-border flex flex-col-reverse font-ark-heavy text-ark-fg',
+        serif
+          ? 'font-ark-cjk-serif tracking-ark-normal'
+          : 'font-ark-cjk-sans tracking-ark-cjk-tight',
         gap[size],
         className,
       )}
@@ -70,7 +81,10 @@ export function Codename({
       {sub != null && (
         <span
           className={cn(
-            'font-ark-latin-wide leading-ark-solid font-ark-bold tracking-ark-normal uppercase',
+            'leading-ark-solid tracking-ark-normal',
+            serif
+              ? 'font-ark-cjk-sans font-ark-regular'
+              : 'font-ark-latin-wide font-ark-bold uppercase',
             subSize[size],
           )}
         >

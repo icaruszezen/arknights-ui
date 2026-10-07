@@ -58,52 +58,82 @@ describe('ThumbnailStrip', () => {
     expect(checked()).toHaveAccessibleName('干员乙')
   })
 
-  it('横排时短条在当前项上方，并留出它的位置', () => {
+  it('当前项的标记是从右上角后面探出来的信号色三角，上、右两边给它留出位置', () => {
     render(<Strip defaultValue="a" />)
-    expect(screen.getByRole('radiogroup')).toHaveClass('flex-row', 'pt-ark-2')
+    expect(screen.getByRole('radiogroup')).toHaveClass('flex-row', 'pt-ark-2', 'pr-[0.375rem]')
     expect(checked()).toHaveClass(
-      'before:inset-x-0',
+      'isolate',
       'before:-top-ark-2',
-      'before:h-(--ark-line-strong)',
+      'before:right-[-0.375rem]',
+      'before:-z-1',
+      'before:size-8',
       'before:bg-ark-signal',
+      'before:[clip-path:polygon(0_0,100%_0,100%_100%)]',
+      'before:opacity-0',
       'aria-checked:before:opacity-100',
     )
+    // 不再是上方的一条短条
+    expect(checked().className).not.toContain('before:h-(--ark-line-strong)')
   })
 
-  it('竖排时短条在左侧', () => {
+  it('竖排时标记不变，只是排成一列', () => {
     render(<Strip defaultValue="a" orientation="vertical" />)
     const group = screen.getByRole('radiogroup')
     expect(group).toHaveAttribute('aria-orientation', 'vertical')
-    expect(group).toHaveClass('flex-col', 'pl-ark-2')
-    expect(checked()).toHaveClass(
-      'before:inset-y-0',
-      'before:-left-ark-2',
-      'before:w-(--ark-line-strong)',
-    )
-    expect(checked()).not.toHaveClass('before:-top-ark-2')
+    expect(group).toHaveClass('flex-col', 'pt-ark-2')
+    expect(checked()).toHaveClass('before:-top-ark-2', 'before:right-[-0.375rem]')
   })
 })
 
 describe('Thumbnail', () => {
-  it('3:4 的图片，铺满，本身对读屏隐藏', () => {
+  it('7.125rem × 11.25rem 的图片，铺满，本身对读屏隐藏', () => {
     render(<Strip defaultValue="a" />)
     const thumbnail = checked()
     expect(thumbnail).toHaveAttribute('data-ark', 'thumbnail')
-    expect(thumbnail).toHaveClass('aspect-[3/4]', 'w-16')
+    expect(thumbnail).toHaveClass('h-[11.25rem]', 'w-[7.125rem]')
     const image = thumbnail.querySelector('img') as HTMLImageElement
     expect(image).toHaveAttribute('src', '/a.png')
     expect(image).toHaveAttribute('alt', '')
     expect(image).toHaveClass('object-cover')
   })
 
-  it('非当前项压暗，悬停和选中时恢复', () => {
+  it('一圈 0.625rem 的白框压在图片上', () => {
     render(<Strip defaultValue="a" />)
-    expect(checked().querySelector('img')).toHaveClass(
-      'opacity-50',
-      'group-hover:opacity-100',
-      'group-aria-checked:opacity-100',
-      'group-aria-checked:saturate-100',
+    const frame = checked().querySelector('img')?.nextElementSibling
+    expect(frame).toHaveAttribute('aria-hidden', 'true')
+    expect(frame).toHaveClass('inset-0', 'border-[0.625rem]', 'border-ark-neutral-white')
+  })
+
+  it('非当前项不压暗', () => {
+    render(<Strip defaultValue="a" />)
+    for (const radio of screen.getAllByRole('radio')) {
+      expect(radio.querySelector('img')?.className).not.toMatch(/opacity|saturate/)
+    }
+  })
+
+  it('名称写在左下角，上面一个小方点；它就是可访问名称，不再另给 aria-label', () => {
+    render(<Strip defaultValue="a" />)
+    const label = screen.getByText('干员甲')
+    expect(label).toHaveClass(
+      'absolute',
+      'bottom-ark-4',
+      'left-ark-4',
+      'font-ark-medium',
+      'before:size-[0.375rem]',
+      'before:bg-current',
     )
+    expect(checked()).not.toHaveAttribute('aria-label')
+    expect(checked()).toHaveAccessibleName('干员甲')
+  })
+
+  it('hideLabel 时名称只读给读屏', () => {
+    render(
+      <ThumbnailStrip aria-label="卡池" defaultValue="a">
+        <Thumbnail value="a" src="/a.png" label="卡池一" hideLabel />
+      </ThumbnailStrip>,
+    )
+    expect(screen.getByText('卡池一')).toHaveClass('sr-only')
+    expect(screen.getByRole('radio', { name: '卡池一' })).toBeInTheDocument()
   })
 
   it('position 传给图片', () => {

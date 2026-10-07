@@ -46,17 +46,21 @@ describe('KeyValue', () => {
     expect(row).toHaveClass('col-span-2', 'grid-cols-subgrid', 'portrait:col-span-1')
   })
 
-  it('键偏灰并带冒号，值是粗体', () => {
+  it('键是粗体并带冒号，值是常规字重（官方公告正文的写法）', () => {
     render(
       <KeyValueList>
         <KeyValue label="解锁条件">通关主线 1-10</KeyValue>
       </KeyValueList>,
     )
-    expect(screen.getByRole('term')).toHaveClass('text-ark-fg-muted', "after:content-['：']")
-    expect(screen.getByRole('definition')).toHaveClass('font-ark-bold', 'text-ark-fg')
+    const key = screen.getByRole('term')
+    expect(key).toHaveClass('font-ark-bold', 'text-ark-fg', "after:content-['：']")
+    expect(key).not.toHaveClass('text-ark-fg-muted')
+    const value = screen.getByRole('definition')
+    expect(value).toHaveClass('font-ark-regular', 'text-ark-fg')
+    expect(value).not.toHaveClass('font-ark-bold')
   })
 
-  it('tone="signal" 把值换成主题色', () => {
+  it('tone="signal" 把值换成主题色，只上色、不加粗', () => {
     render(
       <KeyValueList>
         <KeyValue label="活动时间" tone="signal">
@@ -65,7 +69,7 @@ describe('KeyValue', () => {
       </KeyValueList>,
     )
     const value = screen.getByRole('definition')
-    expect(value).toHaveClass('text-ark-signal-fg')
-    expect(value).not.toHaveClass('text-ark-fg')
+    expect(value).toHaveClass('text-ark-signal-fg', 'font-ark-regular')
+    expect(value).not.toHaveClass('text-ark-fg', 'font-ark-bold')
   })
 })

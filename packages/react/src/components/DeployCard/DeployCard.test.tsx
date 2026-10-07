@@ -18,16 +18,18 @@ describe('DeployCard', () => {
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
-  it('3:4 的小卡，点击区不小于 44px', () => {
+  it('5:6 的卡片，6.5rem 宽，点击区不小于 44px', () => {
     render(<DeployCard label="占位干员甲" cost={12} />)
-    expect(screen.getByRole('button')).toHaveClass('aspect-[3/4]', 'w-14')
+    expect(screen.getByRole('button')).toHaveClass('aspect-[5/6]', 'w-[6.5rem]')
   })
 
-  it('费用在左上角的黑底方块里，数据体粗体', () => {
+  it('费用在顶部的黑底方块里，数据体', () => {
     render(<DeployCard label="占位干员甲" cost={12} />)
-    const cost = screen.getByText('12', { exact: false, selector: 'span.absolute' })
-    expect(cost).toHaveClass('top-0', 'left-0', 'bg-ark-neutral-black', 'font-ark-data')
-    expect(cost).not.toHaveClass('text-ark-signal-danger')
+    const cost = screen.getByText('12', { exact: false, selector: 'span.bg-ark-neutral-black' })
+    expect(cost).toHaveClass('h-6', 'font-ark-data', 'text-ark-body')
+    expect(cost).not.toHaveClass('text-ark-neutral-gray-500')
+    // 顶部正中
+    expect(cost.parentElement).toHaveClass('absolute', 'top-0', 'left-1/2', '-translate-x-1/2')
   })
 
   it('头像铺满，对读屏隐藏', () => {
@@ -55,11 +57,13 @@ describe('DeployCard', () => {
     )
   })
 
-  it('费用不足：卡面压暗，数字转红，并读给读屏', () => {
+  it('费用不足：卡面压暗，数字变灰（不是转红），并读给读屏', () => {
     render(<DeployCard label="占位干员甲" cost={32} src="/a.png" insufficient />)
     const card = screen.getByRole('button', { name: '占位干员甲 费用 32 费用不足' })
     expect(card.querySelector('img')).toHaveClass('brightness-[0.4]')
-    expect(card.querySelector('.bg-ark-neutral-black')).toHaveClass('text-ark-signal-danger')
+    const cost = card.querySelector('.bg-ark-neutral-black')
+    expect(cost).toHaveClass('text-ark-neutral-gray-500')
+    expect(cost).not.toHaveClass('text-ark-signal-danger')
   })
 
   it('再部署冷却：卡面压暗，盖上倒计时', () => {
@@ -77,11 +81,18 @@ describe('DeployCard', () => {
     expect(card.querySelector('img')?.className).not.toContain('brightness')
   })
 
-  it('职业图标在右下角，对读屏隐藏', () => {
+  it('职业图标在顶部、费用的左边，浅灰底深色图形，对读屏隐藏', () => {
     render(<DeployCard label="占位干员甲" cost={12} classIcon={icon} />)
-    const chip = screen.getByTestId('class-icon').parentElement
-    expect(chip).toHaveClass('right-0', 'bottom-0')
+    const chip = screen.getByTestId('class-icon').parentElement as HTMLElement
+    expect(chip).toHaveClass('size-6', 'bg-ark-neutral-gray-300', 'text-ark-neutral-black')
     expect(chip).toHaveAttribute('aria-hidden', 'true')
+    // 和费用并排，图标在前
+    expect(chip.nextElementSibling).toHaveClass('bg-ark-neutral-black')
+  })
+
+  it('卡面压暗时职业图标的底跟着变暗', () => {
+    render(<DeployCard label="占位干员甲" cost={32} classIcon={icon} insufficient />)
+    expect(screen.getByTestId('class-icon').parentElement).toHaveClass('bg-ark-neutral-gray-500')
   })
 
   it('aria-label 可以整个换掉读屏的说法', () => {
