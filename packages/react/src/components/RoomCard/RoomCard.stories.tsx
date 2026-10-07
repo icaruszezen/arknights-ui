@@ -76,7 +76,7 @@ export const Kinds: Story = {
   ),
 }
 
-/** `src` 给房间垫一张内景图，压暗之后文字仍然读得清。右上角的红点表示有可收取的产出。 */
+/** `src` 给房间垫一张内景图，压暗之后文字仍然读得清。右上角的橙色标记表示有可收取的产出。 */
 export const WithScene: Story = {
   args: { src: scenes[1], icon: glyphs.blocks, badge: true, badgeLabel: '有可收取的产出' },
   render: args => <RoomCard {...args}>{crew(3, 3)}</RoomCard>,
@@ -117,6 +117,7 @@ export const OpensDrawer: Story = {
           </RoomCard>
         ))}
         <Drawer
+          accent
           open={current !== undefined}
           onOpenChange={() => setOpen(null)}
           title={current?.title}

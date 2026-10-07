@@ -48,7 +48,8 @@
 | 来源 | 链接 | 能看到什么 | 对应文档 |
 | --- | --- | --- | --- |
 | MAA 的模板图 | [MaaAssistantArknights · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | 从 1280 × 720 的实机画面裁出的单个控件：`PopupConfirm` / `PopupCancel`（弹窗按钮）、`Battle/BattleFlag/PrtsErrorConfirm`（整条弹窗）、`ReturnButton/Return`（返回）、`Battle/StartButton/StartButton1`（开始行动）、`Depot/DepotMaterialTab*`（仓库分类）等 | [按钮](../elements/buttons.md)、[反馈](../elements/feedback.md)、[导航](../elements/navigation.md) |
-| 机核文章的配图 | [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154) | 2436 × 1125 的实机截图：展开的快捷导航、基建的进驻信息抽屉、凭证交易所的兑换弹层 | [导航](../elements/navigation.md)、[面板与卡片](../elements/panels-and-cards.md) |
+| 机核文章的配图 | [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154) | 2436 × 1125 的实机截图：展开的快捷导航、基建的进驻信息抽屉、凭证交易所的兑换弹层、干员列表（星级、等级环）、干员详情（属性、标签）、仓库（分类）、基建总览（资源条） | [导航](../elements/navigation.md)、[面板与卡片](../elements/panels-and-cards.md)、[数据展示](../elements/data-display.md) |
+| PRTS 的界面主题预览图 | [界面主题一览 · PRTS](https://prts.wiki/w/%E7%95%8C%E9%9D%A2%E4%B8%BB%E9%A2%98%E4%B8%80%E8%A7%88) | 1280 × 720 的主界面实机截图，每个主题一张：资源条、入口面板的三种底色、橙色条与橙色菱形、计数色块、等级环。原图可以直接取色 | [数据展示](../elements/data-display.md)、[面板与卡片](../elements/panels-and-cards.md)、[色彩](../foundations/color.md) |
 
 模板图是自动化工具用来识别界面的素材，属于游戏画面的局部截图，版权同样归鹰角网络。只在原仓库查看，不要转存。
 

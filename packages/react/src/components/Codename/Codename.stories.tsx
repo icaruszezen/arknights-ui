@@ -51,7 +51,7 @@ export const Resume: Story = {
         <Tag variant="solid" cut>
           近卫
         </Tag>
-        <Tag variant="outline">输出</Tag>
+        <Tag>输出</Tag>
       </div>
       <KeyValueList className="gap-y-0 text-ark-label">
         {(

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
+import { glyphs } from '../../../.storybook/glyphs'
 import { Button } from '../Button'
 import { Heading } from '../Heading'
 import { Panel } from '../Panel'
@@ -13,12 +14,22 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 数字角标：直角小块，数据体黑字压在红底上。 */
+/** 计数：一块直角的暗红色块，数据体白字。主界面上“基建”面板里的告警数就是这样。 */
 export const Count: Story = {}
 
-/** 红点：未读、可领取。只说“有”，不说“有多少”。 */
+/** 提醒标记：橙色的菱形带一圈白边，表示未读、可领取。只说“有”，不说“有多少”。 */
 export const Dot: Story = {
   args: { dot: true, count: undefined },
+}
+
+/** 数字前可以带一个小图标；通知一类用信号色。图标由使用方提供。 */
+export const WithIcon: Story = {
+  render: () => (
+    <div className="grid w-fit gap-ark-1">
+      <Badge count={1} icon={glyphs.peak} label="1 条告警" />
+      <Badge count={10} tone="signal" icon={glyphs.target} label="10 条通知" />
+    </div>
+  ),
 }
 
 /** 超过上限时写成 `99+`。 */
@@ -27,8 +38,8 @@ export const Overflow: Story = {
 }
 
 /**
- * 包住一个元素，角标贴在它的右上角。
- * `label` 给读屏一句完整的说明；没有 `label` 的红点对读屏是隐藏的。
+ * 包住一个元素，角标骑在它的右上角。
+ * `label` 给读屏一句完整的说明；没有 `label` 的提醒标记对读屏是隐藏的。
  */
 export const OnElements: Story = {
   render: () => (
@@ -46,7 +57,7 @@ export const OnElements: Story = {
   ),
 }
 
-/** 主界面的入口面板：红点贴在面板的右上角。 */
+/** 主界面的入口面板：菱形骑在面板的角上。 */
 export const OnPanel: Story = {
   globals: { backgrounds: { value: 'scene' } },
   render: () => (

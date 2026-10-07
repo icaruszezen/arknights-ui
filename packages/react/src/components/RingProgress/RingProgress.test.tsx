@@ -76,6 +76,34 @@ describe('RingProgress', () => {
     }
   })
 
+  it('filled 在环内压一块半透明黑的圆底，画在轨道下面', () => {
+    const { container, rerender } = render(<RingProgress aria-label="等级" value={50} />)
+    expect(container.querySelectorAll('circle')).toHaveLength(2)
+
+    rerender(<RingProgress aria-label="等级" value={50} filled />)
+    const circles = container.querySelectorAll('circle')
+    expect(circles).toHaveLength(3)
+    expect(circles[0]).toHaveClass('fill-ark-neutral-black/60')
+  })
+
+  it('labelPosition 把标签放到数字下面，DOM 里的顺序不变', () => {
+    const { rerender } = render(
+      <RingProgress aria-label="等级" value={50} label="LV">
+        90
+      </RingProgress>,
+    )
+    const center = () => screen.getByText('LV').parentElement as HTMLElement
+    expect(center()).toHaveClass('flex-col')
+
+    rerender(
+      <RingProgress aria-label="等级" value={50} label="LV" labelPosition="below">
+        120
+      </RingProgress>,
+    )
+    expect(center()).toHaveClass('flex-col-reverse')
+    expect(center().firstElementChild).toHaveTextContent('LV')
+  })
+
   it('颜色可选，默认信号色', () => {
     const { rerender } = render(<RingProgress aria-label="经验" value={50} />)
     expect(getFill()).toHaveClass('stroke-ark-signal')

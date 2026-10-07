@@ -30,9 +30,9 @@ interface EntryPanelOwnProps {
    * 面板是 `<button>` 时请放行内内容。
    */
   aside?: ReactNode
-  /** 右上角的提示：`true` 是一个红点，数字是数量角标（为 0 时不显示）。 */
+  /** 右上角的提示：`true` 是一个橙色的提醒标记，数字是计数色块（为 0 时不显示）。 */
   badge?: boolean | number
-  /** 给读屏的说明，如“有可领取的奖励”。红点本身没有文字，不给这个就不会被读到。 */
+  /** 给读屏的说明，如“有可领取的奖励”。提醒标记本身没有文字，不给这个就不会被读到。 */
   badgeLabel?: string
   /** 垫在留白处的水印：一个放大、压低不透明度的标识。 */
   watermark?: ReactNode
@@ -99,7 +99,7 @@ const paperShadow =
 
 /**
  * 主界面的入口面板：重磅的中文衬线大字贴左下，英文小注脚在其下方，其余留白。
- * 没有描边，面板之间只留很窄的缝；红点提示贴在右上角。
+ * 没有描边，面板之间只留很窄的缝；提醒标记压在右上角。
  *
  * 面积与亮度直接对应优先级：最重要的入口最大、用纸白，不需要“推荐”角标。
  * 多个入口用 `EntryGrid` 排成“一、二、三、三”；需要透视时再在外面套 `TiltGroup`。
@@ -124,7 +124,7 @@ export function EntryPanel(props: EntryPanelProps) {
 
   const classes = cn(base, tones[tone], className)
 
-  // DOM 里入口名在最前：读屏先读到“任务”，再读到右上角的数值和红点的说明。
+  // DOM 里入口名在最前：读屏先读到“任务”，再读到右上角的数值和提醒标记的说明。
   // 其余几样都是绝对定位的，先后只影响朗读顺序
   const content = (
     <>
@@ -155,7 +155,7 @@ export function EntryPanel(props: EntryPanelProps) {
         <span
           className={cn(
             'absolute top-ark-4 grid justify-items-end text-right',
-            // 给红点让出位置
+            // 给角标让出位置
             hasBadge ? 'right-ark-5' : 'right-ark-4',
           )}
         >
@@ -167,7 +167,12 @@ export function EntryPanel(props: EntryPanelProps) {
           dot={badge === true}
           count={typeof badge === 'number' ? badge : undefined}
           label={badgeLabel}
-          className="absolute top-ark-2 right-ark-2"
+          className={
+            badge === true
+              ? // 菱形的中心压在角上，面板裁掉一半，剩下一个橙色的角（实机邮件图标上就是这样）
+                'absolute top-0 right-0 size-4 translate-x-1/2 -translate-y-1/2'
+              : 'absolute top-ark-2 right-ark-2'
+          }
         />
       )}
       {watermark != null && <Watermark>{watermark}</Watermark>}

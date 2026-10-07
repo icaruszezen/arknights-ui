@@ -14,7 +14,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 金色五角星，间距是图形宽度的四分之一。只画点亮的那几颗。 */
+/** 黄色五角星，一颗压住前一颗约两成，各带一圈很小的硬边（实机卡片上的写法）。只画点亮的那几颗。 */
 export const Stars: Story = {}
 
 /** 同一处星级在不同位置会写成菱形。 */
@@ -39,7 +39,7 @@ export const Sizes: Story = {
 
 /**
  * 稀有度双重编码：星星的数量，加上卡片底边的稀有度色条。
- * 纸白面上的金色自动压暗，保证看得清。
+ * 纸白面上的黄色自动压暗，保证看得清。
  */
 export const OnCards: Story = {
   globals: { backgrounds: { value: 'scene' } },

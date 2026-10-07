@@ -17,6 +17,10 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
+/**
+ * 信息级：半透明的黑条，前面一个白色的圆圈 i，没有色边（实机提示条的写法）。
+ * 它压在场景上时下层仍然隐约可见。
+ */
 export const Info: Story = {}
 
 /** 警示：黄边之外，顶部再加一条警戒条纹窄边。条纹只做窄边，不铺满。 */
@@ -37,7 +41,7 @@ export const WithTitle: Story = {
   },
 }
 
-/** 三个级别并排：色边分级，底色不变；图形是颜色之外的第二种编码。 */
+/** 三个级别并排：信息级不加颜色，警示和错误才在左侧加色边；图形是颜色之外的第二种编码。 */
 export const Levels: Story = {
   render: () => (
     <div className="grid gap-ark-2">

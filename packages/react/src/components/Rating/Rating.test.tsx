@@ -48,10 +48,10 @@ describe('Rating', () => {
     expect(star).not.toBe(diamond)
   })
 
-  it('用稀有度的金色，并跟随明暗上下文压暗', () => {
+  it('用实机取色的黄，并跟随明暗上下文压暗', () => {
     render(<Rating value={5} />)
     const rating = screen.getByRole('img')
-    expect(rating.className).toContain('--ark-color-tier-5')
+    expect(rating.className).toContain('--ark-color-tier-star')
     expect(rating.className).toContain('--ark-signal-fg-mix')
   })
 
@@ -59,6 +59,23 @@ describe('Rating', () => {
     render(<Rating value={6} aria-label="六星干员" className="text-ark-tier-6" />)
     const rating = screen.getByRole('img', { name: '六星干员' })
     expect(rating).toHaveClass('text-ark-tier-6')
-    expect(rating.className).not.toContain('--ark-color-tier-5')
+    expect(rating.className).not.toContain('--ark-color-tier-star')
+  })
+
+  it('星形一颗压一颗：从第二颗起往回收两成，各带一圈硬边；菱形保持间距', () => {
+    const { rerender } = render(<Rating value={3} />)
+    const stars = getShapes()
+    expect(stars[0]).not.toHaveClass('-ml-[0.2em]')
+    expect(stars[1]).toHaveClass('-ml-[0.2em]')
+    expect(stars[2]).toHaveClass('-ml-[0.2em]')
+    for (const star of stars) expect(star.getAttribute('class')).toContain('drop-shadow-')
+    expect(screen.getByRole('img')).not.toHaveClass('gap-[0.25em]')
+
+    rerender(<Rating value={3} shape="diamond" />)
+    expect(screen.getByRole('img')).toHaveClass('gap-[0.25em]')
+    for (const diamond of getShapes()) {
+      expect(diamond).not.toHaveClass('-ml-[0.2em]')
+      expect(diamond.getAttribute('class')).not.toContain('drop-shadow-')
+    }
   })
 })

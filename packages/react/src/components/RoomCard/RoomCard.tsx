@@ -35,7 +35,7 @@ export interface RoomCardProps extends Omit<ComponentProps<'div'>, 'title' | 'on
   icon?: ReactNode
   /** 房间内景的图片地址，垫在最底层并压暗。 */
   src?: string
-  /** 右上角的提示：`true` 是一个红点（有可收取的产出），数字是数量角标。 */
+  /** 右上角的提示：`true` 是一个橙色的提醒标记（有可收取的产出），数字是计数色块。 */
   badge?: boolean | number
   /** 给读屏的说明，如“有可收取的产出”。 */
   badgeLabel?: string
@@ -142,7 +142,12 @@ export function RoomCard({
           dot={badge === true}
           count={typeof badge === 'number' ? badge : undefined}
           label={badgeLabel}
-          className="absolute top-ark-1 right-ark-1"
+          className={
+            badge === true
+              ? // 菱形的中心压在角上，卡片裁掉一半，剩下一个橙色的角
+                'absolute top-0 right-0 size-4 translate-x-1/2 -translate-y-1/2'
+              : 'absolute top-ark-1 right-ark-1'
+          }
         />
       )}
 

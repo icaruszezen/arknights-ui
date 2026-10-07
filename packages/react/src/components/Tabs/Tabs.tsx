@@ -37,7 +37,7 @@ interface TabsOwnProps {
   /**
    * - `block`：选中项变成信号色实心块、右端一个折线箭头，其余只留文字（官网新闻分类）
    * - `underline`：选中项信号色文字 + 4px 底条，其余文字变灰
-   * - `segment`：每一项都有底块，连成一条；选中项明暗对调（游戏内仓库的分类）
+   * - `segment`：每一项都有底块，连成一条，项间一条短竖线；选中项明暗对调（游戏内仓库、任务的分类）
    * @default 'block'
    */
   variant?: TabsVariant
@@ -142,8 +142,8 @@ export interface TabProps extends Omit<ComponentProps<'button'>, 'value'> {
 const listVariants: Record<TabsVariant, string> = {
   block: 'gap-ark-4',
   underline: 'gap-ark-5 border-b border-ark-rule',
-  // 块与块之间只留 2px 的缝
-  segment: 'gap-0.5',
+  // 连成一条，项与项之间靠一条短竖线分开（画在 Tab 上）
+  segment: 'gap-0',
 }
 
 const tabBase = cn(
@@ -166,6 +166,9 @@ const tabVariants: Record<TabsVariant, string> = {
   segment: cn(
     'h-9 bg-ark-fg/10 px-ark-4 text-[1rem] text-ark-fg-secondary hover:bg-ark-fg/20 hover:text-ark-fg',
     'aria-selected:bg-ark-invert aria-selected:text-ark-on-invert aria-selected:hover:bg-ark-invert aria-selected:hover:text-ark-on-invert',
+    // 项与项之间一条半高的短竖线（实机仓库分类的写法）；选中项和它右边那一项不画
+    'not-first:before:absolute not-first:before:top-1/4 not-first:before:left-0 not-first:before:h-1/2 not-first:before:w-px not-first:before:bg-ark-fg/40',
+    'aria-selected:before:hidden [[aria-selected=true]+&]:before:hidden',
     hitArea,
   ),
   underline: cn(

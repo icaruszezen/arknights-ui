@@ -1,6 +1,6 @@
 # 反馈
 
-> 弹窗是横贯屏幕的一条带，不是悬在中间的一个盒子。提示靠左侧一条色边说明级别。
+> 弹窗是横贯屏幕的一条带，不是悬在中间的一个盒子。提示是一条半透明的黑底，需要分级时才在左侧加一条色边。
 
 ## 特征拆解
 
@@ -12,9 +12,9 @@
 
 **4. 抽屉直接关闭。** 抽屉式页面应当“点返回即关闭”。早期基建的抽屉在关闭时带二次确认，被评论文章指为不符合常见产品逻辑——反馈层级不应比操作本身更重。
 
-**5. 提示条用色边分级。** 信息用蓝边，警示用黄边（可加一条警戒条纹），错误用红边。底色保持深色，不整条变色。
+**5. 提示条是一条半透明的黑底。** 前面一个白色的圆圈 i，后面是白字，不加任何颜色——干员页里“精英化晋升干员以继续提高干员等级”、代理作战底部的“代理指挥作战正常运行中”都是这样。实机上只见到信息这一级；需要分级时，警示在左侧加黄边（可加一条警戒条纹），错误加红边，底色仍然保持深色，不整条变色。
 
-**6. 加载展示内容。** 长加载时铺满插画，短加载用一条细进度条加百分比和英文状态文字。
+**6. 加载展示内容。** 长加载时铺满插画或标识，实机就是这样。短加载用一条细进度条加百分比和英文状态文字，这是本仓库的写法，实机上没有找到出处。
 
 **7. 奖励有光。** 获得物品时，物品图标背后有一圈静态的放射光。这是少数允许“发光”的时刻，因为它标记的是一次正向结果。
 
@@ -40,18 +40,20 @@
 
 ### 提示条
 
-| 级别 | 左边色 | 附加 | 可信度 |
-| --- | --- | --- | --- |
-| 信息 | `--ark-color-signal-info` | — | 估计 |
-| 警示 | `--ark-color-signal-action` | 顶部 `--ark-pattern-hazard` 窄边 | 估计 |
-| 错误 | `--ark-color-signal-danger` | — | 估计 |
-| 底色 | `--ark-color-neutral-ink-900` | — | 估计 |
+| 级别 | 左边色 | 图形 | 附加 | 可信度 |
+| --- | --- | --- | --- | --- |
+| 信息 | 无 | 白色的圆圈 i | — | 社区（实机裁图） |
+| 警示 | `--ark-color-signal-action` | 黄色三角 | 顶部 `--ark-pattern-hazard` 窄边 | 估计 |
+| 错误 | `--ark-color-signal-danger` | 红色菱形 | — | 估计 |
+| 底色 | 黑约 85%，半透明 | — | — | 社区（实机裁图） |
+
+> **2026-10-07 更正：** 原先三个级别都有色边，底色是不透明的 `ink-900`。实机的提示条没有色边，底是半透明的黑。信息级照实机改了；警示和错误在实机上没有找到对应的提示条（这类情况游戏里用的是弹窗），色边保留为估计。
 
 ### 加载
 
 | 项 | 值 | 可信度 |
 | --- | --- | --- |
-| 进度条 | 轨道 1–2px 白 30%，进度 4px 信号色 | 估计 |
+| 进度条 | 轨道 1–2px 白 30%，进度 4px 信号色 | 估计（实机的加载是整屏的标识或插画，没有这种细条） |
 | 状态文字 | 数据体大写，`0.75rem`，如 `LOADING ASSETS...` | 估计 |
 | 百分比 | 数据体，右对齐 | 估计 |
 | 旋转指示 | `1s linear infinite` | 实测（官网轮播预加载） |
@@ -117,6 +119,7 @@
 | 浮层与层级简化 | [UI/UX 分析（GameRes）](https://www.gameres.com/849200.html) | “过场衔接技巧与系统结构”一节 |
 | 抽屉关闭逻辑、可点击区域不明显 | [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154) | “不足 2”“不足 3” |
 | 弹层的社区实现 | [ak-ui · Components](https://ak-ui.yyj.moe/en/components/) | Dialog、Notice、Loading |
+| 提示条的实机裁图 | [MAA · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | `OperBox/OperFiles/OperFilesCannotEnterLevelUpPage` |
 | 确认弹窗的实机裁图 | [MAA · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | `Battle/BattleFlag/PrtsErrorConfirm`（整条内容带与两个按钮）、`PopupCancel`、`PopupConfirm`、`OfflineConfirm` |
 
 ## Do / Don't

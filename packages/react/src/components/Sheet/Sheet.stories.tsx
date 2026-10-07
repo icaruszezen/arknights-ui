@@ -64,7 +64,7 @@ export const Default: Story = {
           <Tag variant="solid" cut>
             近卫
           </Tag>
-          <Tag variant="outline">输出</Tag>
+          <Tag>输出</Tag>
           <Tag>生存</Tag>
         </div>
         <p className="m-0">近卫干员擅长近身作战，可以阻挡敌人并造成稳定的伤害。</p>

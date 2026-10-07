@@ -29,19 +29,38 @@ describe('Badge', () => {
     expect(container).toBeEmptyDOMElement()
   })
 
-  it('红点没有文字，优先于数量', () => {
+  it('提醒标记没有文字，优先于数量；它是橙色的菱形，带白边', () => {
     const { container } = render(<Badge dot count={3} />)
     const badge = getBadge(container)
     expect(badge).toBeEmptyDOMElement()
-    expect(badge).toHaveClass('rounded-full')
+    expect(badge).toHaveClass('rotate-45', 'bg-ark-signal-accent', 'border-ark-neutral-white')
+    expect(badge).not.toHaveClass('rounded-full')
   })
 
-  it('数字用黑字压在红底上', () => {
+  it('计数是暗红的色块压白字', () => {
     const { container } = render(<Badge count={3} />)
-    expect(getBadge(container)).toHaveClass('bg-ark-signal-danger', 'text-ark-neutral-black')
+    expect(getBadge(container)).toHaveClass('bg-ark-signal-alert', 'text-ark-neutral-white')
   })
 
-  it('没有说明的红点对读屏隐藏，数字照常读出', () => {
+  it('tone="signal" 换成信号色和它自己的前景色', () => {
+    const { container } = render(<Badge count={10} tone="signal" />)
+    const badge = getBadge(container)
+    expect(badge).toHaveClass('bg-ark-signal', 'text-ark-on-signal')
+    expect(badge).not.toHaveClass('bg-ark-signal-alert')
+  })
+
+  it('icon 放在数字前，对读屏隐藏；提醒标记不带图标', () => {
+    const { container, rerender } = render(<Badge count={3} icon={<svg data-testid="glyph" />} />)
+    const badge = getBadge(container)
+    expect(badge).toHaveTextContent(/^3$/)
+    expect(screen.getByTestId('glyph').parentElement).toHaveAttribute('aria-hidden', 'true')
+    expect(badge?.firstElementChild).toContainElement(screen.getByTestId('glyph'))
+
+    rerender(<Badge dot icon={<svg data-testid="glyph" />} />)
+    expect(screen.queryByTestId('glyph')).toBeNull()
+  })
+
+  it('没有说明的提醒标记对读屏隐藏，数字照常读出', () => {
     const { container, rerender } = render(<Badge dot />)
     expect(getBadge(container)).toHaveAttribute('aria-hidden', 'true')
 
@@ -59,14 +78,14 @@ describe('Badge', () => {
     expect(dot).not.toHaveAttribute('aria-hidden')
   })
 
-  it('包住子元素时角标贴在右上角', () => {
+  it('包住子元素时角标骑在右上角', () => {
     const { container } = render(
       <Badge count={3}>
         <button type="button">邮件</button>
       </Badge>,
     )
     const badge = getBadge(container)
-    expect(badge).toHaveClass('absolute', 'top-0', 'right-0')
+    expect(badge).toHaveClass('absolute', 'top-0', 'right-0', 'translate-x-1/2', '-translate-y-1/2')
     expect(badge?.parentElement).toHaveClass('relative')
     expect(badge?.parentElement).toContainElement(screen.getByRole('button', { name: '邮件' }))
   })

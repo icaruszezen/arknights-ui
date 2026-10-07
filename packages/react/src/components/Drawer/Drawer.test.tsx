@@ -166,7 +166,7 @@ describe('Drawer', () => {
     expect(drawer.firstElementChild?.className).not.toContain('--ark-fg-muted')
   })
 
-  it('主画面压暗但不模糊；石墨半透明的面，左缘一条信号色强调边', () => {
+  it('主画面压暗但不模糊；石墨半透明的面，默认没有色边', () => {
     render(
       <Drawer open title="制造站">
         {body}
@@ -176,10 +176,20 @@ describe('Drawer', () => {
     expect(drawer).toHaveClass('backdrop:bg-ark-overlay-scrim', 'bg-transparent')
     expect(drawer.className).not.toContain('backdrop:backdrop-blur')
     expect(drawer).toHaveAttribute('data-ark-tone', 'dark')
-    // 内容铺满 <dialog>，底色与强调边都在里面那一层
+    // 内容铺满 <dialog>，底色画在里面那一层
     expect(drawer.children).toHaveLength(1)
-    expect(drawer.firstElementChild).toHaveClass(
-      'bg-ark-overlay-panel-dark',
+    expect(drawer.firstElementChild).toHaveClass('bg-ark-overlay-panel-dark')
+    // 实机的抽屉没有色边
+    expect(drawer.firstElementChild?.className).not.toContain('border-l-')
+  })
+
+  it('accent 在左缘加一条信号色强调边，画在铺满 <dialog> 的那一层', () => {
+    render(
+      <Drawer open accent title="制造站">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer().firstElementChild).toHaveClass(
       'border-l-(length:--ark-line-strong)',
       'border-ark-signal',
     )

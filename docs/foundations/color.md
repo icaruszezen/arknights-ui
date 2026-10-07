@@ -57,8 +57,10 @@
 | 信息（游戏内近似） | `#22bbff` | `--ark-color-signal-info-game` | 社区 |
 | 深蓝 | `#0098dc` | `--ark-color-signal-info-deep` | 社区 |
 | 行动 / 警示黄 | `#ffd802` | `--ark-color-signal-action` | 社区 |
-| 强调橙 | `#ff5e19` | `--ark-color-signal-accent` | 社区 |
+| 强调橙 | `#ff5e19` | `--ark-color-signal-accent` | 社区；与主界面实机截图取色一致 |
 | 危险红 | `#e33b3b` | `--ark-color-signal-danger` | 社区 |
+| 告警红（计数色块） | `#a32339` | `--ark-color-signal-alert` | 社区（实机截图取色） |
+| 确认红（弹窗的确认块） | `#731111` | `--ark-color-signal-confirm` | 社区（实机裁图取色） |
 
 ### 稀有度 / 档位
 
@@ -70,6 +72,7 @@
 | T4 淡紫 | `#cfc2d1` | `--ark-color-tier-4` | 社区 |
 | T5 金 | `#f1c644` | `--ark-color-tier-5` | 社区 |
 | T6 橙 | `#ff5e19` | `--ark-color-tier-6` | 估计 |
+| 星级的黄 | `#f1d94a` | `--ark-color-tier-star` | 社区（实机截图取色） |
 
 ### 面积配比（估计）
 
@@ -105,6 +108,7 @@
 ## 来源
 
 - 官网样式表实测（2026-10-06）
+- 游戏内的几个色值对实机截图取色核对（2026-10-07）：PRTS 的主界面截图、MAA 的模板图、机核文章里的实机截图
 - [YunYouJun/ak-ui](https://github.com/YunYouJun/ak-ui) `src/scss/_variables.scss`、`_tokens.scss`
 - [mashirozx/arknights-ui](https://github.com/mashirozx/arknights-ui) `css/styles.css`
 - [Yue-plus/hexo-theme-arknights](https://github.com/Yue-plus/hexo-theme-arknights) `source/css/_core/color/`

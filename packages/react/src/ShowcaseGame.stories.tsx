@@ -78,10 +78,11 @@ export const Game: Story = {
           </QuickNav>
         </BackHome>
 
+        {/* 实机的资源条只有图标和数字，名称只读给读屏；可以购买的后面带一个加号 */}
         <ResourceBar className="absolute top-0 right-0">
-          <Resource label="龙门币" value={128400} />
-          <Resource label="合成玉" value={6000} />
-          <Resource label="理智" value={131} max={135} />
+          <Resource label="龙门币" icon={glyphs.frame} value={128400} />
+          <Resource label="合成玉" icon={glyphs.shield} value={6000} onAdd={() => {}} />
+          <Resource label="理智" icon={glyphs.chevrons} value={131} max={135} />
         </ResourceBar>
 
         <div className="grid grid-cols-[minmax(0,1fr)_22rem] items-end gap-ark-7 px-ark-7 pt-28 pb-ark-7">
@@ -94,7 +95,8 @@ export const Game: Story = {
               <Tag variant="solid" cut>
                 近卫
               </Tag>
-              <Tag variant="outline">输出</Tag>
+              {/* 实机里定位是深色块白字，不是描边 */}
+              <Tag>输出</Tag>
               <Tag>生存</Tag>
             </div>
             <div className="flex items-center gap-ark-6">

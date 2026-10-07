@@ -1,5 +1,6 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
 import { Resource, ResourceBar } from './ResourceBar'
 
 function Bar() {
@@ -65,5 +66,57 @@ describe('ResourceBar', () => {
     expect(term).toContainElement(screen.getByTestId('icon'))
     expect(screen.getByTestId('icon').parentElement).toHaveAttribute('aria-hidden', 'true')
     expect(term).toHaveTextContent('源石')
+  })
+
+  it('有图标时名称只读给读屏（实机只有图标和数字），showLabel 可以强制显示', () => {
+    const { rerender } = render(
+      <ResourceBar>
+        <Resource label="源石" value={12} icon={<svg />} />
+      </ResourceBar>,
+    )
+    expect(screen.getByText('源石')).toHaveClass('sr-only')
+
+    rerender(
+      <ResourceBar>
+        <Resource label="源石" value={12} icon={<svg />} showLabel />
+      </ResourceBar>,
+    )
+    expect(screen.getByText('源石')).not.toHaveClass('sr-only')
+  })
+
+  it('没有图标时名称照常显示', () => {
+    render(<Bar />)
+    expect(screen.getByText('龙门币')).not.toHaveClass('sr-only')
+  })
+
+  it('onAdd 在数字后面加一个加号按钮，名称带上资源的名称', async () => {
+    const user = userEvent.setup()
+    const onAdd = vi.fn()
+    render(
+      <ResourceBar>
+        <Resource label="合成玉" value={6000} icon={<svg />} onAdd={onAdd} />
+        <Resource label="龙门币" value={128400} icon={<svg />} />
+      </ResourceBar>,
+    )
+    expect(screen.getAllByRole('button')).toHaveLength(1)
+    const add = screen.getByRole('button', { name: '补充 合成玉' })
+    expect(add.closest('dd')).not.toBeNull()
+    // 可见的圆只有 16px，点击区撑到 44px
+    expect(add).toHaveClass('size-4', 'after:size-11')
+    await user.click(add)
+    expect(onAdd).toHaveBeenCalledTimes(1)
+    // 加号不改变数量的文字
+    expect(screen.getAllByRole('definition')[0]).toHaveTextContent(/^6,000$/)
+  })
+
+  it('plain 不画每一项的底，数字直接压在场景上', () => {
+    render(
+      <ResourceBar data-testid="bar" plain>
+        <Resource label="龙门币" value={128400} />
+      </ResourceBar>,
+    )
+    const item = screen.getByTestId('bar').firstElementChild
+    expect(item).not.toHaveClass('bg-ark-neutral-black/65')
+    expect(item?.className).toContain('text-shadow')
   })
 })

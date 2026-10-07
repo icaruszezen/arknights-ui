@@ -107,14 +107,15 @@ describe('RoomCard', () => {
     expect(screen.getByText('制造站')).toHaveClass('group-hover:text-ark-signal-fg')
   })
 
-  it('badge 是右上角的红点或数量', () => {
+  it('badge 是右上角的提醒标记或数量', () => {
     const { rerender } = render(
       <RoomCard data-testid="room" title="制造站" badge badgeLabel="有可收取的产出" />,
     )
     expect(screen.getByRole('img', { name: '有可收取的产出' })).toHaveClass(
       'absolute',
-      'top-ark-1',
-      'right-ark-1',
+      'top-0',
+      'right-0',
+      'rotate-45',
     )
 
     rerender(<RoomCard data-testid="room" title="贸易站" badge={2} />)

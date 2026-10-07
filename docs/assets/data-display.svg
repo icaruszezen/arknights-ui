@@ -49,18 +49,24 @@
   <g fill="#121212"><rect x="630" y="220" width="2" height="10"/><rect x="702" y="220" width="2" height="10"/><rect x="774" y="220" width="2" height="10"/><rect x="846" y="220" width="2" height="10"/></g>
   <text x="920" y="248" text-anchor="end" class="data" font-size="12" fill="#ababab">EXP 2,480 / 3,600</text>
 
-  <text x="560" y="276" class="data tag">04 TAG / STAR</text>
-  <polygon points="560,292 624,292 630,298 630,314 560,314" fill="#fff"/>
-  <text x="594" y="308" text-anchor="middle" class="cjk" font-size="12" font-weight="700" fill="#000">近卫</text>
-  <rect x="642" y="292" width="64" height="22" fill="none" stroke="#18d1ff"/>
-  <text x="674" y="308" text-anchor="middle" class="cjk" font-size="12" fill="#18d1ff">输出</text>
-  <rect x="718" y="292" width="64" height="22" fill="#424242"/>
-  <text x="750" y="308" text-anchor="middle" class="cjk" font-size="12" fill="#fff">生存</text>
-  <g fill="#f1c644">
-    <polygon points="806,296 809,303 816,303 810,307 813,314 806,310 799,314 802,307 796,303 803,303"/>
-    <polygon points="828,296 831,303 838,303 832,307 835,314 828,310 821,314 824,307 818,303 825,303"/>
-    <polygon points="850,296 853,303 860,303 854,307 857,314 850,310 843,314 846,307 840,303 847,303"/>
-    <polygon points="872,296 875,303 882,303 876,307 879,314 872,310 865,314 868,307 862,303 869,303"/>
-    <polygon points="894,296 897,303 904,303 898,307 901,314 894,310 887,314 890,307 884,303 891,303"/>
+  <text x="560" y="276" class="data tag">04 TAG / STAR / BADGE</text>
+  <!-- 标签：天赋用实心白底，定位用深色块（实机） -->
+  <rect x="560" y="292" width="56" height="22" fill="#fff"/>
+  <text x="588" y="308" text-anchor="middle" class="cjk" font-size="12" font-weight="700" fill="#000">领袖</text>
+  <rect x="622" y="292" width="64" height="22" fill="#424242"/>
+  <text x="654" y="308" text-anchor="middle" class="cjk" font-size="12" fill="#fff">近战位</text>
+  <!-- 星：偏柠檬的黄，后一颗压住前一颗约两成，各带一圈深色硬边 -->
+  <g fill="#f1d94a" stroke="#000" stroke-opacity=".55" stroke-width="1" paint-order="stroke">
+    <polygon points="712,296 715,303 722,303 716,307 719,314 712,310 705,314 708,307 702,303 709,303"/>
+    <polygon points="729,296 732,303 739,303 733,307 736,314 729,310 722,314 725,307 719,303 726,303"/>
+    <polygon points="746,296 749,303 756,303 750,307 753,314 746,310 739,314 742,307 736,303 743,303"/>
+    <polygon points="763,296 766,303 773,303 767,307 770,314 763,310 756,314 759,307 753,303 760,303"/>
+    <polygon points="780,296 783,303 790,303 784,307 787,314 780,310 773,314 776,307 770,303 777,303"/>
   </g>
+  <!-- 提醒标记：橙色菱形带白边，骑在角上；计数：直角色块，白色图标加数字 -->
+  <rect x="812" y="296" width="40" height="18" fill="none" stroke="#fff" stroke-opacity=".5"/>
+  <path d="M852 289l7 7-7 7-7-7z" fill="#ff5e19" stroke="#fff"/>
+  <rect x="872" y="292" width="46" height="22" fill="#a32339"/>
+  <path d="M879 309l5.5-11 5.5 11z" fill="#fff"/>
+  <text x="904" y="308" text-anchor="middle" class="data" font-size="13" font-weight="700" fill="#fff">1</text>
 </svg>

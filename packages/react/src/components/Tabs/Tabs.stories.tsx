@@ -1,5 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
+import { type GlyphName, glyphs } from '../../../.storybook/glyphs'
+import { Panel } from '../Panel'
 import { Tab, TabList, TabPanel, Tabs } from './Tabs'
 
 const meta = {
@@ -79,29 +81,50 @@ export const Underline: Story = {
   ),
 }
 
-const depot = [
-  ['all', '全部'],
-  ['consumable', '消耗品'],
-  ['basic', '基础物品'],
-  ['material', '养成材料'],
-] as const
+const depot: readonly (readonly [string, string, GlyphName])[] = [
+  ['all', '全部', 'blocks'],
+  ['consumable', '消耗物品', 'target'],
+  ['basic', '基础物品', 'frame'],
+  ['material', '养成材料', 'peak'],
+]
 
 /**
- * 分段块：每一项都有底块，连成一条，选中项明暗对调。游戏内仓库分类的写法。
- * 放进纸白面板时选中项是深色块，和实机一致。
+ * 分段块：每一项都有底块，连成一条，项与项之间一条短竖线；选中项明暗对调。
+ * 游戏内仓库、任务分类的写法，每一项前面带一个图标。
  */
 export const Segment: Story = {
-  args: { variant: 'segment', defaultValue: 'material' },
+  args: { variant: 'segment', defaultValue: 'all' },
   render: args => (
     <Tabs {...args}>
       <TabList aria-label="仓库分类">
-        {depot.map(([value, label]) => (
+        {depot.map(([value, label, glyph]) => (
           <Tab key={value} value={value}>
+            <span aria-hidden="true" className="grid size-4 [&>svg]:block [&>svg]:size-full">
+              {glyphs[glyph]}
+            </span>
             {label}
           </Tab>
         ))}
       </TabList>
     </Tabs>
+  ),
+}
+
+/** 放进纸白面板时选中项是深色块、未选中是浅灰，和实机的仓库一致。 */
+export const SegmentOnPaper: Story = {
+  args: { variant: 'segment', defaultValue: 'all' },
+  render: args => (
+    <Panel tone="paper" className="w-fit">
+      <Tabs {...args}>
+        <TabList aria-label="仓库分类">
+          {depot.map(([value, label]) => (
+            <Tab key={value} value={value}>
+              {label}
+            </Tab>
+          ))}
+        </TabList>
+      </Tabs>
+    </Panel>
   ),
 }
 

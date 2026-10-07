@@ -98,6 +98,16 @@ export function CheckCircleIcon(props: IconProps) {
   )
 }
 
+/** 圆圈里一个 i：游戏内提示条前面的图形。线条，不填实。 */
+export function InfoCircleIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <circle cx="12" cy="12" r="9.5" stroke="currentColor" strokeWidth="2" />
+      <path d="M12 6.5v2.6M12 10.8v6.7" stroke="currentColor" strokeWidth="2.6" />
+    </Icon>
+  )
+}
+
 /** 圆圈里一个叉：游戏内“取消”的固定图形。同样是镂空的。 */
 export function CloseCircleIcon(props: IconProps) {
   return (

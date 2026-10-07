@@ -36,9 +36,11 @@
 
   <!-- 提示条 -->
   <text x="560" y="44" class="data tag">02 NOTICE</text>
-  <text x="630" y="44" class="cjk note">提示条：左侧色条表达级别</text>
-  <rect x="560" y="64" width="360" height="40" fill="#1d1f20"/><rect x="560" y="64" width="4" height="40" fill="#18d1ff"/>
-  <text x="578" y="89" class="cjk" font-size="13" fill="#fff">订单已交付，获得龙门币 ×2000</text>
+  <text x="630" y="44" class="cjk note">提示条：半透明黑底 + 圆圈 i；分级时才加色边</text>
+  <rect x="560" y="64" width="360" height="40" fill="#000" fill-opacity=".85"/>
+  <circle cx="578" cy="84" r="7" fill="none" stroke="#fff" stroke-width="1.5"/>
+  <path d="M578 80v2M578 83.5v5" stroke="#fff" stroke-width="2" fill="none"/>
+  <text x="594" y="89" class="cjk" font-size="13" fill="#fff">订单已交付，获得龙门币 ×2000</text>
   <rect x="560" y="112" width="360" height="40" fill="#1d1f20"/><rect x="560" y="112" width="360" height="6" fill="url(#hz)"/><rect x="560" y="118" width="4" height="34" fill="#ffd802"/>
   <text x="578" y="141" class="cjk" font-size="13" fill="#fff">理智不足，无法开始行动</text>
   <rect x="560" y="160" width="360" height="40" fill="#1d1f20"/><rect x="560" y="160" width="4" height="40" fill="#e33b3b"/>

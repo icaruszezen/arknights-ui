@@ -92,10 +92,12 @@ export const WithFooter: Story = {
 }
 
 /**
- * 主题色标记归属：左缘的强调边用信号色。在抽屉上覆盖 `--ark-signal`，
+ * 主题色标记归属：打开 `accent`，左缘多一条信号色的强调边。再在抽屉上覆盖 `--ark-signal`，
  * 从房间到抽屉到进度条都是同一种颜色，用户始终知道自己在哪个系统里。
+ * 实机的抽屉没有这条边，所以它默认是关的。
  */
 export const TypeColor: Story = {
+  args: { accent: true },
   render: ({ open: _open, ...args }) => (
     <Demo
       trigger="查看发电站"

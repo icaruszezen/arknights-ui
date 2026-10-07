@@ -31,7 +31,7 @@ const sizes: Record<RatingSize, string> = {
 }
 
 /**
- * 星级。稀有度用颜色和数量双重编码：这里是“数量”那一半，
+ * 星级：黄色的五角星一颗压一颗地排开。稀有度用颜色和数量双重编码：这里是“数量”那一半，
  * 另一半通常是卡片底边的稀有度色条。任何一种单独拿掉，信息仍然完整。
  *
  * 读屏读到的是“5 星”这样一句话，可以用 `aria-label` 改写。
@@ -54,10 +54,11 @@ export function Rating({
       aria-label={max === undefined ? `${lit} 星` : `${lit} / ${total} 星`}
       {...rest}
       className={cn(
-        // 间距取图形宽度的 25%
-        'box-border inline-flex items-center gap-[0.25em] align-middle',
-        // 金色是固定语义。纸白面上金色对比度不够，和信号色文字一样按上下文压暗
-        'text-[color:color-mix(in_srgb,var(--ark-color-tier-5)_var(--ark-signal-fg-mix),black)]',
+        'box-border inline-flex items-center align-middle',
+        // 菱形之间留图形宽度的 25%；星形是一颗压一颗，见下面
+        shape === 'diamond' && 'gap-[0.25em]',
+        // 星的黄是固定语义（实机取色）。纸白面上对比度不够，和信号色文字一样按上下文压暗
+        'text-[color:color-mix(in_srgb,var(--ark-color-tier-star)_var(--ark-signal-fg-mix),black)]',
         sizes[size],
         className,
       )}
@@ -65,7 +66,15 @@ export function Rating({
       {Array.from({ length: total }, (_, index) => index + 1).map(position => (
         <Shape
           key={position}
-          className={cn('size-[1em] shrink-0', position > lit && 'opacity-25')}
+          className={cn(
+            'size-[1em] shrink-0',
+            // 实机里后一颗压住前一颗约两成（节距是星高的 0.8），靠一圈很小的硬边把它们分开
+            shape === 'star' && [
+              'drop-shadow-[0.05em_0.03em_0_rgb(0_0_0/0.55)]',
+              position > 1 && '-ml-[0.2em]',
+            ],
+            position > lit && 'opacity-25',
+          )}
         />
       ))}
     </span>

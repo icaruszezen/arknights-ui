@@ -116,7 +116,7 @@ export const Announcement: Story = {
                   <Codename as="h3" sub={operator.en}>
                     {operator.name}
                   </Codename>
-                  <Tag variant="outline">{operator.role}</Tag>
+                  <Tag>{operator.role}</Tag>
                 </div>
               </li>
             ))}

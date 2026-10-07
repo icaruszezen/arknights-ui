@@ -23,8 +23,15 @@ export interface RingProgressProps extends ComponentProps<'div'> {
    * @default 'md'
    */
   size?: RingProgressSize
-  /** 数字上方的小标签，如 `LV`。 */
+  /** 数字旁边的小标签，如 `LV`。 */
   label?: ReactNode
+  /**
+   * 标签在数字的上面还是下面。干员卡片和详情页在上，主界面的等级在下。
+   * @default 'above'
+   */
+  labelPosition?: 'above' | 'below'
+  /** 环内压一块半透明黑的圆底。压在立绘、场景上时用，数字才读得清（干员卡片上的等级环）。 */
+  filled?: boolean
   /** 居中的内容，通常是一个数字。它不一定等于进度：等级环中间写的是等级，环表示的是经验。 */
   children?: ReactNode
 }
@@ -54,6 +61,8 @@ export function RingProgress({
   tone = 'signal',
   size = 'md',
   label,
+  labelPosition = 'above',
+  filled = false,
   className,
   children,
   'aria-label': ariaLabel,
@@ -90,6 +99,7 @@ export function RingProgress({
           fill="none"
           className="block size-full -rotate-90"
         >
+          {filled && <circle cx="50" cy="50" r={radius} className="fill-ark-neutral-black/60" />}
           <circle cx="50" cy="50" r={radius} strokeWidth={stroke} className="stroke-ark-fg/25" />
           <circle
             cx="50"
@@ -108,7 +118,13 @@ export function RingProgress({
         </svg>
       </div>
       {(label != null || children != null) && (
-        <div className="relative grid justify-items-center gap-0.5 leading-ark-solid">
+        <div
+          className={cn(
+            'relative flex items-center gap-0.5 leading-ark-solid',
+            // DOM 里标签始终在前；放到下面时只调视觉顺序
+            labelPosition === 'below' ? 'flex-col-reverse' : 'flex-col',
+          )}
+        >
           {label != null && (
             <span className="font-ark-latin-condensed text-ark-caption font-ark-medium tracking-ark-wide text-ark-fg-muted uppercase">
               {label}

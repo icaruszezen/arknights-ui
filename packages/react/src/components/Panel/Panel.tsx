@@ -28,8 +28,11 @@ export interface PanelProps extends ComponentProps<'div'> {
    * @default 'graphite'
    */
   tone?: PanelTone
-  /** 一条信号色强调边，标记类别或选中。只加一条。`frosted` 不支持。 */
-  accent?: 'left' | 'bottom'
+  /**
+   * 一条信号色强调边，标记类别或选中。只加一条。`frosted` 不支持。
+   * 主界面的面板把它放在上沿或下沿。
+   */
+  accent?: 'left' | 'top' | 'bottom'
   /** 切掉右上角。`frosted` 不支持。 */
   cut?: boolean
   /** 投影。卡片才加，主界面的面板靠明暗区分层级。`frosted` 不支持。 */
@@ -55,6 +58,7 @@ const cutBackground: Record<Exclude<PanelTone, 'frosted'>, string> = {
 
 const accents = {
   left: 'border-l-(length:--ark-line-strong) border-ark-signal',
+  top: 'border-t-(length:--ark-line-strong) border-ark-signal',
   bottom: 'border-b-(length:--ark-line-strong) border-ark-signal',
 }
 

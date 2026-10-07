@@ -47,6 +47,20 @@ describe('Notice', () => {
     expect(new Set(shapes).size).toBe(3)
   })
 
+  it('信息级是半透明黑条加白色的圆圈 i，没有色边；警示和错误才有', () => {
+    const { rerender } = render(<Notice>订单已交付</Notice>)
+    const info = screen.getByRole('status')
+    expect(info).toHaveClass('bg-ark-neutral-black/85')
+    expect(info.className).not.toContain('border-l-')
+    expect(info.querySelector('svg circle')).not.toBeNull()
+
+    rerender(<Notice level="warning">理智不足</Notice>)
+    expect(screen.getByRole('alert')).toHaveClass('border-ark-signal-action')
+
+    rerender(<Notice level="error">网络连接中断</Notice>)
+    expect(screen.getByRole('alert')).toHaveClass('border-ark-signal-danger')
+  })
+
   it('渲染标题与正文', () => {
     render(<Notice title="即将进行闪断更新">预计持续 10 分钟。</Notice>)
     const notice = screen.getByRole('status')

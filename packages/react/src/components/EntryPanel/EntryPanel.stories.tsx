@@ -64,7 +64,7 @@ export const Sizes: Story = {
 }
 
 /**
- * 红点贴在右上角：未读、可领取。数字是数量角标。红点本身没有文字，
+ * 提醒标记压在右上角：未读、可领取。数字是计数色块。提醒标记本身没有文字，
  * 用 `badgeLabel` 告诉读屏它表示什么。
  */
 export const WithBadge: Story = {

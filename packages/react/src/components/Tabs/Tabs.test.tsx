@@ -194,9 +194,12 @@ describe('Tabs', () => {
         </TabList>
       </Tabs>,
     )
-    expect(screen.getByRole('tablist')).toHaveClass('gap-0.5')
+    // 连成一条，没有缝；项与项之间是画在 Tab 上的短竖线，选中项两侧不画
+    expect(screen.getByRole('tablist')).toHaveClass('gap-0')
     for (const tab of screen.getAllByRole('tab')) {
       expect(tab).toHaveClass('bg-ark-fg/10', 'aria-selected:bg-ark-invert')
+      expect(tab).toHaveClass('not-first:before:w-px', 'aria-selected:before:hidden')
+      expect(tab.className).toContain('[[aria-selected=true]+&]:before:hidden')
       expect(tab.querySelector('svg')).toBeNull()
     }
   })

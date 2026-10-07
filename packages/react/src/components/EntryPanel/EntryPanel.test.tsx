@@ -111,11 +111,12 @@ describe('EntryPanel', () => {
     expect(screen.getByText('作战').className).toContain('[text-shadow:0.3125rem_0.3125rem_0_')
   })
 
-  it('badge 是红点，贴在右上角；给了 badgeLabel 才会被读到', () => {
+  it('badge 是橙色的提醒标记，中心压在右上角；给了 badgeLabel 才会被读到', () => {
     const { rerender } = render(<EntryPanel badge>任务</EntryPanel>)
     const panel = screen.getByRole('button', { name: '任务' })
     const dot = panel.querySelector('[data-ark="badge"]')
-    expect(dot).toHaveClass('absolute', 'top-ark-2', 'right-ark-2', 'rounded-full')
+    expect(dot).toHaveClass('absolute', 'top-0', 'right-0', 'translate-x-1/2', '-translate-y-1/2')
+    expect(dot).toHaveClass('rotate-45', 'bg-ark-signal-accent')
     expect(dot).toHaveAttribute('aria-hidden', 'true')
 
     rerender(
@@ -134,7 +135,7 @@ describe('EntryPanel', () => {
     expect(screen.getByRole('button').querySelector('[data-ark="badge"]')).toBeNull()
   })
 
-  it('aside 在右上角，有红点时给它让出位置', () => {
+  it('aside 在右上角，有角标时给它让出位置', () => {
     const { rerender } = render(
       <EntryPanel aside={<b data-testid="sanity">131/135</b>}>作战</EntryPanel>,
     )

@@ -34,6 +34,23 @@ export const Sizes: Story = {
   ),
 }
 
+/**
+ * 压在立绘或场景上时，环内垫一块半透明黑的圆底，数字才读得清——干员卡片上的等级环就是这样。
+ * 右边是主界面的写法：`LV` 在数字下面。
+ */
+export const OnScene: Story = {
+  globals: { backgrounds: { value: 'scene' } },
+  args: { tone: 'action', value: 100, filled: true },
+  render: args => (
+    <div className="flex items-center gap-ark-6">
+      <RingProgress {...args} />
+      <RingProgress {...args} tone="neutral" labelPosition="below">
+        120
+      </RingProgress>
+    </div>
+  ),
+}
+
 /** 不放内容时就是一个环，比如小头像上表示心情的环。 */
 export const RingOnly: Story = {
   args: { children: undefined, label: undefined, size: 'sm', tone: 'neutral', value: 30 },

@@ -17,6 +17,11 @@ export interface DrawerProps
    * @default 'graphite'
    */
   tone?: DrawerTone
+  /**
+   * 左缘加一条信号色的强调边。实机的抽屉没有这条边，所以默认不画；
+   * 需要标出抽屉属于哪个系统时打开，并在抽屉或它的祖先上覆盖 `--ark-signal`。
+   */
+  accent?: boolean
   /** 抽屉请求关闭时调用（点了关闭、按 Esc、点主画面）。 */
   onOpenChange?: (open: boolean) => void
   /** 标题，同时是抽屉的名称。省略时请给 `aria-label`。 */
@@ -39,12 +44,13 @@ export interface DrawerProps
  * 抽屉直接关闭——点关闭、按 Esc、点主画面都行，没有二次确认：
  * 反馈的重量不应该超过操作本身。
  *
- * 左缘的强调边用信号色。在抽屉或它的祖先上覆盖 `--ark-signal`，就能标出它属于哪个系统。
+ * 打开 `accent` 时左缘多一条信号色的强调边，配合 `--ark-signal` 标出它属于哪个系统。
  */
 export function Drawer({
   open,
   onOpenChange,
   tone = 'graphite',
+  accent = false,
   title,
   sub,
   footer,
@@ -83,7 +89,8 @@ export function Drawer({
       {/* 内容铺满 <dialog>：强调边和底色画在这一层，点在它们上面不会被当成点了遮罩 */}
       <div
         className={cn(
-          'box-border flex h-full flex-col border-l-(length:--ark-line-strong) border-ark-signal font-ark-cjk-sans',
+          'box-border flex h-full flex-col font-ark-cjk-sans',
+          accent && 'border-l-(length:--ark-line-strong) border-ark-signal',
           tone === 'paper'
             ? 'bg-ark-overlay-panel-light'
             : ['bg-ark-overlay-panel-dark', brighterMuted],

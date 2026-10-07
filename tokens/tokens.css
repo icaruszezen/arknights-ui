@@ -18,9 +18,9 @@
   --ark-color-neutral-gray-300: #d2d2d2; /* 实测 · 正文次要文字 */
   --ark-color-neutral-white: #ffffff; /* 实测 · 主文字、反白块 */
   --ark-color-neutral-paper: #fdfdfb; /* 社区 · 游戏主界面浅色面板（mashirozx/arknights-ui） */
-  --ark-color-neutral-paper-ink: #323232; /* 社区 · 纸白面板上的文字色（mashirozx/arknights-ui） */
+  --ark-color-neutral-paper-ink: #323232; /* 社区 · 纸白面板上的文字色（mashirozx/arknights-ui）。与主界面实机截图取色一致 */
   --ark-color-neutral-paper-muted: #ebeceb; /* 社区 · 浅色面板的次级底 */
-  --ark-color-neutral-graphite: #424242; /* 社区 · 游戏主界面深色面板 */
+  --ark-color-neutral-graphite: #424242; /* 社区 · 游戏主界面深色面板。与主界面实机截图取色一致 */
   --ark-color-neutral-graphite-deep: #313131; /* 社区 · 更深一级的石墨灰（ak-ui） */
   --ark-color-line-hairline: rgba(255, 255, 255, 0.3); /* 实测 · 1px 分隔线的默认颜色 */
   --ark-color-line-hairline-strong: rgba(255, 255, 255, 0.5); /* 实测 · 描边按钮、强调分隔线 */
@@ -30,8 +30,9 @@
   --ark-color-signal-info-game: #22bbff; /* 社区 · 游戏内蓝色的常用近似（ak-ui、hexo-theme-arknights 均取 #2bf） */
   --ark-color-signal-info-deep: #0098dc; /* 社区 · 偏深的罗德岛蓝（ak-ui text-color） */
   --ark-color-signal-action: #ffd802; /* 社区 · 行动 / 警示黄（ak-ui） */
-  --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui） */
+  --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui）。与主界面实机截图取色一致：提醒用的菱形与面板上的橙色条 */
   --ark-color-signal-danger: #e33b3b; /* 社区 · 危险 / 敌方（ak-ui） */
+  --ark-color-signal-alert: #a32339; /* 社区 · 主界面的告警计数角标。对 PRTS 的主界面实机截图（1280×720）取色 */
   --ark-color-signal-confirm: #731111; /* 社区 · 游戏内弹窗、寻访的确认块（暗红）。对 MAA 的实机裁图（1280×720）取色 */
   --ark-color-signal-success: #46c47c; /* 社区 · 成功（ak-ui 的设计决定，非游戏取色） */
   --ark-color-tier-1: #9c9c9c; /* 社区 · 材料 / 稀有度一档：灰 */
@@ -40,6 +41,7 @@
   --ark-color-tier-4: #cfc2d1; /* 社区 · 四档：淡紫 */
   --ark-color-tier-5: #f1c644; /* 社区 · 五档：金 */
   --ark-color-tier-6: #ff5e19; /* 估计 · 六星以橙色强调，取 accent 的同值 */
+  --ark-color-tier-star: #f1d94a; /* 社区 · 干员卡片上星级的黄。对机核文章里的实机截图取色 */
   --ark-color-overlay-scrim: rgba(0, 0, 0, 0.5); /* 实测 · 图片上压字用的半透明黑 */
   --ark-color-overlay-scrim-strong: rgba(0, 0, 0, 0.8); /* 实测 · 弹层遮罩 */
   --ark-color-overlay-panel-dark: rgba(66, 66, 66, 0.92); /* 社区 · 半透明深色面板（ak-ui） */
