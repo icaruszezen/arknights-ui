@@ -19,7 +19,7 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 半调网点：最常用的一种。左下最密，朝右上渐疏。 */
+/** 半调网点：最常用的一种。左下最密、点最大，朝右上越来越小直到消失。 */
 export const Default: Story = {}
 
 function Swatch({
@@ -44,26 +44,33 @@ function Swatch({
   )
 }
 
-/** 五种底纹各自的用法。对照 `docs/assets/patterns.svg`。 */
+/** 六种底纹各自的用法。对照 `docs/assets/patterns.svg`。 */
 export const Gallery: Story = {
   render: () => (
     <div className="grid w-[56rem] grid-cols-3 gap-ark-5">
       <Swatch
         label="01 HALFTONE"
-        note="半调网点：由密到疏，压在角落和面板底部"
+        note="半调网点：由密到疏是点变小，压在角落和面板底部"
         className="bg-ark-neutral-ink-900"
       >
         <Pattern variant="halftone" />
       </Swatch>
       <Swatch
-        label="02 GRAIN"
+        label="02 DOTS"
+        note="点阵：等大的小方点，四排一组放在角落"
+        className="bg-ark-neutral-ink-900"
+      >
+        <Pattern variant="dots" className="absolute bottom-ark-4 left-ark-4 h-[7.5rem] w-72" />
+      </Swatch>
+      <Swatch
+        label="03 GRAIN"
         note="噪点：低密度、高颗粒，让留白不发飘"
         className="bg-ark-neutral-graphite"
       >
         <Pattern variant="grain" />
       </Swatch>
       <Swatch
-        label="03 HAZARD"
+        label="04 HAZARD"
         note="警戒条纹：45°，只做窄边，不铺满"
         className="bg-ark-neutral-ink-900"
       >
@@ -71,27 +78,26 @@ export const Gallery: Story = {
         <Pattern variant="hazard" mono className="absolute inset-x-0 bottom-0 h-ark-5" />
       </Swatch>
       <Swatch
-        label="04 DIAGONAL GRID"
+        label="05 DIAGONAL GRID"
         note="斜线网格：方格 + 对角线，铺在最底层"
         className="bg-ark-neutral-black"
       >
         <Pattern variant="grid" />
       </Swatch>
-      <Swatch label="05 SCANLINE" note="扫描线：投影、全息看板的质感" className="bg-[#16323c]">
+      <Swatch label="06 SCANLINE" note="扫描线：投影、全息看板的质感" className="bg-[#16323c]">
         <Pattern variant="scanline" />
-      </Swatch>
-      <Swatch label="06 SCANLINE + HALFTONE" note="一个面上最多叠两种" className="bg-[#16323c]">
-        <Pattern variant="scanline" className="absolute inset-0" />
-        <Pattern variant="halftone" className="absolute inset-0" />
       </Swatch>
     </div>
   ),
 }
 
-/** `fade` 是朝哪个方向渐疏：网点只放一角，不要整面铺满均匀的点。 */
+/**
+ * `fade` 是朝哪个方向渐疏：网点只放一角，不要整面铺满均匀的点。
+ * 半调的每个方向各是一张遮罩图；`none` 是一片等大的点。
+ */
 export const Fades: Story = {
   render: () => (
-    <div className="grid w-[40rem] grid-cols-4 gap-ark-2">
+    <div className="grid w-[48rem] grid-cols-3 gap-ark-2">
       {(
         [
           'top-right',
@@ -102,9 +108,10 @@ export const Fades: Story = {
           'right',
           'bottom',
           'left',
+          'none',
         ] as const
       ).map(fade => (
-        <div key={fade} className="relative isolate h-24 bg-ark-neutral-ink-900">
+        <div key={fade} className="relative isolate h-40 bg-ark-neutral-ink-900">
           <Pattern variant="halftone" fade={fade} />
           <span className="absolute top-ark-2 left-ark-2 font-ark-data text-ark-caption text-ark-fg-muted">
             {fade}

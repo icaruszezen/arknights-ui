@@ -29,7 +29,10 @@ export const Variants: Story = {
   ),
 }
 
-/** 分隔线带一个“起点”：信号色短粗段，或一个小方块。 */
+/**
+ * 分隔线带一个“起点”：一段 3.5rem × 3px 的短粗段（和细线之间留一道缝），或一个 6px 的小方块。
+ * 前者是官网公告页标题下面那条，后者是加载条两端的端块。
+ */
 export const WithStart: Story = {
   render: () => (
     <div className="grid gap-ark-5">

@@ -61,7 +61,8 @@ describe('Panel', () => {
       rerender(<Panel data-testid="panel" tone={tone} halftone />)
       const panel = screen.getByTestId('panel')
       expect(panel).toHaveClass('after:ark-pattern-halftone', 'after:-z-1')
-      expect(panel.className).toContain('after:[--ark-pattern-fade:')
+      // 渐疏的方向烘在遮罩图里，不再叠一层渐隐
+      expect(panel.className).not.toContain('--ark-pattern-fade')
       expect(panel).not.toHaveClass('after:invert')
     }
   })

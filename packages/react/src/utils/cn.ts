@@ -24,6 +24,15 @@ export const arkShadows = ['ark-drop', 'ark-panel', 'ark-hard']
 const isArkKey = (value: string) => value.startsWith('ark-')
 
 const twMerge = extendTailwindMerge({
+  override: {
+    // tailwind-merge 默认认为字号类会连行高一起设，所以后写的字号会把先写的 leading-* 去掉。
+    // Tailwind v4 里字号类读的是 --tw-leading，行高类始终生效；本库的字号（text-ark-*）更是根本不带行高。
+    // 不去掉这条规则的话，cn('leading-ark-solid', sizes[size]) 这种写法会悄悄丢掉行高。
+    // 带行高修饰的写法（text-lg/7）走的是另一张表，仍然会覆盖 leading-*。
+    conflictingClassGroups: {
+      'font-size': [],
+    },
+  },
   extend: {
     theme: {
       text: arkFontSizes,

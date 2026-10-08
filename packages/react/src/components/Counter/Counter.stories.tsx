@@ -14,12 +14,18 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * 官网右栏的写法：一个宽体的大号信号色数字，右边是“当前 / 总数”，下面是栏目的英文名。
- * 它告诉用户现在在第几屏、一共几屏。字体和字号是官网实测值。
+ * 官网右栏的写法：一个宽体的大号信号色数字，右边是“当前 / 总数”，下面是栏目的英文名，靠右。
+ * 大数字的下缘被裁掉一截，像被一条水平线切过。它告诉用户现在在第几屏、一共几屏。
+ * 字体和字号是官网实测值。
  */
 export const Default: Story = {}
 
-/** 小号：全部排成一行，用在轮播、列表项这类地方。 */
+/** 官网在“当前 / 总数”和栏目名之间还有一行微缩字，写的是品牌名。 */
+export const WithMicro: Story = {
+  args: { micro: 'ARKNIGHTS' },
+}
+
+/** 小号：全部排成一行，用在轮播、列表项这类地方。这一档没有实机出处，是估计。 */
 export const Small: Story = {
   args: { size: 'sm', value: 3, total: 12, label: undefined },
 }
@@ -29,7 +35,7 @@ export const InSideRail: Story = {
   render: args => (
     <div className="flex h-48 w-fit gap-ark-5">
       <Divider orientation="vertical" variant="fade" start="bar" />
-      <Counter {...args} className="self-start" />
+      <Counter {...args} micro="ARKNIGHTS" className="self-start" />
     </div>
   ),
 }
@@ -43,7 +49,10 @@ export const OnPaper: Story = {
   ),
 }
 
-/** 序号：`NO.` 加补零的数字，`VOL.` 加不补零的数字。颜色继承自所在的文字。 */
+/**
+ * 序号：`NO.` 加补零的数字，`VOL.` 加不补零的数字。颜色继承自所在的文字。
+ * 这个写法没有实机出处，是估计。
+ */
 export const SerialNumbers: Story = {
   render: () => (
     <div className="flex items-baseline gap-ark-6 text-ark-fg-muted">

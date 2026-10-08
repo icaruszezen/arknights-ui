@@ -25,8 +25,8 @@
 | 情报 | <https://ak.hypergryph.com/#information> | 新闻行、分类标签、主按钮、轮播进度条 | [数据展示](../elements/data-display.md)、[按钮](../elements/buttons.md) |
 | 干员 | <https://ak.hypergryph.com/#operator> | 立绘出血、幽灵重影、中英文名排版、缩略图条 | [图片](../foundations/imagery.md) |
 | 设定 | <https://ak.hypergryph.com/#world> | 条目列表、逐条滑入的入场、斜线网格、悬停幽灵字 | [底纹](../foundations/texture-and-pattern.md) |
-| 泰拉万象 | <https://ak.hypergryph.com/#media> | 等距场景、标注点与标签 | [装饰元素](../elements/decorations.md) |
-| 更多内容 | <https://ak.hypergryph.com/#more> | 条带切图、图标 + 双语标题 | [图标与符号](../foundations/iconography.md) |
+| 泰拉万象 | <https://ak.hypergryph.com/#media> | 等距场景、标注的两种状态、标题组、点阵 | [装饰元素](../elements/decorations.md)、[底纹](../foundations/texture-and-pattern.md) |
+| 更多内容 | <https://ak.hypergryph.com/#more> | 条带切图、图标 + 双语标题 | [图标与符号](../foundations/iconography.md)、[图片](../foundations/imagery.md) |
 
 ## 游戏界面
 
@@ -53,7 +53,9 @@
 
 | Terra Wiki 的界面截图 | [Operation · Arknights Terra Wiki](https://arknights.wiki.gg/wiki/Operation)，以及站内文件名以 `UI-` 开头的图 | 2140 × 1080 上下的整屏实机截图：作战 HUD（`Operation-main`）、关卡选择（`Operation-selection`）、选中干员（`Operation-select_manual`）、编队（`UI-squads`）、干员列表与筛选（`UI-opmenu`、`UI-opfilter`）、采购中心首页（`Store_main_page`）、主界面（`Home_Screen_UI-Day`）、设置页（`UI-settingsmenu`）。站内可以直接取色 | [作战](../modules/game/battle.md)、[干员](../modules/game/operator.md)、[主界面](../modules/game/home.md) |
 | Terra Wiki 的章节封面 | [Story · Arknights Terra Wiki](https://arknights.wiki.gg/wiki/Story) | 各章的封面图（`Episode_NN`）：章节编号的小方框、标题字 | [剧情](../modules/game/story.md) |
-| 官网的公告正文 | [官网 · 情报](https://ak.hypergryph.com/#information) 里的任意一条 | 公告的原文标记：中文数字的小节、粗体的键、`◆` 起头的注意事项、时间写法 | [宣传物料](../modules/promotional.md) |
+| 官网的公告正文 | [官网 · 情报](https://ak.hypergryph.com/#information) 里的任意一条 | 公告的原文标记：中文数字的小节、粗体的键、`◆` 起头的注意事项、时间写法；标题下面带起点的分隔线 | [宣传物料](../modules/promotional.md)、[装饰元素](../elements/decorations.md) |
+| 官网的加载屏 | [官网](https://ak.hypergryph.com/)，每次打开先出现 | 细线加两端方块的进度条、`LOADING - 20%` 式的状态文字 | [反馈](../elements/feedback.md) |
+| 官网的底纹图 | 样式表里引用的 `common_mask`（半调）、`dots` 与 `dots_wide`（点阵）几张图 | 可以画到 canvas 上量点距、角度和浓度。只在原站查看，不要转存 | [底纹](../foundations/texture-and-pattern.md) |
 
 模板图是自动化工具用来识别界面的素材，属于游戏画面的局部截图，版权同样归鹰角网络。只在原仓库查看，不要转存。维基上的截图同理。
 
@@ -116,4 +118,4 @@
 
 - 外链可能因站点改版而失效。发现失效链接欢迎提 Issue。
 - 部分站点有防盗链或访问限制，因此本仓库只给链接，不在文档中内嵌这些图片。
-- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源。
+- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源；2026-10-08 加了官网的加载屏和底纹图。

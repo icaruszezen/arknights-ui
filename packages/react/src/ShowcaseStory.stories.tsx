@@ -75,13 +75,11 @@ export const Episode: Story = {
         <Portrait
           src={figure('#9aa3a8')}
           alt=""
-          shadow={false}
           className={`absolute bottom-0 left-[20%] -z-1 h-[90%] w-[20%] ${fade} ${line.who === 'a' ? '' : dim}`}
         />
         <Portrait
           src={figure('#a39a8f', '#ffd802')}
           alt=""
-          shadow={false}
           className={`absolute right-[20%] bottom-0 -z-1 h-[90%] w-[20%] ${fade} ${line.who === 'b' ? '' : dim}`}
         />
 

@@ -53,7 +53,7 @@
 | --- | --- |
 | `Dialog` | 通栏横带式确认弹窗：纸白的内容带，左黑右暗红的两个按钮 |
 | `Notice` | 半透明黑底的提示条；警示和错误在左侧加色边 |
-| `Loading` | 细进度条加百分比和状态文字；进度未知时是旋转指示加闪烁光标 |
+| `Loading` | 一条细线、两端各一个方块、压在上面的进度段，下面写“状态文字 - 百分比”；进度未知时是旋转指示加闪烁光标 |
 | `Empty` | 虚线框空状态 |
 | `RewardGlow` | 奖励图标背后的静态放射光 |
 
@@ -61,17 +61,17 @@
 
 | 组件 | 说明 |
 | --- | --- |
-| `Heading` | 中英成对的双语标题 |
-| `Divider` | 细线、虚线、渐隐线，可带起点或标签 |
-| `Counter` / `Serial` | `01 // 01 / 05` 式的计数与 `NO.0147` 式的序号 |
+| `Heading` | 中英成对的双语标题，下面可以加一条信号色的粗条 |
+| `Divider` | 细线、虚线、渐隐线，可带起点（一段短粗条或一个方点）或标签 |
+| `Counter` / `Serial` | `01 // 01 / 05` 式的计数，大数字的下缘被裁掉一截；`NO.0147` 式的序号 |
 | `DateText` | `2026 // 10 / 03`，输出 `<time>` |
 | `MicroText` | 微缩英文，可竖排 |
-| `GhostTitle` | 背景巨字 |
+| `GhostTitle` | 背景巨字，可以裁掉上缘 |
 | `CornerMarks` | 四个 L 形角标框住内容 |
-| `Callout` | 标注点 + 折线 + 黑底标签，标签可以是链接 |
+| `Callout` | 标注：一个带斜杠的小方框加一行灰字，选中时换成黑底信号色字的标签；可以是链接 |
 | `Barcode` | 条形码，真实的 Code 39 编码 |
 | `Ticks` | 标尺刻度 |
-| `Prose` | 档案类长文本：中文宋体配英文衬线，行高更大，可给小标题自动编号 |
+| `Prose` | 成段的文字：黑体、行高 1.4，可给小标题自动编号；`serif` 是宋体的文书写法 |
 
 **[图标与符号](../../docs/foundations/iconography.md)**
 
@@ -79,29 +79,29 @@
 | --- | --- |
 | `Icon` | 图标的画板：正方形、单色，可选方框或三角框。图形由使用方传入 |
 | `Watermark` | 把一个标识放大、压低不透明度，垫在面板的留白处 |
-| `IconTitle` | 图标 + 中文粗字 + 英文小字的入口组合 |
+| `IconTitle` | 图标 + 中文粗字 + 英文小字的入口组合；图标可以挂到文字列的外面 |
 
 **[底纹](../../docs/foundations/texture-and-pattern.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `Pattern` | 半调网点、噪点、警戒条纹、斜线网格、扫描线，可朝一个方向渐疏 |
+| `Pattern` | 半调网点（由密到疏是点变小）、点阵、噪点、警戒条纹、斜线网格、扫描线，可朝一个方向渐疏 |
 | `Glitch` | 故障：横向错位加色块，只在转场时播一次，不超过 1 秒 |
 
 **[图片](../../docs/foundations/imagery.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `Portrait` | 立绘容器：出血、幽灵重影、向左下的投影 |
+| `Portrait` | 立绘容器：出血、幽灵重影、入场后的缓移；小图可以加向左下的投影 |
 | `Scrim` | 只压文字一侧的黑色渐变遮罩 |
-| `StripGallery` / `Strip` | 等宽竖带切图，底部压黑，每条是一个入口 |
+| `StripGallery` / `Strip` | 等宽竖带切图，没有间缝，上下压黑，每条一个主题色、一个入口 |
 
 **[布局与层级](../../docs/foundations/layout-and-depth.md)**
 
 | 组件 | 说明 |
 | --- | --- |
-| `Shell` | 固定骨架：顶栏、右栏、背景巨字、滚动提示，换屏只换内容 |
-| `ScrollHint` | 底部的滚动提示，也可以是“去下一屏”的入口 |
+| `Shell` | 固定骨架：顶栏、右栏、一条随屏换位的横线、背景巨字、滚动提示，换屏只换内容 |
+| `ScrollHint` | 底部的滚动提示：一行 `SCROLL` 加一个箭头，也可以是“去下一屏”的入口 |
 | `TiltGroup` | 透视面板组，可随指针摆动，竖屏取消 |
 | `PanelGrid` / `PanelGridItem` | 大小不一的矩形错位拼合 |
 | `Parallax` / `ParallaxLayer` | 多层视差，跟指针或跟滚动 |
@@ -266,7 +266,7 @@ body {
 <Button className="px-ark-6">更宽的按钮</Button>
 ```
 
-合并用的 `cn()` 也从包里导出，它认识 `ark-` 主题键（例如不会把字号 `text-ark-body` 和颜色 `text-ark-fg` 当成冲突）。
+合并用的 `cn()` 也从包里导出，它认识 `ark-` 主题键（例如不会把字号 `text-ark-body` 和颜色 `text-ark-fg` 当成冲突）。它和 tailwind-merge 的默认行为有一处不同：后写的字号不会去掉先写的行高，所以改字号（`className="text-ark-h1"`）不会顺带把组件的行高改回 `normal`。
 
 **稳定的选择器。** 每个组件的根节点带 `data-ark="<名称>"`，可以用来写选择器或做测试定位。
 
@@ -286,7 +286,7 @@ const [open, setOpen] = useState(false)
 
 **逐个摆位的子元素。** `EntryGrid`、`Carousel`、`StageMap`、`WorldEntryList` 会把每个子元素各放进一格。子元素要直接写在里面或者传数组；包一层 Fragment 或自定义组件就只算一个。
 
-**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`，对比度有意压低。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。`Pattern`、`Watermark`，以及不放内容的 `Scrim`、不带链接的 `ScrollHint` 同样是装饰。`Icon` 默认也是，给了 `label` 才会被读到。场景组件里，`ChapterTitle` 的 `caption`、`StageNode` 的 `caption`、`AttributeList` 的相对值条、`Carousel` 的进度条都是对已有信息的第二次表述，同样对读屏隐藏。
+**装饰。** `MicroText`、`GhostTitle`、`Barcode`、`Ticks` 和 `CornerMarks` 的角标是纯装饰，默认带 `aria-hidden`。`GhostTitle` 的对比度有意压低；`MicroText` 的颜色跟随所在的文字，要压暗自己加一个 `text-*`。必须读到的信息不要交给它们；确实需要被读到时传 `aria-hidden={false}`。`Pattern`、`Watermark`，以及不放内容的 `Scrim`、不带链接的 `ScrollHint` 同样是装饰。`Icon` 默认也是，给了 `label` 才会被读到。场景组件里，`ChapterTitle` 的 `caption`、`StageNode` 的 `caption`、`AttributeList` 的相对值条、`Carousel` 的进度条都是对已有信息的第二次表述，同样对读屏隐藏。
 
 **只给读屏的文字。** 有几处画面上只有图形和数字，名称另外读给读屏：`DeployCard` 的干员名和“费用不足”“再部署冷却”，`HudCounterItem` 的“击杀”“生命点数”，`CostMeter` 的“费用”，`StageNode` 的“已通关”“当前”“未解锁”，`OperatorCard` 的精英化阶段，`RoomCard` 的等级。想换一种说法时用各自的 `label` 类属性，或者直接给 `aria-label`。还有几处是实机上只有图标、组件默认仍然显示名称的：给了 `icon` 的 `Attribute`、开了 `iconOnly` 的 `ClassFilter`、开了 `hideLabel` 的 `Thumbnail`，这时名称只读给读屏。
 
@@ -296,7 +296,7 @@ const [open, setOpen] = useState(false)
 
 **图片与图标。** 组件库不带任何图片和图标。`Icon`、`Watermark`、`Portrait`、`Strip` 的图都由使用方提供，请使用原创或已获授权的素材。场景组件也一样：立绘和头像（`OperatorCard`、`OperatorShowcase`、`OperatorAvatar`、`DeployCard`、`Thumbnail`）、职业与技能图标（`ClassFilterItem`、`SkillSlot`）、主视觉与商品图（`CarouselSlide`、`Banner`、`ProductCard`）、卡池的标题标识（`Banner` 的 `logo`）都要自备。Storybook 里看到的是代码画的占位图。
 
-**动效。** 入场、数字滚动、故障、视差、摆动都遵守 `prefers-reduced-motion`：减少动效时 `Stagger` 只淡入，`CountUp` 直接显示最终值，`Glitch`、`Parallax` 和 `TiltGroup` 的摆动不启动。跟指针走的效果在触屏设备上也不启用。`Carousel` 的自动轮播默认关闭；打开后带一个暂停按钮，指针悬停、焦点在里面、页面不可见时不走，减少动效时完全不启动，换页也不做位移。
+**动效。** 入场、数字滚动、故障、视差、摆动都遵守 `prefers-reduced-motion`：减少动效时 `Stagger` 只淡入，`CountUp` 直接显示最终值，`Glitch`、`Parallax` 和 `TiltGroup` 的摆动不启动。`ScrollHint` 的淡入淡出、`Portrait` 的缓移、`Shell` 横线的换位、`Strip` 悬停时的放大，同样只在允许动效时进行。跟指针走的效果在触屏设备上也不启用。`Carousel` 的自动轮播默认关闭；打开后带一个暂停按钮，指针悬停、焦点在里面、页面不可见时不走，减少动效时完全不启动，换页也不做位移。
 
 **服务端组件。** 产物顶部带 `"use client"`，在 React Server Components 项目里可以直接引入。
 
@@ -311,7 +311,8 @@ const [open, setOpen] = useState(false)
 | 纸白面板上的信号色文字 | — | 信号色压暗到 45% | 青蓝、黄在浅底上对比度不足。色块和底条不受影响 |
 | 悬停的触发条件 | `(any-hover: hover)` | `(hover: hover)` | 用的是 Tailwind 内置的 `hover:`，意图相同 |
 | `Divider` 的 `fade` | `--ark-pattern-fade-rule` | 从起点向末端渐隐，颜色跟随明暗上下文 | 原取值固定为白色且方向相反 |
-| `MicroText`、`GhostTitle` 的颜色 | 固定的 `#585858`、`#242424` | 次要文字色的 50%、前景色的 14% | 黑底上与原取值相同，放进面板时跟着换 |
+| `GhostTitle` 的颜色 | 固定的 `#242424` | 前景色的 14% | 黑底上与原取值相同，放进面板时跟着换 |
+| `GhostTitle` 的裁切 | 装进一个高 `0.95em` 的框里贴底放，裁掉溢出 | 字和一个空的占位块按基线对齐，占位块高 `0.84cap` | 官网的写法裁掉多少取决于字体的度量；这样写换什么字体都裁掉大写高的 16% |
 | `Rating` 在纸白面板上 | `--ark-color-tier-star` | 黄色压暗到 45% | 黄色在浅底上看不清，做法同信号色文字 |
 | `Rating` 的硬边 | 星与星之间是一圈深色的描边 | 每颗星一道很小的硬边投影 | 效果相同，不用改图形 |
 | `Badge` 的通知色 | 蓝底白字（取色 `#229ed5`） | `tone="signal"`：信号色配它自己的前景色 | 白字压在这个蓝上只有 3:1 |
@@ -324,7 +325,9 @@ const [open, setOpen] = useState(false)
 | `QuickNav` 的图标 | 实机每一项都有图标 | 由使用方传入，不给就只有名称 | 组件库不带图标 |
 | `Nav` 的当前项 | 只变色，并建议补一个非颜色标记 | 默认只变色，`indicator` 补一条 4px 条 | 两种都给，由使用方决定 |
 | `Counter` 的大数字与英文标签 | DemiBold（600） | Tailwind 自带的 `font-semibold` | token 里没有 600 这一档 |
-| `Counter` 的排法 | “当前 / 总数”和栏目名都靠右，压在 10rem 宽的块里，和大数字的包围盒有重叠 | “当前 / 总数”排在大数字右边，栏目名在下面靠左，互不重叠 | 回退字体比官网的字宽，照搬会叠字 |
+| `Counter` 的排法 | 整块固定 10rem 宽，“当前 / 总数”压在大数字的右缘上约 1rem | 两者并排、不重叠，整块的宽度由内容决定；栏目名照样靠右 | 回退字体比官网的字宽，照搬会叠字 |
+| `Counter` 的裁切 | `line-height: 0.55` 加 `overflow: hidden` | 数字和一个空的占位块按基线对齐，再下移 `0.2cap` | 同 `GhostTitle`：官网的写法换一个回退字体会连上缘一起裁 |
+| `Counter` 的 `sm`、`Serial` | 官网没有 | 保留 | 没有实机出处，是估计 |
 | `Drawer` 的默认表面 | 基建的抽屉是纸白 | 默认石墨，`tone="paper"` 换成纸白 | 石墨是其余所有东西的默认容器 |
 | `Button` 主按钮的尺寸 | 固定 `14.375rem × 3.75rem` | 最小宽高，内容更长时撑开 | 文字长度不由组件决定；可以用 `className` 改 |
 | `ActionButton` 的主色 | 实机是蓝底白字（`#0098dc`） | 跟随 `--ark-signal`，默认青蓝底黑字 | 白字压在这个蓝上只有 3.2:1，只够大号粗体用；需要时覆盖 `--ark-signal` 和 `--ark-on-signal` |
@@ -332,16 +335,29 @@ const [open, setOpen] = useState(false)
 | `Tabs` 分段块的未选中项 | 浅灰的渐变底块 | 前景色的 10% | 色面不做渐变；跟随明暗上下文 |
 | `Tabs` 的底条 | 实机只见到“选中蓝字、未选中灰字” | 另加一条 4px 底条 | 颜色之外的第二种标记 |
 | `Barcode` | 条码作为装饰 | 真实的 Code 39 编码 | 装饰写真实内容；字符集因此限于大写字母、数字和少数符号 |
+| `Callout` 选中时的高亮 | 物件套一圈白框，背后垫一块信号色方块 | 没有，只换标签 | 那是场景里物件的高亮，不是标注的一部分 |
+| `Heading` 的 `sm` | 官网没有这样的小标题 | 保留 | 没有实机出处，是估计 |
+| `IconTitle` 的 `sm`、`md` | 官网只有中文 3.375rem 一种 | 按比例缩小，英文最小 0.75rem | 估计 |
 | 底纹的颜色 | 白或黑，固定 | 取当前文字色 | 放进面板时跟着明暗上下文换，也能换成信号色。警戒条纹的黄黑除外 |
-| 斜线网格的浓度 | 白 5–15% | 方格 8%、对角线 14%；`Shell` 里再减半 | 取自示意图。铺满整屏时要压到“细看才有” |
+| 斜线网格的浓度 | 白 5–15% | 方格 8%、对角线 14%；`Shell` 里再减半 | 取自示意图。铺满整屏时要压到“细看才有”。官网的网格是 canvas 画的，取值读不到 |
+| 半调的点距 | 官网的半调图量得约 15px（1920 基准），跟着视口缩放 | 固定 16px | 遮罩是一张 SVG，里面写不了 rem |
+| 半调的浓度 | 浅灰的点，用叠加模式（`mix-blend-mode: overlay`）盖在画面上 | 当前文字色的 20%，普通叠放 | 跟随明暗上下文；混合模式会受层叠上下文影响 |
 | 噪点、扫描线、斜线网格的取值 | 只有参数范围，没有 token | 写在主题层的工具类里 | 没有改动 `tokens.json` |
 | `Glitch` 的马赛克 | 局部画面被打成色块 | 叠一层信号色的色块，不对画面本身做像素化 | CSS 没有像素化滤镜，SVG 滤镜在大面积上开销大 |
 | `TiltGroup` 的摆动 | 陀螺仪 / 鼠标 | 只跟指针 | iOS 上读陀螺仪要先弹权限请求，不该由一个装饰效果发起 |
 | 透视、拼合、条带的窄屏处理 | 窄屏取消倾斜、纵向堆叠 | 按竖屏（`orientation: portrait`）切换 | 与 `Nav` 一致：官网按方向而不是按宽度切换 |
-| `Icon` 的三角外框 | 全局只用 45° | 近等边三角形 | 沿用示意图里徽记外框的画法；45° 的三角太扁，放不下图形 |
-| `Prose` 的行高 | “明显大于界面文字” | 1.9 | 文档没有给数值 |
-| `Shell` 的右栏 | 约 14.75rem | 宽 15rem，可用 `--ark-shell-rail` 改 | 取整；回退字体下计数刚好放得下 |
-| `Shell` 的整体缩放 | 根字号 `100vw / 120`，整站等比缩放 | 不改根字号 | 组件不设置页面级样式；需要等比缩放时由页面自己设根字号 |
+| `Icon` 的三角外框 | 全局只用 45° | 近等边三角形 | 官网干员屏的阵营徽记就是等边三角的比例；45° 的三角太扁，放不下图形 |
+| `Prose` 的行长 | 官网公告正文一行约 72 个字 | 限制在 40 个字 | 一行太长不好读；用 `max-w-*` 可以改 |
+| `Prose` 的 `serif`、`numbered` | 官网成段的文字都是黑体，小标题也没有 `01` 式的编号 | 作为选项保留 | 没有实机出处，是估计 |
+| `Portrait` 的重影 | 另一张预先处理好的灰度图 | 默认由同一张图放大、去色、25% 得来；`ghostSrc` 可以另给一张 | 组件库不带图片 |
+| `Strip` 的尺寸 | 条带固定 30rem 宽，文字用 rem | 条带设成容器，文字的位置和字号按条带的宽度走，标题最小 1rem | 条带多宽不由组件决定 |
+| `Shell` 的整体缩放 | 根字号 `100vw / 120`，整站等比缩放 | 不改根字号 | 组件不设置页面级样式；需要等比缩放时由页面自己设根字号，或者调小 `--ark-shell-top`、`--ark-shell-bottom`、`--ark-shell-rail` |
+| `Shell` 的内容区 | 每屏固定一屏高，不滚动 | 内容区自己滚动 | 内容多少不由骨架决定 |
+| `Shell` 的竖屏 | 官网竖屏另有一套取值 | 右栏挪到底部排成一行，横线原地淡出 | 竖屏的根字号基准没有弄清，换算不了 |
+| `ScrollHint` 的颜色 | 首屏信号色，其余各屏 `#585858` | 装饰用时 `#585858`；可交互时是前景色，悬停变信号色 | `#585858` 压在黑底上不到 3:1，不能用在可点的东西上 |
+| `ScrollHint` 首屏的标识 | 提示上方多一个站点标识 | 没有 | 组件库不带图片 |
+| `Stagger` 的入场 | 菜单项自右 20%、每项 0.2s；设定条目自左整条、每项 0.8s | 默认自左 1.5rem、0.6s；间隔 70ms | 间隔和位移是实测值，时长取内容块入场的那一档 |
+| `Loading` 的颜色 | 线和文字是 `#a4a4a4` | 次要文字色 | 跟随明暗上下文 |
 | `Carousel` 的进度条 | 轨道左侧接一段 12rem 的渐隐线 | 没有这段线 | 那是官网版式的一部分，由页面自己决定 |
 | `Carousel` 的自动轮播 | 官网自动轮播 | 默认关闭；打开后带暂停按钮 | 自动更新的内容要能暂停（WCAG 2.2.2） |
 | `OperatorShowcase` 的中文名 | 代号 Heavy、字距 -0.1em | Bold、不收字距 | 这是官网的实测值；`Codename` 默认是游戏里的写法 |
@@ -386,6 +402,8 @@ const [open, setOpen] = useState(false)
 
 `Empty` 不在表里：文档原先写的 `gray-600` 文字在黑底上只有 2.95:1，这个问题已经在文档里更正并记录，见 [反馈 · 空状态](../../docs/elements/feedback.md#空状态)。
 
+还有几个组件没有取到实机证据，维持着文档里估计的写法：`CornerMarks`、`Barcode`、`Ticks`、`Glitch`、`Parallax`、`CountUp`。官网上没有它们，游戏内的对应画面还没有找到可以量的截图。
+
 ## 开发
 
 在仓库根目录执行：
@@ -414,8 +432,11 @@ pnpm install
 - 按子元素逐个摆位的组件用 `toItems()`。它不展开 Fragment，测试和 Story 里要传数组。`StageMap` 还会读子元素的属性来算位置和连线，所以节点必须是直接子元素。
 - 日期和时间的解析在 [`src/utils/date.ts`](src/utils/date.ts)：`YYYY-MM-DD` 开头的字符串按字面取，不经过 `Date`，服务端和浏览器的结果才一定相同。
 - 弹层用 [`src/utils/useModalDialog.ts`](src/utils/useModalDialog.ts)。点遮罩靠“事件目标是 `<dialog>` 自身”来判断，所以内容要铺满 `<dialog>`，底色、描边都画在里面那一层。
-- 动画都定义在 [`src/styles/theme.css`](src/styles/theme.css)：`animate-ark-spin`、`animate-ark-blink`、`animate-ark-fade-in`，入场的 `animate-ark-enter-left` / `-right` / `-up`，滚动提示的 `animate-ark-bob`，故障的 `animate-ark-glitch`（及 `-bars`、`-mosaic`）。只动透明度的 `fade-in` 可以直接用，其余都要包在 `motion-safe:` 里。
+- 动画都定义在 [`src/styles/theme.css`](src/styles/theme.css)：`animate-ark-spin`、`animate-ark-blink`、`animate-ark-fade-in`，入场的 `animate-ark-enter-left` / `-right` / `-up`，滚动提示的 `animate-ark-scroll-hint` 和 `animate-ark-pulse`，立绘缓移的 `animate-ark-drift`，故障的 `animate-ark-glitch`（及 `-bars`、`-mosaic`）。只动透明度的 `fade-in` 可以直接用，其余都要包在 `motion-safe:` 里。
 - 底纹、透视、视差图层、长文本的样式也是主题层里的工具类（`ark-pattern-*`、`ark-tilt`、`ark-parallax-layer`、`ark-prose`），和 `ark-cut-*` 一样可以带变体（`after:ark-pattern-halftone`）。复杂的 CSS 写成工具类，组件里只引用类名。
+- 半调的遮罩是一张内联 SVG，由 [`src/internal/halftone.ts`](src/internal/halftone.ts) 生成。`tokens.json` 里 `pattern.halftone` 的值是它的一份输出（朝右上渐疏的那张），改了生成的函数要把这个值一起换掉，测试会提醒。
+- [`src/utils/cn.ts`](src/utils/cn.ts) 里去掉了 tailwind-merge“字号会连行高一起覆盖”的规则。组件里到处是 `cn('… leading-ark-solid …', sizes[size])` 这样的写法，字号在后；按默认规则行高会被悄悄去掉，变回 `normal`（2026-10-08 之前一直如此，`Heading`、`EntryPanel`、`Codename` 等十来个组件的行高因此都不是写的那个值）。
+- 要把一行字裁掉固定的一截（`Counter` 的大数字、`GhostTitle` 的 `clip`），不要用“行高比字矮再裁掉溢出”：裁掉多少取决于字体的度量，回退字体下位置会跑。让字（行高设为 0）和一个空的占位块在 `flex` 里按基线对齐，容器的下缘就正好落在基线上；占位块的高度用 `cap` 单位写，并给不支持它的浏览器留一个 `em` 的近似值。
 - JS 驱动的动效用 `src/utils/` 里的三个 hook：`useReducedMotion`、`useInView`、`useOffset`。监听挂在 effect 里，通过 CSS 变量改样式，不走 React 状态。
 - 属性是联合类型的组件（`Button`、`ActionButton`、`ListRow`、`Strip`、`ScrollHint`），Story 里不要用 `decorators`，否则参数类型会被推成 `never`。
 - Story 里的图片用 [`.storybook/art.ts`](.storybook/art.ts) 生成的占位图，不要引入任何图片文件；图标用 [`.storybook/glyphs.tsx`](.storybook/glyphs.tsx) 里自绘的几何图形。

@@ -74,7 +74,8 @@
     var(--ark-motion-easing-standard) both;
 
   /*
-   * 入场：位移 1rem 加淡入，取 slow 档（内容块入场）。文字自左、图片自右。
+   * 入场：位移 1.5rem 加淡入，取 slow 档（内容块入场）。文字自左、图片自右。
+   * 1.5rem 是官网样式表里最常见的入场位移（±1.5rem 横竖共出现 8 次，2026-10-08 统计）。
    * 减少动效时组件换成只动透明度的 ark-fade-in。
    */
   --animate-ark-enter-left: ark-enter-left var(--ark-motion-duration-slow)
@@ -84,8 +85,15 @@
   --animate-ark-enter-up: ark-enter-up var(--ark-motion-duration-slow)
     var(--ark-motion-easing-standard) both;
 
-  /* 滚动提示：2s 往复（官网实测 1.5–2s） */
-  --animate-ark-bob: ark-bob 2s var(--ark-motion-easing-standard) infinite;
+  /*
+   * 滚动提示（官网实测）：1.5s 一轮——淡入、停住、下移 30% 并淡出。
+   * 末屏换成向上的箭头，2s 明灭一次。
+   */
+  --animate-ark-scroll-hint: ark-scroll-hint 1.5s var(--ark-motion-easing-standard) infinite;
+  --animate-ark-pulse: ark-pulse 2s var(--ark-motion-easing-standard) infinite;
+
+  /* 立绘入场后的缓移（官网实测）：10 秒里自左移回原位，只走一次 */
+  --animate-ark-drift: ark-drift 10s var(--ark-motion-easing-standard) both;
 
   /*
    * 故障：逐帧、只播一次。时长由 --ark-glitch-duration 给出，Glitch 组件把它限制在 1s 以内。
@@ -117,24 +125,50 @@
 @keyframes ark-enter-left {
   from {
     opacity: 0;
-    translate: -1rem 0;
+    translate: -1.5rem 0;
   }
 }
 @keyframes ark-enter-right {
   from {
     opacity: 0;
-    translate: 1rem 0;
+    translate: 1.5rem 0;
   }
 }
 @keyframes ark-enter-up {
   from {
     opacity: 0;
-    translate: 0 1rem;
+    translate: 0 1.5rem;
   }
 }
-@keyframes ark-bob {
+@keyframes ark-scroll-hint {
+  0% {
+    opacity: 0;
+    translate: 0 0;
+  }
+  40% {
+    opacity: 1;
+    translate: 0 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    translate: 0 30%;
+  }
+}
+@keyframes ark-pulse {
+  0%,
+  100% {
+    opacity: 0;
+  }
   50% {
-    translate: 0 0.375rem;
+    opacity: 1;
+  }
+}
+@keyframes ark-drift {
+  from {
+    translate: -3rem 0;
   }
 }
 
@@ -346,13 +380,36 @@
  * 前景色是用一张纯色渐变铺的，而不是 background-color：无障碍检查工具（axe）不认识遮罩，
  * 会把 background-color 当成一整块实底，给压在底纹上的文字误报对比度不足。
  */
-/* 半调网点：形状与浓度取自 --ark-pattern-halftone（1px 圆点、0.5rem 间距、35%） */
+/*
+ * 半调网点：形状与浓度取自 --ark-pattern-halftone。那是一张内联 SVG（src/internal/halftone.ts 生成）：
+ * 点距 16px、网格转 20°，点径随浓度从相切缩到消失，朝右上渐疏，浓度 20%（官网的半调图实测）。
+ * 换方向就换这个变量；--ark-pattern-fade 仍然可以再叠一层渐隐。
+ * 也可以把变量换成一张等距小圆点的 radial-gradient（OperatorCard 的稀有度光晕就是这样）。
+ */
 @utility ark-pattern-halftone {
   @supports (mask-composite: intersect) {
     background-image: linear-gradient(currentColor, currentColor);
     mask:
       var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
       var(--ark-pattern-halftone);
+  }
+}
+/*
+ * 点阵：等大的小方点排成稀疏的方阵，和半调不是一回事。官网泰拉万象屏的左下和右上各有一片
+ * （实测：点约 4 × 3px、横向点距 2.25rem、纵向约 2.44rem、#ababab 的 45%，折合白 30%）。
+ * 两层条纹取交集，交出来的就是方点。
+ */
+@utility ark-pattern-dots {
+  @supports (mask-composite: intersect) {
+    background-image: linear-gradient(currentColor, currentColor);
+    mask:
+      var(--ark-pattern-fade, linear-gradient(#000, #000)) intersect,
+      repeating-linear-gradient(to right, #000 0 0.25rem, transparent 0.25rem 2.25rem) intersect,
+      repeating-linear-gradient(
+        to bottom,
+        rgb(0 0 0 / 0.3) 0 0.1875rem,
+        transparent 0.1875rem 2.4375rem
+      );
   }
 }
 /*
@@ -521,14 +578,12 @@
 }
 
 /*
- * 档案类长文本：中文宋体配英文衬线，行高明显大于界面正文的 1.6（1.9 是估计值）。
- * 字体栈先英文后中文，中间不能夹通用族名（否则中文落不到宋体上），所以在这里重新拼一份。
+ * 成段的文字：行高 1.4、段距 1em（官网公告正文实测，干员简介和设定说明也是 1.4）。字体跟随所在的元素。
  * 后代选择器都包在 :where() 里，特异性为 0：使用方写在子元素上的类可以直接覆盖。
  * 不依赖全局重置，段落、标题、列表的边距在这里写全。
  */
 @utility ark-prose {
-  font-family: "Times New Roman", Georgia, "Noto Serif", var(--ark-font-family-cjk-serif);
-  line-height: 1.9;
+  line-height: var(--ark-prose-leading, var(--ark-font-leading-snug));
 
   :where(& :is(p, ul, ol, blockquote, figure, h2, h3, h4)) {
     margin: 0;
@@ -582,6 +637,15 @@
   :where(& :is(strong, b)) {
     font-weight: var(--ark-font-weight-bold);
   }
+}
+/*
+ * 文书的写法：中文宋体配英文衬线，行高放到 1.9。没有实机出处，是估计。
+ * 字体栈先英文后中文，中间不能夹通用族名（否则中文落不到宋体上），所以在这里重新拼一份。
+ * 行高走变量而不是直接写属性：和 ark-prose 写在同一个元素上时不用管两个类谁先谁后。
+ */
+@utility ark-prose-serif {
+  --ark-prose-leading: 1.9;
+  font-family: "Times New Roman", Georgia, "Noto Serif", var(--ark-font-family-cjk-serif);
 }
 /* 二级标题自动编号：01、02…，数据体、信号色 */
 @utility ark-prose-numbered {

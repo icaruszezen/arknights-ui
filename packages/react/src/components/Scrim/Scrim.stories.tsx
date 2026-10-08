@@ -37,7 +37,7 @@ type Story = StoryObj<typeof meta>
 /** 底部压字：贴边 5rem 是实黑，到 20rem 处渐隐为透明。图片的上半部分保持原样。 */
 export const Default: Story = {}
 
-/** 侧边压字：从 50% 的黑渐隐到透明，更轻。 */
+/** 侧边压字：从 70% 的黑渐隐到透明，更轻。 */
 export const Side: Story = {
   args: { side: 'left' },
 }

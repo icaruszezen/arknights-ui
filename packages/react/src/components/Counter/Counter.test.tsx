@@ -22,7 +22,7 @@ describe('Counter', () => {
     const counter = screen.getByTestId('counter')
     expect(counter.querySelector('.sr-only')).toHaveTextContent('1 / 5')
     expect(counter.querySelector('b')).toHaveAttribute('aria-hidden', 'true')
-    expect(screen.getByText('// 01 / 05')).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.getByText('// 01 / 05').closest('[aria-hidden="true"]')).not.toBeNull()
   })
 
   it('标签是可读的文字，不隐藏', () => {
@@ -52,10 +52,45 @@ describe('Counter', () => {
     )
   })
 
-  it('md 的名称另起一行、1.125rem；“当前 / 总数”也是 1.125rem', () => {
+  it('md 的名称另起一行、靠右、1.125rem；“当前 / 总数”也是 1.125rem', () => {
     render(<Counter value={1} total={5} label="INFORMATION" />)
-    expect(screen.getByText('INFORMATION')).toHaveClass('col-span-2', 'text-ark-body')
+    expect(screen.getByText('INFORMATION')).toHaveClass(
+      'col-span-2',
+      'justify-self-end',
+      'text-ark-body',
+    )
     expect(screen.getByText('// 01 / 05')).toHaveClass('text-ark-body')
+  })
+
+  it('md 的大数字下缘被裁掉：容器裁切，数字下移，占位块定高', () => {
+    render(<Counter data-testid="counter" value={1} total={5} />)
+    const number = screen.getByTestId('counter').querySelector('b')
+    // min-w-max：被挤窄时数字也不让出自己的宽度
+    expect(number).toHaveClass('flex', 'items-baseline', 'overflow-hidden', 'min-w-max')
+    const [digits, strut] = number?.children ?? []
+    expect(digits).toHaveTextContent('01')
+    expect(digits).toHaveClass('leading-[0]', 'supports-[height:1cap]:translate-y-[0.2cap]')
+    expect(strut).toBeEmptyDOMElement()
+    expect(strut).toHaveClass('w-0', 'supports-[height:1cap]:h-[0.8cap]')
+  })
+
+  it('sm 的数字不裁切', () => {
+    render(<Counter data-testid="counter" value={3} total={12} size="sm" />)
+    const number = screen.getByTestId('counter').querySelector('b')
+    expect(number).not.toHaveClass('overflow-hidden')
+    expect(number?.children).toHaveLength(0)
+  })
+
+  it('micro 在“当前 / 总数”下面加一行微缩字，对读屏隐藏；sm 不显示', () => {
+    const { rerender } = render(<Counter value={1} total={5} micro="ARKNIGHTS" />)
+    const micro = screen.getByText('ARKNIGHTS')
+    expect(micro).toHaveClass('text-ark-micro', 'tracking-ark-micro', 'font-ark-latin-wide')
+    expect(micro.closest('[aria-hidden="true"]')).not.toBeNull()
+    // 两行同在右边那一列里，微缩字紧跟在“当前 / 总数”后面
+    expect(micro.previousElementSibling).toHaveTextContent('// 01 / 05')
+
+    rerender(<Counter value={1} total={5} micro="ARKNIGHTS" size="sm" />)
+    expect(screen.queryByText('ARKNIGHTS')).not.toBeInTheDocument()
   })
 })
 

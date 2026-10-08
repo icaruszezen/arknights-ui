@@ -17,6 +17,16 @@ describe('Prose', () => {
     expect(prose).not.toHaveClass('ark-prose-numbered')
   })
 
+  it('默认是黑体 1rem；serif 换成宋体的写法', () => {
+    const { rerender } = render(<Prose data-testid="prose" />)
+    expect(screen.getByTestId('prose')).toHaveClass('font-ark-cjk-sans', 'text-[1rem]')
+    expect(screen.getByTestId('prose')).not.toHaveClass('ark-prose-serif')
+
+    rerender(<Prose data-testid="prose" serif />)
+    expect(screen.getByTestId('prose')).toHaveClass('ark-prose', 'ark-prose-serif', 'text-ark-body')
+    expect(screen.getByTestId('prose')).not.toHaveClass('text-[1rem]', 'font-ark-cjk-sans')
+  })
+
   it('里面是普通的标题和段落，不改动它们', () => {
     render(
       <Prose>
@@ -43,6 +53,6 @@ describe('Prose', () => {
     render(<Prose data-testid="prose" className="max-w-none text-ark-label" />)
     const prose = screen.getByTestId('prose')
     expect(prose).toHaveClass('max-w-none', 'text-ark-label', 'text-ark-fg')
-    expect(prose).not.toHaveClass('max-w-[40em]', 'text-ark-body')
+    expect(prose).not.toHaveClass('max-w-[40em]', 'text-[1rem]')
   })
 })

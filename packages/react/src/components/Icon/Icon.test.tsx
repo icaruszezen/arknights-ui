@@ -88,7 +88,8 @@ describe('Watermark', () => {
     const mark = screen.getByTestId('mark')
     expect(mark).toHaveAttribute('data-ark', 'watermark')
     expect(mark).toHaveAttribute('aria-hidden', 'true')
-    expect(mark).toHaveClass('pointer-events-none', 'absolute', '-z-1', 'opacity-10', 'h-[90%]')
+    // 12%：主界面纸白面板上的水印取色折算出来的浓度
+    expect(mark).toHaveClass('pointer-events-none', 'absolute', '-z-1', 'opacity-[0.12]', 'h-[90%]')
   })
 
   it('颜色跟随明暗上下文', () => {
@@ -119,7 +120,7 @@ describe('Watermark', () => {
     render(<Watermark data-testid="mark" src="/emblem.png" className="h-[120%] opacity-5" />)
     const mark = screen.getByTestId('mark')
     expect(mark).toHaveClass('h-[120%]', 'opacity-5')
-    expect(mark).not.toHaveClass('h-[90%]', 'opacity-10')
+    expect(mark).not.toHaveClass('h-[90%]', 'opacity-[0.12]')
     expect((mark.firstElementChild as HTMLElement).style.maskImage).toBe('url("/emblem.png")')
   })
 })

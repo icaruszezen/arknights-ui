@@ -11,9 +11,14 @@
   </style>
   <defs>
     <pattern id="grid" width="80" height="80" patternUnits="userSpaceOnUse"><path d="M0 0 L80 80 M80 0 L0 80" stroke="#fff" stroke-opacity=".06"/><rect width="80" height="80" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
-    <pattern id="dots" width="6" height="6" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1" fill="#fff" fill-opacity=".25"/></pattern>
-    <linearGradient id="fadeDots" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#fff"/><stop offset=".6" stop-color="#fff" stop-opacity="0"/></linearGradient>
-    <mask id="m"><rect x="0" y="245" width="240" height="160" fill="url(#fadeDots)"/></mask>
+    <!-- 半调：点径随浓度变化 -->
+    <radialGradient id="htDot"><stop stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <pattern id="htDots" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><rect width="6" height="6" fill="url(#htDot)"/></pattern>
+    <linearGradient id="htFade" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#fff"/><stop offset=".6" stop-color="#000"/></linearGradient>
+    <filter id="htCut" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  10 0 0 0 -5"/><feComponentTransfer><feFuncA type="linear" slope=".25"/></feComponentTransfer></filter>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#000" stop-opacity=".8"/><stop offset=".5" stop-color="#000" stop-opacity=".6"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+    <clipPath id="cnt"><rect x="646" y="180" width="62" height="17.8"/></clipPath>
+    <clipPath id="ghost"><rect x="0" y="337.5" width="632" height="67.5"/></clipPath>
   </defs>
   <rect width="960" height="600" fill="#121212"/>
 
@@ -21,10 +26,11 @@
   <g transform="translate(40 40)">
     <rect width="720" height="405" fill="#000"/>
     <rect width="720" height="405" fill="url(#grid)"/>
-    <rect x="0" y="245" width="240" height="160" fill="url(#dots)" mask="url(#m)"/>
+    <g filter="url(#htCut)"><rect x="0" y="245" width="240" height="160" fill="url(#htFade)"/><rect x="0" y="245" width="240" height="160" fill="url(#htDots)" opacity=".5"/></g>
 
-    <!-- 顶栏 -->
-    <rect x="14" y="12" width="44" height="18" fill="none" stroke="#fff" stroke-opacity=".6"/>
+    <!-- 顶栏：高 6.75rem，叠在内容上，自上而下一道黑色渐变，下缘没有线 -->
+    <rect width="720" height="40.5" fill="url(#top)"/>
+    <rect x="18" y="11" width="42" height="19" fill="none" stroke="#fff" stroke-opacity=".6"/>
     <g class="cond" font-size="9" fill="#fff">
       <text x="290" y="18">INDEX</text><text x="338" y="18" fill="#18d1ff">INFORMATION</text><text x="412" y="18">OPERATOR</text>
       <text x="476" y="18">WORLD</text><text x="524" y="18">MEDIA</text><text x="570" y="18">MORE</text>
@@ -33,18 +39,22 @@
       <text x="290" y="28">首页</text><text x="338" y="28" fill="#18d1ff">情报</text><text x="412" y="28">干员</text>
       <text x="476" y="28">设定</text><text x="524" y="28">泰拉万象</text><text x="570" y="28">更多内容</text>
     </g>
-    <line x1="0" y1="56" x2="720" y2="56" stroke="#fff" stroke-opacity=".15"/>
+    <!-- 横线：这一屏（情报）在距顶 9.5rem 处，和竖线同为 30% 白，横贯整屏 -->
+    <line x1="0" y1="57" x2="720" y2="57" stroke="#fff" stroke-opacity=".3"/>
 
-    <!-- 右栏 -->
-    <line x1="632" y1="0" x2="632" y2="405" stroke="#fff" stroke-opacity=".3"/>
+    <!-- 右栏：宽 14.75rem -->
+    <line x1="631.5" y1="0" x2="631.5" y2="405" stroke="#fff" stroke-opacity=".3"/>
     <g fill="#fff"><circle cx="652" cy="20" r="3"/><rect x="672" y="14" width="2" height="12" fill="#18d1ff"/><rect x="676" y="17" width="2" height="6" fill="#18d1ff"/><circle cx="700" cy="20" r="4" fill="none" stroke="#fff"/></g>
-    <text x="646" y="198" class="data" font-size="26" font-weight="700" fill="#18d1ff">01</text>
-    <text x="684" y="186" class="data" font-size="8" fill="#fff">// 01 / 05</text>
-    <text x="684" y="198" class="wide" font-size="5.5" fill="#fff" letter-spacing=".4">INFORMATION</text>
+    <!-- 计数：上缘在 44.4% 高处，在右栏里居中；大数字的下缘被裁掉，后三行靠右 -->
+    <text x="646" y="202.5" class="wide" font-size="32.4" font-weight="600" fill="#18d1ff" clip-path="url(#cnt)">01</text>
+    <text x="706" y="192.5" text-anchor="end" class="data" font-size="6.75" fill="#fff">// 01 / 05</text>
+    <text x="707" y="196.5" text-anchor="end" class="wide" font-size="2.25" font-weight="500" fill="#fff" letter-spacing="1.1">ARKNIGHTS</text>
+    <text x="706" y="204.5" text-anchor="end" class="wide" font-size="6.75" font-weight="600" fill="#fff" letter-spacing=".7">INFORMATION</text>
 
-    <!-- 幽灵字 -->
-    <text x="54" y="368" class="cond" font-size="42" fill="#242424" letter-spacing="-2.1">BREAKING NEWS</text>
-    <line x1="0" y1="338" x2="632" y2="338" stroke="#fff" stroke-opacity=".15"/>
+    <!-- 幽灵字：左 8.375rem，挂在距底 11.25rem 的那条线下面，上缘被裁掉一截 -->
+    <text x="50" y="366" class="cond" font-size="42" fill="#242424" letter-spacing="-2.1" clip-path="url(#ghost)">BREAKING NEWS</text>
+    <!-- 其余各屏的横线在这里（虚线示意），这一屏没有 -->
+    <line x1="0" y1="337.5" x2="720" y2="337.5" stroke="#fff" stroke-opacity=".3" stroke-dasharray="3 4"/>
 
     <!-- 内容区：新闻列表 + 图 -->
     <rect x="22" y="70" width="34" height="9" fill="#fff"/>
@@ -63,19 +73,21 @@
     <text x="419" y="204" text-anchor="middle" class="cjk" font-size="11" fill="#585858">KEY VISUAL · 16:9 出血到右栏</text>
     <rect x="354" y="337" width="278" height="3" fill="#ababab"/><rect x="354" y="337" width="56" height="3" fill="#18d1ff"/>
 
-    <!-- 滚动提示 -->
-    <polygon points="352,392 360,398 368,392 360,395" fill="#fff" fill-opacity=".7"/>
+    <!-- 滚动提示：相对整屏居中，距底 3.75rem；一行字加一个两段不相连的粗折线箭头 -->
+    <text x="360" y="372" text-anchor="middle" class="wide" font-size="4.5" font-weight="500" fill="#585858">SCROLL</text>
+    <path d="M352 375h3l6 6-1.5 1.5zM368 375h-3l-3.5 3.5 1.5 1.5z" fill="#585858"/>
     <rect width="720" height="405" fill="none" stroke="#333"/>
   </g>
 
   <!-- 标注 -->
   <g class="cjk note">
     <path class="lead" d="M500 52 V30 H780"/><text x="786" y="34">① 双语导航：英文窄体在上，</text><text x="786" y="50">   中文小字在下；激活 = 青蓝</text>
-    <path class="lead" d="M712 232 H780"/><text x="786" y="228">② 右栏：竖线 + 栏目计数</text><text x="786" y="244">   “01 // 01 / 05”</text>
-    <path class="lead" d="M400 400 H780"/><text x="786" y="396">③ 幽灵标题：7rem，#242424，</text><text x="786" y="412">   与内容底边重叠</text>
+    <path class="lead" d="M762 97 H780"/><text x="786" y="94">⑦ 横线只有一条，随屏换位：</text><text x="786" y="110">   上 9.5rem 或 下 11.25rem</text>
+    <path class="lead" d="M750 232 H780"/><text x="786" y="228">② 右栏 14.75rem：竖线 + 计数</text><text x="786" y="244">   大数字的下缘被裁掉</text>
+    <path class="lead" d="M400 400 H780"/><text x="786" y="396">③ 幽灵标题：7rem，#242424，</text><text x="786" y="412">   挂在底线下，上缘被裁掉</text>
     <path class="lead" d="M200 180 V470 H260"/><text x="266" y="474">④ 内容区左起 9rem；列表与大图不等分，图片一侧出血</text>
     <path class="lead" d="M450 378 V500 H500"/><text x="506" y="504">⑤ 轮播进度：0.5rem 高的中灰轨道，上面一段同高的青蓝停在当前页</text>
-    <path class="lead" d="M80 300 V530 H140"/><text x="146" y="534">⑥ 背景：近黑底 + 斜线网格 + 左下角半调网点</text>
+    <path class="lead" d="M80 300 V530 H140"/><text x="146" y="534">⑥ 背景：近黑底 + 斜线网格 + 半调网点（点径由大到小）</text>
   </g>
-  <text x="40" y="576" class="cjk" font-size="12" fill="#8d8d8d">线框根据 2026-10-06 官网实测绘制，轮播进度条于 2026-10-07 按样式表改正；灰块代表官方图片与文字，未使用任何官方素材。</text>
+  <text x="40" y="576" class="cjk" font-size="12" fill="#8d8d8d">线框根据官网实测绘制：轮播进度条 2026-10-07、骨架与计数 2026-10-08 按样式表改正；灰块代表官方图片与文字，未使用任何官方素材。</text>
 </svg>

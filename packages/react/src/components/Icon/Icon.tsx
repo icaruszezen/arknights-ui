@@ -120,7 +120,8 @@ const positions: Record<WatermarkPosition, string> = {
  * 水印：把一个标识放大、压低不透明度，垫在面板留白的地方。
  *
  * 默认高度是面板的 90%（文档的范围是 60–120%，用 `h-*` 改；超过 100% 时给面板加
- * `overflow-hidden`），不透明度 10%（范围 5–15%，用 `opacity-*` 改）。
+ * `overflow-hidden`），不透明度 12%（范围 5–15%，用 `opacity-*` 改）。两个默认值都对过主界面的实机截图：
+ * 纸白面板上的水印约占面板高的九成，灰度折合 12% 的前景色。
  * 它垫在内容下面，需要父元素是定位元素并且自成层叠上下文——`Panel` 已经是。
  *
  * 一块面板里只放一个水印。
@@ -138,7 +139,7 @@ export function Watermark({
       aria-hidden="true"
       {...rest}
       className={cn(
-        'pointer-events-none absolute top-1/2 -z-1 box-border grid aspect-square h-[90%] -translate-y-1/2 text-ark-fg opacity-10 select-none',
+        'pointer-events-none absolute top-1/2 -z-1 box-border grid aspect-square h-[90%] -translate-y-1/2 text-ark-fg opacity-[0.12] select-none',
         positions[position],
         className,
       )}

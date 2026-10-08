@@ -26,6 +26,23 @@ describe('GhostTitle', () => {
     expect(title).not.toHaveClass('text-ark-fg/14')
   })
 
+  it('clip 裁掉字的上缘：容器裁切，字的行高归零，占位块定高', () => {
+    const { container, rerender } = render(<GhostTitle>WORLD</GhostTitle>)
+    const root = () => container.querySelector('[data-ark="ghost-title"]')
+    expect(root()).not.toHaveClass('overflow-hidden')
+    expect(root()?.children).toHaveLength(0)
+
+    rerender(<GhostTitle clip>WORLD</GhostTitle>)
+    expect(root()).toHaveClass('flex', 'items-baseline', 'overflow-hidden')
+    const [text, strut] = root()?.children ?? []
+    expect(text).toHaveTextContent('WORLD')
+    expect(text).toHaveClass('leading-[0]')
+    expect(strut).toBeEmptyDOMElement()
+    expect(strut).toHaveClass('w-0', 'supports-[height:1cap]:h-[0.84cap]')
+    // 仍然是装饰
+    expect(root()).toHaveAttribute('aria-hidden', 'true')
+  })
+
   it('字号可以用 className 覆盖', () => {
     render(<GhostTitle className="text-ark-hero">WORLD</GhostTitle>)
     const title = screen.getByText('WORLD')

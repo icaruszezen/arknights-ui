@@ -29,4 +29,20 @@ describe('Divider', () => {
     expect(parts).toHaveLength(2)
     for (const part of parts) expect(part).toHaveAttribute('aria-hidden', 'true')
   })
+
+  it('bar 是 3.5rem × 3px 的前景色短粗段，和细线之间留 0.5rem', () => {
+    const { container, rerender } = render(<Divider start="bar" />)
+    const start = () => container.querySelector('[data-ark="divider"] > span')
+    expect(start()).toHaveClass('h-[0.1875rem]', 'w-14', 'mr-ark-2', 'bg-ark-fg')
+    expect(start()).not.toHaveClass('bg-ark-signal')
+
+    rerender(<Divider start="bar" orientation="vertical" />)
+    expect(start()).toHaveClass('h-14', 'w-[0.1875rem]', 'mb-ark-2')
+  })
+
+  it('square 是 6px 的方块，紧贴着细线', () => {
+    const { container } = render(<Divider start="square" />)
+    const start = container.querySelector('[data-ark="divider"] > span')
+    expect(start).toHaveClass('size-[0.375rem]', 'bg-ark-fg')
+  })
 })

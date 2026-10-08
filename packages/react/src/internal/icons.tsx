@@ -64,11 +64,14 @@ export function PauseIcon(props: IconProps) {
   )
 }
 
-/** 向下：一道 16 × 6 的粗折线，滚动提示用。 */
-export function ChevronDownIcon(props: IconProps) {
+/**
+ * 滚动提示的箭头：两根 45° 的粗条拼成一个向下的 V。左边那根一直伸到底，右边那根短一截，
+ * 两根之间留一道与条同宽的缝。画板 30 × 14，和官网的箭头同一个比例（2.68rem × 1.25rem）。
+ */
+export function ScrollArrowIcon(props: IconProps) {
   return (
-    <Icon {...props}>
-      <path d="M4 9l8 6 8-6" stroke="currentColor" strokeWidth="2.5" />
+    <Icon viewBox="0 0 30 14" {...props}>
+      <path d="M0 0h5.6l11.2 11.2-2.8 2.8zM30 0h-5.6l-6.6 6.6 2.8 2.8z" fill="currentColor" />
     </Icon>
   )
 }

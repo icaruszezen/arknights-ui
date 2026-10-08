@@ -129,12 +129,7 @@ export const Headhunt: Story = {
                   depth={0.4}
                   className="absolute right-[34%] bottom-0 -z-3 h-[78%] w-[20%]"
                 >
-                  <Portrait
-                    src={figure('#6f777c', pool.accent)}
-                    alt=""
-                    shadow={false}
-                    className="size-full"
-                  />
+                  <Portrait src={figure('#6f777c', pool.accent)} alt="" className="size-full" />
                 </ParallaxLayer>
                 <ParallaxLayer
                   depth={0.9}

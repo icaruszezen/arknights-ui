@@ -19,11 +19,11 @@ describe('Scrim', () => {
     expect(className).toContain('var(--ark-scrim-extent,20rem)')
   })
 
-  it('左右两侧默认用更轻的 50% 黑', () => {
+  it('左右两侧默认用更轻的一种：从 70% 的黑渐隐', () => {
     const { rerender } = render(<Scrim data-testid="scrim" side="left" />)
     expect(screen.getByTestId('scrim')).toHaveClass(
       'bg-linear-to-r',
-      'from-ark-overlay-scrim',
+      'from-ark-neutral-black/70',
       'to-transparent',
     )
 

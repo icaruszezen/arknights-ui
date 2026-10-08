@@ -1,1 +1,1 @@
-export { ScrollHint, type ScrollHintProps } from './ScrollHint'
+export { ScrollHint, type ScrollHintDirection, type ScrollHintProps } from './ScrollHint'

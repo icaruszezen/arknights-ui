@@ -25,11 +25,16 @@ describe('MicroText', () => {
     expect(text.className).not.toContain('rotate')
   })
 
-  it('颜色跟随明暗上下文，不写死调色板里的灰', () => {
-    render(<MicroText>RHODES ISLAND</MicroText>)
+  it('自己不定颜色，跟随所在的文字；要压暗由使用方加', () => {
+    const { rerender } = render(<MicroText>RHODES ISLAND</MicroText>)
     const text = screen.getByText('RHODES ISLAND')
-    expect(text).toHaveClass('text-ark-fg-muted/50')
-    expect(text.className).not.toContain('neutral-gray')
+    // 只有字号一个 text- 类
+    expect(text.className.split(' ').filter(name => name.startsWith('text-'))).toEqual([
+      'text-ark-micro',
+    ])
+
+    rerender(<MicroText className="text-ark-fg-muted">RHODES ISLAND</MicroText>)
+    expect(screen.getByText('RHODES ISLAND')).toHaveClass('text-ark-micro', 'text-ark-fg-muted')
   })
 
   it('使用方的 className 覆盖同属性的默认类', () => {

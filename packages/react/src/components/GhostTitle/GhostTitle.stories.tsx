@@ -20,6 +20,19 @@ export const Signal: Story = {
 }
 
 /**
+ * `clip` 裁掉字的上缘：大写高的 16%。官网每一屏左下角的巨字都挂在骨架的底线下面，
+ * 像被那条线切过。这里的细线就是裁切的位置。
+ */
+export const Clipped: Story = {
+  render: args => (
+    <div className="grid w-[36rem]">
+      <div className="h-px bg-ark-rule" />
+      <GhostTitle {...args} clip />
+    </div>
+  ),
+}
+
+/**
  * 垫在内容背后，被内容和容器切掉一部分。栏目名因此写了两遍：
  * 真正的标题给人读，巨字当纹理。
  */

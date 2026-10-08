@@ -58,7 +58,7 @@ export const StageSelect: Story = {
     return (
       <div className="relative isolate -m-ark-6 grid min-h-screen grid-rows-[auto_minmax(0,1fr)] overflow-hidden bg-ark-neutral-black/55">
         <GhostTitle className="absolute bottom-ark-4 left-ark-7 -z-1">Episode 01</GhostTitle>
-        <MicroText vertical className="absolute right-ark-2 bottom-ark-7">
+        <MicroText vertical className="absolute right-ark-2 bottom-ark-7 text-ark-fg-muted">
           {'ARKNIGHTS-UI // UNOFFICIAL'}
         </MicroText>
 

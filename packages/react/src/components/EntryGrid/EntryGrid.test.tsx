@@ -19,7 +19,7 @@ describe('EntryGrid', () => {
     render(<EntryGrid data-testid="grid">{entries()}</EntryGrid>)
     const grid = screen.getByTestId('grid')
     expect(grid).toHaveAttribute('data-ark', 'entry-grid')
-    expect(grid).toHaveClass('grid-cols-12', 'gap-ark-1', 'portrait:grid-cols-1')
+    expect(grid).toHaveClass('grid-cols-12', 'gap-ark-4', 'portrait:grid-cols-1')
     expect(screen.getAllByRole('button')).toHaveLength(9)
   })
 

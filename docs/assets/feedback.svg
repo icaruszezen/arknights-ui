@@ -48,11 +48,13 @@
 
   <!-- 加载 -->
   <text x="560" y="244" class="data tag">03 LOADING</text>
-  <text x="640" y="244" class="cjk note">加载：进度条 + 百分比 + 英文状态</text>
-  <rect x="560" y="262" width="360" height="2" fill="#fff" fill-opacity=".3"/>
-  <rect x="560" y="261" width="234" height="4" fill="#18d1ff"/>
-  <text x="560" y="286" class="data" font-size="12" fill="#ababab">LOADING ASSETS...</text>
-  <text x="920" y="286" text-anchor="end" class="data" font-size="12" fill="#fff">65%</text>
+  <text x="640" y="244" class="cjk note">加载：细线 + 两端方块 + 粗的进度段</text>
+  <!-- 官网加载屏：2px 的灰线，两端各一个 6px 方块，青蓝的进度段 6px 高 -->
+  <rect x="566" y="262" width="348" height="2" fill="#a4a4a4"/>
+  <rect x="560" y="260" width="6" height="6" fill="#a4a4a4"/><rect x="914" y="260" width="6" height="6" fill="#a4a4a4"/>
+  <rect x="566" y="260" width="226" height="6" fill="#18d1ff"/>
+  <text x="560" y="286" class="data" font-size="12" font-weight="700" fill="#a4a4a4">LOADING ASSETS - 65%</text>
+  <text x="920" y="286" text-anchor="end" class="data" font-size="12" fill="#a4a4a4">ARKNIGHTS-UI // UNOFFICIAL</text>
   <g fill="#fff"><rect x="560" y="304" width="8" height="8" transform="rotate(45 564 308)"/><rect x="578" y="304" width="8" height="8" transform="rotate(45 582 308)" fill-opacity=".6"/><rect x="596" y="304" width="8" height="8" transform="rotate(45 600 308)" fill-opacity=".3"/></g>
   <text x="620" y="313" class="cjk note">菱形点阵循环（估计）</text>
 

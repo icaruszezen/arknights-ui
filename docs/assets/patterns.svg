@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 440" role="img" aria-labelledby="t d">
   <title id="t">底纹库</title>
-  <desc id="d">半调网点、噪点、警戒条纹、斜线网格、马赛克故障、扫描线六种底纹。</desc>
+  <desc id="d">半调网点、噪点、警戒条纹、斜线网格与点阵、马赛克故障、扫描线几种底纹。</desc>
   <style>
     .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
     .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
@@ -9,9 +9,12 @@
   </style>
   <defs>
     <pattern id="dots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.2" fill="#fff" fill-opacity=".45"/></pattern>
-    <pattern id="dotsL" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="3" fill="#fff" fill-opacity=".45"/></pattern>
-    <pattern id="dotsM" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="2" fill="#fff" fill-opacity=".45"/></pattern>
-    <pattern id="dotsS" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="6" cy="6" r="1" fill="#fff" fill-opacity=".45"/></pattern>
+    <!-- 半调：柔边圆点叠在方向渐变上，取阈值——渐变越亮，留下的点越大 -->
+    <radialGradient id="htDot"><stop stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <pattern id="htDots" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><rect width="14" height="14" fill="url(#htDot)"/></pattern>
+    <linearGradient id="htFade" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#fff"/><stop offset=".75" stop-color="#000"/></linearGradient>
+    <filter id="htCut" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  12 0 0 0 -6"/><feComponentTransfer><feFuncA type="linear" slope=".4"/></feComponentTransfer></filter>
+    <pattern id="lattice" width="20" height="21" patternUnits="userSpaceOnUse"><rect width="3" height="2.4" fill="#ababab" fill-opacity=".45"/></pattern>
     <pattern id="hazard" width="24" height="24" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="12" height="24" fill="#ffd802"/><rect x="12" width="12" height="24" fill="#121212"/></pattern>
     <pattern id="hazardMono" width="12" height="12" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="4" height="12" fill="#fff" fill-opacity=".35"/></pattern>
     <pattern id="grid" width="56" height="56" patternUnits="userSpaceOnUse"><path d="M0 0 L56 56 M56 0 L0 56" stroke="#fff" stroke-opacity=".14"/><rect width="56" height="56" fill="none" stroke="#fff" stroke-opacity=".08"/></pattern>
@@ -23,11 +26,12 @@
 
   <!-- 半调 -->
   <text x="40" y="44" class="data tag">01 HALFTONE</text>
-  <text x="40" y="64" class="cjk note">半调网点：由密到疏，压在角落和面板底部</text>
+  <text x="40" y="64" class="cjk note">半调网点：由密到疏是点变小，网格转约 20°</text>
   <rect x="40" y="80" width="272" height="120" fill="#1d1f20"/>
-  <rect x="40" y="80" width="90" height="120" fill="url(#dotsL)"/>
-  <rect x="130" y="80" width="90" height="120" fill="url(#dotsM)"/>
-  <rect x="220" y="80" width="92" height="120" fill="url(#dotsS)"/>
+  <g filter="url(#htCut)">
+    <rect x="40" y="80" width="272" height="120" fill="url(#htFade)"/>
+    <rect x="40" y="80" width="272" height="120" fill="url(#htDots)" opacity=".5"/>
+  </g>
 
   <!-- 噪点 -->
   <text x="344" y="44" class="data tag">02 GRAIN</text>
@@ -46,9 +50,11 @@
 
   <!-- 斜线网格 -->
   <text x="40" y="250" class="data tag">04 DIAGONAL GRID</text>
-  <text x="40" y="270" class="cjk note">斜线网格：官网背景的方格 + 对角线</text>
+  <text x="40" y="270" class="cjk note">斜线网格：方格 + 对角线；右上角是点阵</text>
   <rect x="40" y="286" width="272" height="120" fill="#0c0c0c"/>
   <rect x="40" y="286" width="272" height="120" fill="url(#grid)"/>
+  <!-- 点阵：等大的小方点，四排一组 -->
+  <rect x="172" y="296" width="124" height="66" fill="url(#lattice)"/>
 
   <!-- 马赛克 -->
   <text x="344" y="250" class="data tag">05 MOSAIC GLITCH</text>

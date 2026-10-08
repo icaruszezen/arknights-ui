@@ -1,12 +1,15 @@
 import type { ComponentProps } from 'react'
 import { cn } from '../../utils/cn'
 
-export type PanelGridGap = 'sm' | 'md'
+export type PanelGridGap = 'sm' | 'md' | 'lg'
 
 export interface PanelGridProps extends ComponentProps<'div'> {
   /**
-   * 块与块之间的缝：4px / 8px。缝很窄，面板之间不加描边。
-   * @default 'sm'
+   * 块与块之间的缝，面板之间不加描边。
+   * - `lg`：1rem。主界面各个入口面板之间的缝（实机截图：1080p 下 24px，折到 720p 是 16px）
+   * - `md`：0.5rem
+   * - `sm`：0.25rem。同一组里的子面板之间（实机的“公开招募 / 干员寻访”两块之间约 3px）
+   * @default 'lg'
    */
   gap?: PanelGridGap
 }
@@ -14,6 +17,7 @@ export interface PanelGridProps extends ComponentProps<'div'> {
 const gaps: Record<PanelGridGap, string> = {
   sm: 'gap-ark-1',
   md: 'gap-ark-2',
+  lg: 'gap-ark-4',
 }
 
 /**
@@ -25,7 +29,7 @@ const gaps: Record<PanelGridGap, string> = {
  * 一行的基准高度由 `--ark-panel-grid-row` 决定，默认 5rem。
  * 竖屏时改成一列纵向堆叠，而不是把横屏的拼法整体缩小。
  */
-export function PanelGrid({ gap = 'sm', className, ...rest }: PanelGridProps) {
+export function PanelGrid({ gap = 'lg', className, ...rest }: PanelGridProps) {
   return (
     <div
       data-ark="panel-grid"

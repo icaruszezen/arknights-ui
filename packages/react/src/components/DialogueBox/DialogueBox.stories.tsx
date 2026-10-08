@@ -66,13 +66,11 @@ export const Conversation: Story = {
         <Portrait
           src={figure('#9aa3a8')}
           alt=""
-          shadow={false}
           className={`absolute bottom-0 left-[18%] -z-1 h-[92%] w-[22%] ${line.who === 'a' ? '' : dim}`}
         />
         <Portrait
           src={figure('#a39a8f', '#ffd802')}
           alt=""
-          shadow={false}
           className={`absolute right-[18%] bottom-0 -z-1 h-[92%] w-[22%] ${line.who === 'b' ? '' : dim}`}
         />
         <DialogueBox speaker={line.name} onAdvance={() => setIndex(index + 1)}>

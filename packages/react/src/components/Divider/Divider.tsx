@@ -15,8 +15,8 @@ export interface DividerProps extends Omit<ComponentProps<'div'>, 'children'> {
   variant?: DividerVariant
   /**
    * 分隔线的“起点”。
-   * - `bar`：4px × 3rem 的信号色短粗段
-   * - `square`：8px 方块
+   * - `bar`：3.5rem × 3px 的前景色短粗段，空 0.5rem 再接细线（官网公告页标题下的那条，实测）
+   * - `square`：6px 方块（官网加载条两端的端块，实测）
    * @default 'none'
    */
   start?: DividerStart
@@ -75,15 +75,18 @@ export function Divider({
       )}
     >
       {start === 'bar' && (
+        // 短粗段和细线之间留一道 0.5rem 的缝
         <span
           aria-hidden="true"
           className={cn(
-            'shrink-0 bg-ark-signal',
-            vertical ? 'h-ark-7 w-(--ark-line-strong)' : 'h-(--ark-line-strong) w-ark-7',
+            'shrink-0 bg-ark-fg',
+            vertical ? 'mb-ark-2 h-14 w-[0.1875rem]' : 'mr-ark-2 h-[0.1875rem] w-14',
           )}
         />
       )}
-      {start === 'square' && <span aria-hidden="true" className="size-2 shrink-0 bg-ark-fg" />}
+      {start === 'square' && (
+        <span aria-hidden="true" className="size-[0.375rem] shrink-0 bg-ark-fg" />
+      )}
       {labelled && (
         <span className="shrink-0 pr-ark-3 font-ark-latin-condensed text-ark-label leading-ark-solid font-ark-medium text-ark-fg">
           {label}

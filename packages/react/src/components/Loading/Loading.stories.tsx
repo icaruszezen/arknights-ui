@@ -19,8 +19,23 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 细进度条 + 英文状态文字 + 右对齐的百分比。 */
+/**
+ * 官网加载屏的写法：一条 2px 的灰线，两端各一个 6px 的方块，信号色的进度段压在线上；
+ * 下面是粗体数据体的“状态文字 - 百分比”。
+ */
 export const Default: Story = {}
+
+/** 右边可以再放一行小字，官网写的是品牌名和网址。 */
+export const WithAside: Story = {
+  args: { aside: 'ARKNIGHTS-UI // UNOFFICIAL' },
+  decorators: [
+    Story => (
+      <div className="w-[36rem]">
+        <Story />
+      </div>
+    ),
+  ],
+}
 
 /**
  * 不知道还要多久时：旋转指示，状态文字后面跟一个闪烁的光标。

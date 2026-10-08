@@ -24,6 +24,23 @@ describe('cn', () => {
     expect(cn('text-ark-fg', 'text-ark-signal')).toBe('text-ark-signal')
   })
 
+  // 回归：组件里常见 cn('… leading-ark-solid …', sizes[size])，字号写在后面。
+  // tailwind-merge 默认会让后写的字号把先写的行高去掉，行高于是悄悄变回 normal
+  it('后写的字号不会去掉先写的行高', () => {
+    expect(cn('leading-ark-solid', 'text-ark-display')).toBe('leading-ark-solid text-ark-display')
+    expect(cn('leading-[0.95]', 'text-ark-hero')).toBe('leading-[0.95] text-ark-hero')
+    expect(cn('leading-ark-solid text-ark-fg', 'text-[3.375rem]')).toBe(
+      'leading-ark-solid text-ark-fg text-[3.375rem]',
+    )
+    // 同类之间照常覆盖
+    expect(cn('leading-ark-solid', 'leading-ark-body')).toBe('leading-ark-body')
+    expect(cn('text-ark-body leading-ark-solid', 'text-ark-label')).toBe(
+      'leading-ark-solid text-ark-label',
+    )
+    // 带行高修饰的字号确实设了行高，仍然覆盖先写的 leading-*
+    expect(cn('leading-ark-solid', 'text-lg/7')).toBe('text-lg/7')
+  })
+
   it('字重与字体共用 font- 前缀，但互不覆盖', () => {
     expect(cn('font-ark-data', 'font-ark-bold')).toBe('font-ark-data font-ark-bold')
     expect(cn('font-ark-regular', 'font-ark-bold')).toBe('font-ark-bold')

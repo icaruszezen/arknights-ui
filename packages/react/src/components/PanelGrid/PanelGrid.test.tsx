@@ -3,18 +3,21 @@ import { describe, expect, it } from 'vitest'
 import { PanelGrid, PanelGridItem } from './PanelGrid'
 
 describe('PanelGrid', () => {
-  it('是一个 12 列的网格，缝很窄', () => {
+  it('是一个 12 列的网格，默认的缝是 1rem（主界面入口面板之间的缝）', () => {
     render(<PanelGrid data-testid="grid" />)
     const grid = screen.getByTestId('grid')
     expect(grid).toHaveAttribute('data-ark', 'panel-grid')
-    expect(grid).toHaveClass('grid', 'grid-cols-12', 'gap-ark-1')
+    expect(grid).toHaveClass('grid', 'grid-cols-12', 'gap-ark-4')
   })
 
-  it('gap 可以放宽到 8px', () => {
-    render(<PanelGrid data-testid="grid" gap="md" />)
-    const grid = screen.getByTestId('grid')
-    expect(grid).toHaveClass('gap-ark-2')
-    expect(grid).not.toHaveClass('gap-ark-1')
+  it('gap 可以收窄到 0.5rem 或 0.25rem（同组的子面板之间）', () => {
+    const { rerender } = render(<PanelGrid data-testid="grid" gap="md" />)
+    expect(screen.getByTestId('grid')).toHaveClass('gap-ark-2')
+    expect(screen.getByTestId('grid')).not.toHaveClass('gap-ark-4')
+
+    rerender(<PanelGrid data-testid="grid" gap="sm" />)
+    expect(screen.getByTestId('grid')).toHaveClass('gap-ark-1')
+    expect(screen.getByTestId('grid')).not.toHaveClass('gap-ark-4')
   })
 
   it('竖屏改成一列', () => {

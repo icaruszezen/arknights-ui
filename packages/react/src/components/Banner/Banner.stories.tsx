@@ -29,7 +29,7 @@ const layers = (backdrop: string, accent = '#18d1ff') => [
     depth={0.4}
     className="absolute right-[34%] bottom-0 -z-3 h-[78%] w-[20%]"
   >
-    <Portrait src={figure('#6f777c', accent)} alt="" shadow={false} className="size-full" />
+    <Portrait src={figure('#6f777c', accent)} alt="" className="size-full" />
   </ParallaxLayer>,
   <ParallaxLayer
     key="near"

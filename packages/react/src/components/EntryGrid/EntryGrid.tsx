@@ -12,8 +12,8 @@ export interface EntryGridProps extends ComponentProps<'div'> {
    */
   rows?: readonly EntryGridRow[]
   /**
-   * 面板之间的缝：4px / 8px。
-   * @default 'sm'
+   * 面板之间的缝：0.25rem / 0.5rem / 1rem。实机主界面各入口之间是 1rem。
+   * @default 'lg'
    */
   gap?: PanelGridGap
 }
@@ -44,7 +44,7 @@ const tiers: readonly { size: EntryPanelSize; rows: 1 | 2; height?: string }[] =
  *
  * 它只管拼合，不带透视：需要“画内界面”那种倾斜时，在外面套一个 `TiltGroup side="right"`。
  */
-export function EntryGrid({ rows = DEFAULT_ROWS, gap = 'sm', children, ...rest }: EntryGridProps) {
+export function EntryGrid({ rows = DEFAULT_ROWS, gap = 'lg', children, ...rest }: EntryGridProps) {
   const layout = rows.length > 0 ? rows : DEFAULT_ROWS
   let row = 0
   let filled = 0

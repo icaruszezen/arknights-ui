@@ -17,8 +17,13 @@ export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
   /** 跟在后面的名称，通常是栏目的英文名（`INFORMATION`）。 */
   label?: ReactNode
   /**
-   * - `md`：宽体大数字 5.4rem，右边是“当前 / 总数”，名称另起一行（官网右栏的写法，实测）
-   * - `sm`：数据体数字 1.5rem，全部排成一行（轮播、列表项）
+   * “当前 / 总数”下面的一行微缩字，官网写的是品牌名。纯装饰，对读屏隐藏。只在 `md` 显示。
+   */
+  micro?: ReactNode
+  /**
+   * - `md`：宽体大数字 5.4rem，下缘被裁掉一截；右边是“当前 / 总数”，名称在下面靠右
+   *   （官网右栏的写法，实测）
+   * - `sm`：数据体数字 1.5rem，全部排成一行（轮播、列表项。估计，没有实机出处）
    * @default 'md'
    */
   size?: CounterSize
@@ -26,15 +31,14 @@ export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
 
 const root: Record<CounterSize, string> = {
   sm: 'inline-flex items-baseline-last gap-ark-3',
-  // 两列：大数字和“当前 / 总数”并排，名称在下面占满一行
-  md: 'inline-grid grid-cols-[auto_auto] items-center justify-start gap-x-ark-2 gap-y-ark-2',
+  // 两列：大数字和“当前 / 总数”并排，名称在下面占满一行、靠右
+  md: 'inline-grid grid-cols-[auto_auto] justify-items-end',
 }
 
-// 官网的大数字是 Novecento Sans Wide DemiBold，不是数据体；行高压到比字高还小，
-// 数字没有下伸部分，不会被裁掉。sm 和后面的斜杠排在同一行，仍然用数据体
+// 官网的大数字是 Novecento Sans Wide DemiBold，不是数据体。sm 和后面的斜杠排在同一行，仍然用数据体
 const big: Record<CounterSize, string> = {
   sm: 'font-ark-data text-ark-h2 leading-ark-solid font-ark-bold',
-  md: 'font-ark-latin-wide text-[5.4rem] leading-[0.8] font-semibold',
+  md: 'font-ark-latin-wide text-[5.4rem] font-semibold',
 }
 
 const restSize: Record<CounterSize, string> = {
@@ -45,23 +49,33 @@ const restSize: Record<CounterSize, string> = {
 const labelText: Record<CounterSize, string> = {
   sm: 'text-ark-caption',
   // 1.125rem：官网在 1280 宽时量到的 12px，折回 1920 基准
-  md: 'col-span-2 text-ark-body',
+  md: 'col-span-2 justify-self-end text-ark-body',
 }
+
+const restBase = 'font-ark-data leading-ark-solid font-ark-regular whitespace-nowrap'
 
 /**
  * 计数写作 `01 // 01 / 05`：一个大号数字，后面跟“当前 / 总数”。
  * 任何可以数的东西（分屏、轮播、列表项、章节）都可以这样标，它相当于纵向的面包屑。
+ *
+ * `md` 的大数字不完整：下缘被裁掉大写高的五分之一，和背景巨字一样像被一条水平线切过。
+ * 官网是用 `line-height: 0.55` 加 `overflow: hidden` 裁的，那样裁掉多少取决于字体的度量，
+ * 换一个回退字体就会连上缘一起裁。这里让数字和一个空的占位块按基线对齐——容器的下缘于是正好落在
+ * 基线上——再把数字往下挪，裁掉的就只有下缘，换什么字体都一样。
  */
 export function Counter({
   value,
   total,
   pad = 2,
   label,
+  micro,
   size = 'md',
   className,
   ...rest
 }: CounterProps) {
   const current = formatStatValue(value, pad)
+  const count = `// ${current} / ${formatStatValue(total, pad)}`
+  const hasMicro = micro != null && micro !== false
   return (
     <p
       data-ark="counter"
@@ -72,18 +86,49 @@ export function Counter({
       <span className="sr-only">
         {value} / {total}
       </span>
-      <b aria-hidden="true" className={cn('text-ark-signal-fg', big[size])}>
-        {current}
-      </b>
-      <span
-        aria-hidden="true"
-        className={cn(
-          'font-ark-data leading-ark-solid font-ark-regular whitespace-nowrap',
-          restSize[size],
-        )}
-      >
-        {`// ${current} / ${formatStatValue(total, pad)}`}
-      </span>
+      {size === 'md' ? (
+        <>
+          <b
+            aria-hidden="true"
+            className={cn(
+              // min-w-max：裁切溢出的盒子在网格里最小可以缩到 0，整块被挤窄时数字会探到外面去
+              'flex min-w-max items-baseline overflow-hidden text-ark-signal-fg',
+              big.md,
+            )}
+          >
+            {/* 行高为 0 的这一行不撑高容器；往下挪 0.2 个大写高，这一截就落到容器外面 */}
+            <span className="translate-y-[0.14em] leading-[0] supports-[height:1cap]:translate-y-[0.2cap]">
+              {current}
+            </span>
+            {/* 占位块：没有内容，基线就是它的下缘。它的高度是容器的高度 */}
+            <span className="h-[0.56em] w-0 supports-[height:1cap]:h-[0.8cap]" />
+          </b>
+          <span
+            aria-hidden="true"
+            className={cn(
+              'flex flex-col items-end gap-[0.1rem] self-end',
+              // “当前 / 总数”和微缩字都压在大数字的高度以内，贴着裁切线的上方
+              hasMicro ? 'pb-[0.32rem]' : 'pb-[0.79rem]',
+            )}
+          >
+            <span className={cn(restBase, restSize.md)}>{count}</span>
+            {hasMicro && (
+              <span className="font-ark-latin-wide text-ark-micro leading-ark-solid font-ark-medium tracking-ark-micro whitespace-nowrap uppercase">
+                {micro}
+              </span>
+            )}
+          </span>
+        </>
+      ) : (
+        <>
+          <b aria-hidden="true" className={cn('text-ark-signal-fg', big.sm)}>
+            {current}
+          </b>
+          <span aria-hidden="true" className={cn(restBase, restSize.sm)}>
+            {count}
+          </span>
+        </>
+      )}
       {label != null && (
         // DemiBold：token 里没有 600 这一档，用 Tailwind 自带的
         <span
@@ -110,7 +155,7 @@ export interface SerialProps extends Omit<ComponentProps<'span'>, 'children' | '
 
 /**
  * 序号：`NO.0147`、`VOL.69`。像设备铭牌上的编号，写的应当是真的编号。
- * 颜色继承自所在的文字。
+ * 颜色继承自所在的文字。这个写法没有实机出处，是估计。
  */
 export function Serial({ prefix, value, pad, className, ...rest }: SerialProps) {
   return (

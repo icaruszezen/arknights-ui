@@ -59,7 +59,7 @@ export const Game: Story = {
         {/* 图上压字：只在文字所在的一侧加黑色到透明的渐变，场景其余部分保持原样 */}
         <Scrim side="left" className="right-auto -z-1 w-3/4 from-ark-neutral-black/85" />
         <GhostTitle className="absolute bottom-ark-4 left-ark-7 -z-1">Guard</GhostTitle>
-        <MicroText vertical className="absolute right-ark-2 bottom-ark-7">
+        <MicroText vertical className="absolute right-ark-2 bottom-ark-7 text-ark-fg-muted">
           {'ARKNIGHTS-UI // UNOFFICIAL'}
         </MicroText>
 
@@ -140,9 +140,7 @@ export const Game: Story = {
           </aside>
         </div>
 
-        <Callout className="absolute top-40 left-[46%]" direction="down-right">
-          DEPLOY
-        </Callout>
+        <Callout className="absolute top-40 left-[46%]">DEPLOY</Callout>
 
         <Drawer
           open={drawer}

@@ -33,27 +33,59 @@ describe('Portrait', () => {
     expect(image).not.toHaveClass('object-contain')
   })
 
-  it('默认带向左下的投影，可以关掉', () => {
+  it('默认没有投影（官网的大立绘没有），shadow 打开向左下的那一种', () => {
     const { rerender } = render(<Portrait src="/art.png" alt="立绘" />)
-    expect(screen.getByRole('img')).toHaveClass('drop-shadow-ark-drop')
-
-    rerender(<Portrait src="/art.png" alt="立绘" shadow={false} />)
     expect(screen.getByRole('img')).not.toHaveClass('drop-shadow-ark-drop')
+
+    rerender(<Portrait src="/art.png" alt="立绘" shadow />)
+    expect(screen.getByRole('img')).toHaveClass('drop-shadow-ark-drop')
   })
 
   it('重影是同一张图的放大去色版，垫在后面，对读屏隐藏', () => {
-    render(<Portrait data-testid="portrait" src="/art.png" alt="立绘" ghost />)
+    render(<Portrait data-testid="portrait" src="/art.png" alt="立绘" ghost shadow />)
     const [ghost, main] = [...screen.getByTestId('portrait').querySelectorAll('img')]
     expect(main).toHaveAttribute('alt', '立绘')
 
     expect(ghost).toHaveAttribute('src', '/art.png')
     expect(ghost).toHaveAttribute('alt', '')
     expect(ghost).toHaveAttribute('aria-hidden', 'true')
-    expect(ghost).toHaveClass('-z-1', 'scale-[2.4]', 'grayscale', 'opacity-[0.07]')
+    expect(ghost).toHaveClass('-z-1', 'scale-[2.4]', 'grayscale', 'opacity-25')
     expect(ghost).toHaveClass('pointer-events-none')
     // 投影只给主图
+    expect(main).toHaveClass('drop-shadow-ark-drop')
     expect(ghost).not.toHaveClass('drop-shadow-ark-drop')
     expect(screen.getAllByRole('img')).toHaveLength(1)
+  })
+
+  it('ghostSrc 让重影用另一张图，主图不变', () => {
+    render(
+      <Portrait
+        data-testid="portrait"
+        src="/art.png"
+        alt="立绘"
+        ghost
+        ghostSrc="/art-styled.png"
+      />,
+    )
+    const [ghost, main] = [...screen.getByTestId('portrait').querySelectorAll('img')]
+    expect(ghost).toHaveAttribute('src', '/art-styled.png')
+    expect(main).toHaveAttribute('src', '/art.png')
+  })
+
+  it('没开 ghost 时 ghostSrc 不起作用', () => {
+    render(<Portrait data-testid="portrait" src="/art.png" alt="立绘" ghostSrc="/styled.png" />)
+    expect(screen.getByTestId('portrait').querySelectorAll('img')).toHaveLength(1)
+  })
+
+  it('drift 让主图入场后缓移，包在 motion-safe 里；重影不动', () => {
+    const { rerender } = render(<Portrait data-testid="portrait" src="/art.png" alt="立绘" ghost />)
+    expect(screen.getByRole('img').className).not.toContain('animate-ark-drift')
+
+    rerender(<Portrait data-testid="portrait" src="/art.png" alt="立绘" ghost drift />)
+    const [ghost, main] = [...screen.getByTestId('portrait').querySelectorAll('img')]
+    expect(main).toHaveClass('motion-safe:animate-ark-drift')
+    expect(main?.getAttribute('class')).not.toMatch(/(^|\s)animate-ark-drift/)
+    expect(ghost?.className).not.toContain('animate-ark-drift')
   })
 
   it('图片的加载属性传给图，其余属性留在根元素上', () => {

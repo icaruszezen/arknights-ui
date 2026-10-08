@@ -4,21 +4,33 @@ import { cn } from '../../utils/cn'
 export type PortraitCrop = 'full' | 'bust'
 
 export interface PortraitProps extends Omit<ComponentProps<'div'>, 'children'> {
-  /** 立绘的地址。请用带透明底的图：投影和重影都跟着轮廓走。 */
+  /** 立绘的地址。请用带透明底的图：重影和投影都跟着轮廓走。 */
   src: string
   /** 替代文字。立绘只是陪衬、旁边已经有名字时传空字符串。 */
   alt: string
   /**
-   * 身后的幽灵重影：同一张图放大 2.4 倍、去色、不透明度 7%，像一个巨大的影子，
-   * 把主图和背景拉开距离。
+   * 身后的幽灵重影：一张放大 2.4 倍、去色、不透明度 25% 的图，像一个巨大的影子，
+   * 把主图和背景拉开距离。官网干员屏的重影亮度约两成，只比背景亮一两档。
    * @default false
    */
   ghost?: boolean
   /**
-   * 向左下的投影。
-   * @default true
+   * 重影用的图。官网的重影不是同一张立绘，而是另一张预先处理好的灰度图（另一阶段的立绘）；
+   * 不给就用 `src`。
+   */
+  ghostSrc?: string
+  /**
+   * 向左下的投影。官网的大立绘没有投影——这个取值是缩略图的——所以默认关闭，
+   * 小尺寸的头像、缩略图再打开。
+   * @default false
    */
   shadow?: boolean
+  /**
+   * 入场后的缓移：10 秒里自左移回原位（3rem），只走一次。官网干员屏换人时立绘就这样慢慢滑过来。
+   * 用户要求减少动效时不动。
+   * @default false
+   */
+  drift?: boolean
   /**
    * 裁切方式。
    * - `full`：全身。头顶贴着框的上缘，腿部被框的下缘切掉
@@ -63,7 +75,9 @@ export function Portrait({
   src,
   alt,
   ghost = false,
-  shadow = true,
+  ghostSrc,
+  shadow = false,
+  drift = false,
   crop = 'full',
   srcSet,
   sizes,
@@ -81,14 +95,14 @@ export function Portrait({
       {ghost && (
         // 重影只是主图的影子，不需要被读到，也不必按视口选图
         <img
-          src={src}
+          src={ghostSrc ?? src}
           alt=""
           aria-hidden="true"
           loading={loading}
           decoding={decoding}
           className={cn(
             image,
-            'pointer-events-none absolute inset-0 -z-1 size-full scale-[2.4] object-contain opacity-[0.07] grayscale',
+            'pointer-events-none absolute inset-0 -z-1 size-full scale-[2.4] object-contain opacity-25 grayscale',
           )}
         />
       )}
@@ -104,6 +118,7 @@ export function Portrait({
           'absolute inset-x-0 top-0 w-full',
           crops[crop],
           shadow && 'drop-shadow-ark-drop',
+          drift && 'motion-safe:animate-ark-drift',
         )}
       />
     </div>

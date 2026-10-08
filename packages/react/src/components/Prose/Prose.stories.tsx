@@ -43,27 +43,30 @@ export default meta
 type Story = StoryObj<typeof meta>
 
 /**
- * 中文宋体配英文衬线，行高 1.9，行长约 40 个字。二级标题上方一条细线，把正文分成一节一节。
- * 里面写的就是普通的 `h2`、`p`、`ul`、`blockquote`。
+ * 黑体 1rem、行高 1.4、段距 1em，行长约 40 个字——官网公告正文的排法。
+ * 二级标题上方一条细线，把正文分成一节一节。里面写的就是普通的 `h2`、`p`、`ul`、`blockquote`。
  */
 export const Default: Story = {}
 
-/** 自动编号：档案条目用编号和细线分节。编号是数据体、信号色。 */
+/** 自动编号：档案条目用编号和细线分节。编号是数据体、信号色。这个写法没有实机出处。 */
 export const Numbered: Story = {
   args: { numbered: true, as: 'article' },
 }
 
 /**
- * 界面用黑体，文书用宋体。同一段话左边是界面正文（黑体、行高 1.6），右边是 `Prose`。
+ * `serif` 是文书的写法：中文宋体配英文衬线，1.125rem、行高 1.9。没有实机出处，是估计——
+ * 官网所有成段的文字都是黑体。左边是默认，右边是 `serif`。
  */
-export const VersusInterface: Story = {
+export const Serif: Story = {
   render: () => {
     const text =
       '该名工程人员于两年前加入本舰后勤部门，负责外勤设备的检修与改装。入职评估显示，其在结构力学与野外应急维修方面的经验远超岗位要求。'
     return (
       <div className="grid w-[52rem] grid-cols-2 gap-ark-7">
-        <p className="m-0 text-ark-body leading-ark-body">{text}</p>
         <Prose>
+          <p>{text}</p>
+        </Prose>
+        <Prose serif>
           <p>{text}</p>
         </Prose>
       </div>

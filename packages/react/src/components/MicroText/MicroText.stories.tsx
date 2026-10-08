@@ -30,10 +30,12 @@ export const AsTexture: Story = {
       <Heading as="h3" sub="RHODES ISLAND">
         罗德岛
       </Heading>
-      <MicroText className="absolute bottom-ark-3 left-ark-5">
+      <MicroText className="absolute bottom-ark-3 left-ark-5 text-ark-fg-muted">
         GITHUB.COM/ICARUSZEZEN/ARKNIGHTS-UI
       </MicroText>
-      <MicroText className="absolute right-ark-5 bottom-ark-3">UNOFFICIAL</MicroText>
+      <MicroText className="absolute right-ark-5 bottom-ark-3 text-ark-fg-muted">
+        UNOFFICIAL
+      </MicroText>
       <MicroText vertical className="absolute top-ark-5 right-ark-3">
         {'RHODES ISLAND // 01'}
       </MicroText>
@@ -41,18 +43,30 @@ export const AsTexture: Story = {
   ),
 }
 
-/** 颜色取所在表面次要文字色的一半，放进石墨或纸白面板时跟着换，始终比正文暗。 */
+/**
+ * 颜色跟随所在的文字：放进石墨或纸白面板时跟着前景色换。
+ * 第二列是用 `text-ark-fg-muted` 压暗之后的样子。
+ */
 export const OnSurfaces: Story = {
   render: args => (
-    <div className="grid w-72 gap-ark-2">
+    <div className="grid w-96 grid-cols-2 gap-ark-2">
       <div className="p-ark-5">
         <MicroText {...args} />
+      </div>
+      <div className="p-ark-5">
+        <MicroText {...args} className="text-ark-fg-muted" />
       </div>
       <Panel>
         <MicroText {...args} />
       </Panel>
+      <Panel>
+        <MicroText {...args} className="text-ark-fg-muted" />
+      </Panel>
       <Panel tone="paper">
         <MicroText {...args} />
+      </Panel>
+      <Panel tone="paper">
+        <MicroText {...args} className="text-ark-fg-muted" />
       </Panel>
     </div>
   ),

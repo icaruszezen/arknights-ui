@@ -11,7 +11,8 @@
   </style>
   <defs>
     <filter id="b6"><feGaussianBlur stdDeviation="5"/></filter>
-    <filter id="ds" x="-30%" y="-10%" width="150%" height="130%"><feDropShadow dx="-8" dy="8" stdDeviation="8" flood-color="#000" flood-opacity=".9"/></filter>
+    <filter id="ds" x="-60%" y="-20%" width="200%" height="150%"><feDropShadow dx="-2" dy="2" stdDeviation="2" flood-color="#000" flood-opacity=".9"/></filter>
+    <linearGradient id="edge" x1="1" x2="0"><stop offset="0" stop-color="#000" stop-opacity=".8"/><stop offset=".35" stop-color="#000" stop-opacity="0"/></linearGradient>
     <linearGradient id="up" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#000"/><stop offset=".25" stop-color="#000" stop-opacity=".7"/><stop offset=".7" stop-color="#000" stop-opacity="0"/></linearGradient>
     <linearGradient id="left" x1="0" x2="1"><stop offset="0" stop-color="#000" stop-opacity=".85"/><stop offset=".6" stop-color="#000" stop-opacity="0"/></linearGradient>
     <symbol id="fig" viewBox="0 0 100 200"><path d="M50 8 C66 8 76 22 74 40 C73 50 68 56 64 60 C84 70 96 110 98 200 H2 C4 110 16 70 36 60 C32 56 27 50 26 40 C24 22 34 8 50 8 Z"/></symbol>
@@ -26,18 +27,20 @@
   <rect x="40" y="76" width="420" height="250" fill="#000"/>
   <g clip-path="url(#c1)">
     <text x="40" y="310" class="cond" font-size="120" fill="#1d1f20" letter-spacing="-6">RHODES</text>
-    <use href="#fig" x="110" y="60" width="300" height="600" fill="#fff" fill-opacity=".07"/>
-    <use href="#fig" x="290" y="96" width="130" height="260" fill="#8d8d8d" filter="url(#ds)"/>
+    <use href="#fig" x="110" y="60" width="300" height="600" fill="#fff" fill-opacity=".2"/>
+    <use href="#fig" x="290" y="96" width="130" height="260" fill="#8d8d8d"/>
     <rect x="40" y="76" width="420" height="250" fill="url(#left)"/>
   </g>
   <text x="62" y="150" class="wide" font-size="11" fill="#fff">CODENAME</text>
   <text x="62" y="186" class="cjk" font-size="32" font-weight="700" fill="#fff">干员代号</text>
   <rect x="62" y="204" width="120" height="1" fill="#fff" fill-opacity=".5"/>
-  <g fill="#333" stroke="#fff" stroke-opacity=".3"><rect x="62" y="262" width="34" height="44"/><rect x="100" y="262" width="34" height="44"/><rect x="138" y="262" width="34" height="44"/><rect x="176" y="262" width="34" height="44"/></g>
-  <rect x="62" y="258" width="34" height="3" fill="#18d1ff"/>
+  <!-- 缩略图：一圈白框，当前项的右上角探出一块青蓝三角；图片向左下投影 -->
+  <path d="M84 258 H98 V272 Z" fill="#18d1ff"/>
+  <g fill="#333" stroke="#fff" stroke-width="3"><rect x="63.5" y="263.5" width="31" height="41"/><rect x="101.5" y="263.5" width="31" height="41"/><rect x="139.5" y="263.5" width="31" height="41"/><rect x="177.5" y="263.5" width="31" height="41"/></g>
+  <g fill="#8d8d8d" filter="url(#ds)"><use href="#fig" x="70" y="270" width="18" height="36"/><use href="#fig" x="108" y="270" width="18" height="36"/><use href="#fig" x="146" y="270" width="18" height="36"/><use href="#fig" x="184" y="270" width="18" height="36"/></g>
   <g class="cjk note">
-    <text x="40" y="350">· 重影：同一张图放大 2–3 倍、去色、不透明度 5–10%</text>
-    <text x="40" y="370">· 主图 drop-shadow 向左下：-0.5rem 0.5rem 1rem #000</text>
+    <text x="40" y="350">· 重影：另一张灰度图，亮度约两成；CSS 里可用同图放大去色、25%</text>
+    <text x="40" y="370">· 大立绘没有投影；缩略图里的才有：-0.5rem 0.5rem 1rem #000</text>
     <text x="40" y="390">· 文字侧加横向黑色渐变，保证白字对比度</text>
   </g>
 
@@ -47,23 +50,25 @@
   <rect x="500" y="76" width="200" height="250" fill="#5c6a70"/>
   <circle cx="640" cy="130" r="60" fill="#8fa3ab" filter="url(#b6)"/>
   <rect x="500" y="76" width="200" height="250" fill="url(#up)"/>
-  <rect x="516" y="252" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" transform="rotate(45 524 260)"/>
-  <text x="544" y="268" class="cjk" font-size="22" font-weight="700" fill="#fff">集成战略</text>
-  <text x="516" y="292" class="cond" font-size="10" fill="#fff" letter-spacing=".8">INTEGRATED STRATEGIES</text>
-  <text x="516" y="306" class="data" font-size="9" fill="#ababab">VIEW MORE &gt;</text>
-  <rect x="516" y="312" width="48" height="1" fill="#fff"/>
+  <!-- 图标挂在文字列的左边；英文、VIEW MORE、短横线都从标题文字的左缘起 -->
+  <rect x="516" y="244" width="16" height="16" fill="none" stroke="#fff" stroke-width="2" transform="rotate(45 524 252)"/>
+  <text x="544" y="260" class="cjk" font-size="22" font-weight="700" fill="#fff">集成战略</text>
+  <text x="544" y="282" class="wide" font-size="7" font-weight="500" fill="#fff">INTEGRATED STRATEGIES</text>
+  <text x="544" y="293" class="wide" font-size="5.5" font-weight="500" fill="#fff">VIEW MORE &gt;</text>
+  <rect x="544" y="302" width="45" height="1" fill="#fff"/>
 
   <!-- 3 条带 -->
   <text x="730" y="44" class="data tag">03 STRIPS</text><text x="804" y="44" class="cjk note">竖条切图</text>
-  <rect x="730" y="76" width="46" height="250" fill="#3e4a52"/>
-  <rect x="778" y="76" width="46" height="250" fill="#5a5148"/>
-  <rect x="826" y="76" width="46" height="250" fill="#40504a"/>
-  <rect x="874" y="76" width="46" height="250" fill="#56505c"/>
+  <!-- 条带之间没有缝，每条右缘一道暗边 -->
+  <rect x="730" y="76" width="47.5" height="250" fill="#3e4a52"/><rect x="730" y="76" width="47.5" height="250" fill="url(#edge)"/>
+  <rect x="777.5" y="76" width="47.5" height="250" fill="#5a5148"/><rect x="777.5" y="76" width="47.5" height="250" fill="url(#edge)"/>
+  <rect x="825" y="76" width="47.5" height="250" fill="#40504a"/><rect x="825" y="76" width="47.5" height="250" fill="url(#edge)"/>
+  <rect x="872.5" y="76" width="47.5" height="250" fill="#56505c"/><rect x="872.5" y="76" width="47.5" height="250" fill="url(#edge)"/>
   <rect x="730" y="76" width="190" height="250" fill="url(#up)"/>
   <g class="cjk note">
-    <text x="500" y="350">· 渐变：#000 → 透明，覆盖下方 30–60%</text>
-    <text x="500" y="370">· 标题组左对齐，下方留一段短横线</text>
-    <text x="500" y="390">· 多入口并排时切成等宽竖条，各取原图局部</text>
+    <text x="500" y="350">· 渐变：底部 #000 → 透明 40%，顶部另压一道</text>
+    <text x="500" y="370">· 图标挂在左边，英文和短横线从标题左缘起</text>
+    <text x="500" y="390">· 条带等宽、没有缝，靠右缘 4rem 的暗边分开</text>
   </g>
 
   <line x1="40" y1="416" x2="920" y2="416" stroke="#fff" stroke-opacity=".3"/>

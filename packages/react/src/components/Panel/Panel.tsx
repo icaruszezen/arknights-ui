@@ -62,11 +62,11 @@ const accents = {
   bottom: 'border-b-(length:--ark-line-strong) border-ark-signal',
 }
 
-// 与 Pattern 共用同一个工具类：网点取当前文字色，纸白面上自动是深色的
+// 与 Pattern 共用同一个工具类：网点取当前文字色，纸白面上自动是深色的。
+// 遮罩默认就是左下最密、朝右上越来越小，不用再叠渐隐
 const halftoneLayer = cn(
   'after:pointer-events-none after:absolute after:inset-x-0 after:bottom-0 after:-z-1 after:h-2/5',
   'after:ark-pattern-halftone',
-  'after:[--ark-pattern-fade:linear-gradient(to_top_right,#000,transparent_60%)]',
 )
 
 /**

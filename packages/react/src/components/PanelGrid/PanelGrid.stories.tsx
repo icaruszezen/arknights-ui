@@ -43,7 +43,8 @@ function Entry({
 
 /**
  * 游戏主界面右面板组的拼法：一、二、三、三。
- * 作战最大、最亮（纸白），占两行高；其余是石墨。面板之间只留 4px 的缝，没有描边。
+ * 作战最大、最亮（纸白），占两行高；其余是石墨。面板之间留 1rem 的缝（实机截图量得），没有描边，
+ * 场景从缝里透出来。
  */
 export const Default: Story = {
   render: args => (
@@ -120,9 +121,13 @@ export const BigWithSmall: Story = {
   ),
 }
 
-/** 一行三等分，下面接一行两等分。缝可以放宽到 8px，行高用 `--ark-panel-grid-row` 调。 */
+/**
+ * 一行三等分，下面接一行两等分。缝可以收窄：`md` 是 0.5rem，`sm` 是 0.25rem——
+ * 实机上同一组里的两块子面板（公开招募、干员寻访）之间就只有这么窄。
+ * 行高用 `--ark-panel-grid-row` 调。
+ */
 export const ThreeOverTwo: Story = {
-  args: { gap: 'md' },
+  args: { gap: 'sm' },
   render: args => (
     <PanelGrid {...args} className="w-[34rem] [--ark-panel-grid-row:7rem]">
       {['STORE', 'RECRUIT', 'HEADHUNT'].map(sub => (

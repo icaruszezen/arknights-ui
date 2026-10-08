@@ -11,15 +11,17 @@ export interface ScrimProps extends ComponentProps<'div'> {
    */
   side?: ScrimSide
   /**
-   * - `solid`：贴边一段是实黑，再渐隐到透明。官网底部压字的写法，文字多时用
-   * - `soft`：从 50% 的黑渐隐到透明。官网侧边的写法，只是让文字从图里浮出来
+   * - `solid`：贴边一段是实黑，再渐隐到透明。官网情报屏底部压字的写法（实测），文字多时用
+   * - `soft`：从 70% 的黑渐隐到透明。官网干员屏上半幅底缘的写法（实测），只是让文字从图里浮出来
    *
    * 上下默认 `solid`，左右默认 `soft`。
    */
   variant?: ScrimVariant
 }
 
-// solid 是官网实测的 linear-gradient(0deg, #000 5rem, transparent 20rem)，两个长度可以用变量调
+// solid 是官网实测的 linear-gradient(0deg, #000 5rem, transparent 20rem)，两个长度可以用变量调。
+// soft 是 linear-gradient(0deg, rgba(0, 0, 0, 0.7), transparent)。
+// 原先 soft 取的 50% 出自轮播库 Swiper 自带的侧影，不是官网的设计（2026-10-08 重读样式表）
 const gradients: Record<ScrimVariant, Record<ScrimSide, string>> = {
   solid: {
     bottom:
@@ -30,10 +32,10 @@ const gradients: Record<ScrimVariant, Record<ScrimSide, string>> = {
       'bg-[linear-gradient(to_left,var(--ark-color-neutral-black)_var(--ark-scrim-solid,5rem),transparent_var(--ark-scrim-extent,20rem))]',
   },
   soft: {
-    bottom: 'bg-linear-to-t from-ark-overlay-scrim to-transparent',
-    top: 'bg-linear-to-b from-ark-overlay-scrim to-transparent',
-    left: 'bg-linear-to-r from-ark-overlay-scrim to-transparent',
-    right: 'bg-linear-to-l from-ark-overlay-scrim to-transparent',
+    bottom: 'bg-linear-to-t from-ark-neutral-black/70 to-transparent',
+    top: 'bg-linear-to-b from-ark-neutral-black/70 to-transparent',
+    left: 'bg-linear-to-r from-ark-neutral-black/70 to-transparent',
+    right: 'bg-linear-to-l from-ark-neutral-black/70 to-transparent',
   },
 }
 

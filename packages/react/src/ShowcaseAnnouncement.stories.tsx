@@ -61,7 +61,7 @@ export const Announcement: Story = {
       {/* 底纹：整面极淡的噪点，让大面积的留白不发飘 */}
       <Pattern variant="grain" className="absolute inset-0 -z-1" />
       {/* 贴边的微缩英文，写的是真实内容 */}
-      <MicroText vertical className="absolute top-ark-8 right-ark-2">
+      <MicroText vertical className="absolute top-ark-8 right-ark-2 text-ark-fg-muted">
         {'ARKNIGHTS-UI // UNOFFICIAL // EVENT NOTICE'}
       </MicroText>
 
