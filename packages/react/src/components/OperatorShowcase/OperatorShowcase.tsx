@@ -47,7 +47,8 @@ export interface OperatorShowcaseProps extends Omit<ComponentProps<'section'>, '
  * 换干员时给它换一个 `key`，入场会重播。
  *
  * 根元素需要一个高度（如 `h-[32rem]` 或铺满父元素），立绘占右侧五分之三。
- * 竖屏时立绘堆到文字上方，不再和文字并排。
+ * 竖屏时立绘堆到文字上方，不再和文字并排；`footer` 比屏幕宽时自己横向滚动。
+ * 这是组件库自己的竖屏编排，没有对照官网的竖屏。
  *
  * 本组件不带任何图片。请使用原创或已获授权的素材。
  */
@@ -72,7 +73,8 @@ export function OperatorShowcase({
       {...rest}
       className={cn(
         'relative isolate box-border grid min-h-96 overflow-hidden font-ark-cjk-sans text-ark-fg',
-        'portrait:min-h-0 portrait:content-start portrait:gap-ark-5 portrait:overflow-visible',
+        // 竖屏：这一列不许被内容撑宽（一排缩略图会比屏幕宽）
+        'portrait:min-h-0 portrait:grid-cols-[minmax(0,1fr)] portrait:content-start portrait:gap-ark-5 portrait:overflow-visible',
         className,
       )}
     >
@@ -85,13 +87,13 @@ export function OperatorShowcase({
         ghost
         className={cn(
           'absolute inset-y-0 right-0 -z-2 aspect-auto h-full w-3/5',
-          // 图片自右入场；减少动效时只淡入
-          'motion-safe:animate-ark-enter-right motion-reduce:animate-ark-fade-in',
+          // 图片自右入场；减少动效时只淡入。竖屏时图片和屏幕一样宽，滑进来的那一下会撑出横向滚动条，也只淡入
+          'landscape:motion-safe:animate-ark-enter-right motion-reduce:animate-ark-fade-in portrait:animate-ark-fade-in',
           'portrait:relative portrait:inset-auto portrait:z-auto portrait:h-80 portrait:w-full',
         )}
       />
       <Scrim side="left" className="-z-1 portrait:hidden" />
-      <Stagger className="grid max-w-[33.625rem] content-center justify-items-start gap-ark-4 portrait:max-w-none">
+      <Stagger className="grid max-w-[33.625rem] content-center justify-items-start gap-ark-4 portrait:max-w-none portrait:grid-cols-[minmax(0,1fr)] portrait:[&>*]:max-w-full">
         {label != null && <Divider label={label} variant="fade" className="w-64 max-w-full" />}
         <div className="flex items-end gap-ark-5">
           {/* 官网实测：中文名是 Bold、不收字距，英文名 1.25rem 对中文名 3.75rem */}
@@ -115,7 +117,12 @@ export function OperatorShowcase({
             {children}
           </div>
         )}
-        {footer}
+        {footer != null && (
+          // 竖屏时放不下就自己横向滚动，不把整屏撑宽。四周留 4px 给焦点轮廓
+          <div className="portrait:-m-1 portrait:max-w-[calc(100%+0.5rem)] portrait:overflow-x-auto portrait:p-1">
+            {footer}
+          </div>
+        )}
       </Stagger>
     </section>
   )

@@ -26,7 +26,7 @@ describe('Shell', () => {
     expect(within(shell).getByRole('complementary')).toHaveTextContent('01 / 05')
   })
 
-  it('右栏依次放小按钮、计数、常驻入口', () => {
+  it('小按钮在顶栏的最右边，计数和常驻入口在右栏', () => {
     render(
       <Shell
         actions={<button type="button">分享</button>}
@@ -34,9 +34,14 @@ describe('Shell', () => {
         aside={<a href="#download">下载</a>}
       />,
     )
+    const header = screen.getByRole('banner')
+    expect(within(header).getByRole('button', { name: '分享' })).toBeInTheDocument()
+    // 顶栏里依次是标识、导航、小按钮
+    expect(header.lastElementChild).toHaveAttribute('data-ark', 'shell-actions')
+
     const rail = screen.getByRole('complementary')
-    expect(rail).toHaveTextContent('分享01 / 05下载')
-    expect(within(rail).getByRole('button', { name: '分享' })).toBeInTheDocument()
+    expect(rail).toHaveTextContent('01 / 05下载')
+    expect(within(rail).queryByRole('button')).not.toBeInTheDocument()
     expect(within(rail).getByRole('link', { name: '下载' })).toBeInTheDocument()
   })
 
@@ -46,83 +51,174 @@ describe('Shell', () => {
     const shell = screen.getByTestId('shell')
     expect(shell).toHaveClass('grid-cols-1')
     expect(shell.className).not.toContain('--ark-shell-rail')
-    expect(screen.getByRole('banner').className).not.toContain('--ark-shell-rail')
+    const header = screen.getByRole('banner')
+    expect(header.className).not.toContain('--ark-shell-rail')
+    expect(header.querySelector('[data-ark="shell-actions"]')).toBeNull()
   })
 
-  it('有右栏时它宽 14.75rem（可用变量改），左缘一条竖线；竖屏挪到底部', () => {
+  it('有右栏时它宽 14.75rem（可用变量改），左缘一条竖线；竖屏收窄到 2.875rem，仍在右边', () => {
     render(<Shell data-testid="shell" counter={<p>01</p>} />)
     expect(screen.getByTestId('shell')).toHaveClass(
       'grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,14.75rem)]',
-      'portrait:grid-cols-1',
+      'portrait:grid-cols-[minmax(0,1fr)_var(--ark-shell-rail,2.875rem)]',
     )
     const rail = screen.getByRole('complementary')
-    expect(rail).toHaveClass('border-l', 'border-ark-rule')
-    expect(rail).toHaveClass('portrait:row-start-4', 'portrait:flex-row')
-    // 顶栏把右栏顶端那一格让出来
-    expect(screen.getByRole('banner')).toHaveClass('pr-[var(--ark-shell-rail,14.75rem)]')
+    expect(rail).toHaveClass('col-start-2', 'row-span-3', 'border-l', 'border-ark-rule')
+    // 竖屏的线比横屏亮一档
+    expect(rail).toHaveClass('portrait:border-ark-rule-strong')
+    expect(rail.className).not.toContain('portrait:row-start-4')
   })
 
-  it('计数放在右栏 44.4% 高的地方，左右居中', () => {
+  it('顶栏在右栏上方留出同宽的一格，没有小按钮也留', () => {
+    render(<Shell counter={<p>01</p>} />)
+    const cell = screen.getByRole('banner').querySelector('[data-ark="shell-actions"]')
+    expect(cell).toBeEmptyDOMElement()
+    expect(cell).toHaveClass('w-[var(--ark-shell-rail,14.75rem)]', 'h-full', 'shrink-0')
+    // 竖屏时这一格只有小按钮那么宽，排在菜单按钮的左边
+    expect(cell).toHaveClass('portrait:w-auto')
+  })
+
+  it('竖屏时导航排到顶栏的最后，占右栏上方的那一格', () => {
+    const { rerender } = render(<Shell nav={<nav aria-label="主导航" />} counter={<p>01</p>} />)
+    const slot = () => screen.getByRole('navigation', { name: '主导航' }).parentElement
+    expect(slot()).toHaveClass(
+      'portrait:order-last',
+      'portrait:w-[var(--ark-shell-rail,2.875rem)]',
+      'portrait:justify-center',
+      'portrait:px-0',
+    )
+
+    // 没有右栏时不占那一格，只是贴右
+    rerender(<Shell nav={<nav aria-label="主导航" />} />)
+    expect(slot()).not.toHaveClass('portrait:order-last')
+    expect(slot()).toHaveClass('portrait:px-[0.875rem]')
+  })
+
+  it('计数放在右栏 44.4% 高的地方，左右居中；竖屏挪到底带的上方', () => {
     render(<Shell counter={<p>01 / 05</p>} />)
     const slot = screen.getByText('01 / 05').parentElement
+    expect(slot).toHaveAttribute('data-ark', 'shell-counter')
     expect(slot).toHaveClass('absolute', 'top-[44.4444%]', 'inset-x-0', 'flex', 'justify-center')
     // 不用 left-1/2 加平移：那样留给计数的只有半栏宽
     expect(slot?.className).not.toContain('translate-x')
-  })
-
-  it('三行的高度是官网的实测值，上下两条带可以用变量改', () => {
-    render(<Shell data-testid="shell" />)
-    expect(screen.getByTestId('shell')).toHaveClass(
-      'grid-rows-[var(--ark-shell-top,9.5rem)_minmax(0,1fr)_var(--ark-shell-bottom,11.25rem)]',
+    expect(slot).toHaveClass(
+      'portrait:top-auto',
+      'portrait:bottom-[calc(var(--ark-shell-bottom,6rem)+0.25rem)]',
     )
   })
 
-  it('顶栏高 6.75rem，没有底线，垫一道自上而下的黑色渐变', () => {
+  it('常驻入口竖屏时不显示：右栏放不下', () => {
+    render(<Shell aside={<a href="#download">下载</a>} />)
+    expect(screen.getByRole('link', { name: '下载' }).parentElement).toHaveClass('portrait:hidden')
+  })
+
+  it('三行的高度是官网的实测值，横屏竖屏各一套，可以用变量改', () => {
+    render(<Shell data-testid="shell" />)
+    expect(screen.getByTestId('shell')).toHaveClass(
+      'grid-rows-[var(--ark-shell-top,9.5rem)_minmax(0,1fr)_var(--ark-shell-bottom,11.25rem)]',
+      'portrait:grid-rows-[var(--ark-shell-top,4.6875rem)_minmax(0,1fr)_var(--ark-shell-bottom,6rem)]',
+    )
+  })
+
+  it('顶栏高 6.75rem，没有底线，垫一道自上而下的黑色渐变，压在右栏上面', () => {
     render(<Shell logo="LOGO" />)
     const header = screen.getByRole('banner')
-    expect(header).toHaveClass('h-[6.75rem]', 'self-start', 'col-span-full')
+    expect(header).toHaveClass('h-[6.75rem]', 'self-start', 'col-span-full', 'z-1')
     expect(header.className).toContain('before:bg-[linear-gradient(0deg,transparent,')
     expect(header.className).not.toMatch(/(^|\s)border-b/)
   })
 
-  it('默认铺满视口，内容区自己滚动', () => {
+  it('竖屏的顶栏和它所在的带一样高，渐变只有两段，标识左起 0.875rem', () => {
+    render(<Shell logo={<span>LOGO</span>} />)
+    const header = screen.getByRole('banner')
+    expect(header).toHaveClass(
+      'portrait:h-full',
+      'portrait:before:bg-[linear-gradient(0deg,transparent,rgba(0,0,0,0.8))]',
+    )
+    expect(screen.getByText('LOGO').parentElement).toHaveClass('ml-ark-7', 'portrait:ml-[0.875rem]')
+  })
+
+  it('默认铺满视口，内容区自己滚动；竖屏四边各留 0.875rem', () => {
     render(<Shell data-testid="shell">内容</Shell>)
     expect(screen.getByTestId('shell')).toHaveClass('h-dvh', 'overflow-hidden')
     const main = screen.getByRole('main')
-    expect(main).toHaveClass('min-h-0', 'overflow-y-auto', 'pl-ark-9')
+    expect(main).toHaveClass('min-h-0', 'overflow-y-auto', 'pl-ark-9', 'portrait:p-[0.875rem]')
     expect(main.className).not.toMatch(/(^|\s)border-/)
   })
 
-  it('横线只有一条在画面里：默认在内容区下缘，line="top" 换到上缘', () => {
-    const { rerender } = render(<Shell data-testid="shell" />)
+  describe('横线', () => {
     const lineAt = (side: string) =>
       screen
         .getByTestId('shell')
         .querySelector(`[data-ark="shell-line"][data-side="${side}"]`) as HTMLElement
-    const hidden = (element: HTMLElement) => /translate-y-\[calc\(/.test(element.className)
+    // 不在画面里的那条被平移到屏幕外面；横屏、竖屏各由一个类管
+    const hidden = (element: HTMLElement, orientation: 'landscape' | 'portrait') =>
+      element.className.includes(
+        `${orientation}:${element.dataset.side === 'top' ? '-' : ''}translate-y-[calc(`,
+      )
 
-    expect(screen.getByTestId('shell')).toHaveAttribute('data-line', 'bottom')
-    for (const side of ['top', 'bottom']) {
-      expect(lineAt(side)).toHaveAttribute('aria-hidden', 'true')
-      // 和右栏的竖线同一个颜色，横贯整屏
-      expect(lineAt(side)).toHaveClass('h-px', 'bg-ark-rule', 'col-span-full')
-    }
-    expect(lineAt('top')).toHaveClass('row-start-1', 'self-end')
-    expect(lineAt('bottom')).toHaveClass('row-start-3', 'self-start')
-    expect(hidden(lineAt('top'))).toBe(true)
-    expect(hidden(lineAt('bottom'))).toBe(false)
+    it('只有一条在画面里：默认在内容区下缘，line="top" 换到上缘', () => {
+      const { rerender } = render(<Shell data-testid="shell" />)
+      expect(screen.getByTestId('shell')).toHaveAttribute('data-line', 'bottom')
+      for (const side of ['top', 'bottom']) {
+        expect(lineAt(side)).toHaveAttribute('aria-hidden', 'true')
+        // 和右栏的竖线同一个颜色，横贯整屏；竖屏亮一档
+        expect(lineAt(side)).toHaveClass(
+          'h-px',
+          'bg-ark-rule',
+          'portrait:bg-ark-rule-strong',
+          'col-span-full',
+        )
+      }
+      expect(lineAt('top')).toHaveClass('row-start-1', 'self-end')
+      expect(lineAt('bottom')).toHaveClass('row-start-3', 'self-start')
+      expect(hidden(lineAt('top'), 'landscape')).toBe(true)
+      expect(hidden(lineAt('bottom'), 'landscape')).toBe(false)
 
-    rerender(<Shell data-testid="shell" line="top" />)
-    expect(screen.getByTestId('shell')).toHaveAttribute('data-line', 'top')
-    expect(hidden(lineAt('top'))).toBe(false)
-    expect(hidden(lineAt('bottom'))).toBe(true)
-  })
+      rerender(<Shell data-testid="shell" line="top" />)
+      expect(screen.getByTestId('shell')).toHaveAttribute('data-line', 'top')
+      expect(hidden(lineAt('top'), 'landscape')).toBe(false)
+      expect(hidden(lineAt('bottom'), 'landscape')).toBe(true)
+    })
 
-  it('横线换位是位移类的动效，只在允许动效时过渡', () => {
-    render(<Shell data-testid="shell" />)
-    const line = screen.getByTestId('shell').querySelector('[data-ark="shell-line"]')
-    expect(line).toHaveClass('motion-safe:transition-[translate,opacity]')
-    expect(line?.className).not.toMatch(/(^|\s)transition-/)
+    it('竖屏默认和横屏在同一边', () => {
+      const { rerender } = render(<Shell data-testid="shell" />)
+      expect(screen.getByTestId('shell')).toHaveAttribute('data-portrait-line', 'bottom')
+      expect(hidden(lineAt('top'), 'portrait')).toBe(true)
+      expect(hidden(lineAt('bottom'), 'portrait')).toBe(false)
+
+      rerender(<Shell data-testid="shell" line="top" />)
+      expect(screen.getByTestId('shell')).toHaveAttribute('data-portrait-line', 'top')
+      expect(hidden(lineAt('top'), 'portrait')).toBe(false)
+      expect(hidden(lineAt('bottom'), 'portrait')).toBe(true)
+    })
+
+    it('portraitLine 让竖屏的横线换一边：官网的设定、更多内容几屏横屏在下、竖屏在上', () => {
+      render(<Shell data-testid="shell" line="bottom" portraitLine="top" />)
+      const shell = screen.getByTestId('shell')
+      expect(shell).toHaveAttribute('data-line', 'bottom')
+      expect(shell).toHaveAttribute('data-portrait-line', 'top')
+      expect(hidden(lineAt('top'), 'landscape')).toBe(true)
+      expect(hidden(lineAt('bottom'), 'landscape')).toBe(false)
+      expect(hidden(lineAt('top'), 'portrait')).toBe(false)
+      expect(hidden(lineAt('bottom'), 'portrait')).toBe(true)
+    })
+
+    it('滑出去的距离跟着那条带的高度走，横屏竖屏不一样', () => {
+      render(<Shell data-testid="shell" line="top" portraitLine="bottom" />)
+      expect(lineAt('bottom')).toHaveClass(
+        'landscape:translate-y-[calc(var(--ark-shell-bottom,11.25rem)+0.25rem)]',
+      )
+      expect(lineAt('top')).toHaveClass(
+        'portrait:-translate-y-[calc(var(--ark-shell-top,4.6875rem)+0.25rem)]',
+      )
+    })
+
+    it('换位是位移类的动效，只在允许动效时过渡', () => {
+      render(<Shell data-testid="shell" />)
+      expect(lineAt('top')).toHaveClass('motion-safe:transition-[translate,opacity]')
+      expect(lineAt('top').className).not.toMatch(/(^|\s)transition-/)
+    })
   })
 
   it('背景巨字是装饰，挂在底线下面、上缘被裁掉，以 1s 淡入', () => {
@@ -138,6 +234,8 @@ describe('Shell', () => {
       'overflow-hidden',
     )
     expect(ghost?.className).not.toContain('translate-y')
+    // 竖屏缩到一半，左起 1.4375rem
+    expect(ghost).toHaveClass('portrait:text-[3.5rem]', 'portrait:left-[1.4375rem]')
   })
 
   it('scrollHint 为 true 时用默认的滚动提示，也可以换成自己的', () => {
@@ -153,7 +251,7 @@ describe('Shell', () => {
     expect(screen.getByRole('link', { name: '下一屏' })).toBeInTheDocument()
   })
 
-  it('滚动提示相对整屏居中，距底 3.75rem', () => {
+  it('滚动提示相对整屏居中，距底 3.75rem；竖屏 1.875rem', () => {
     render(<Shell data-testid="shell" scrollHint counter={<p>01</p>} />)
     const slot = screen.getByTestId('shell').querySelector('[data-ark="shell-hint"]')
     expect(slot).toHaveClass(
@@ -162,6 +260,7 @@ describe('Shell', () => {
       'self-end',
       'justify-self-center',
       'mb-[3.75rem]',
+      'portrait:mb-[1.875rem]',
     )
   })
 

@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { type GlyphName, glyphs } from '../.storybook/glyphs'
+import { fitScreen } from '../.storybook/scale'
 import {
   ActionButton,
   BackHome,
@@ -35,6 +36,8 @@ const meta = {
   tags: ['!autodocs'],
   parameters: { controls: { disable: true } },
   globals: { backgrounds: { value: 'scene' } },
+  // 游戏内的界面按 1280 × 720 排：根字号随画布等比缩放，画布多大都是完整的一屏
+  decorators: [fitScreen('game')],
 } satisfies Meta
 
 export default meta

@@ -109,11 +109,19 @@ export function WorldEntry(props: WorldEntryProps) {
           {ghost}
         </GhostTitle>
       )}
-      <span className={cn('text-ark-h1 font-ark-bold', linked && hover)}>{children}</span>
+      {/* 竖屏：字号收小，中文名不折行（估计——官网竖屏不排成列表，一次只显示一个条目） */}
+      <span
+        className={cn(
+          'text-ark-h1 font-ark-bold portrait:text-[1.875rem] portrait:whitespace-nowrap',
+          linked && hover,
+        )}
+      >
+        {children}
+      </span>
       {sub != null && (
         <span
           className={cn(
-            'ml-ark-5 font-ark-latin-wide text-ark-body-lg font-ark-bold',
+            'ml-ark-5 font-ark-latin-wide text-ark-body-lg font-ark-bold portrait:ml-ark-4 portrait:text-ark-label',
             linked && hover,
           )}
         >

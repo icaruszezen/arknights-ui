@@ -94,6 +94,8 @@ const shade = cn(
  *
  * 官网的条带固定 30rem 宽；这里把条带设成容器，文字的位置和字号按条带的宽度走
  * （30rem 宽时正好是官网的值），窄一些的条带上也排得下。
+ * 竖屏的横带不这样：文字块左起 3.75rem、距底 1.8125rem，标题 1.6875rem，都是官网竖屏取值的一半
+ * （官网竖屏以 750 宽为基准）。
  *
  * 是链接时，悬停会把图片放大到 1.1 倍、退掉盖在上面的暗层，并自下浮起一层主题色。文字不变色。
  */
@@ -169,7 +171,8 @@ export function Strip(props: StripProps) {
         />
       )}
       <span aria-hidden="true" data-ark="strip-shade" className={cn(layer, shade)} />
-      <span className="absolute right-ark-3 bottom-[20.5556%] left-[27.9167cqw] grid justify-items-start portrait:bottom-ark-4">
+      {/* 竖屏的横带上，文字块的位置和字号是固定的，不再跟着宽度走（官网实测，按 375 宽折算） */}
+      <span className="absolute right-ark-3 bottom-[20.5556%] left-[27.9167cqw] grid justify-items-start portrait:bottom-[1.8125rem] portrait:left-[3.75rem]">
         <IconTitle
           as="span"
           size="lg"
@@ -177,7 +180,7 @@ export function Strip(props: StripProps) {
           icon={icon}
           sub={sub}
           // 30rem 宽的条带上是 3.375rem；一圈黑色的晕让字从图里浮出来
-          className="text-[length:clamp(1rem,11.25cqw,3.375rem)] drop-shadow-[0_0_0.5rem_#000]"
+          className="text-[length:clamp(1rem,11.25cqw,3.375rem)] drop-shadow-[0_0_0.5rem_#000] portrait:text-[1.6875rem]"
         >
           {children}
         </IconTitle>
@@ -189,7 +192,7 @@ export function Strip(props: StripProps) {
         <span
           aria-hidden="true"
           data-ark="strip-rule"
-          className="mt-[clamp(0.625rem,4.1667cqw,1.25rem)] block h-px w-[clamp(3.5rem,22.5cqw,6.75rem)] bg-current"
+          className="mt-[clamp(0.625rem,4.1667cqw,1.25rem)] block h-px w-[clamp(3.5rem,22.5cqw,6.75rem)] bg-current portrait:mt-[0.625rem] portrait:w-[3.375rem]"
         />
       </span>
     </>

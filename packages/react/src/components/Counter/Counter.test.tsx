@@ -92,6 +92,92 @@ describe('Counter', () => {
     rerender(<Counter value={1} total={5} micro="ARKNIGHTS" size="sm" />)
     expect(screen.queryByText('ARKNIGHTS')).not.toBeInTheDocument()
   })
+
+  it('默认横排', () => {
+    render(<Counter data-testid="counter" value={1} total={5} label="INFORMATION" />)
+    const counter = screen.getByTestId('counter')
+    expect(counter).not.toHaveAttribute('data-vertical')
+    expect(counter).toHaveClass('inline-grid')
+    expect(counter.className).not.toContain('writing-mode')
+    expect(counter.innerHTML).not.toContain('writing-mode')
+  })
+
+  it('vertical="always" 是窄栏里的竖排：2rem 宽，数字缩到 1.8rem、居中，后两行竖着写在右下角', () => {
+    render(
+      <Counter
+        data-testid="counter"
+        value={1}
+        total={5}
+        label="INFORMATION"
+        micro="ARKNIGHTS"
+        vertical="always"
+      />,
+    )
+    const counter = screen.getByTestId('counter')
+    expect(counter).toHaveAttribute('data-vertical', 'always')
+    expect(counter).toHaveClass('relative', 'block', 'w-8')
+    expect(counter).not.toHaveClass('inline-grid')
+
+    // 数字比这一块宽：居中，两边各裁掉一点
+    const number = counter.querySelector('b')
+    expect(number).toHaveClass('w-full', 'min-w-0', 'justify-center', 'overflow-hidden')
+    expect(number).toHaveClass('text-[1.8rem]')
+    expect(number).not.toHaveClass('text-[5.4rem]', 'min-w-max')
+
+    const count = screen.getByText('// 01 / 05')
+    expect(count).toHaveClass('text-[0.5rem]', '[writing-mode:vertical-rl]')
+    expect(count.parentElement).toHaveClass('absolute', 'right-0', 'bottom-0', 'pb-0')
+
+    const label = screen.getByText('INFORMATION')
+    expect(label).toHaveClass(
+      'absolute',
+      'right-3',
+      'bottom-0',
+      'text-[0.3125rem]',
+      '[writing-mode:vertical-rl]',
+    )
+    // 微缩字放不下，不显示
+    expect(screen.getByText('ARKNIGHTS')).toHaveClass('hidden')
+  })
+
+  it('vertical="portrait" 只在竖屏竖排：同一组类，前面多一个 portrait:', () => {
+    render(
+      <Counter
+        data-testid="counter"
+        value={1}
+        total={5}
+        label="INFORMATION"
+        micro="ARKNIGHTS"
+        vertical="portrait"
+      />,
+    )
+    const counter = screen.getByTestId('counter')
+    expect(counter).toHaveAttribute('data-vertical', 'portrait')
+    // 横屏的写法原样保留
+    expect(counter).toHaveClass('inline-grid', 'portrait:block', 'portrait:w-8')
+    const number = counter.querySelector('b')
+    expect(number).toHaveClass('text-[5.4rem]', 'portrait:text-[1.8rem]', 'portrait:justify-center')
+    expect(screen.getByText('// 01 / 05')).toHaveClass(
+      'text-ark-body',
+      'portrait:text-[0.5rem]',
+      'portrait:[writing-mode:vertical-rl]',
+    )
+    expect(screen.getByText('INFORMATION')).toHaveClass(
+      'portrait:absolute',
+      'portrait:right-3',
+      'portrait:text-[0.3125rem]',
+    )
+    expect(screen.getByText('ARKNIGHTS')).toHaveClass('portrait:hidden')
+    expect(screen.getByText('ARKNIGHTS')).not.toHaveClass('hidden')
+  })
+
+  it('sm 没有竖排的写法', () => {
+    render(<Counter data-testid="counter" value={3} total={12} size="sm" vertical="always" />)
+    const counter = screen.getByTestId('counter')
+    expect(counter).not.toHaveAttribute('data-vertical')
+    expect(counter).toHaveClass('inline-flex')
+    expect(counter).not.toHaveClass('w-8')
+  })
 })
 
 describe('Serial', () => {

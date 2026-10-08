@@ -87,6 +87,18 @@ describe('WorldEntry', () => {
     expect(zh.nextElementSibling).toBe(en)
   })
 
+  it('竖屏字号收小，中文名不折行', () => {
+    render(<WorldEntry sub="ORIGINIUM ARTS">源石技艺</WorldEntry>)
+    expect(screen.getByText('源石技艺')).toHaveClass(
+      'portrait:text-[1.875rem]',
+      'portrait:whitespace-nowrap',
+    )
+    expect(screen.getByText('ORIGINIUM ARTS')).toHaveClass(
+      'portrait:text-ark-label',
+      'portrait:ml-ark-4',
+    )
+  })
+
   it('默认是灰的', () => {
     render(
       <WorldEntry data-testid="entry" sub="ORIGINIUM">

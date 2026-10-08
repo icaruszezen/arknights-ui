@@ -9,13 +9,35 @@ import { Nav, NavItem } from '../Nav'
 import { ScrollHint } from '../ScrollHint'
 import { Shell } from './Shell'
 
-// 横线的位置随屏换：官网的情报、干员两屏在内容区上缘，其余在下缘
+// 横线的位置随屏换：官网的情报、干员两屏在内容区上缘，其余在下缘。
+// 竖屏时只有首页的还在下缘，其余各屏都在顶栏的下缘
 const screens = [
-  { id: 'index', en: 'INDEX', zh: '首页', ghost: 'ARKNIGHTS-UI', line: 'bottom' },
-  { id: 'information', en: 'INFORMATION', zh: '情报', ghost: 'BREAKING NEWS', line: 'top' },
-  { id: 'operator', en: 'OPERATOR', zh: '干员', ghost: 'RHODES', line: 'top' },
-  { id: 'world', en: 'WORLD', zh: '设定', ghost: 'WORLD', line: 'bottom' },
-  { id: 'more', en: 'MORE', zh: '更多内容', ghost: 'MORE CONTENT', line: 'bottom' },
+  {
+    id: 'index',
+    en: 'INDEX',
+    zh: '首页',
+    ghost: 'ARKNIGHTS-UI',
+    line: 'bottom',
+    portrait: 'bottom',
+  },
+  {
+    id: 'information',
+    en: 'INFORMATION',
+    zh: '情报',
+    ghost: 'BREAKING NEWS',
+    line: 'top',
+    portrait: 'top',
+  },
+  { id: 'operator', en: 'OPERATOR', zh: '干员', ghost: 'RHODES', line: 'top', portrait: 'top' },
+  { id: 'world', en: 'WORLD', zh: '设定', ghost: 'WORLD', line: 'bottom', portrait: 'top' },
+  {
+    id: 'more',
+    en: 'MORE',
+    zh: '更多内容',
+    ghost: 'MORE CONTENT',
+    line: 'bottom',
+    portrait: 'top',
+  },
 ] as const
 
 // 标识是一行字，不是任何官方 Logo
@@ -58,9 +80,10 @@ const aside = (
   </ul>
 )
 
-const news = (
+// 手机上放不下最大一档的标题，竖屏的那个 Story 用小一档的
+const newsBlock = (size: 'lg' | 'md') => (
   <div className="grid max-w-xl gap-ark-5">
-    <Heading as="h1" size="lg" sub="BREAKING NEWS" bar>
+    <Heading as="h1" size={size} sub="BREAKING NEWS" bar>
       情报
     </Heading>
     <ul className="m-0 list-none p-0">
@@ -80,6 +103,8 @@ const news = (
     </Button>
   </div>
 )
+
+const news = newsBlock('lg')
 
 const meta = {
   title: '布局与层级/Shell',
@@ -108,7 +133,10 @@ const meta = {
         ))}
       </Nav>
     ),
-    counter: <Counter value={1} total={4} label="INFORMATION" micro="ARKNIGHTS-UI" />,
+    // 竖屏的右栏只有菜单按钮那么宽，计数换成竖排
+    counter: (
+      <Counter value={1} total={4} label="INFORMATION" micro="ARKNIGHTS-UI" vertical="portrait" />
+    ),
     children: news,
   },
 } satisfies Meta<typeof Shell>
@@ -124,6 +152,20 @@ type Story = StoryObj<typeof meta>
  * 这一屏的横线在内容区的上缘（`line="top"`）。
  */
 export const Default: Story = {}
+
+/**
+ * 竖屏是另一套编排（官网实测）：顶栏高 4.6875rem，横线就是它的下缘；右栏还在右边，
+ * 收窄到 2.875rem——上面是菜单按钮，底下是竖排的计数；小按钮排到菜单按钮的左边；
+ * 常驻入口不显示；线比横屏亮一档。
+ *
+ * 取值是官网竖屏的一半：官网竖屏以 750 宽为基准，375 宽的手机上根字号只有 8px。
+ * 在画布视图里才是竖屏；文档页是横向的，这里看到的是横屏。
+ */
+export const Portrait: Story = {
+  // 抵消 Story 的留白，让骨架铺满手机尺寸的画布
+  args: { className: '-m-ark-6', children: newsBlock('md') },
+  globals: { viewport: { value: 'mobile1', isRotated: false } },
+}
 
 /** 横线在内容区的下缘：背景巨字正好挂在它下面，上缘被它裁掉一截。 */
 export const LineBottom: Story = {
@@ -144,12 +186,14 @@ export const Screens: Story = {
         {...args}
         ghost={screen.ghost}
         line={screen.line}
+        portraitLine={screen.portrait}
         counter={
           <Counter
             value={index}
             total={screens.length - 1}
             label={screen.en}
             micro="ARKNIGHTS-UI"
+            vertical="portrait"
           />
         }
         scrollHint={
@@ -160,7 +204,7 @@ export const Screens: Story = {
           )
         }
         nav={
-          <Nav aria-label="主导航" collapse="never">
+          <Nav aria-label="主导航">
             {screens.map((item, i) => (
               <NavItem
                 key={item.id}
@@ -178,7 +222,8 @@ export const Screens: Story = {
           </Nav>
         }
       >
-        <Heading as="h1" size="lg" sub={screen.en} bar>
+        {/* 小一档的标题：手机尺寸的画布里也放得下 */}
+        <Heading as="h1" size="md" sub={screen.en} bar>
           {screen.zh}
         </Heading>
       </Shell>

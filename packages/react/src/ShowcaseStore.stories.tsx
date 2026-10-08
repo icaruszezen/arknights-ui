@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { figure, item, scenes } from '../.storybook/art'
 import { glyphs } from '../.storybook/glyphs'
+import { fitScreen } from '../.storybook/scale'
 import {
   ActionButton,
   BackHome,
@@ -32,6 +33,8 @@ const meta = {
   title: '示例/寻访与采购',
   tags: ['!autodocs'],
   parameters: { controls: { disable: true } },
+  // 游戏内的界面按 1280 × 720 排：根字号随画布等比缩放，画布多大都是完整的一屏
+  decorators: [fitScreen('game')],
 } satisfies Meta
 
 export default meta
@@ -50,7 +53,7 @@ export const Headhunt: Story = {
   render: function Gacha() {
     const [index, setIndex] = useState(0)
     return (
-      <div className="relative -m-ark-6 grid min-h-screen grid-rows-[auto_minmax(0,1fr)] bg-ark-neutral-black">
+      <div className="relative -m-ark-6 grid min-h-screen grid-rows-[auto_minmax(0,1fr)] bg-ark-neutral-black landscape:h-screen">
         <div className="flex items-start justify-between">
           <BackHome />
           <ResourceBar>
@@ -60,7 +63,7 @@ export const Headhunt: Story = {
         </div>
 
         {/* 卡池切换是横向的轮播：侧边一条竖排的缩略图，点一下换一个卡池 */}
-        <div className="grid grid-cols-[auto_minmax(0,1fr)] items-start gap-ark-4 px-ark-6 pt-ark-4 pb-ark-6">
+        <div className="grid min-h-0 grid-cols-[auto_minmax(0,1fr)] items-start gap-ark-4 px-ark-6 pt-ark-4 pb-ark-6 landscape:grid-rows-[minmax(0,1fr)]">
           <ThumbnailStrip
             aria-label="卡池"
             orientation="vertical"
@@ -79,7 +82,13 @@ export const Headhunt: Story = {
             ))}
           </ThumbnailStrip>
 
-          <Carousel aria-label="卡池" index={index} onIndexChange={setIndex}>
+          {/* 横屏时轮播撑满剩下的高度，不按 16:9 算：画布再宽也还是一屏 */}
+          <Carousel
+            aria-label="卡池"
+            index={index}
+            onIndexChange={setIndex}
+            className="landscape:grid-rows-[minmax(0,1fr)_auto] landscape:self-stretch landscape:[--ark-carousel-ratio:auto]"
+          >
             {pools.map((pool, poolIndex) => (
               <Banner
                 key={pool.id}

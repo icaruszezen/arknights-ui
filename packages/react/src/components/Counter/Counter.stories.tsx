@@ -40,6 +40,22 @@ export const InSideRail: Story = {
   ),
 }
 
+/**
+ * 窄栏里的竖排。官网竖屏的右栏只有一个菜单按钮那么宽，计数在那里换了一种写法：
+ * 数字缩小、居中，“当前 / 总数”和栏目名竖着写，压在数字上，微缩字不显示。
+ * 字很小——取值是官网竖屏的一半（那里以 750 宽为基准，同样的 rem 在手机上只有一半大）。
+ *
+ * 通常写成 `vertical="portrait"`，只在竖屏切换；这里固定成竖排，放在一条 2.875rem 宽的栏里。
+ */
+export const Vertical: Story = {
+  args: { vertical: 'always', micro: 'ARKNIGHTS' },
+  render: args => (
+    <div className="box-border flex h-48 w-[2.875rem] items-end justify-center border-l border-ark-rule-strong">
+      <Counter {...args} />
+    </div>
+  ),
+}
+
 /** 放进纸白面板时，信号色的大数字压暗以保证对比度。 */
 export const OnPaper: Story = {
   render: args => (

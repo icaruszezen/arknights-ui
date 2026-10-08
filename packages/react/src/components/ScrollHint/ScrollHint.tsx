@@ -49,6 +49,7 @@ const motions: Record<ScrollHintDirection, string> = {
  * 滚动提示：固定骨架底部正中，一行 `SCROLL` 加一个向下的箭头，告诉用户下面还有一屏。
  * 取值出自官网（实测）：字是宽体 0.75rem，箭头是两根不相连的粗条，2.68rem × 1.25rem；
  * 整组 1.5 秒一轮地淡入、停住、下移淡出。位置由使用方决定（`Shell` 会把它放在底部居中）。
+ * 竖屏时字和箭头都缩到一半：官网竖屏以 750 宽为基准，同样的 rem 在手机上只有一半大。
  *
  * 默认只是装饰，对读屏隐藏，颜色是官网中间几屏用的 `#585858`（首屏是信号色，用 `className` 换）。
  * 给了 `href` 或 `onClick` 就成为“去下一屏”的入口，这时用前景色——`#585858` 压在黑底上不到 3:1。
@@ -66,15 +67,21 @@ export function ScrollHint(props: ScrollHintProps) {
     // 字和箭头是一组，一起淡入淡出
     <span
       data-ark="scroll-hint-body"
-      className={cn('inline-grid justify-items-center gap-[0.25rem]', motions[direction])}
+      className={cn(
+        'inline-grid justify-items-center gap-[0.25rem] portrait:gap-[0.125rem]',
+        motions[direction],
+      )}
     >
       {hasText && (
-        <span className="font-ark-latin-wide text-ark-caption leading-ark-solid font-ark-medium">
+        <span className="font-ark-latin-wide text-ark-caption leading-ark-solid font-ark-medium portrait:text-[0.375rem]">
           {children}
         </span>
       )}
       <ScrollArrowIcon
-        className={cn('block h-5 w-[2.68rem]', direction === 'up' && '-scale-y-100')}
+        className={cn(
+          'block h-5 w-[2.68rem] portrait:h-[0.625rem] portrait:w-[1.34rem]',
+          direction === 'up' && '-scale-y-100',
+        )}
       />
     </span>
   )

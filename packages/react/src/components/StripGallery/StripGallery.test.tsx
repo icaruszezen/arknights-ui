@@ -185,4 +185,23 @@ describe('Strip', () => {
     )
     expect(screen.getByTestId('strip')).toHaveClass('aspect-[4/9]', 'portrait:aspect-[5/2]')
   })
+
+  it('竖屏的横带上，文字块的位置和字号是固定的，不跟着宽度走', () => {
+    render(
+      <Strip data-testid="strip" src="/a.png" sub="INTEGRATED STRATEGIES">
+        集成战略
+      </Strip>,
+    )
+    const title = screen.getByText('集成战略').closest('[data-ark="icon-title"]')
+    expect(title).toHaveClass('portrait:text-[1.6875rem]')
+    expect(title?.parentElement).toHaveClass(
+      'left-[27.9167cqw]',
+      'portrait:left-[3.75rem]',
+      'portrait:bottom-[1.8125rem]',
+    )
+    expect(screen.getByTestId('strip').querySelector('[data-ark="strip-rule"]')).toHaveClass(
+      'portrait:w-[3.375rem]',
+      'portrait:mt-[0.625rem]',
+    )
+  })
 })

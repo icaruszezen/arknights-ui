@@ -3,6 +3,7 @@ import { cn } from '../../utils/cn'
 import { formatStatValue } from '../Stat'
 
 export type CounterSize = 'sm' | 'md'
+export type CounterVertical = 'portrait' | 'always' | 'never'
 
 export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
   /** 当前是第几个。 */
@@ -27,6 +28,15 @@ export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
    * @default 'md'
    */
   size?: CounterSize
+  /**
+   * 什么时候换成窄栏里的竖排写法（只对 `md` 起作用）：大数字缩到 1.8rem、居中，
+   * “当前 / 总数”和名称竖着写，贴在右下角、压在数字上，微缩字不显示。整块只有 2rem 宽。
+   * - `portrait`：竖屏时（官网的做法：竖屏的右栏只有一个菜单按钮那么宽）
+   * - `always`：始终竖排
+   * - `never`：始终横排
+   * @default 'never'
+   */
+  vertical?: CounterVertical
 }
 
 const root: Record<CounterSize, string> = {
@@ -54,6 +64,30 @@ const labelText: Record<CounterSize, string> = {
 
 const restBase = 'font-ark-data leading-ark-solid font-ark-regular whitespace-nowrap'
 
+// 窄栏里的竖排写法。取值是官网竖屏的一半：官网竖屏以 750 宽为基准，这里按 375 宽算（见 README）。
+// portrait 那一份和 always 逐项相同，只是每个类前面多一个 portrait:
+const narrow: Record<Exclude<CounterVertical, 'never'>, Record<string, string>> = {
+  always: {
+    root: 'relative block w-8',
+    // 数字比这一块宽：居中，两边各裁掉一点
+    big: 'w-full min-w-0 justify-center text-[1.8rem]',
+    // 仍然是一列 flex：竖排的那行字作为 flex 项贴底，不会被行框的降部垫高
+    aside: 'absolute right-0 bottom-0 pb-0',
+    count: 'text-[0.5rem] [writing-mode:vertical-rl]',
+    micro: 'hidden',
+    label: 'absolute right-3 bottom-0 text-[0.3125rem] [writing-mode:vertical-rl]',
+  },
+  portrait: {
+    root: 'portrait:relative portrait:block portrait:w-8',
+    big: 'portrait:w-full portrait:min-w-0 portrait:justify-center portrait:text-[1.8rem]',
+    aside: 'portrait:absolute portrait:right-0 portrait:bottom-0 portrait:pb-0',
+    count: 'portrait:text-[0.5rem] portrait:[writing-mode:vertical-rl]',
+    micro: 'portrait:hidden',
+    label:
+      'portrait:absolute portrait:right-3 portrait:bottom-0 portrait:text-[0.3125rem] portrait:[writing-mode:vertical-rl]',
+  },
+}
+
 /**
  * 计数写作 `01 // 01 / 05`：一个大号数字，后面跟“当前 / 总数”。
  * 任何可以数的东西（分屏、轮播、列表项、章节）都可以这样标，它相当于纵向的面包屑。
@@ -62,6 +96,9 @@ const restBase = 'font-ark-data leading-ark-solid font-ark-regular whitespace-no
  * 官网是用 `line-height: 0.55` 加 `overflow: hidden` 裁的，那样裁掉多少取决于字体的度量，
  * 换一个回退字体就会连上缘一起裁。这里让数字和一个空的占位块按基线对齐——容器的下缘于是正好落在
  * 基线上——再把数字往下挪，裁掉的就只有下缘，换什么字体都一样。
+ *
+ * 官网竖屏的右栏只有一个菜单按钮那么宽，计数在那里换了一种写法：数字缩小、居中，后面两行竖着写，
+ * 压在数字上。放进 `Shell` 的右栏时请加 `vertical="portrait"`。
  */
 export function Counter({
   value,
@@ -70,17 +107,20 @@ export function Counter({
   label,
   micro,
   size = 'md',
+  vertical = 'never',
   className,
   ...rest
 }: CounterProps) {
   const current = formatStatValue(value, pad)
   const count = `// ${current} / ${formatStatValue(total, pad)}`
   const hasMicro = micro != null && micro !== false
+  const tall = size === 'md' && vertical !== 'never' ? narrow[vertical] : undefined
   return (
     <p
       data-ark="counter"
+      data-vertical={tall ? vertical : undefined}
       {...rest}
-      className={cn('m-0 box-border text-ark-fg', root[size], className)}
+      className={cn('m-0 box-border text-ark-fg', root[size], tall?.root, className)}
     >
       {/* 读屏只需要“第几个 / 共几个”：视觉上的写法会被念成两遍 01 和一串斜杠 */}
       <span className="sr-only">
@@ -94,6 +134,7 @@ export function Counter({
               // min-w-max：裁切溢出的盒子在网格里最小可以缩到 0，整块被挤窄时数字会探到外面去
               'flex min-w-max items-baseline overflow-hidden text-ark-signal-fg',
               big.md,
+              tall?.big,
             )}
           >
             {/* 行高为 0 的这一行不撑高容器；往下挪 0.2 个大写高，这一截就落到容器外面 */}
@@ -109,11 +150,17 @@ export function Counter({
               'flex flex-col items-end gap-[0.1rem] self-end',
               // “当前 / 总数”和微缩字都压在大数字的高度以内，贴着裁切线的上方
               hasMicro ? 'pb-[0.32rem]' : 'pb-[0.79rem]',
+              tall?.aside,
             )}
           >
-            <span className={cn(restBase, restSize.md)}>{count}</span>
+            <span className={cn(restBase, restSize.md, tall?.count)}>{count}</span>
             {hasMicro && (
-              <span className="font-ark-latin-wide text-ark-micro leading-ark-solid font-ark-medium tracking-ark-micro whitespace-nowrap uppercase">
+              <span
+                className={cn(
+                  'font-ark-latin-wide text-ark-micro leading-ark-solid font-ark-medium tracking-ark-micro whitespace-nowrap uppercase',
+                  tall?.micro,
+                )}
+              >
                 {micro}
               </span>
             )}
@@ -135,6 +182,7 @@ export function Counter({
           className={cn(
             'font-ark-latin-wide leading-ark-solid font-semibold tracking-ark-wide whitespace-nowrap uppercase',
             labelText[size],
+            tall?.label,
           )}
         >
           {label}

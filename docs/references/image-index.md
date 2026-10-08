@@ -56,6 +56,7 @@
 | 官网的公告正文 | [官网 · 情报](https://ak.hypergryph.com/#information) 里的任意一条 | 公告的原文标记：中文数字的小节、粗体的键、`◆` 起头的注意事项、时间写法；标题下面带起点的分隔线 | [宣传物料](../modules/promotional.md)、[装饰元素](../elements/decorations.md) |
 | 官网的加载屏 | [官网](https://ak.hypergryph.com/)，每次打开先出现 | 细线加两端方块的进度条、`LOADING - 20%` 式的状态文字 | [反馈](../elements/feedback.md) |
 | 官网的底纹图 | 样式表里引用的 `common_mask`（半调）、`dots` 与 `dots_wide`（点阵）几张图 | 可以画到 canvas 上量点距、角度和浓度。只在原站查看，不要转存 | [底纹](../foundations/texture-and-pattern.md) |
+| 官网的竖屏 | [官网](https://ak.hypergryph.com/)，把窗口拉成竖的，或用浏览器的手机模拟 | 另一套编排：顶栏右端的菜单按钮、收窄的右栏、竖排的计数、上下叠着的横带。页头有一段脚本按视口算根字号（竖屏以 750 × 1334 为基准） | [官网](../modules/website.md#竖屏的骨架) |
 
 模板图是自动化工具用来识别界面的素材，属于游戏画面的局部截图，版权同样归鹰角网络。只在原仓库查看，不要转存。维基上的截图同理。
 
@@ -110,6 +111,7 @@
 | [feedback.svg](../assets/feedback.svg) | 反馈元素 |
 | [decorations.svg](../assets/decorations.svg) | 装饰元素 |
 | [website-layout.svg](../assets/website-layout.svg) | 官网分屏线框 |
+| [website-layout-portrait.svg](../assets/website-layout-portrait.svg) | 官网竖屏线框 |
 | [home-layout.svg](../assets/home-layout.svg) | 游戏主界面线框 |
 | [operator-detail.svg](../assets/operator-detail.svg) | 干员详情线框 |
 | [battle-hud.svg](../assets/battle-hud.svg) | 作战 HUD 线框 |
@@ -118,4 +120,4 @@
 
 - 外链可能因站点改版而失效。发现失效链接欢迎提 Issue。
 - 部分站点有防盗链或访问限制，因此本仓库只给链接，不在文档中内嵌这些图片。
-- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源；2026-10-08 加了官网的加载屏和底纹图。
+- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源；2026-10-08 加了官网的加载屏、底纹图和竖屏。

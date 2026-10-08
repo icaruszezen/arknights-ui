@@ -27,6 +27,7 @@
 | 元素 | 写法 | 可信度 |
 | --- | --- | --- |
 | 计数 | `NN // NN / NN`，整块宽 `10rem`。大数字 Novecento Sans Wide DemiBold `5.4rem`、信号色，行高 `0.55` 加 `overflow: hidden`，下缘被裁掉约四分之一；“// 当前 / 总数” Bender Regular `1.125rem`、白色，靠右，压在大数字的高度以内；下面一行微缩字（品牌名）；栏目名 Novecento Sans Wide DemiBold `1.125rem`、字距 `0.1em`，靠右 | 实测 |
+| 计数（竖屏的窄栏） | 整块宽 `4rem`，放在只有 `5.75rem` 宽的右栏底部。大数字 `3.6rem`、居中，同样裁掉下缘；“// 当前 / 总数” `1rem`、竖排（`writing-mode: vertical-rl`），贴右下角；栏目名 `0.625rem`、竖排，右距 `1.5rem`、贴底；微缩字不显示。两行竖排的字压在数字上。这些 rem 以 750 宽为基准，375 宽的手机上折半：`2rem`、`1.8rem`、`0.5rem`、`0.3125rem`、`0.75rem` | 实测 |
 | 日期 | `YYYY // MM / DD`，Bender Regular `1rem`，字距 `1px` | 实测 |
 | 序号 | `NO.0147`、`VOL.69`，数据体 | 估计（官网没有） |
 | 微缩英文 | Novecento Sans Wide Medium，`0.375rem`，字距 `0.5em`；颜色跟随所在的文字，官网唯一的一处是白的 | 实测 |
@@ -121,5 +122,6 @@
 
 - 官网计算样式实测（2026-10-06）；右栏计数的字体与字号在 2026-10-07 重新读取并更正（原先写的是“大数字 Bender Bold”）
 - 2026-10-08 重读官网样式表与 DOM：计数的裁切与排法、标注的两种状态、分隔线起点、微缩英文、背景巨字的裁切。字体的大写高、数字高用 canvas 的 `measureText` 读取
+- 2026-10-08 在 375 × 812 的竖屏视口下读官网样式表：右栏计数的竖排写法。竖屏的 rem 以 750 宽为基准（根字号算法见[官网](../modules/website.md#响应式)）
 - [ak-ui · Design language](https://ak-ui.yyj.moe/en/guide/design-language.html)（强度分级、常见失败模式）
 - [我在明日方舟里面学平面设计](https://zhuanlan.zhihu.com/p/145684354)

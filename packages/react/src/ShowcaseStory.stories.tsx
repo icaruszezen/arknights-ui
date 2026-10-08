@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { figure, scene, scenes } from '../.storybook/art'
+import { fitScreen } from '../.storybook/scale'
 import {
   Button,
   ChapterTitle,
@@ -19,6 +20,8 @@ const meta = {
   title: '示例/剧情',
   tags: ['!autodocs'],
   parameters: { controls: { disable: true } },
+  // 游戏内的界面按 1280 × 720 排：根字号随画布等比缩放，画布多大都是完整的一屏
+  decorators: [fitScreen('game')],
 } satisfies Meta
 
 export default meta

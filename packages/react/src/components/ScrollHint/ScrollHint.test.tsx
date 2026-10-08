@@ -35,6 +35,17 @@ describe('ScrollHint', () => {
     expect(arrow).not.toHaveClass('-scale-y-100')
   })
 
+  it('竖屏时字和箭头都缩到一半', () => {
+    render(<ScrollHint data-testid="hint" />)
+    const hint = screen.getByTestId('hint')
+    expect(hint.querySelector('[data-ark="scroll-hint-body"]')).toHaveClass(
+      'gap-[0.25rem]',
+      'portrait:gap-[0.125rem]',
+    )
+    expect(screen.getByText('SCROLL')).toHaveClass('text-ark-caption', 'portrait:text-[0.375rem]')
+    expect(hint.querySelector('svg')).toHaveClass('portrait:w-[1.34rem]', 'portrait:h-[0.625rem]')
+  })
+
   it('up 只剩一个向上的箭头，明灭而不位移', () => {
     render(<ScrollHint data-testid="hint" direction="up" />)
     const hint = screen.getByTestId('hint')

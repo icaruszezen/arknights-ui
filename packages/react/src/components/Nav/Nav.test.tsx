@@ -142,6 +142,21 @@ describe('Nav', () => {
     expect(within(link).getByText('首页')).toHaveClass('after:h-1.5', 'after:bg-current')
   })
 
+  it('竖屏时菜单里的尺寸折半：官网竖屏以 750 宽为基准，同样的 rem 在手机上只有一半大', async () => {
+    const user = userEvent.setup()
+    render(<Site />)
+    await user.click(getMenuButton())
+
+    const link = within(getMenu()).getByRole('link', { name: 'INDEX 首页' })
+    expect(link).toHaveClass('portrait:h-15')
+    expect(within(link).getByText('INDEX')).toHaveClass('portrait:text-[1.125rem]')
+    expect(within(link).getByText('首页')).toHaveClass(
+      'portrait:text-[0.875rem]',
+      'portrait:after:h-[0.1875rem]',
+      'portrait:after:-bottom-[0.09375rem]',
+    )
+  })
+
   it('点菜单里的一项之后关闭，并保留使用方的 onClick', async () => {
     const user = userEvent.setup()
     const onClick = vi.fn()

@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 620" role="img" aria-labelledby="t d">
+  <title id="t">官网竖屏线框</title>
+  <desc id="d">官网竖屏的固定骨架：顶栏右端是菜单按钮，右栏收窄，计数竖排在右栏底部，横线在顶栏的下缘，底带里是幽灵字和滚动提示。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .wide { font-family: 'Novecento Sans Wide','Novecento Wide','Montserrat','Segoe UI',Arial,sans-serif; font-weight: 700; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #18d1ff; font-size: 12px; }
+    .lead { stroke: #18d1ff; stroke-width: 1; fill: none; stroke-dasharray: 2 3; }
+  </style>
+  <defs>
+    <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"><path d="M0 0 L60 60 M60 0 L0 60" stroke="#fff" stroke-opacity=".06"/><rect width="60" height="60" fill="none" stroke="#fff" stroke-opacity=".05"/></pattern>
+    <!-- 半调：点径随浓度变化 -->
+    <radialGradient id="htDot"><stop stop-color="#fff"/><stop offset="1" stop-color="#000"/></radialGradient>
+    <pattern id="htDots" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(20)"><rect width="7" height="7" fill="url(#htDot)"/></pattern>
+    <linearGradient id="htFade" x1="0" y1="1" x2="1" y2="0"><stop stop-color="#fff"/><stop offset=".6" stop-color="#000"/></linearGradient>
+    <filter id="htCut" x="0" y="0" width="1" height="1" color-interpolation-filters="sRGB"><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  10 0 0 0 -5"/><feComponentTransfer><feFuncA type="linear" slope=".25"/></feComponentTransfer></filter>
+    <linearGradient id="top" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#000" stop-opacity=".8"/><stop offset="1" stop-color="#000" stop-opacity="0"/></linearGradient>
+    <clipPath id="screen"><rect width="300" height="534"/></clipPath>
+    <clipPath id="cnt"><rect x="268.8" y="441.2" width="25.6" height="12.8"/></clipPath>
+    <clipPath id="ghost"><rect x="0" y="457.2" width="300" height="76.8"/></clipPath>
+  </defs>
+  <rect width="960" height="620" fill="#121212"/>
+
+  <!-- 画面：375 × 667.5 的手机，缩到 0.8 -->
+  <g transform="translate(60 40)">
+    <g clip-path="url(#screen)">
+      <rect width="300" height="534" fill="#000"/>
+      <rect width="300" height="534" fill="url(#grid)"/>
+      <g filter="url(#htCut)"><rect x="0" y="330" width="130" height="204" fill="url(#htFade)"/><rect x="0" y="330" width="130" height="204" fill="url(#htDots)" opacity=".5"/></g>
+
+      <!-- 内容区：四边各留 0.875rem；情报屏的图片贴着顶栏和两边 -->
+      <rect x="0" y="60" width="263.2" height="148" fill="#2a2e30"/>
+      <text x="131.6" y="138" text-anchor="middle" class="cjk" font-size="10" fill="#8d8d8d">轮播 · 贴着顶栏和两边</text>
+      <rect x="0" y="218" width="40" height="6.4" fill="#585858"/><rect x="0" y="218" width="14" height="6.4" fill="#18d1ff"/>
+      <text x="50" y="225" class="data" font-size="9" fill="#18d1ff">01 <tspan fill="#fff" font-size="7">// 01 / 03</tspan></text>
+      <rect x="11.2" y="246" width="44" height="12" fill="#18d1ff"/><text x="15" y="255.5" class="cjk" font-size="9" font-weight="700" fill="#000">最新</text>
+      <text x="72" y="255.5" class="cjk" font-size="9" font-weight="700" fill="#fff">公告</text><text x="116" y="255.5" class="cjk" font-size="9" font-weight="700" fill="#fff">活动</text>
+      <g class="cjk" font-size="9" font-weight="700">
+        <text x="11.2" y="296" fill="#18d1ff">活动</text><rect x="44" y="284" width="92" height="6" fill="#d2d2d2"/><rect x="44" y="296" width="60" height="6" fill="#d2d2d2"/>
+        <text x="11.2" y="344" fill="#18d1ff">公告</text><rect x="44" y="332" width="80" height="6" fill="#d2d2d2"/><rect x="44" y="344" width="68" height="6" fill="#d2d2d2"/>
+      </g>
+      <g class="data" font-size="7" fill="#d2d2d2"><text x="252" y="296" text-anchor="end">2026 // 10 / 03</text><text x="252" y="344" text-anchor="end">2026 // 09 / 29</text></g>
+      <path d="M11.2 316 H252 M11.2 364 H252" stroke="#fff" stroke-opacity=".3"/>
+      <rect x="11.2" y="386" width="132" height="34" fill="#18d1ff"/><text x="22" y="402" class="cjk" font-size="10" font-weight="700" fill="#000">更多情报</text><text x="22" y="413" class="data" font-size="7" font-weight="700" fill="#000">READ MORE</text>
+
+      <!-- 底带：高 6rem。幽灵字挂在它的上缘，上缘被裁掉一截 -->
+      <text x="18.4" y="487.7" class="cond" font-size="44.8" fill="#242424" letter-spacing="-2.2" clip-path="url(#ghost)">BREAKING NEWS</text>
+      <!-- 只有首页的横线在这里 -->
+      <path d="M0 457.2 H300" stroke="#fff" stroke-opacity=".3" stroke-dasharray="4 4"/>
+
+      <!-- 滚动提示：距底 1.875rem，相对整屏居中 -->
+      <text x="150" y="498.5" text-anchor="middle" class="wide" font-size="4.8" font-weight="500" fill="#585858">SCROLL</text>
+      <path d="M141.5 502 h3.2 l6.3 6.2 -1.6 1.6z M158.5 502 h-3.2 l-3.7 3.7 1.6 1.6z" fill="#585858"/>
+
+      <!-- 顶栏：高 4.6875rem，一道两段的黑色渐变；横线就是它的下缘 -->
+      <rect width="300" height="60" fill="url(#top)"/>
+      <rect x="11.2" y="20" width="62" height="20" fill="none" stroke="#fff" stroke-opacity=".6"/>
+      <text x="42.2" y="33" text-anchor="middle" class="cond" font-size="8" fill="#fff" fill-opacity=".6">LOGO</text>
+      <rect x="199.6" y="24" width="12" height="12" fill="none" stroke="#c4c2c2" stroke-width="1.6"/>
+      <rect x="234.8" y="24" width="12" height="12" fill="none" stroke="#c4c2c2" stroke-width="1.6"/>
+      <path d="M273.2 22.5 h16.8 M273.2 30 h16.8 M273.2 37.5 h16.8" stroke="#fff" stroke-width="1.6"/>
+
+      <!-- 竖线、横线：50% 的白 -->
+      <path d="M263.2 0 V534 M0 60 H300" stroke="#fff" stroke-opacity=".5"/>
+
+      <!-- 计数：右栏底部，离底带 0.25rem。数字居中、裁掉下缘，后两行竖排，压在数字上 -->
+      <text x="281.6" y="457.2" text-anchor="middle" class="wide" font-size="23" font-weight="600" fill="#18d1ff" clip-path="url(#cnt)">01</text>
+      <text transform="translate(289.4 454) rotate(90)" text-anchor="end" class="data" font-size="6.4" fill="#fff">// 01 / 04</text>
+      <text transform="translate(281.8 454) rotate(90)" text-anchor="end" class="wide" font-size="4" font-weight="600" fill="#fff" letter-spacing=".4">INFORMATION</text>
+    </g>
+    <rect width="300" height="534" fill="none" stroke="#fff" stroke-opacity=".2"/>
+  </g>
+
+  <!-- 标注 -->
+  <g class="cjk note">
+    <path class="lead" d="M102 70 V30 H412"/><text x="420" y="34">① 顶栏高 4.6875rem，垫一道两段的黑色渐变；Logo 左起 0.875rem</text>
+    <path class="lead" d="M352 70 H412"/><text x="420" y="74">② 导航收成菜单按钮，占右栏上方的那一格；</text><text x="420" y="90">   分享、音频这类小按钮排在它的左边</text>
+    <path class="lead" d="M360 100 H388 V120 H412"/><text x="420" y="124">③ 横线在顶栏的下缘。只有首页的横线在底带的上缘（虚线处）</text>
+    <path class="lead" d="M250 180 H412"/><text x="420" y="184">④ 内容区四边各留 0.875rem；情报屏的图片堆到列表上方，</text><text x="420" y="200">   贴着顶栏和左右两边</text>
+    <path class="lead" d="M323.2 300 H412"/><text x="420" y="304">⑤ 右栏仍在右边，宽 2.875rem；竖线、横线是 50% 的白，</text><text x="420" y="320">   比横屏亮一档</text>
+    <path class="lead" d="M356 488 H384 V440 H412"/><text x="420" y="444">⑥ 计数在右栏底部：数字 1.8rem，居中，下缘被裁掉；</text><text x="420" y="460">   “当前 / 总数”0.5rem、栏目名 0.3125rem，竖着写，压在数字上</text>
+    <path class="lead" d="M250 516 H396 V500 H412"/><text x="420" y="504">⑦ 底带高 6rem。幽灵标题 3.5rem，左起 1.4375rem，上缘被裁掉</text>
+    <path class="lead" d="M222 546 H412"/><text x="420" y="550">⑧ 滚动提示距底 1.875rem，相对整屏居中；字和箭头是横屏的一半</text>
+  </g>
+  <text x="40" y="596" class="cjk" font-size="12" fill="#8d8d8d">竖屏线框按官网样式表绘制（2026-10-08，375 × 812 视口）。官网竖屏以 750 宽为基准，图中的 rem 是折半以后的值。灰块代表官方图片与文字，未使用任何官方素材。</text>
+</svg>

@@ -116,7 +116,7 @@ describe('OperatorShowcase', () => {
     expect(stagger.children).toHaveLength(4)
     expect(stagger.firstElementChild).toHaveClass('motion-safe:animate-ark-enter-left')
     expect(showcase.querySelector('[data-ark="portrait"]')).toHaveClass(
-      'motion-safe:animate-ark-enter-right',
+      'landscape:motion-safe:animate-ark-enter-right',
       'motion-reduce:animate-ark-fade-in',
     )
   })
@@ -127,8 +127,35 @@ describe('OperatorShowcase', () => {
     expect(showcase.querySelector('[data-ark="portrait"]')).toHaveClass(
       'portrait:relative',
       'portrait:w-full',
+      // 和屏幕一样宽的图片不滑进来，只淡入：滑的那一下会撑出横向滚动条
+      'portrait:animate-ark-fade-in',
     )
     expect(showcase.querySelector('[data-ark="scrim"]')).toHaveClass('portrait:hidden')
     expect(showcase.querySelector('[data-ark="ghost-title"]')).toHaveClass('portrait:hidden')
+  })
+
+  it('竖屏时不被内容撑宽：底栏比屏幕宽就自己横向滚动', () => {
+    render(
+      <OperatorShowcase
+        data-testid="showcase"
+        name="干员代号"
+        src="/a.png"
+        footer={<div data-testid="footer">缩略图</div>}
+      />,
+    )
+    const showcase = screen.getByTestId('showcase')
+    expect(showcase).toHaveClass('portrait:grid-cols-[minmax(0,1fr)]')
+    expect(showcase.querySelector('[data-ark="stagger"]')).toHaveClass(
+      'portrait:grid-cols-[minmax(0,1fr)]',
+      'portrait:[&>*]:max-w-full',
+    )
+    expect(screen.getByTestId('footer').parentElement).toHaveClass('portrait:overflow-x-auto')
+  })
+
+  it('没有底栏时不留那一栏', () => {
+    render(<OperatorShowcase data-testid="showcase" name="干员代号" src="/a.png" label={null} />)
+    const stagger = screen.getByTestId('showcase').querySelector('[data-ark="stagger"]')
+    // 只剩名字
+    expect(stagger?.children).toHaveLength(1)
   })
 })

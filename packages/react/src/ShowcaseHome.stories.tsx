@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { figure, scene } from '../.storybook/art'
+import { fitScreen } from '../.storybook/scale'
 import {
   CountUp,
   EntryGrid,
@@ -28,6 +29,8 @@ const meta = {
   tags: ['!autodocs'],
   parameters: { controls: { disable: true } },
   globals: { backgrounds: { value: 'scene' } },
+  // 游戏内的界面按 1280 × 720 排：根字号随画布等比缩放，画布多大都是完整的一屏
+  decorators: [fitScreen('game')],
 } satisfies Meta
 
 export default meta
@@ -63,7 +66,7 @@ export const Home: Story = {
         <Resource label="理智" value={131} max={135} />
       </ResourceBar>
 
-      <div className="flex min-h-screen items-center justify-between gap-ark-7 px-ark-7 pt-20 pb-ark-7 portrait:flex-col portrait:items-stretch">
+      <div className="box-border flex min-h-screen items-center justify-between gap-ark-7 px-ark-7 pt-20 pb-ark-7 portrait:flex-col portrait:items-stretch">
         {/* 左组：博士信息和次要入口，向右后方倾 */}
         <TiltGroup side="left" sway className="relative w-80 portrait:w-auto">
           <PanelGrid>

@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from '@storybook/react-vite'
 import { useState } from 'react'
 import { figure, scene } from '../.storybook/art'
 import { glyphs } from '../.storybook/glyphs'
+import { fitScreen } from '../.storybook/scale'
 import {
   ActionButton,
   BackHome,
@@ -34,6 +35,8 @@ const meta = {
   tags: ['!autodocs'],
   parameters: { controls: { disable: true } },
   globals: { backgrounds: { value: 'scene' } },
+  // 游戏内的界面按 1280 × 720 排：根字号随画布等比缩放，画布多大都是完整的一屏
+  decorators: [fitScreen('game')],
 } satisfies Meta
 
 export default meta
@@ -132,47 +135,54 @@ export const Hud: Story = {
           alt=""
           className="absolute inset-0 -z-3 block size-full object-cover opacity-70"
         />
-        {/* 战场：一张透视的格子。选中了干员时，可部署的地块用半透明的信号色高亮 */}
-        <svg
-          aria-hidden="true"
-          viewBox="0 0 720 405"
-          preserveAspectRatio="xMidYMid meet"
-          fill="none"
-          className="absolute inset-0 -z-2 block size-full"
-        >
-          <g className="stroke-ark-neutral-white/15">
-            <path d="M150 300 570 300 520 120 200 120Z" />
-            <path d="M163 255H557M175 210H545M188 165H532" />
-            <path d="M234 300 264 120M318 300 328 120M402 300 392 120M486 300 456 120" />
-          </g>
-          {selected && (
-            <path
-              d="M402 255 479 255 472 210 400 210Z"
-              className="fill-ark-signal/30 stroke-none"
-            />
-          )}
-        </svg>
+        {/*
+          战场和站在上面的单位放进同一个 16:9 的框，在画面里居中：
+          画布比 16:9 宽或者窄，单位都还站在自己的格子上
+        */}
+        <div className="absolute inset-0 -z-2 grid place-items-center [container-type:size]">
+          <div className="relative aspect-video w-[min(100cqw,100cqh*16/9)]">
+            {/* 一张透视的格子。选中了干员时，可部署的地块用半透明的信号色高亮 */}
+            <svg
+              aria-hidden="true"
+              viewBox="0 0 720 405"
+              fill="none"
+              className="absolute inset-0 block size-full"
+            >
+              <g className="stroke-ark-neutral-white/15">
+                <path d="M150 300 570 300 520 120 200 120Z" />
+                <path d="M163 255H557M175 210H545M188 165H532" />
+                <path d="M234 300 264 120M318 300 328 120M402 300 392 120M486 300 456 120" />
+              </g>
+              {selected && (
+                <path
+                  d="M402 255 479 255 472 210 400 210Z"
+                  className="fill-ark-signal/30 stroke-none"
+                />
+              )}
+            </svg>
 
-        {/* 单位头顶的细条：蓝是我方的生命，黄绿是技力；敌方是红 */}
-        <div className="absolute top-[46%] left-[60%]">
-          <UnitBar
-            value={76}
-            skill={18}
-            skillMax={34}
-            label="我方单位的生命"
-            skillLabel="我方单位的技力"
-            className="absolute -top-ark-3 left-1/2 -translate-x-1/2"
-          />
-          <div aria-hidden="true" className="size-9 bg-ark-signal-info-deep/90" />
-        </div>
-        <div className="absolute top-[30%] left-[27%]">
-          <UnitBar
-            side="enemy"
-            value={41}
-            label="敌方单位的生命"
-            className="absolute -top-ark-2 left-1/2 -translate-x-1/2"
-          />
-          <div aria-hidden="true" className="size-9 bg-ark-signal-danger/80" />
+            {/* 单位头顶的细条：蓝是我方的生命，黄绿是技力；敌方是红 */}
+            <div className="absolute top-[46%] left-[60%]">
+              <UnitBar
+                value={76}
+                skill={18}
+                skillMax={34}
+                label="我方单位的生命"
+                skillLabel="我方单位的技力"
+                className="absolute -top-ark-3 left-1/2 -translate-x-1/2"
+              />
+              <div aria-hidden="true" className="size-9 bg-ark-signal-info-deep/90" />
+            </div>
+            <div className="absolute top-[30%] left-[27%]">
+              <UnitBar
+                side="enemy"
+                value={41}
+                label="敌方单位的生命"
+                className="absolute -top-ark-2 left-1/2 -translate-x-1/2"
+              />
+              <div aria-hidden="true" className="size-9 bg-ark-signal-danger/80" />
+            </div>
+          </div>
         </div>
 
         {/* 战况置顶居中 */}

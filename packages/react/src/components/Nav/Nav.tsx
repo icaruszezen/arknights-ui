@@ -52,7 +52,8 @@ export interface NavProps extends ComponentProps<'nav'> {
  * 顶部一排双语导航：英文窄体是视觉主体，中文小字是说明。当前项只变颜色。
  *
  * 竖屏时折叠为菜单按钮，展开后是全屏菜单：一项一行，英文贴左、中文贴右，逐项自右滑入——
- * 窄屏重新编排，而不是把横排缩小到看不清。
+ * 窄屏重新编排，而不是把横排缩小到看不清。菜单里的尺寸竖屏时是横屏的一半：
+ * 官网只在竖屏用这个菜单，那里以 750 宽为基准，同样的 rem 在手机上只有一半大。
  *
  * 子元素是若干个 `NavItem`。请用 `aria-label` 说明这是哪一组导航。
  * 它不自己定位，固定在顶部交给使用方。按方向折叠时，横排和菜单里各渲染一份子元素，
@@ -186,11 +187,13 @@ const layouts = {
       'after:absolute after:inset-x-0 after:bottom-0 after:h-(--ark-line-strong) after:bg-ark-signal',
   },
   // 全屏菜单（官网实测）：一行 7.5rem 高、底部一条细线，英文 2.25rem 贴左、中文 1.75rem 贴右；
-  // 中文下面压一条 0.375rem 的粗条，骑在这一行的底线上，颜色跟着文字走
+  // 中文下面压一条 0.375rem 的粗条，骑在这一行的底线上，颜色跟着文字走。
+  // 这些是官网竖屏的 rem 值，那里以 750 宽为基准、手机上的根字号只有 8px 上下，
+  // 所以竖屏时全部折半：行高 3.75rem，英文 1.125rem，中文 0.875rem，粗条 0.1875rem
   menu: {
-    root: 'flex h-30 items-center justify-between gap-ark-4 border-b border-ark-rule',
-    main: 'text-[2.25rem] leading-ark-solid',
-    sub: 'relative flex h-full items-center text-[1.75rem] leading-ark-solid after:absolute after:inset-x-0 after:-bottom-[0.1875rem] after:h-1.5 after:bg-current',
+    root: 'flex h-30 items-center justify-between gap-ark-4 border-b border-ark-rule portrait:h-15',
+    main: 'text-[2.25rem] leading-ark-solid portrait:text-[1.125rem]',
+    sub: 'relative flex h-full items-center text-[1.75rem] leading-ark-solid after:absolute after:inset-x-0 after:-bottom-[0.1875rem] after:h-1.5 after:bg-current portrait:text-[0.875rem] portrait:after:-bottom-[0.09375rem] portrait:after:h-[0.1875rem]',
     indicator:
       'after:absolute after:inset-y-0 after:-left-ark-4 after:w-(--ark-line-strong) after:bg-ark-signal',
   },
