@@ -22,6 +22,8 @@
   --color-ark-neutral-paper: var(--ark-color-neutral-paper);
   --color-ark-neutral-paper-ink: var(--ark-color-neutral-paper-ink);
   --color-ark-neutral-paper-muted: var(--ark-color-neutral-paper-muted);
+  --color-ark-neutral-paper-deep: var(--ark-color-neutral-paper-deep);
+  --color-ark-neutral-paper-canvas: var(--ark-color-neutral-paper-canvas);
   --color-ark-neutral-graphite: var(--ark-color-neutral-graphite);
   --color-ark-neutral-graphite-deep: var(--ark-color-neutral-graphite-deep);
   --color-ark-line-hairline: var(--ark-color-line-hairline);
@@ -31,6 +33,7 @@
   --color-ark-signal-info-soft: var(--ark-color-signal-info-soft);
   --color-ark-signal-info-game: var(--ark-color-signal-info-game);
   --color-ark-signal-info-deep: var(--ark-color-signal-info-deep);
+  --color-ark-signal-info-ink: var(--ark-color-signal-info-ink);
   --color-ark-signal-action: var(--ark-color-signal-action);
   --color-ark-signal-accent: var(--ark-color-signal-accent);
   --color-ark-signal-danger: var(--ark-color-signal-danger);
@@ -62,6 +65,26 @@
   --color-ark-brand-skland-bg: var(--ark-color-brand-skland-bg);
   --color-ark-brand-skland-text: var(--ark-color-brand-skland-text);
 
+  /* color · 语义层 */
+  --color-ark-signal: var(--ark-signal);
+  --color-ark-on-signal: var(--ark-on-signal);
+  --color-ark-danger: var(--ark-danger);
+  --color-ark-on-danger: var(--ark-on-danger);
+  --color-ark-canvas: var(--ark-canvas);
+  --color-ark-surface: var(--ark-surface);
+  --color-ark-surface-raised: var(--ark-surface-raised);
+  --color-ark-control: var(--ark-control);
+  --color-ark-disabled: var(--ark-disabled);
+  --color-ark-on-disabled: var(--ark-on-disabled);
+  --color-ark-fg: var(--ark-fg);
+  --color-ark-fg-secondary: var(--ark-fg-secondary);
+  --color-ark-fg-muted: var(--ark-fg-muted);
+  --color-ark-rule: var(--ark-rule);
+  --color-ark-rule-strong: var(--ark-rule-strong);
+  --color-ark-invert: var(--ark-invert);
+  --color-ark-on-invert: var(--ark-on-invert);
+  --color-ark-danger-fg: var(--ark-danger-fg);
+
   /* font */
   --font-ark-latin-condensed: var(--ark-font-family-latin-condensed);
   --font-ark-latin-wide: var(--ark-font-family-latin-wide);
@@ -80,6 +103,7 @@
   --text-ark-nav: var(--ark-font-size-nav);
   --text-ark-body-lg: var(--ark-font-size-body-lg);
   --text-ark-body: var(--ark-font-size-body);
+  --text-ark-base: var(--ark-font-size-base);
   --text-ark-label: var(--ark-font-size-label);
   --text-ark-caption: var(--ark-font-size-caption);
   --text-ark-micro: var(--ark-font-size-micro);

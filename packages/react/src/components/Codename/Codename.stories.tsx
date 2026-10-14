@@ -6,7 +6,7 @@ import { Tag } from '../Tag'
 import { Codename } from './Codename'
 
 const meta = {
-  title: '场景/干员/Codename',
+  title: '排版与装饰/Codename',
   component: Codename,
   args: { children: '干员代号', sub: 'Codename' },
 } satisfies Meta<typeof Codename>

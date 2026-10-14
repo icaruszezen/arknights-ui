@@ -38,9 +38,9 @@ describe('TiltGroup', () => {
     expect(group).not.toHaveClass('origin-right')
   })
 
-  it('竖屏取消倾斜', () => {
+  it('窄屏取消倾斜', () => {
     render(<TiltGroup data-testid="group" />)
-    expect(screen.getByTestId('group')).toHaveClass('portrait:transform-none')
+    expect(screen.getByTestId('group')).toHaveClass('max-md:transform-none')
   })
 
   it('默认不摆动：移动指针不改样式', () => {

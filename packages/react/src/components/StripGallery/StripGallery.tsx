@@ -12,7 +12,7 @@ export type StripGalleryProps = ComponentProps<'ul'>
  * 子元素是若干个 `Strip`，各自包进一个列表项。条带之间没有缝——每条的右缘有一道暗边，
  * 相邻两条靠它分开（官网实测）。条带默认是 4:9 的竖条，
  * 给这个列表一个高度（如 `h-[70vh]`）就改为撑满这个高度。
- * 竖屏时改成纵向堆叠的横带，而不是把竖条挤得更窄。
+ * 窄屏时改成纵向堆叠的横带，而不是把竖条挤得更窄。
  */
 export function StripGallery({ className, children, ...rest }: StripGalleryProps) {
   return (
@@ -22,7 +22,7 @@ export function StripGallery({ className, children, ...rest }: StripGalleryProps
       className={cn(
         // 一行、等宽；行高在列表有高度时撑满，否则由条带的比例决定
         'm-0 box-border grid list-none auto-cols-fr grid-flow-col grid-rows-[minmax(0,1fr)] p-0',
-        'portrait:grid-flow-row portrait:grid-rows-none',
+        'max-md:grid-flow-row max-md:grid-rows-none',
         className,
       )}
     >
@@ -82,10 +82,10 @@ const layer = 'pointer-events-none absolute inset-0'
 const fade = 'transition-opacity duration-(--ark-motion-duration-base) ease-ark-standard'
 
 // 四道黑色渐变（官网实测）：底部两道叠在一起，顶部一道给顶栏垫底，右缘一道 4rem 的暗边把相邻两条分开。
-// 竖屏是横带，换成底部一道加左侧一道
+// 窄屏是横带，换成底部一道加左侧一道
 const shade = cn(
   'bg-[linear-gradient(0deg,#000,transparent_40%),linear-gradient(0deg,#000,transparent_30%),linear-gradient(#000,rgba(0,0,0,0.6)_20%,transparent_40%),linear-gradient(-90deg,rgba(0,0,0,0.8),transparent_4rem)]',
-  'portrait:bg-[linear-gradient(0deg,rgba(0,0,0,0.6),transparent_30%),linear-gradient(90deg,#000,transparent_30%)]',
+  'max-md:bg-[linear-gradient(0deg,rgba(0,0,0,0.6),transparent_30%),linear-gradient(90deg,#000,transparent_30%)]',
 )
 
 /**
@@ -118,7 +118,7 @@ export function Strip(props: StripProps) {
 
   const classes = cn(
     'group @container relative isolate box-border block aspect-[4/9] min-w-0 overflow-hidden font-ark-cjk-sans text-ark-fg no-underline',
-    'portrait:aspect-[5/2]',
+    'max-md:aspect-[5/2]',
     // 条带贴着列表的边，轮廓画在内侧
     interactive && focusRingInset,
     className,
@@ -153,7 +153,7 @@ export function Strip(props: StripProps) {
           className={cn(
             layer,
             'bg-[linear-gradient(0deg,transparent,currentColor_30%,transparent_60%)] opacity-70',
-            'portrait:bg-[linear-gradient(90deg,transparent,currentColor_20%,transparent_70%)] portrait:opacity-90',
+            'max-md:bg-[linear-gradient(90deg,transparent,currentColor_20%,transparent_70%)] max-md:opacity-90',
           )}
           style={{ color: tint } as CSSProperties}
         />
@@ -164,7 +164,7 @@ export function Strip(props: StripProps) {
           data-ark="strip-wash"
           className={cn(
             layer,
-            'bg-[linear-gradient(0deg,currentColor,transparent_50%)] opacity-0 group-hover:opacity-50 portrait:hidden',
+            'bg-[linear-gradient(0deg,currentColor,transparent_50%)] opacity-0 group-hover:opacity-50 max-md:hidden',
             fade,
           )}
           style={{ color: wash } as CSSProperties}
@@ -172,7 +172,7 @@ export function Strip(props: StripProps) {
       )}
       <span aria-hidden="true" data-ark="strip-shade" className={cn(layer, shade)} />
       {/* 竖屏的横带上，文字块的位置和字号是固定的，不再跟着宽度走（官网实测，按 375 宽折算） */}
-      <span className="absolute right-ark-3 bottom-[20.5556%] left-[27.9167cqw] grid justify-items-start portrait:bottom-[1.8125rem] portrait:left-[3.75rem]">
+      <span className="absolute right-ark-3 bottom-[20.5556%] left-[27.9167cqw] grid justify-items-start max-md:bottom-[1.8125rem] max-md:left-[3.75rem]">
         <IconTitle
           as="span"
           size="lg"
@@ -180,7 +180,7 @@ export function Strip(props: StripProps) {
           icon={icon}
           sub={sub}
           // 30rem 宽的条带上是 3.375rem；一圈黑色的晕让字从图里浮出来
-          className="text-[length:clamp(1rem,11.25cqw,3.375rem)] drop-shadow-[0_0_0.5rem_#000] portrait:text-[1.6875rem]"
+          className="text-[length:clamp(1rem,11.25cqw,3.375rem)] drop-shadow-[0_0_0.5rem_#000] max-md:text-[1.6875rem]"
         >
           {children}
         </IconTitle>
@@ -192,7 +192,7 @@ export function Strip(props: StripProps) {
         <span
           aria-hidden="true"
           data-ark="strip-rule"
-          className="mt-[clamp(0.625rem,4.1667cqw,1.25rem)] block h-px w-[clamp(3.5rem,22.5cqw,6.75rem)] bg-current portrait:mt-[0.625rem] portrait:w-[3.375rem]"
+          className="mt-[clamp(0.625rem,4.1667cqw,1.25rem)] block h-px w-[clamp(3.5rem,22.5cqw,6.75rem)] bg-current max-md:mt-[0.625rem] max-md:w-[3.375rem]"
         />
       </span>
     </>

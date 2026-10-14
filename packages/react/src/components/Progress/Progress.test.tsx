@@ -91,7 +91,7 @@ describe('Progress', () => {
     rerender(<Progress aria-label="加载" value={72} />)
     expect(screen.getByRole('progressbar').lastElementChild).toHaveClass('bg-ark-signal')
 
-    rerender(<Progress aria-label="经验" variant="thick" tone="action" value={72} />)
+    rerender(<Progress aria-label="经验" variant="thick" color="warning" value={72} />)
     expect(screen.getByRole('progressbar').lastElementChild).toHaveClass('bg-ark-signal-action')
   })
 })

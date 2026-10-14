@@ -1,9 +1,9 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
-import { formatStatValue } from '../Stat'
+import { formatStatValue } from '../../utils/format'
 
 export type CounterSize = 'sm' | 'md'
-export type CounterVertical = 'portrait' | 'always' | 'never'
+export type CounterVertical = 'narrow' | 'always' | 'never'
 
 export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
   /** 当前是第几个。 */
@@ -31,7 +31,7 @@ export interface CounterProps extends Omit<ComponentProps<'p'>, 'children'> {
   /**
    * 什么时候换成窄栏里的竖排写法（只对 `md` 起作用）：大数字缩到 1.8rem、居中，
    * “当前 / 总数”和名称竖着写，贴在右下角、压在数字上，微缩字不显示。整块只有 2rem 宽。
-   * - `portrait`：竖屏时（官网的做法：竖屏的右栏只有一个菜单按钮那么宽）
+   * - `narrow`：视口窄于 48rem 时（官网竖屏的右栏只有一个菜单按钮那么宽）
    * - `always`：始终竖排
    * - `never`：始终横排
    * @default 'never'
@@ -65,7 +65,7 @@ const labelText: Record<CounterSize, string> = {
 const restBase = 'font-ark-data leading-ark-solid font-ark-regular whitespace-nowrap'
 
 // 窄栏里的竖排写法。取值是官网竖屏的一半：官网竖屏以 750 宽为基准，这里按 375 宽算（见 README）。
-// portrait 那一份和 always 逐项相同，只是每个类前面多一个 portrait:
+// narrow 那一份和 always 逐项相同，只是每个类前面多一个 max-md:
 const narrow: Record<Exclude<CounterVertical, 'never'>, Record<string, string>> = {
   always: {
     root: 'relative block w-8',
@@ -77,14 +77,14 @@ const narrow: Record<Exclude<CounterVertical, 'never'>, Record<string, string>> 
     micro: 'hidden',
     label: 'absolute right-3 bottom-0 text-[0.3125rem] [writing-mode:vertical-rl]',
   },
-  portrait: {
-    root: 'portrait:relative portrait:block portrait:w-8',
-    big: 'portrait:w-full portrait:min-w-0 portrait:justify-center portrait:text-[1.8rem]',
-    aside: 'portrait:absolute portrait:right-0 portrait:bottom-0 portrait:pb-0',
-    count: 'portrait:text-[0.5rem] portrait:[writing-mode:vertical-rl]',
-    micro: 'portrait:hidden',
+  narrow: {
+    root: 'max-md:relative max-md:block max-md:w-8',
+    big: 'max-md:w-full max-md:min-w-0 max-md:justify-center max-md:text-[1.8rem]',
+    aside: 'max-md:absolute max-md:right-0 max-md:bottom-0 max-md:pb-0',
+    count: 'max-md:text-[0.5rem] max-md:[writing-mode:vertical-rl]',
+    micro: 'max-md:hidden',
     label:
-      'portrait:absolute portrait:right-3 portrait:bottom-0 portrait:text-[0.3125rem] portrait:[writing-mode:vertical-rl]',
+      'max-md:absolute max-md:right-3 max-md:bottom-0 max-md:text-[0.3125rem] max-md:[writing-mode:vertical-rl]',
   },
 }
 
@@ -98,7 +98,7 @@ const narrow: Record<Exclude<CounterVertical, 'never'>, Record<string, string>> 
  * 基线上——再把数字往下挪，裁掉的就只有下缘，换什么字体都一样。
  *
  * 官网竖屏的右栏只有一个菜单按钮那么宽，计数在那里换了一种写法：数字缩小、居中，后面两行竖着写，
- * 压在数字上。放进 `Shell` 的右栏时请加 `vertical="portrait"`。
+ * 压在数字上。放进 `Shell` 的右栏时请加 `vertical="narrow"`。
  */
 export function Counter({
   value,

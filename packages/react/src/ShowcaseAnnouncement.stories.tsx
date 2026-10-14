@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react-vite'
 import { figure, item, scenes } from '../.storybook/art'
-import { glyphs } from '../.storybook/glyphs'
 import {
+  Avatar,
   Barcode,
+  Card,
   Codename,
   CornerMarks,
   Heading,
@@ -10,12 +11,11 @@ import {
   KeyValueList,
   MicroText,
   NumberedSection,
-  OperatorCard,
   Pattern,
-  ProductCard,
   Rating,
   Scrim,
   Serial,
+  Stat,
   Tag,
   TimeRange,
 } from './index'
@@ -41,7 +41,6 @@ const operators = [
     role: '近卫',
     rarity: 6,
     body: '#9aa3a8',
-    glyph: glyphs.slashes,
   },
   {
     id: 'b',
@@ -50,14 +49,13 @@ const operators = [
     role: '术师',
     rarity: 5,
     body: '#a39a8f',
-    glyph: glyphs.diamond,
   },
 ] as const
 
 export const Announcement: Story = {
   name: '活动公告',
   render: () => (
-    <article className="relative isolate mx-auto w-[44rem] max-w-full bg-ark-neutral-black">
+    <article className="relative isolate mx-auto w-[44rem] max-w-full bg-ark-canvas">
       {/* 底纹：整面极淡的噪点，让大面积的留白不发飘 */}
       <Pattern variant="grain" className="absolute inset-0 -z-1" />
       {/* 贴边的微缩英文，写的是真实内容 */}
@@ -88,7 +86,7 @@ export const Announcement: Story = {
       <CornerMarks className="m-ark-5 grid gap-ark-7 p-ark-6">
         <NumberedSection number={1} title="活动说明" sub="Event Info" headingAs="h2">
           <KeyValueList>
-            <KeyValue label="活动时间" tone="signal">
+            <KeyValue label="活动时间" color="signal">
               <TimeRange from="2026-10-03T16:00" to="2026-10-17T03:59" />
             </KeyValue>
             <KeyValue label="解锁条件">通关主线 1-10</KeyValue>
@@ -103,14 +101,7 @@ export const Announcement: Story = {
           <ul className="m-0 grid list-none gap-ark-5 p-0">
             {operators.map(operator => (
               <li key={operator.id} className="flex items-end gap-ark-5">
-                <OperatorCard
-                  src={figure(operator.body)}
-                  rarity={operator.rarity}
-                  classIcon={operator.glyph}
-                  className="aspect-[3/4] w-28"
-                >
-                  {operator.name}
-                </OperatorCard>
+                <Avatar src={figure(operator.body)} name={operator.name} size="xl" />
                 <div className="grid justify-items-start gap-ark-3 pb-ark-2">
                   <Rating value={operator.rarity} shape="diamond" />
                   <Codename as="h3" sub={operator.en}>
@@ -138,16 +129,22 @@ export const Announcement: Story = {
               ] as const
             ).map(([name, sub, price, body]) => (
               <li key={name} className="flex">
-                <ProductCard
-                  media={<img src={item(body)} alt="" className="size-16" />}
-                  sub={sub}
-                  price={price}
-                  currency={glyphs.blocks}
-                  currencyLabel="活动代币"
-                  className="w-40"
-                >
-                  {name}
-                </ProductCard>
+                <Card rounded padding="sm" className="grid w-40 justify-items-center gap-ark-3">
+                  <span className="justify-self-stretch text-ark-label font-ark-bold">
+                    {name}
+                    <span className="ml-ark-2 font-ark-data font-ark-regular text-ark-fg-muted">
+                      {sub}
+                    </span>
+                  </span>
+                  <img src={item(body)} alt="" className="size-16" />
+                  <Stat
+                    label="活动代币"
+                    value={price}
+                    size="sm"
+                    orientation="horizontal"
+                    className="justify-self-stretch"
+                  />
+                </Card>
               </li>
             ))}
           </ul>
@@ -160,7 +157,7 @@ export const Announcement: Story = {
           本页是演示用的占位内容，不对应任何真实活动，也不是官方发布的公告。
           活动时间、奖励内容请以官方渠道为准。
         </p>
-        <div className="flex items-end justify-between">
+        <div className="flex flex-wrap items-end justify-between gap-ark-4">
           <Barcode value="ARK-UI 2026-10" />
           <Serial prefix="NO." value={147} pad={4} className="text-ark-fg-muted" />
         </div>

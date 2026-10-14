@@ -1,11 +1,11 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
 import { clampProgress } from '../../utils/progress'
-import type { ProgressTone } from '../Progress'
+import type { ProgressColor } from '../Progress'
 
 export type RingProgressSize = 'sm' | 'md' | 'lg'
 
-export interface RingProgressProps extends ComponentProps<'div'> {
+export interface RingProgressProps extends Omit<ComponentProps<'div'>, 'color'> {
   /** 当前值，会被限制在 `0`–`max` 之间。 */
   value: number
   /**
@@ -14,10 +14,10 @@ export interface RingProgressProps extends ComponentProps<'div'> {
    */
   max?: number
   /**
-   * 进度的颜色。等级环、经验这类用 `action`（黄）。
+   * 进度的颜色。等级环、经验这类用 `warning`（黄）。
    * @default 'signal'
    */
-  tone?: ProgressTone
+  color?: ProgressColor
   /**
    * 直径 3rem / 4.5rem / 6rem，线宽 4 / 5 / 6px。
    * @default 'md'
@@ -43,10 +43,12 @@ const sizes: Record<RingProgressSize, { box: string; stroke: number; value: stri
   lg: { box: 'size-24', stroke: 600 / 96, value: 'text-ark-h1' },
 }
 
-const fill: Record<ProgressTone, string> = {
+const fill: Record<ProgressColor, string> = {
   signal: 'stroke-ark-signal',
-  action: 'stroke-ark-signal-action',
   neutral: 'stroke-ark-fg',
+  danger: 'stroke-ark-signal-danger',
+  warning: 'stroke-ark-signal-action',
+  success: 'stroke-ark-signal-success',
 }
 
 /**
@@ -58,7 +60,7 @@ const fill: Record<ProgressTone, string> = {
 export function RingProgress({
   value,
   max = 100,
-  tone = 'signal',
+  color = 'signal',
   size = 'md',
   label,
   labelPosition = 'above',
@@ -112,7 +114,7 @@ export function RingProgress({
             strokeDashoffset={100 - percent}
             className={cn(
               'transition-[stroke-dashoffset] duration-(--ark-motion-duration-base) ease-ark-standard motion-reduce:transition-none',
-              fill[tone],
+              fill[color],
             )}
           />
         </svg>

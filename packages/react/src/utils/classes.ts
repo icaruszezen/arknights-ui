@@ -28,6 +28,48 @@ export const triangleDown =
 export const hitArea =
   'after:absolute after:inset-x-0 after:top-1/2 after:h-11 after:-translate-y-1/2'
 
+/**
+ * 同上，但只在触屏（指针不精确）时撑大。
+ * 紧凑的控件排得很密时（表格行里的操作、工具栏），常驻的 44px 点击区会盖到上下相邻的控件上；
+ * 鼠标指得准，不需要它。
+ */
+export const hitAreaCoarse =
+  'pointer-coarse:after:absolute pointer-coarse:after:inset-x-0 pointer-coarse:after:top-1/2 pointer-coarse:after:h-11 pointer-coarse:after:-translate-y-1/2'
+
+/** 控件的五档尺寸，取值在 tokens 的 size.control 里。 */
+export type ControlSize = 'xs' | 'sm' | 'md' | 'lg' | 'xl'
+
+/** 控件的高度（最小高度：内容折行时可以撑开）。 */
+export const controlHeight: Record<ControlSize, string> = {
+  xs: 'min-h-(--ark-size-control-xs)',
+  sm: 'min-h-(--ark-size-control-sm)',
+  md: 'min-h-(--ark-size-control-md)',
+  lg: 'min-h-(--ark-size-control-lg)',
+  xl: 'min-h-(--ark-size-control-xl)',
+}
+
+/** 与高度同值的宽度：方形的控件（图标按钮、步进器的加减）。 */
+export const controlSquare: Record<ControlSize, string> = {
+  xs: 'size-(--ark-size-control-xs)',
+  sm: 'size-(--ark-size-control-sm)',
+  md: 'size-(--ark-size-control-md)',
+  lg: 'size-(--ark-size-control-lg)',
+  xl: 'size-(--ark-size-control-xl)',
+}
+
+/** 控件里文字的字号：越小的控件字越小，最小 12px。 */
+export const controlText: Record<ControlSize, string> = {
+  xs: 'text-ark-caption',
+  sm: 'text-ark-label',
+  md: 'text-ark-label',
+  lg: 'text-ark-base',
+  xl: 'text-ark-body-lg',
+}
+
+/** 禁用态：底色与文字都换成禁用的那一档，不响应悬停。写在原生可禁用的元素上。 */
+export const disabledControl =
+  'disabled:cursor-not-allowed disabled:border-transparent disabled:bg-ark-disabled disabled:text-ark-on-disabled'
+
 /** 横向滚动的容器：滚动条跟着细线的颜色走，不用系统默认的浅色轨道。 */
 export const thinScrollbar =
   '[scrollbar-color:var(--ark-rule-strong)_transparent] [scrollbar-width:thin]'

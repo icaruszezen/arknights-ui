@@ -11,58 +11,26 @@
 @import "@arknights-ui/tokens/tailwind.css";
 
 /*
- * 语义层。组件只引用这一层，不直接取调色板。
- * - 信号色：每个场景只有一个。在任意子树上覆盖 --ark-signal 即可换色。
- * - 明暗上下文：纸白面板设 data-ark-tone="light"，前景、细线、反白块随之翻转。
+ * 语义层（--ark-fg、--ark-surface、--ark-signal…）和它在 Tailwind 里的颜色键由 tokens 生成，
+ * 明暗两套取值、data-ark-theme / data-ark-tone 的选择器都在 tokens.css 里。
+ * 这里只补需要现算的几个：信号色和状态色用作文字或描边时的取值。
  */
-@layer theme {
-  :root {
-    --ark-signal: var(--ark-color-signal-info);
-    --ark-on-signal: var(--ark-color-neutral-black);
-  }
-
-  :root,
-  [data-ark-tone="dark"] {
-    --ark-fg: var(--ark-color-neutral-white);
-    --ark-fg-secondary: var(--ark-color-neutral-gray-300);
-    /* 最暗只到 gray-400：再暗一档的 gray-500 在石墨面板上只有约 3.3:1 */
-    --ark-fg-muted: var(--ark-color-neutral-gray-400);
-    --ark-rule: var(--ark-color-line-hairline);
-    --ark-rule-strong: var(--ark-color-line-hairline-strong);
-    --ark-invert: var(--ark-color-neutral-white);
-    --ark-on-invert: var(--ark-color-neutral-black);
-    --ark-signal-fg-mix: 100%;
-  }
-
-  [data-ark-tone="light"] {
-    --ark-fg: var(--ark-color-neutral-paper-ink);
-    /* 纸白面上能满足 4.5:1 的灰只有 gray-600，两档次要文字在这里合为一档 */
-    --ark-fg-secondary: var(--ark-color-neutral-gray-600);
-    --ark-fg-muted: var(--ark-color-neutral-gray-600);
-    --ark-rule: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 20%, transparent);
-    --ark-rule-strong: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 50%, transparent);
-    --ark-invert: var(--ark-color-neutral-paper-ink);
-    --ark-on-invert: var(--ark-color-neutral-paper);
-    /* 45%：半透明纸白压在黑底上会变暗，青蓝、蓝、黄、橙四种信号色在这个比例下都过 4.5:1 */
-    --ark-signal-fg-mix: 45%;
-  }
-}
-
 @theme inline {
-  --color-ark-signal: var(--ark-signal);
-  --color-ark-on-signal: var(--ark-on-signal);
   /*
-   * 信号色用作文字或描边时的取值：深色面上就是信号色本身，纸白面上压暗以保证对比度。
+   * 深色面上就是颜色本身，浅色面上压暗以保证对比度（--ark-signal-fg-mix：100% / 45%）。
    * 混色写在类里而不是存成变量，这样在子树上覆盖 --ark-signal 后仍然跟着变。
    */
   --color-ark-signal-fg: color-mix(in srgb, var(--ark-signal) var(--ark-signal-fg-mix), black);
-  --color-ark-fg: var(--ark-fg);
-  --color-ark-fg-secondary: var(--ark-fg-secondary);
-  --color-ark-fg-muted: var(--ark-fg-muted);
-  --color-ark-rule: var(--ark-rule);
-  --color-ark-rule-strong: var(--ark-rule-strong);
-  --color-ark-invert: var(--ark-invert);
-  --color-ark-on-invert: var(--ark-on-invert);
+  --color-ark-warning-fg: color-mix(
+    in srgb,
+    var(--ark-color-signal-action) var(--ark-signal-fg-mix),
+    black
+  );
+  --color-ark-success-fg: color-mix(
+    in srgb,
+    var(--ark-color-signal-success) var(--ark-signal-fg-mix),
+    black
+  );
 
   /*
    * 动画。旋转 1s linear、光标 1s step-end 是官网实测；菜单项淡入取 fast 档。
@@ -91,6 +59,15 @@
    */
   --animate-ark-scroll-hint: ark-scroll-hint 1.5s var(--ark-motion-easing-standard) infinite;
   --animate-ark-pulse: ark-pulse 2s var(--ark-motion-easing-standard) infinite;
+
+  /* 进度未知：一段色条自左向右走过轨道，1.5s 一轮（估计） */
+  --animate-ark-sweep: ark-sweep 1.5s var(--ark-motion-easing-standard) infinite;
+
+  /* 骨架的明暗起伏：1.6s 一轮，只动透明度（估计） */
+  --animate-ark-breathe: ark-breathe 1.6s var(--ark-motion-easing-standard) infinite;
+
+  /* 轻提示底下走时的细线：从满到空，匀速，只走一次。时长由 --ark-toast-duration 给出 */
+  --animate-ark-toast-timer: ark-toast-timer var(--ark-toast-duration, 5s) linear forwards;
 
   /* 立绘入场后的缓移（官网实测）：10 秒里自左移回原位，只走一次 */
   --animate-ark-drift: ark-drift 10s var(--ark-motion-easing-standard) both;
@@ -164,6 +141,24 @@
   }
   50% {
     opacity: 1;
+  }
+}
+@keyframes ark-sweep {
+  from {
+    left: -40%;
+  }
+  to {
+    left: 100%;
+  }
+}
+@keyframes ark-breathe {
+  50% {
+    opacity: 0.4;
+  }
+}
+@keyframes ark-toast-timer {
+  to {
+    scale: 0 1;
   }
 }
 @keyframes ark-drift {

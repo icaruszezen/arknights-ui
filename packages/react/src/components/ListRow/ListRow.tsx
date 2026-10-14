@@ -21,21 +21,21 @@ export type ListRowProps = ListRowAsDiv | ListRowAsAnchor
 const base = cn(
   // 日期和标题贴得很近：官网实测两行之间只有 0.125rem
   'group relative m-0 box-border grid min-h-ark-8 content-center items-center gap-x-ark-4 gap-y-0.5 border-b border-ark-rule py-ark-4 font-ark-cjk-sans text-ark-fg',
-  // 竖屏：排成一行，日期移到标题右侧
-  'portrait:min-h-ark-7 portrait:py-ark-3',
+  // 窄屏：排成一行，日期移到标题右侧
+  'max-md:min-h-ark-7 max-md:py-ark-3',
 )
 
-// 有没有分类一栏，决定了网格的列和竖屏时各格的位置
+// 有没有分类一栏，决定了网格的列和窄屏时各格的位置
 const layouts = {
   withCategory: {
-    root: 'grid-cols-[4rem_minmax(0,1fr)] portrait:grid-cols-[auto_minmax(0,1fr)_auto]',
-    date: 'portrait:col-start-3',
-    title: 'portrait:col-start-2',
+    root: 'grid-cols-[4rem_minmax(0,1fr)] max-md:grid-cols-[auto_minmax(0,1fr)_auto]',
+    date: 'max-md:col-start-3',
+    title: 'max-md:col-start-2',
   },
   plain: {
-    root: 'grid-cols-[minmax(0,1fr)] portrait:grid-cols-[minmax(0,1fr)_auto]',
-    date: 'portrait:col-start-2',
-    title: 'portrait:col-start-1',
+    root: 'grid-cols-[minmax(0,1fr)] max-md:grid-cols-[minmax(0,1fr)_auto]',
+    date: 'max-md:col-start-2',
+    title: 'max-md:col-start-1',
   },
 }
 
@@ -54,7 +54,7 @@ export function ListRow(props: ListRowProps) {
   const content = (
     <>
       {category != null && (
-        <span className="row-span-2 text-ark-body leading-ark-solid font-ark-bold text-ark-signal-fg portrait:row-span-1 portrait:text-[1rem]">
+        <span className="row-span-2 text-ark-body leading-ark-solid font-ark-bold text-ark-signal-fg max-md:row-span-1 max-md:text-[1rem]">
           {category}
         </span>
       )}
@@ -63,14 +63,14 @@ export function ListRow(props: ListRowProps) {
           value={date}
           className={cn(
             // 日期与标题同色（官网实测 #d2d2d2），不比标题更暗
-            'text-ark-fg-secondary portrait:row-start-1 portrait:text-ark-caption',
+            'text-ark-fg-secondary max-md:row-start-1 max-md:text-ark-caption',
             layout.date,
           )}
         />
       )}
       <span
         className={cn(
-          'line-clamp-2 text-ark-body leading-ark-snug font-ark-bold tracking-[2px] text-ark-fg-secondary portrait:row-start-1 portrait:text-[1rem]',
+          'line-clamp-2 text-ark-body leading-ark-snug font-ark-bold tracking-[2px] text-ark-fg-secondary max-md:row-start-1 max-md:text-[1rem]',
           linked && ['group-hover:text-ark-fg', colorTransition],
           layout.title,
         )}
@@ -82,7 +82,7 @@ export function ListRow(props: ListRowProps) {
           aria-hidden="true"
           className={cn(
             triangleRight,
-            'absolute top-1/2 right-ark-2 -translate-y-1/2 text-ark-fg-muted portrait:hidden',
+            'absolute top-1/2 right-ark-2 -translate-y-1/2 text-ark-fg-muted max-md:hidden',
             'transition-[color,translate] duration-(--ark-motion-duration-base) ease-ark-standard',
             'group-hover:text-ark-signal-fg motion-safe:group-hover:translate-x-1',
           )}
@@ -99,8 +99,8 @@ export function ListRow(props: ListRowProps) {
         className={cn(
           base,
           layout.root,
-          // 右侧给方向三角让出位置；竖屏不显示三角
-          'cursor-pointer pr-ark-6 no-underline portrait:pr-0',
+          // 右侧给方向三角让出位置；窄屏不显示三角
+          'cursor-pointer pr-ark-6 no-underline max-md:pr-0',
           focusRing,
           className,
         )}

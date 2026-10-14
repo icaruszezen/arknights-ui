@@ -3,7 +3,7 @@ import { KeyValue, KeyValueList } from '../KeyValue'
 import { TimeRange } from './TimeRange'
 
 const meta = {
-  title: '场景/宣传物料/TimeRange',
+  title: '数据展示/TimeRange',
   component: TimeRange,
   args: { from: '2026-10-03T16:00', to: '2026-10-17T03:59' },
 } satisfies Meta<typeof TimeRange>
@@ -31,7 +31,7 @@ export const WithYear: Story = {
 export const InKeyValue: Story = {
   render: args => (
     <KeyValueList className="max-w-xl">
-      <KeyValue label="活动时间" tone="signal">
+      <KeyValue label="活动时间" color="signal">
         <TimeRange {...args} />
       </KeyValue>
       <KeyValue label="兑换时间">

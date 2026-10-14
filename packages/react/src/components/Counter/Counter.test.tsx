@@ -140,7 +140,7 @@ describe('Counter', () => {
     expect(screen.getByText('ARKNIGHTS')).toHaveClass('hidden')
   })
 
-  it('vertical="portrait" 只在竖屏竖排：同一组类，前面多一个 portrait:', () => {
+  it('vertical="narrow" 只在窄屏竖排：同一组类，前面多一个 max-md:', () => {
     render(
       <Counter
         data-testid="counter"
@@ -148,26 +148,26 @@ describe('Counter', () => {
         total={5}
         label="INFORMATION"
         micro="ARKNIGHTS"
-        vertical="portrait"
+        vertical="narrow"
       />,
     )
     const counter = screen.getByTestId('counter')
-    expect(counter).toHaveAttribute('data-vertical', 'portrait')
-    // 横屏的写法原样保留
-    expect(counter).toHaveClass('inline-grid', 'portrait:block', 'portrait:w-8')
+    expect(counter).toHaveAttribute('data-vertical', 'narrow')
+    // 宽屏的写法原样保留
+    expect(counter).toHaveClass('inline-grid', 'max-md:block', 'max-md:w-8')
     const number = counter.querySelector('b')
-    expect(number).toHaveClass('text-[5.4rem]', 'portrait:text-[1.8rem]', 'portrait:justify-center')
+    expect(number).toHaveClass('text-[5.4rem]', 'max-md:text-[1.8rem]', 'max-md:justify-center')
     expect(screen.getByText('// 01 / 05')).toHaveClass(
       'text-ark-body',
-      'portrait:text-[0.5rem]',
-      'portrait:[writing-mode:vertical-rl]',
+      'max-md:text-[0.5rem]',
+      'max-md:[writing-mode:vertical-rl]',
     )
     expect(screen.getByText('INFORMATION')).toHaveClass(
-      'portrait:absolute',
-      'portrait:right-3',
-      'portrait:text-[0.3125rem]',
+      'max-md:absolute',
+      'max-md:right-3',
+      'max-md:text-[0.3125rem]',
     )
-    expect(screen.getByText('ARKNIGHTS')).toHaveClass('portrait:hidden')
+    expect(screen.getByText('ARKNIGHTS')).toHaveClass('max-md:hidden')
     expect(screen.getByText('ARKNIGHTS')).not.toHaveClass('hidden')
   })
 

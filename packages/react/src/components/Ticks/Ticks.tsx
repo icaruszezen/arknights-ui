@@ -15,6 +15,8 @@ export interface TicksProps extends Omit<ComponentProps<'div'>, 'children'> {
    * @default 5
    */
   major?: number
+  /** 再画一条贯穿的基线，像一把尺。官网的刻度没有这条线。 */
+  baseline?: boolean
 }
 
 const step = 'var(--ark-ticks-step, 0.5rem)'
@@ -23,40 +25,42 @@ const majorStep = `calc(${step} * var(--ark-ticks-major))`
 const ticks = (angle: string, period: string) =>
   `repeating-linear-gradient(${angle}, currentColor 0 1px, transparent 1px ${period})`
 
-// 三层背景，从上到下：基线、长刻度（满高）、短刻度（半高）
-const layers: Record<TicksOrientation, CSSProperties> = {
-  horizontal: {
-    backgroundImage: [
-      'linear-gradient(currentColor, currentColor)',
-      ticks('90deg', majorStep),
-      ticks('90deg', step),
-    ].join(', '),
-    backgroundSize: '100% 1px, 100% 100%, 100% 50%',
-    backgroundPosition: 'left bottom',
-    backgroundRepeat: 'no-repeat',
-  },
-  vertical: {
-    backgroundImage: [
-      'linear-gradient(currentColor, currentColor)',
-      ticks('180deg', majorStep),
-      ticks('180deg', step),
-    ].join(', '),
-    backgroundSize: '1px 100%, 100% 100%, 50% 100%',
-    backgroundPosition: 'left top',
-    backgroundRepeat: 'no-repeat',
-  },
-}
+// 三层背景，从上到下：基线、长刻度（满高）、短刻度（半高）。不要基线时第一层的尺寸是 0
+const layers = (orientation: TicksOrientation, baseline: boolean): CSSProperties =>
+  orientation === 'horizontal'
+    ? {
+        backgroundImage: [
+          'linear-gradient(currentColor, currentColor)',
+          ticks('90deg', majorStep),
+          ticks('90deg', step),
+        ].join(', '),
+        backgroundSize: `${baseline ? '100% 1px' : '0 0'}, 100% 100%, 100% 50%`,
+        backgroundPosition: 'left bottom',
+        backgroundRepeat: 'no-repeat',
+      }
+    : {
+        backgroundImage: [
+          'linear-gradient(currentColor, currentColor)',
+          ticks('180deg', majorStep),
+          ticks('180deg', step),
+        ].join(', '),
+        backgroundSize: `${baseline ? '1px 100%' : '0 0'}, 100% 100%, 50% 100%`,
+        backgroundPosition: 'left top',
+        backgroundRepeat: 'no-repeat',
+      }
 
 /**
- * 标尺刻度：一条基线，上面是等距的短刻度，每隔几格一条长的。铺满可用的宽度。
- * 和条码一样只在沉浸型页面里偶尔出现，强化“工程图”的语感。
+ * 刻度：等距的短线，每隔几格一条长的。铺满可用的宽度。
+ * 出处是官网图集页的时间轴（实测）：长刻度 `1rem × 1px`，两格之间夹着一半长的分格，
+ * 颜色是次要文字的灰，没有贯穿的基线。带数字、可以选的那种用 `Timeline`。
  *
  * 纯装饰，默认对读屏隐藏。格距由 `--ark-ticks-step` 决定（默认 0.5rem），
- * 刻度的长度就是元素的高度（竖向是宽度），默认 8px。
+ * 长刻度的长度就是元素的高度（竖向是宽度），默认 1rem。
  */
 export function Ticks({
   orientation = 'horizontal',
   major = 5,
+  baseline = false,
   className,
   style,
   ...rest
@@ -68,10 +72,12 @@ export function Ticks({
       {...rest}
       className={cn(
         'box-border text-ark-fg-muted',
-        orientation === 'vertical' ? 'w-2 self-stretch' : 'h-2 w-full',
+        orientation === 'vertical' ? 'w-4 self-stretch' : 'h-4 w-full',
         className,
       )}
-      style={{ '--ark-ticks-major': major, ...layers[orientation], ...style } as CSSProperties}
+      style={
+        { '--ark-ticks-major': major, ...layers(orientation, baseline), ...style } as CSSProperties
+      }
     />
   )
 }

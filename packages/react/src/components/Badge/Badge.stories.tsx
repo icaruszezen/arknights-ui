@@ -27,7 +27,7 @@ export const WithIcon: Story = {
   render: () => (
     <div className="grid w-fit gap-ark-1">
       <Badge count={1} icon={glyphs.peak} label="1 条告警" />
-      <Badge count={10} tone="signal" icon={glyphs.target} label="10 条通知" />
+      <Badge count={10} color="signal" icon={glyphs.target} label="10 条通知" />
     </div>
   ),
 }

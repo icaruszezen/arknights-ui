@@ -20,6 +20,8 @@
   --ark-color-neutral-paper: #fdfdfb; /* 社区 · 游戏主界面浅色面板（mashirozx/arknights-ui） */
   --ark-color-neutral-paper-ink: #323232; /* 社区 · 纸白面板上的文字色（mashirozx/arknights-ui）。与主界面实机截图取色一致 */
   --ark-color-neutral-paper-muted: #ebeceb; /* 社区 · 浅色面板的次级底 */
+  --ark-color-neutral-paper-deep: #dbdcdd; /* 社区 · 浅色面上控件的底。实机仓库分类未选中项的底色取到 #dbdcdd–#f4f4f5（MAA 的实机裁图），取深的一端 */
+  --ark-color-neutral-paper-canvas: #f2f2f2; /* 估计 · 亮色主题的页面底色。本仓库的设计决定；与森空岛首页底色同值 */
   --ark-color-neutral-graphite: #424242; /* 社区 · 游戏主界面深色面板。与主界面实机截图取色一致 */
   --ark-color-neutral-graphite-deep: #313131; /* 社区 · 更深一级的石墨灰（ak-ui） */
   --ark-color-line-hairline: rgba(255, 255, 255, 0.3); /* 实测 · 1px 分隔线的默认颜色 */
@@ -29,6 +31,7 @@
   --ark-color-signal-info-soft: rgba(24, 209, 255, 0.25); /* 实测 · 悬停时的幽灵英文大字 */
   --ark-color-signal-info-game: #22bbff; /* 社区 · 游戏内蓝色的常用近似（ak-ui、hexo-theme-arknights 均取 #2bf） */
   --ark-color-signal-info-deep: #0098dc; /* 社区 · 偏深的罗德岛蓝（ak-ui text-color）。作战里我方生命图标的蓝边取色是 #08a0f0，接近这个值 */
+  --ark-color-signal-info-ink: #0075a8; /* 社区 · 更深的蓝：设置页里选中的选项、打开的开关。对 Terra Wiki 的两张设置页截图取色；ak-ui 的深蓝也是这个值。白字压在上面是 5.1:1 */
   --ark-color-signal-action: #ffd802; /* 社区 · 行动 / 警示黄（ak-ui） */
   --ark-color-signal-accent: #ff5e19; /* 社区 · 高浓度橙色强调（mashirozx/arknights-ui）。与主界面实机截图取色一致：提醒用的菱形与面板上的橙色条 */
   --ark-color-signal-danger: #e33b3b; /* 社区 · 危险 / 敌方（ak-ui） */
@@ -76,6 +79,7 @@
   --ark-font-size-nav: 1.375rem; /* 实测 · 导航英文 */
   --ark-font-size-body-lg: 1.25rem; /* 实测 · 按钮中文、英文副标 */
   --ark-font-size-body: 1.125rem; /* 实测 · 新闻分类、正文 */
+  --ark-font-size-base: 1rem; /* 实测 · 公告正文、日期、设定条目的说明。应用界面里的正文从这一档起 */
   --ark-font-size-label: 0.875rem; /* 实测 · 导航中文副标、READ MORE */
   --ark-font-size-caption: 0.75rem; /* 实测 · 注释 */
   --ark-font-size-micro: 0.375rem; /* 实测 · 纯装饰的微缩英文 */
@@ -102,6 +106,13 @@
   --ark-space-7: 3rem; /* 估计 */
   --ark-space-8: 6rem; /* 社区 · 官网新闻行最小高度（ak-ui 官网研究） */
   --ark-space-9: 9rem; /* 实测 · 官网内容区左边距（1280 宽时为 96px） */
+
+  /* size */
+  --ark-size-control-xs: 1.5rem; /* 实测 · 官网弱按钮（READ MORE）的高度。可见形状只有 24px，触屏上要另外撑大点击区 */
+  --ark-size-control-sm: 2rem; /* 估计 · 紧凑的控件：工具栏、表格里的操作。本仓库的设计决定 */
+  --ark-size-control-md: 2.5rem; /* 估计 · 控件的默认高度。实机设置页的开关、滑块折到 720p 约 40px */
+  --ark-size-control-lg: 3rem; /* 估计 · 宽松的控件。实机设置页的分段选项约 48px；官网首页右栏的入口也是 3rem */
+  --ark-size-control-xl: 3.75rem; /* 实测 · 官网主按钮（更多情报 / READ MORE）的高度 */
 
   /* line */
   --ark-line-hairline: 1px; /* 实测 · 绝大多数分隔线 */
@@ -147,4 +158,138 @@
   --ark-pattern-fade-rule: linear-gradient(-90deg, rgba(255, 255, 255, 0.3), transparent); /* 实测 · 一端渐隐的细线 */
   --ark-pattern-hazard: repeating-linear-gradient(-45deg, #ffd802 0 0.5rem, #121212 0.5rem 1rem); /* 估计 · 警戒条纹 */
   --ark-pattern-halftone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cdefs%3E%3CradialGradient id='d'%3E%3Cstop stop-color='%23fff'/%3E%3Cstop offset='1' stop-color='%23000'/%3E%3C/radialGradient%3E%3Cpattern id='p' width='16' height='16' patternUnits='userSpaceOnUse' patternTransform='rotate(20)'%3E%3Crect width='16' height='16' fill='url(%23d)'/%3E%3C/pattern%3E%3ClinearGradient id='g' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop stop-color='%23fff'/%3E%3Cstop offset='.6' stop-color='%23000'/%3E%3C/linearGradient%3E%3Cfilter id='t' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 12 0 0 0 -6'/%3E%3CfeComponentTransfer%3E%3CfeFuncA type='linear' slope='.2'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3C/defs%3E%3Cg filter='url(%23t)'%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3Crect width='100%25' height='100%25' fill='url(%23p)' opacity='.5'/%3E%3C/g%3E%3C/svg%3E") 0 0 / 100% 100% no-repeat; /* 实测 · 半调网点的遮罩：点径随浓度变化，朝右上渐疏。点距 16px（官网的半调图量得约 15px）、网格转 20°、浓度 20%。由 packages/react/src/internal/halftone.ts 生成，不要手改 */
+}
+
+/*
+ * 语义层：组件只引用这一层，不直接取调色板。
+ * - 主题：data-ark-theme="dark | light | auto" 写在任意祖先上，不写就是暗色；auto 跟随系统。
+ * - 明暗上下文：data-ark-tone="dark | light" 让一棵子树换一套取值（纸白面板就是这样）；
+ *   "inverse" 换成与所在主题相反的那一套，只翻一层。
+ */
+:root {
+  --ark-signal: var(--ark-color-signal-info); /* 实测 · 每个场景唯一的信号色。在任意子树上覆盖它即可换色 */
+  --ark-on-signal: var(--ark-color-neutral-black); /* 实测 · 压在信号色实底上的文字。官网主按钮是黑字 */
+  --ark-danger: var(--ark-color-signal-alert); /* 估计 · 危险操作的实底。本仓库的设计决定：取告警红，白字压在上面是 7.4:1 */
+  --ark-on-danger: var(--ark-color-neutral-white); /* 估计 */
+}
+
+:root,
+[data-ark-theme="dark"],
+[data-ark-tone="dark"] {
+  --ark-canvas: var(--ark-color-neutral-black); /* 实测 · 页面底色 */
+  --ark-surface: var(--ark-color-neutral-ink-900); /* 实测 · 默认的面：面板、弹层 */
+  --ark-surface-raised: var(--ark-color-neutral-ink-800); /* 实测 · 抬起的一层：卡片、浮层 */
+  --ark-control: var(--ark-color-neutral-graphite-deep); /* 社区 · 控件未选中时的底。实机设置页取色 #313131 */
+  --ark-disabled: var(--ark-color-neutral-ink-700); /* 估计 · 禁用态的底 */
+  --ark-on-disabled: var(--ark-color-neutral-gray-500); /* 估计 · 禁用态的文字 */
+  --ark-fg: var(--ark-color-neutral-white); /* 实测 · 主文字 */
+  --ark-fg-secondary: var(--ark-color-neutral-gray-300); /* 实测 · 次要正文 */
+  --ark-fg-muted: var(--ark-color-neutral-gray-400); /* 实测 · 最暗只到 gray-400：它在默认面上是 7.2:1、控件底上 5.7:1；再暗一档的 gray-500 在控件底上不到 4.5:1 */
+  --ark-rule: var(--ark-color-line-hairline); /* 实测 · 细分隔线 */
+  --ark-rule-strong: var(--ark-color-line-hairline-strong); /* 实测 · 描边、强分隔线 */
+  --ark-invert: var(--ark-color-neutral-white); /* 实测 · 反白块：悬停、选中 */
+  --ark-on-invert: var(--ark-color-neutral-black); /* 实测 · 反白块上的文字 */
+  --ark-signal-fg-mix: 100%; /* 实测 · 信号色用作文字时保留的比例。深色面上就是信号色本身 */
+  --ark-danger-fg: color-mix(in srgb, var(--ark-color-signal-danger) 75%, white); /* 估计 · 报错的文字。危险红提亮到 75%：在抬起的面上是 4.9:1，原色只有 3.5:1 */
+  /* 反面的取值，data-ark-tone="inverse" 取用 */
+  --ark-inv-surface: var(--ark-color-neutral-paper);
+  --ark-inv-surface-raised: var(--ark-color-neutral-white);
+  --ark-inv-control: var(--ark-color-neutral-paper-deep);
+  --ark-inv-disabled: var(--ark-color-neutral-paper-muted);
+  --ark-inv-on-disabled: var(--ark-color-neutral-gray-500);
+  --ark-inv-fg: var(--ark-color-neutral-paper-ink);
+  --ark-inv-fg-secondary: var(--ark-color-neutral-gray-600);
+  --ark-inv-fg-muted: var(--ark-color-neutral-gray-600);
+  --ark-inv-rule: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 20%, transparent);
+  --ark-inv-rule-strong: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 60%, transparent);
+  --ark-inv-invert: var(--ark-color-neutral-paper-ink);
+  --ark-inv-on-invert: var(--ark-color-neutral-paper);
+  --ark-inv-signal-fg-mix: 45%;
+  --ark-inv-danger-fg: var(--ark-color-signal-alert);
+}
+
+[data-ark-theme="light"],
+[data-ark-tone="light"] {
+  --ark-canvas: var(--ark-color-neutral-paper-canvas); /* 估计 · 页面底色 */
+  --ark-surface: var(--ark-color-neutral-paper); /* 社区 · 默认的面：纸白 */
+  --ark-surface-raised: var(--ark-color-neutral-white); /* 估计 · 抬起的一层 */
+  --ark-control: var(--ark-color-neutral-paper-deep); /* 社区 · 控件未选中时的底 */
+  --ark-disabled: var(--ark-color-neutral-paper-muted); /* 估计 · 禁用态的底 */
+  --ark-on-disabled: var(--ark-color-neutral-gray-500); /* 估计 · 禁用态的文字 */
+  --ark-fg: var(--ark-color-neutral-paper-ink); /* 社区 · 主文字 */
+  --ark-fg-secondary: var(--ark-color-neutral-gray-600); /* 估计 · 浅色面上能过 4.5:1 的灰只有 gray-600，两档次要文字在这里合为一档 */
+  --ark-fg-muted: var(--ark-color-neutral-gray-600); /* 估计 · gray-600 在画布上是 6.4:1、控件底上 5.1:1 */
+  --ark-rule: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 20%, transparent); /* 估计 · 细分隔线 */
+  --ark-rule-strong: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 60%, transparent); /* 估计 · 描边。60% 压在纸白上是 3.7:1，够得上控件边界的 3:1 */
+  --ark-invert: var(--ark-color-neutral-paper-ink); /* 社区 · 反色块：浅色面上是深色块 */
+  --ark-on-invert: var(--ark-color-neutral-paper); /* 社区 · 反色块上的文字 */
+  --ark-signal-fg-mix: 45%; /* 估计 · 信号色压暗到 45% 再当文字用：青蓝、蓝、黄、橙在这个比例下压在纸白上都过 4.5:1 */
+  --ark-danger-fg: var(--ark-color-signal-alert); /* 估计 · 报错的文字。告警红压在纸白上是 7.2:1 */
+  /* 反面的取值，data-ark-tone="inverse" 取用 */
+  --ark-inv-surface: var(--ark-color-neutral-ink-900);
+  --ark-inv-surface-raised: var(--ark-color-neutral-ink-800);
+  --ark-inv-control: var(--ark-color-neutral-graphite-deep);
+  --ark-inv-disabled: var(--ark-color-neutral-ink-700);
+  --ark-inv-on-disabled: var(--ark-color-neutral-gray-500);
+  --ark-inv-fg: var(--ark-color-neutral-white);
+  --ark-inv-fg-secondary: var(--ark-color-neutral-gray-300);
+  --ark-inv-fg-muted: var(--ark-color-neutral-gray-400);
+  --ark-inv-rule: var(--ark-color-line-hairline);
+  --ark-inv-rule-strong: var(--ark-color-line-hairline-strong);
+  --ark-inv-invert: var(--ark-color-neutral-white);
+  --ark-inv-on-invert: var(--ark-color-neutral-black);
+  --ark-inv-signal-fg-mix: 100%;
+  --ark-inv-danger-fg: color-mix(in srgb, var(--ark-color-signal-danger) 75%, white);
+}
+
+@media (prefers-color-scheme: light) {
+  [data-ark-theme="auto"] {
+    --ark-canvas: var(--ark-color-neutral-paper-canvas); /* 估计 · 页面底色 */
+    --ark-surface: var(--ark-color-neutral-paper); /* 社区 · 默认的面：纸白 */
+    --ark-surface-raised: var(--ark-color-neutral-white); /* 估计 · 抬起的一层 */
+    --ark-control: var(--ark-color-neutral-paper-deep); /* 社区 · 控件未选中时的底 */
+    --ark-disabled: var(--ark-color-neutral-paper-muted); /* 估计 · 禁用态的底 */
+    --ark-on-disabled: var(--ark-color-neutral-gray-500); /* 估计 · 禁用态的文字 */
+    --ark-fg: var(--ark-color-neutral-paper-ink); /* 社区 · 主文字 */
+    --ark-fg-secondary: var(--ark-color-neutral-gray-600); /* 估计 · 浅色面上能过 4.5:1 的灰只有 gray-600，两档次要文字在这里合为一档 */
+    --ark-fg-muted: var(--ark-color-neutral-gray-600); /* 估计 · gray-600 在画布上是 6.4:1、控件底上 5.1:1 */
+    --ark-rule: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 20%, transparent); /* 估计 · 细分隔线 */
+    --ark-rule-strong: color-mix(in srgb, var(--ark-color-neutral-paper-ink) 60%, transparent); /* 估计 · 描边。60% 压在纸白上是 3.7:1，够得上控件边界的 3:1 */
+    --ark-invert: var(--ark-color-neutral-paper-ink); /* 社区 · 反色块：浅色面上是深色块 */
+    --ark-on-invert: var(--ark-color-neutral-paper); /* 社区 · 反色块上的文字 */
+    --ark-signal-fg-mix: 45%; /* 估计 · 信号色压暗到 45% 再当文字用：青蓝、蓝、黄、橙在这个比例下压在纸白上都过 4.5:1 */
+    --ark-danger-fg: var(--ark-color-signal-alert); /* 估计 · 报错的文字。告警红压在纸白上是 7.2:1 */
+    /* 反面的取值，data-ark-tone="inverse" 取用 */
+    --ark-inv-surface: var(--ark-color-neutral-ink-900);
+    --ark-inv-surface-raised: var(--ark-color-neutral-ink-800);
+    --ark-inv-control: var(--ark-color-neutral-graphite-deep);
+    --ark-inv-disabled: var(--ark-color-neutral-ink-700);
+    --ark-inv-on-disabled: var(--ark-color-neutral-gray-500);
+    --ark-inv-fg: var(--ark-color-neutral-white);
+    --ark-inv-fg-secondary: var(--ark-color-neutral-gray-300);
+    --ark-inv-fg-muted: var(--ark-color-neutral-gray-400);
+    --ark-inv-rule: var(--ark-color-line-hairline);
+    --ark-inv-rule-strong: var(--ark-color-line-hairline-strong);
+    --ark-inv-invert: var(--ark-color-neutral-white);
+    --ark-inv-on-invert: var(--ark-color-neutral-black);
+    --ark-inv-signal-fg-mix: 100%;
+    --ark-inv-danger-fg: color-mix(in srgb, var(--ark-color-signal-danger) 75%, white);
+  }
+}
+
+[data-ark-tone="inverse"] {
+  --ark-surface: var(--ark-inv-surface);
+  --ark-surface-raised: var(--ark-inv-surface-raised);
+  --ark-control: var(--ark-inv-control);
+  --ark-disabled: var(--ark-inv-disabled);
+  --ark-on-disabled: var(--ark-inv-on-disabled);
+  --ark-fg: var(--ark-inv-fg);
+  --ark-fg-secondary: var(--ark-inv-fg-secondary);
+  --ark-fg-muted: var(--ark-inv-fg-muted);
+  --ark-rule: var(--ark-inv-rule);
+  --ark-rule-strong: var(--ark-inv-rule-strong);
+  --ark-invert: var(--ark-inv-invert);
+  --ark-on-invert: var(--ark-inv-on-invert);
+  --ark-signal-fg-mix: var(--ark-inv-signal-fg-mix);
+  --ark-danger-fg: var(--ark-inv-danger-fg);
 }

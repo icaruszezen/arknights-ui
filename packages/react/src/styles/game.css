@@ -1,0 +1,12 @@
+/*
+ * 游戏入口的预编译样式，产出 dist/game.css，配合 @arknights-ui/react/game 使用。
+ * 自带主题层，可以单独引入；和 styles.css 一起引入时，重复的工具类是同一条规则，互不影响。
+ */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+@import "./theme.css";
+
+@source "../game";
+@source not "../**/*.stories.tsx";
+@source not "../**/*.test.{ts,tsx}";

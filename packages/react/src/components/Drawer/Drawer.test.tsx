@@ -152,47 +152,100 @@ describe('Drawer', () => {
     expect(onOpenChange).toHaveBeenCalledExactlyOnceWith(false)
   })
 
+  it('默认的面跟着主题走，不设明暗上下文', () => {
+    render(
+      <Drawer open title="成员详情">
+        {body}
+      </Drawer>,
+    )
+    const drawer = getDrawer()
+    expect(drawer).not.toHaveAttribute('data-ark-tone')
+    // 内容铺满 <dialog>，底色画在里面那一层
+    expect(drawer.children).toHaveLength(1)
+    expect(drawer.firstElementChild).toHaveClass('bg-ark-surface')
+    expect(drawer).toHaveClass('bg-transparent')
+  })
+
   it('tone="paper" 是纸白的面，并切到浅色上下文', () => {
     render(
-      <Drawer open tone="paper" title="进驻信息">
+      <Drawer open tone="paper" title="成员详情">
         {body}
       </Drawer>,
     )
     const drawer = getDrawer()
     expect(drawer).toHaveAttribute('data-ark-tone', 'light')
     expect(drawer.firstElementChild).toHaveClass('bg-ark-overlay-panel-light')
-    expect(drawer.firstElementChild).not.toHaveClass('bg-ark-overlay-panel-dark')
     // 提亮次要文字是给半透明深色面用的
     expect(drawer.firstElementChild?.className).not.toContain('--ark-fg-muted')
   })
 
-  it('主画面压暗但不模糊；石墨半透明的面，默认没有色边', () => {
+  it('主画面压暗但不模糊，默认没有色边', () => {
     render(
-      <Drawer open title="制造站">
+      <Drawer open title="成员详情">
         {body}
       </Drawer>,
     )
     const drawer = getDrawer()
-    expect(drawer).toHaveClass('backdrop:bg-ark-overlay-scrim', 'bg-transparent')
+    expect(drawer).toHaveClass('backdrop:bg-ark-overlay-scrim')
     expect(drawer.className).not.toContain('backdrop:backdrop-blur')
-    expect(drawer).toHaveAttribute('data-ark-tone', 'dark')
-    // 内容铺满 <dialog>，底色画在里面那一层
-    expect(drawer.children).toHaveLength(1)
-    expect(drawer.firstElementChild).toHaveClass('bg-ark-overlay-panel-dark')
-    // 实机的抽屉没有色边
     expect(drawer.firstElementChild?.className).not.toContain('border-l-')
   })
 
-  it('accent 在左缘加一条信号色强调边，画在铺满 <dialog> 的那一层', () => {
-    render(
-      <Drawer open accent title="制造站">
+  it('accent 在朝主画面的那一缘加一条信号色强调边，画在铺满 <dialog> 的那一层', () => {
+    const { rerender } = render(
+      <Drawer open accent title="成员详情">
         {body}
       </Drawer>,
     )
     expect(getDrawer().firstElementChild).toHaveClass(
       'border-l-(length:--ark-line-strong)',
-      'border-ark-signal',
+      'border-l-ark-signal',
     )
+    rerender(
+      <Drawer open accent side="left" title="成员详情">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer().firstElementChild).toHaveClass('border-r-ark-signal')
+  })
+
+  it('side 决定贴哪一边：左边的抽屉贴左，下边的通栏、高度随内容', () => {
+    const { rerender } = render(
+      <Drawer open title="成员详情">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer()).toHaveAttribute('data-side', 'right')
+    expect(getDrawer()).toHaveClass('right-0', 'left-auto', 'h-full')
+
+    rerender(
+      <Drawer open side="left" title="导航">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer()).toHaveClass('left-0', 'right-auto')
+
+    rerender(
+      <Drawer open side="bottom" title="操作">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer()).toHaveClass('bottom-0', 'top-auto', 'w-full', 'max-h-[85dvh]')
+  })
+
+  it('size 换左右抽屉的宽度', () => {
+    const { rerender } = render(
+      <Drawer open title="成员详情">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer()).toHaveClass('w-[min(100vw-3rem,max(40vw,22.5rem))]')
+    rerender(
+      <Drawer open size="sm" title="成员详情">
+        {body}
+      </Drawer>,
+    )
+    expect(getDrawer()).toHaveClass('w-[min(100vw-3rem,20rem)]')
   })
 
   it('平移只在允许动效时进行，减少动效时改为淡入淡出', () => {
@@ -203,6 +256,7 @@ describe('Drawer', () => {
     )
     const classes = getDrawer().className.split(/\s+/)
     const moving = classes.filter(name => name.includes('translate-x-'))
+    // 开和关各一个方向的类，都只在允许动效时生效
     expect(moving.length).toBeGreaterThan(0)
     for (const name of moving) expect(name).toMatch(/^motion-safe:/)
     expect(classes).toContain('motion-reduce:opacity-0')

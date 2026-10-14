@@ -1,5 +1,6 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
+import { type ArkColor, textColor } from '../../utils/color'
 
 export type KeyValueListProps = ComponentProps<'dl'>
 
@@ -8,7 +9,7 @@ export type KeyValueListProps = ComponentProps<'dl'>
  * 所有的键排成一列、宽度取最长的那个，值从同一条左边线起。
  *
  * 子元素是若干个 `KeyValue`。整体是一个描述列表：键是 `<dt>`，值是 `<dd>`。
- * 竖屏时键和值改成上下两行。
+ * 窄屏时键和值改成上下两行。
  */
 export function KeyValueList({ className, ...rest }: KeyValueListProps) {
   return (
@@ -17,50 +18,49 @@ export function KeyValueList({ className, ...rest }: KeyValueListProps) {
       {...rest}
       className={cn(
         'm-0 box-border grid grid-cols-[auto_minmax(0,1fr)] gap-x-ark-3 gap-y-ark-2 font-ark-cjk-sans text-[1rem] leading-ark-snug text-ark-fg',
-        'portrait:grid-cols-1 portrait:gap-y-ark-3',
+        'max-md:grid-cols-1 max-md:gap-y-ark-3',
         className,
       )}
     />
   )
 }
 
-export type KeyValueTone = 'default' | 'signal'
-
-export interface KeyValueProps extends ComponentProps<'div'> {
+export interface KeyValueProps extends Omit<ComponentProps<'div'>, 'color'> {
   /** 键，如“活动时间”。后面的冒号由组件补。 */
   label: ReactNode
   /**
    * 值的颜色。值默认是常规字重的前景色；最要紧的那一项（通常是时间、主要奖励）可以换成主题色。
-   * @default 'default'
+   * @default 'neutral'
    */
-  tone?: KeyValueTone
-}
-
-const tones: Record<KeyValueTone, string> = {
-  default: 'text-ark-fg',
-  signal: 'text-ark-signal-fg',
+  color?: ArkColor
 }
 
 /**
  * 一行键值对：键是粗体、带冒号，值是常规字重——官方公告正文就是这样写的
- * （`<strong>活动时间：</strong>10月09日 12:00 - …`）。要强调的值用 `tone="signal"` 上色。
+ * （`<strong>活动时间：</strong>10月09日 12:00 - …`）。要强调的值用 `color="signal"` 上色。
  * `children` 是值，可以放一个 `TimeRange`。只能放在 `KeyValueList` 里。
  */
-export function KeyValue({ label, tone = 'default', className, children, ...rest }: KeyValueProps) {
+export function KeyValue({
+  label,
+  color = 'neutral',
+  className,
+  children,
+  ...rest
+}: KeyValueProps) {
   return (
     <div
       data-ark="key-value"
       {...rest}
       // 子网格：这一行自己有盒子（可以加底线、间距），两格仍然对齐到列表的两列
       className={cn(
-        'col-span-2 box-border grid grid-cols-subgrid items-baseline portrait:col-span-1',
+        'col-span-2 box-border grid grid-cols-subgrid items-baseline max-md:col-span-1',
         className,
       )}
     >
       <dt className="m-0 font-ark-bold whitespace-nowrap text-ark-fg after:content-['：']">
         {label}
       </dt>
-      <dd className={cn('m-0 font-ark-regular', tones[tone])}>{children}</dd>
+      <dd className={cn('m-0 font-ark-regular', textColor[color])}>{children}</dd>
     </div>
   )
 }

@@ -19,7 +19,7 @@ export const Default: Story = {}
 
 /** 经验用行动黄。 */
 export const Level: Story = {
-  args: { tone: 'action', size: 'lg', value: 2480, max: 3600 },
+  args: { color: 'warning', size: 'lg', value: 2480, max: 3600 },
   argTypes: { value: { control: { type: 'range', min: 0, max: 3600 } } },
 }
 
@@ -40,11 +40,11 @@ export const Sizes: Story = {
  */
 export const OnScene: Story = {
   globals: { backgrounds: { value: 'scene' } },
-  args: { tone: 'action', value: 100, filled: true },
+  args: { color: 'warning', value: 100, filled: true },
   render: args => (
     <div className="flex items-center gap-ark-6">
       <RingProgress {...args} />
-      <RingProgress {...args} tone="neutral" labelPosition="below">
+      <RingProgress {...args} color="neutral" labelPosition="below">
         120
       </RingProgress>
     </div>
@@ -53,7 +53,7 @@ export const OnScene: Story = {
 
 /** 不放内容时就是一个环，比如小头像上表示心情的环。 */
 export const RingOnly: Story = {
-  args: { children: undefined, label: undefined, size: 'sm', tone: 'neutral', value: 30 },
+  args: { children: undefined, label: undefined, size: 'sm', color: 'neutral', value: 30 },
 }
 
 /** 轨道、标签和数字跟随明暗上下文，放进纸白面板时换成深色。 */

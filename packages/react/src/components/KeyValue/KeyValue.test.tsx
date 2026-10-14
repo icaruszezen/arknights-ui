@@ -23,11 +23,11 @@ describe('KeyValueList', () => {
     ])
   })
 
-  it('两列网格：键取最长的宽度，竖屏改成一列', () => {
+  it('两列网格：键取最长的宽度，窄屏改成一列', () => {
     render(<KeyValueList data-testid="list" />)
     expect(screen.getByTestId('list')).toHaveClass(
       'grid-cols-[auto_minmax(0,1fr)]',
-      'portrait:grid-cols-1',
+      'max-md:grid-cols-1',
     )
   })
 })
@@ -43,7 +43,7 @@ describe('KeyValue', () => {
     )
     const row = screen.getByTestId('row')
     expect(row).toHaveAttribute('data-ark', 'key-value')
-    expect(row).toHaveClass('col-span-2', 'grid-cols-subgrid', 'portrait:col-span-1')
+    expect(row).toHaveClass('col-span-2', 'grid-cols-subgrid', 'max-md:col-span-1')
   })
 
   it('键是粗体并带冒号，值是常规字重（官方公告正文的写法）', () => {
@@ -60,10 +60,10 @@ describe('KeyValue', () => {
     expect(value).not.toHaveClass('font-ark-bold')
   })
 
-  it('tone="signal" 把值换成主题色，只上色、不加粗', () => {
+  it('color="signal" 把值换成主题色，只上色、不加粗', () => {
     render(
       <KeyValueList>
-        <KeyValue label="活动时间" tone="signal">
+        <KeyValue label="活动时间" color="signal">
           10月03日 16:00
         </KeyValue>
       </KeyValueList>,

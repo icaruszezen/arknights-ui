@@ -1,6 +1,6 @@
 import { type ComponentProps, type ReactNode, useId } from 'react'
 import { cn } from '../../utils/cn'
-import { formatStatValue } from '../Stat'
+import { formatStatValue } from '../../utils/format'
 
 export type NumberedSectionHeading = 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
 
@@ -27,7 +27,7 @@ export interface NumberedSectionProps extends Omit<ComponentProps<'section'>, 't
  * 编号小节：数据体的两位数字、中文小节名，下面一条 1px 细线，再下面是这一节的内容。
  * 公告长图是模板化的信息图——每一期只换主题色、页眉和底纹，这副分节的骨架不动。
  *
- * 内容从小节名的左缘写起，编号独占一列；竖屏时内容回到最左。
+ * 内容从小节名的左缘写起，编号独占一列；窄屏时内容回到最左。
  * 整节以“编号 + 小节名”为名称，读屏可以在各节之间跳转。
  */
 export function NumberedSection({
@@ -71,7 +71,7 @@ export function NumberedSection({
       </div>
       <span aria-hidden="true" className="col-span-2 mt-ark-2 h-px bg-ark-rule" />
       {children != null && (
-        <div className="col-start-2 box-border min-w-0 pt-ark-4 portrait:col-span-2 portrait:col-start-1">
+        <div className="col-start-2 box-border min-w-0 pt-ark-4 max-md:col-span-2 max-md:col-start-1">
           {children}
         </div>
       )}

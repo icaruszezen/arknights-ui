@@ -1,15 +1,15 @@
 import type { ComponentProps } from 'react'
 import { cn } from '../../utils/cn'
 
-export type GhostTitleTone = 'neutral' | 'signal'
+export type GhostTitleColor = 'neutral' | 'signal'
 
-export interface GhostTitleProps extends ComponentProps<'div'> {
+export interface GhostTitleProps extends Omit<ComponentProps<'div'>, 'color'> {
   /**
    * - `neutral`：只比底色亮一档，黑底上是 `#242424`
    * - `signal`：25% 的信号色，条目悬停时在背后浮现的那种
    * @default 'neutral'
    */
-  tone?: GhostTitleTone
+  color?: GhostTitleColor
   /**
    * 裁掉字的上缘：大写高的 16%，像被一条水平线切过。官网每一屏左下角的巨字都是这样，
    * 它正好挂在骨架的底线下面。打开后根元素的上缘就是那条裁切线。
@@ -19,7 +19,7 @@ export interface GhostTitleProps extends ComponentProps<'div'> {
 }
 
 // 都用不透明度而不是写死的色值：换到别的底色、换信号色之后，仍然“只比底色亮一档”
-const tones: Record<GhostTitleTone, string> = {
+const colors: Record<GhostTitleColor, string> = {
   neutral: 'text-ark-fg/14',
   signal: 'text-ark-signal/25',
 }
@@ -36,7 +36,7 @@ const tones: Record<GhostTitleTone, string> = {
  * 官网是把字装进一个高 0.95em 的框里贴底放，裁掉多少取决于 Oswald 的度量。
  */
 export function GhostTitle({
-  tone = 'neutral',
+  color = 'neutral',
   clip = false,
   className,
   children,
@@ -49,7 +49,7 @@ export function GhostTitle({
       {...rest}
       className={cn(
         'pointer-events-none box-border font-ark-latin-condensed text-ark-ghost leading-ark-solid font-ark-medium tracking-ark-tight whitespace-nowrap uppercase select-none',
-        tones[tone],
+        colors[color],
         // 基线以下留 0.27em（Oswald 的下行高度），逗号、Q 的尾巴不会被裁
         clip && 'flex items-baseline overflow-hidden pb-[0.27em]',
         className,

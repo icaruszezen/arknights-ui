@@ -7,7 +7,7 @@ import { Stat } from '../Stat'
 import { Countdown } from './Countdown'
 
 const meta = {
-  title: '场景/基建/Countdown',
+  title: '数据展示/Countdown',
   component: Countdown,
   args: { seconds: 8076 },
 } satisfies Meta<typeof Countdown>
@@ -66,7 +66,7 @@ export const Format: Story = {
 export const InPanel: Story = {
   render: () => (
     <Panel className="grid w-72 gap-ark-4">
-      <Progress aria-label="制造进度" variant="thick" tone="action" value={62} segments={5} />
+      <Progress aria-label="制造进度" variant="thick" color="warning" value={62} segments={5} />
       <Stat
         label="Remaining"
         value={<Countdown seconds={8076} />}

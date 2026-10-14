@@ -16,7 +16,7 @@ export const Default: Story = {}
 
 /** 25% 的信号色：设定屏里悬停某个条目时，背后浮现的那行巨字。 */
 export const Signal: Story = {
-  args: { tone: 'signal', children: 'ORIGINIUM' },
+  args: { color: 'signal', children: 'ORIGINIUM' },
 }
 
 /**

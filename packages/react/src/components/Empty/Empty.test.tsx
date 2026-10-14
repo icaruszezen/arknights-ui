@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import { Empty } from './Empty'
+import userEvent from '@testing-library/user-event'
+import { describe, expect, it, vi } from 'vitest'
+import { Empty, EmptySlot } from './Empty'
 
 describe('Empty', () => {
   it('默认标题是 NO DATA，没有说明时它就是唯一的信息', () => {
@@ -26,5 +27,26 @@ describe('Empty', () => {
     render(<Empty title="NO RESULT">没有符合筛选条件的干员</Empty>)
     expect(screen.getByText('NO RESULT')).toBeInTheDocument()
     expect(screen.queryByText('NO DATA')).not.toBeInTheDocument()
+  })
+})
+
+describe('EmptySlot', () => {
+  it('是一个按钮，名称就是动作名；加号对读屏隐藏', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<EmptySlot onClick={onClick}>添加成员</EmptySlot>)
+    const slot = screen.getByRole('button', { name: '添加成员' })
+    expect(slot).toHaveAttribute('type', 'button')
+    expect(slot).toHaveAttribute('data-ark', 'empty-slot')
+    expect(slot.querySelector('svg')).toHaveAttribute('aria-hidden', 'true')
+    await user.click(slot)
+    expect(onClick).toHaveBeenCalledTimes(1)
+  })
+
+  it('是实线的细框，撑满所在的格子', () => {
+    render(<EmptySlot>添加成员</EmptySlot>)
+    const slot = screen.getByRole('button')
+    expect(slot).toHaveClass('border', 'border-ark-rule-strong', 'size-full')
+    expect(slot.className).not.toContain('border-dashed')
   })
 })

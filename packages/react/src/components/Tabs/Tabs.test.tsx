@@ -5,15 +5,24 @@ import { describe, expect, it, vi } from 'vitest'
 import { Tab, TabList, TabPanel, Tabs, type TabsProps } from './Tabs'
 
 interface NewsProps {
+  variant?: TabsProps['variant']
+  orientation?: TabsProps['orientation']
   value?: string
   defaultValue?: string
   onValueChange?: (value: string) => void
   disabledEvent?: boolean
 }
 
-function News({ value, defaultValue = 'latest', onValueChange, disabledEvent }: NewsProps) {
-  const state: TabsProps =
-    value !== undefined ? { value, onValueChange } : { defaultValue, onValueChange }
+function News({
+  variant,
+  orientation,
+  value,
+  defaultValue = 'latest',
+  onValueChange,
+  disabledEvent,
+}: NewsProps) {
+  const shared = { variant, orientation, onValueChange }
+  const state: TabsProps = value !== undefined ? { ...shared, value } : { ...shared, defaultValue }
   return (
     <Tabs {...state}>
       <TabList aria-label="新闻分类">
@@ -171,7 +180,7 @@ describe('Tabs', () => {
   })
 
   it('block 变体只在选中项上显示折线箭头，箭头贴右', () => {
-    render(<News />)
+    render(<News variant="block" />)
     const marked = screen.getAllByRole('tab').filter(tab => tab.querySelector('[aria-hidden]'))
     expect(marked).toHaveLength(1)
     expect(marked[0]).toHaveTextContent('最新')
@@ -179,7 +188,7 @@ describe('Tabs', () => {
   })
 
   it('block 变体的选中项是信号色底（官网实测），不是反白', () => {
-    render(<News />)
+    render(<News variant="block" />)
     const tab = selectedTab()
     expect(tab).toHaveClass('aria-selected:bg-ark-signal', 'aria-selected:text-ark-on-signal')
     expect(tab.className).not.toContain('aria-selected:bg-ark-invert')
@@ -197,11 +206,41 @@ describe('Tabs', () => {
     // 连成一条，没有缝；项与项之间是画在 Tab 上的短竖线，选中项两侧不画
     expect(screen.getByRole('tablist')).toHaveClass('gap-0')
     for (const tab of screen.getAllByRole('tab')) {
-      expect(tab).toHaveClass('bg-ark-fg/10', 'aria-selected:bg-ark-invert')
+      expect(tab).toHaveClass('bg-ark-control', 'aria-selected:bg-ark-invert')
       expect(tab).toHaveClass('not-first:before:w-px', 'aria-selected:before:hidden')
       expect(tab.className).toContain('[[aria-selected=true]+&]:before:hidden')
       expect(tab.querySelector('svg')).toBeNull()
     }
+  })
+
+  it('默认是底条：选中项信号色文字加一条 4px 的条', () => {
+    render(<News />)
+    expect(screen.getByRole('tablist')).toHaveClass('shadow-[inset_0_-1px_0_var(--ark-rule)]')
+    expect(selectedTab()).toHaveClass('aria-selected:text-ark-signal-fg')
+    expect(selectedTab().className).toContain('before:h-(--ark-line-strong)')
+  })
+
+  it('竖排时用上下方向键，左右不起作用', async () => {
+    const user = userEvent.setup()
+    render(<News orientation="vertical" />)
+    expect(screen.getByRole('tablist')).toHaveAttribute('aria-orientation', 'vertical')
+    selectedTab().focus()
+    await user.keyboard('{ArrowRight}')
+    expect(selectedTab()).toHaveTextContent('最新')
+    await user.keyboard('{ArrowDown}')
+    expect(selectedTab()).toHaveTextContent('公告')
+    await user.keyboard('{ArrowUp}{ArrowUp}')
+    expect(selectedTab()).toHaveTextContent('新闻')
+  })
+
+  it('竖排的底条在左缘，分段块各自成块、带一圈细边', () => {
+    const { rerender } = render(<News orientation="vertical" />)
+    expect(screen.getByRole('tablist')).toHaveClass('flex-col', 'border-l')
+    expect(selectedTab().className).toContain('before:w-(--ark-line-strong)')
+
+    rerender(<News orientation="vertical" variant="segment" />)
+    expect(screen.getByRole('tablist')).toHaveClass('flex-col', 'gap-ark-2')
+    expect(selectedTab()).toHaveClass('border', 'border-ark-rule', 'aria-selected:bg-ark-invert')
   })
 
   it('脱离 Tabs 使用时报错', () => {

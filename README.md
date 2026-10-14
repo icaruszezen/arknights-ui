@@ -60,6 +60,7 @@
 | 文档 | 内容 |
 | --- | --- |
 | [官网](docs/modules/website.md) | 六屏结构、固定骨架、实测数值 |
+| [网页与应用](docs/modules/web-app.md) | 规则落到网页上的取舍：明暗两套、尺寸档、浮层、表单、表格 |
 | [游戏 · 主界面](docs/modules/game/home.md) | 画内界面、透视面板组 |
 | [游戏 · 干员](docs/modules/game/operator.md) | 列表、详情、不离开画布的养成 |
 | [游戏 · 作战](docs/modules/game/battle.md) | 关卡地图、作战 HUD |
@@ -96,7 +97,7 @@
 }
 ```
 
-覆盖范围：颜色（中性、信号、稀有度、遮罩、衍生品牌）、字体（字体栈、字号、字距、行高、字重）、间距、线宽、切角、圆角、阴影、模糊、透视、动效、底纹。
+覆盖范围：颜色（中性、信号、稀有度、遮罩、衍生品牌）、字体（字体栈、字号、字距、行高、字重）、间距、控件尺寸、线宽、切角、圆角、阴影、模糊、透视、动效、底纹，以及暗色、亮色两套语义变量（`--ark-canvas`、`--ark-surface`、`--ark-fg`…）。主题写在祖先元素的 `data-ark-theme` 上（`dark` / `light` / `auto`）。
 
 修改 token 后重新生成 CSS（需要 Node.js 18+，无其他依赖）：
 
@@ -135,36 +136,21 @@ node scripts/build-tokens.mjs
 
 ## React 组件库
 
-[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。[通用元素](#通用元素) 里除“表单控件”以外的六篇，写到的东西都有对应的组件，[基础规范](#基础规范) 里能做成组件的部分也有：
+[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。它面向**网页和应用**：风格来自文档里的规则，而不是对游戏画面的复刻；暗色、亮色两套主题，控件有统一的尺寸档，按宽度响应。规则落到网页上的取舍写在 [网页与应用](docs/modules/web-app.md)。
 
-| 文档 | 组件 |
+| 分组 | 组件 |
 | --- | --- |
-| 按钮 | `Button` · `ActionButton` |
-| 面板与卡片 | `Panel` / `Card` · `Drawer` · `Sheet` |
-| 导航 | `Nav` · `BackHome` · `QuickNav` · `ResourceBar` · `Tabs` |
-| 数据展示 | `Stat` · `ListRow` · `Progress` · `RingProgress` · `Tag` · `Rating` · `Badge` |
-| 反馈 | `Dialog` · `Notice` · `Loading` · `Empty` · `RewardGlow` |
-| 装饰元素与排版 | `Heading` · `Divider` · `Counter` / `Serial` · `DateText` · `MicroText` · `GhostTitle` · `CornerMarks` · `Callout` · `Barcode` · `Ticks` · `Prose` |
-| 图标与符号 | `Icon` / `Watermark` · `IconTitle` |
-| 底纹 | `Pattern` · `Glitch` |
-| 图片 | `Portrait` · `Scrim` · `StripGallery` |
-| 布局与层级 | `Shell` · `ScrollHint` · `TiltGroup` · `PanelGrid` · `Parallax` |
-| 动效 | `Stagger` · `CountUp` |
+| 按钮 | `Button` · `IconButton` |
+| 表单 | `Field` / `FormSection` · `Input` · `Textarea` · `Select` · `Checkbox` · `RadioGroup` · `Switch` · `Slider` · `SegmentedControl` · `NumberStepper` |
+| 面板与浮层 | `Panel` / `Card` · `Modal` · `Drawer` · `Popover` · `Menu` · `Tooltip` |
+| 导航 | `Nav` · `Tabs` · `Breadcrumb` · `Pagination` · `Steps` · `EntryList` |
+| 数据展示 | `Stat` · `Table` · `ListRow` · `KeyValue` · `Timeline` · `Progress` · `RingProgress` · `Tag` · `Badge` · `Rating` · `Avatar` · `Accordion` · `Countdown` · `TimeRange` |
+| 反馈 | `Dialog` · `Notice` · `Toast` · `Loading` / `Spinner` · `Skeleton` · `Empty` |
+| 装饰元素与排版 | `Heading` · `Codename` · `Prose` · `NumberedSection` · `Divider` · `Counter` / `Serial` · `DateText` · `MicroText` · `GhostTitle` · `CornerMarks` · `Callout` · `Barcode` · `Ticks` |
+| 图标、底纹、图片 | `Icon` / `Watermark` · `IconTitle` · `Pattern` · `Glitch` · `Portrait` · `Scrim` · `Carousel` · `ThumbnailStrip` · `StripGallery` |
+| 布局与动效 | `AppShell` · `Shell` · `ProfileShowcase` · `PanelGrid` · `ScrollHint` · `TiltGroup` · `Parallax` · `Stagger` · `CountUp` |
 
-“表单控件”一篇是 2026-10-14 新增的，分段选项、开关、滑条、数量步进器还没有组件；同一轮补进文档的时间轴、官网干员屏的阵营切换与语音播放条也没有。文档与组件之间的全部差异列在 [packages/react/README.md](packages/react/README.md#与文档的出入)。
-
-[场景模块](#场景模块) 的八篇各有一组场景组件，把上面这些通用组件按模块的编排拼好：
-
-| 文档 | 组件 |
-| --- | --- |
-| 官网 | `Carousel` · `OperatorShowcase` · `ThumbnailStrip` · `WorldEntryList` |
-| 游戏 · 主界面 | `EntryPanel` · `EntryGrid` |
-| 游戏 · 干员 | `OperatorCard` · `ClassFilter` · `AttributeList` · `SkillSlot` · `Codename` |
-| 游戏 · 作战 | `StageMap` / `StageNode` · `SquadSlot` · `CostMeter` · `DeployCard` · `UnitBar` · `HudCounter` |
-| 游戏 · 基建 | `RoomCard` · `OperatorAvatar` · `MoodBar` · `Countdown` |
-| 游戏 · 寻访与采购中心 | `Banner` · `ProductCard` |
-| 游戏 · 剧情 | `DialogueBox` · `StoryControls` · `ChapterTitle` |
-| 宣传物料 | `NumberedSection` · `KeyValue` · `TimeRange` |
+照着游戏实机画面做的 25 个组件（作战 HUD、基建、剧情、干员卡片、主界面入口、返回 + 主页、资源条等）在单独的入口 `@arknights-ui/react/game` 里，只按暗色设计，不再随主入口演进。文档与组件之间的全部差异列在 [packages/react/README.md](packages/react/README.md#与文档的出入)。
 
 本地预览（需要 Node.js 22.18+ 与 pnpm 10）：
 
@@ -205,7 +191,7 @@ docs/
   00-overview.md      设计总纲
   foundations/        基础规范（8 篇）
   elements/           通用元素（7 篇）
-  modules/            场景模块（官网、游戏 7 篇、宣传物料、衍生品牌）
+  modules/            场景模块（官网、网页与应用、游戏 7 篇、宣传物料、衍生品牌）
   references/         参考资料（3 篇）
   assets/             自绘 SVG 示意图（18 张）
 tokens/

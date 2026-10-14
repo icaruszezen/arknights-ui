@@ -108,7 +108,7 @@ describe('RingProgress', () => {
     const { rerender } = render(<RingProgress aria-label="经验" value={50} />)
     expect(getFill()).toHaveClass('stroke-ark-signal')
 
-    rerender(<RingProgress aria-label="经验" value={50} tone="action" />)
+    rerender(<RingProgress aria-label="经验" value={50} color="warning" />)
     expect(getFill()).toHaveClass('stroke-ark-signal-action')
   })
 })

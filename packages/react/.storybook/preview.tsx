@@ -12,8 +12,9 @@ import '@fontsource/montserrat/800.css'
 import './preview.css'
 import { arkTheme } from './theme'
 
+// “画布”跟着主题走（暗色纯黑、亮色浅灰）；另外两档是固定的颜色，用来看组件压在别的底上的样子
 const canvases: Record<string, { name: string; value: string }> = {
-  canvas: { name: '画布 · 纯黑', value: '#000000' },
+  canvas: { name: '画布 · 跟随主题', value: 'var(--ark-canvas)' },
   ink: { name: '近黑面板', value: '#121212' },
   scene: { name: '场景 · 灰蓝', value: '#465560' },
 }
@@ -43,7 +44,8 @@ const preview: Preview = {
         order: [
           '示例',
           '按钮',
-          '面板与卡片',
+          '表单',
+          '面板与浮层',
           '导航',
           '数据展示',
           '反馈',
@@ -53,17 +55,30 @@ const preview: Preview = {
           '图片',
           '布局与层级',
           '动效',
-          '场景',
-          ['官网', '主界面', '干员', '作战', '基建', '寻访与采购', '剧情', '宣传物料'],
+          '游戏',
+          ['示例', '通用', '主界面', '干员', '作战', '基建', '寻访与采购', '剧情'],
         ],
       },
     },
   },
   initialGlobals: {
     backgrounds: { value: 'canvas' },
+    theme: 'dark',
     signal: 'info',
   },
   globalTypes: {
+    theme: {
+      description: '明暗主题：写在祖先元素上的 data-ark-theme',
+      toolbar: {
+        title: '主题',
+        icon: 'mirror',
+        dynamicTitle: true,
+        items: [
+          { value: 'dark', title: '暗色' },
+          { value: 'light', title: '亮色' },
+        ],
+      },
+    },
     signal: {
       description: '信号色：每个场景只有一个，覆盖 --ark-signal 即可切换',
       toolbar: {
@@ -82,8 +97,11 @@ const preview: Preview = {
   decorators: [
     (Story, context) => {
       const canvas = canvases[context.globals.backgrounds?.value] ?? canvases.canvas
+      // 游戏入口的组件只按暗色设计，不跟主题开关走
+      const theme = context.title.startsWith('游戏/') ? 'dark' : context.globals.theme
       return (
         <div
+          data-ark-theme={theme}
           className="box-border p-ark-6 font-ark-cjk-sans text-ark-fg"
           style={
             {

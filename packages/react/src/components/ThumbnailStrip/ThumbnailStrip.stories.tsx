@@ -13,7 +13,7 @@ const operators = [
 ]
 
 const meta = {
-  title: '场景/官网/ThumbnailStrip',
+  title: '图片/ThumbnailStrip',
   component: ThumbnailStrip,
   subcomponents: { Thumbnail },
   args: { defaultValue: 'a', 'aria-label': '干员' },

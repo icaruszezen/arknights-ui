@@ -90,7 +90,7 @@
 
 ## 如何使用这份文档
 
-**做网页 / 应用：** 从 [色彩](foundations/color.md)、[字体与排版](foundations/typography.md)、[几何语言](foundations/geometry.md) 开始，引入 [`tokens.css`](../tokens/tokens.css)，再按需查 [通用元素](#文档地图)。参考 [官网](modules/website.md) 的整体编排。
+**做网页 / 应用：** 从 [色彩](foundations/color.md)、[字体与排版](foundations/typography.md)、[几何语言](foundations/geometry.md) 开始，引入 [`tokens.css`](../tokens/tokens.css)，再按需查 [通用元素](#文档地图)。规则落到网页上的取舍（明暗两套、尺寸档、浮层、表格）看 [网页与应用](modules/web-app.md)；参考 [官网](modules/website.md) 的整体编排。
 
 **做平面 / 海报：** 重点看 [图片](foundations/imagery.md)、[底纹](foundations/texture-and-pattern.md)、[装饰元素](elements/decorations.md)、[宣传物料](modules/promotional.md)。
 
@@ -143,7 +143,7 @@ elements/      通用元素
   buttons · panels-and-cards · navigation
   data-display · feedback · forms · decorations
 modules/       场景模块
-  website
+  website · web-app
   game/ home · operator · battle · base · gacha-and-store · story · themes
   promotional · sub-brands
 references/    参考资料
@@ -153,13 +153,14 @@ references/    参考资料
 | 基础规范 | 通用元素 | 场景模块 | 参考资料 |
 | --- | --- | --- | --- |
 | [色彩](foundations/color.md) | [按钮](elements/buttons.md) | [官网](modules/website.md) | [开源项目盘点](references/open-source.md) |
-| [字体与排版](foundations/typography.md) | [面板与卡片](elements/panels-and-cards.md) | [游戏 · 主界面](modules/game/home.md) | [分析文章索引](references/articles.md) |
-| [布局与层级](foundations/layout-and-depth.md) | [导航](elements/navigation.md) | [游戏 · 干员](modules/game/operator.md) | [官方图片外链索引](references/image-index.md) |
-| [几何语言](foundations/geometry.md) | [数据展示](elements/data-display.md) | [游戏 · 作战](modules/game/battle.md) | |
-| [底纹](foundations/texture-and-pattern.md) | [反馈](elements/feedback.md) | [游戏 · 基建](modules/game/base.md) | |
-| [图标与符号](foundations/iconography.md) | [表单控件](elements/forms.md) | [游戏 · 寻访与采购中心](modules/game/gacha-and-store.md) | |
-| [图片](foundations/imagery.md) | [装饰元素](elements/decorations.md) | [游戏 · 剧情](modules/game/story.md) | |
-| [动效](foundations/motion.md) | | [游戏 · 界面主题](modules/game/themes.md) | |
+| [字体与排版](foundations/typography.md) | [面板与卡片](elements/panels-and-cards.md) | [网页与应用](modules/web-app.md) | [分析文章索引](references/articles.md) |
+| [布局与层级](foundations/layout-and-depth.md) | [导航](elements/navigation.md) | [游戏 · 主界面](modules/game/home.md) | [官方图片外链索引](references/image-index.md) |
+| [几何语言](foundations/geometry.md) | [数据展示](elements/data-display.md) | [游戏 · 干员](modules/game/operator.md) | |
+| [底纹](foundations/texture-and-pattern.md) | [反馈](elements/feedback.md) | [游戏 · 作战](modules/game/battle.md) | |
+| [图标与符号](foundations/iconography.md) | [表单控件](elements/forms.md) | [游戏 · 基建](modules/game/base.md) | |
+| [图片](foundations/imagery.md) | [装饰元素](elements/decorations.md) | [游戏 · 寻访与采购中心](modules/game/gacha-and-store.md) | |
+| [动效](foundations/motion.md) | | [游戏 · 剧情](modules/game/story.md) | |
+| | | [游戏 · 界面主题](modules/game/themes.md) | |
 | | | [宣传物料](modules/promotional.md) | |
 | | | [衍生品牌](modules/sub-brands.md) | |
 

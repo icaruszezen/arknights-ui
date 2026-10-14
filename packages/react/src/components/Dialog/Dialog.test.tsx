@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { Dialog, type DialogProps } from './Dialog'
 
-const message = '是否消耗 1 份应急理智合剂恢复理智？'
+const message = '是否将这 3 条记录移入回收站？'
 
 // 关闭状态的 <dialog> 不在无障碍树里，统一用 hidden: true 查询
 const getDialog = () => screen.getByRole('dialog', { hidden: true }) as HTMLDialogElement
@@ -190,15 +190,28 @@ describe('Dialog', () => {
     )
     const buttons = screen.getAllByRole('button', { hidden: true })
     expect(buttons.map(button => button.textContent)).toEqual(['知道了'])
-    // 纯告知的弹窗是一个黑色块
-    expect(buttons[0]).toHaveClass('bg-ark-neutral-ink-950')
+    // 纯告知的弹窗是一个不带颜色的块
+    expect(buttons[0]).toHaveClass('bg-ark-control')
   })
 
-  it('内容带是纸白的明暗上下文，按钮是黑色块与暗红块', () => {
+  it('默认是居中的面板，跟着主题走；取消是灰底块，确认是信号色块', () => {
     render(<Dialog open>{message}</Dialog>)
-    expect(screen.getByText(message).closest('[data-ark-tone="light"]')).not.toBeNull()
-    expect(getButton('取消')).toHaveClass('bg-ark-neutral-ink-950')
-    expect(getButton('确认')).toHaveClass('bg-ark-signal-confirm')
+    expect(getDialog()).toHaveAttribute('data-variant', 'panel')
+    expect(getDialog()).toHaveClass('m-auto', 'w-[min(28rem,100vw-2rem)]')
+    expect(screen.getByText(message).closest('[data-ark-tone]')).toBeNull()
+    expect(getButton('取消')).toHaveClass('bg-ark-control')
+    expect(getButton('确认')).toHaveClass('bg-ark-signal')
+  })
+
+  it('variant="band" 是通栏的横带，内容带是与主题相反的面', () => {
+    render(
+      <Dialog open variant="band">
+        {message}
+      </Dialog>,
+    )
+    expect(getDialog()).toHaveAttribute('data-variant', 'band')
+    expect(getDialog()).toHaveClass('w-full', 'my-auto')
+    expect(screen.getByText(message).closest('[data-ark-tone="inverse"]')).not.toBeNull()
   })
 
   it('两个按钮各带一个对读屏隐藏的图形', () => {
@@ -207,27 +220,28 @@ describe('Dialog', () => {
     expect(getButton('确认').querySelector('[aria-hidden="true"] svg')).not.toBeNull()
   })
 
-  it('confirmVariant="signal" 把确认块换成信号色', () => {
+  it('color="danger" 把确认块和面板上沿的色边换成红色', () => {
     render(
-      <Dialog open confirmVariant="signal">
+      <Dialog open color="danger">
         {message}
       </Dialog>,
     )
     const confirm = getButton('确认')
-    expect(confirm).toHaveClass('bg-ark-signal')
-    expect(confirm).not.toHaveClass('bg-ark-signal-confirm')
+    expect(confirm).toHaveClass('bg-ark-danger')
+    expect(confirm).not.toHaveClass('bg-ark-signal')
+    expect(screen.getByText(message).parentElement).toHaveClass('border-t-ark-danger')
   })
 
   it('detail 渲染在正文之外，不计入名称', () => {
     render(
-      <Dialog open detail="SANITY 12/135 → 92/135">
+      <Dialog open detail="QUOTA 12/135 → 92/135">
         {message}
       </Dialog>,
     )
     const dialog = getDialog()
     const label = document.getElementById(dialog.getAttribute('aria-labelledby') ?? '')
-    expect(screen.getByText('SANITY 12/135 → 92/135')).toBeInTheDocument()
-    expect(label).not.toHaveTextContent('SANITY')
+    expect(screen.getByText('QUOTA 12/135 → 92/135')).toBeInTheDocument()
+    expect(label).not.toHaveTextContent('QUOTA')
   })
 
   it('同时支持使用方的 ref', () => {

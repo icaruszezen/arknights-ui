@@ -4,7 +4,7 @@ import { TimeRange } from '../TimeRange'
 import { KeyValue, KeyValueList } from './KeyValue'
 
 const meta = {
-  title: '场景/宣传物料/KeyValue',
+  title: '数据展示/KeyValue',
   component: KeyValueList,
   subcomponents: { KeyValue },
 } satisfies Meta<typeof KeyValueList>
@@ -14,7 +14,7 @@ type Story = StoryObj<typeof meta>
 
 const rows = (
   <>
-    <KeyValue label="活动时间" tone="signal">
+    <KeyValue label="活动时间" color="signal">
       <TimeRange from="2026-10-03T16:00" to="2026-10-17T03:59" />
     </KeyValue>
     <KeyValue label="解锁条件">通关主线 1-10</KeyValue>

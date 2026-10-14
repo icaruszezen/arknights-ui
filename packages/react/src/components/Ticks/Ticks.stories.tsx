@@ -17,8 +17,11 @@ const meta = {
 export default meta
 type Story = StoryObj<typeof meta>
 
-/** 一条基线，上面每 0.5rem 一条短刻度，每 5 格一条长的。铺满可用的宽度。 */
+/** 每 0.5rem 一条短刻度，每 5 格一条长的（1rem）。铺满可用的宽度。官网图集页时间轴的写法。 */
 export const Default: Story = {}
+
+/** 加一条贯穿的基线，像一把尺。 */
+export const WithBaseline: Story = { args: { baseline: true } }
 
 /** 格距由 `--ark-ticks-step` 决定，长刻度的间隔由 `major` 决定。 */
 export const Spacing: Story = {
@@ -26,7 +29,7 @@ export const Spacing: Story = {
     <div className="grid gap-ark-5">
       <Ticks />
       <Ticks major={10} className="[--ark-ticks-step:0.25rem]" />
-      <Ticks major={2} className="h-3 [--ark-ticks-step:1rem]" />
+      <Ticks major={2} baseline className="h-3 [--ark-ticks-step:1rem]" />
     </div>
   ),
 }
@@ -50,7 +53,7 @@ export const UnderContent: Story = {
         <Serial value="50" />
         <Serial value="100" />
       </div>
-      <Ticks className="-scale-y-100" />
+      <Ticks baseline className="h-2 -scale-y-100" />
     </div>
   ),
 }

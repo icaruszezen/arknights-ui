@@ -169,7 +169,7 @@
 
 ## 组件库
 
-[`packages/react`](../../packages/react) 里还没有这一篇对应的组件。现有的 `Tabs`（分段块）可以当作分段选项的外观参考，`Button` 的禁用态与焦点轮廓可以直接沿用。
+[`packages/react`](../../packages/react) 里对应的组件：`SegmentedControl`、`Switch`、`Slider`、`NumberStepper`、`Select`，以及项名、注释、小节带的 `Field`、`FormSection`。网页上补的输入框、勾选框、单选框和尺寸上的取舍，见 [网页与应用](../modules/web-app.md#表单)。
 
 ## 来源
 

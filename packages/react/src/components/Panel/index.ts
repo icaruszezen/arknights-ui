@@ -1,8 +1,15 @@
 export {
   Card,
+  CardFooter,
+  type CardFooterProps,
+  CardHeader,
+  type CardHeaderProps,
+  CardMedia,
+  type CardMediaProps,
   type CardProps,
   Panel,
   type PanelElement,
+  type PanelPadding,
   type PanelProps,
   type PanelTone,
 } from './Panel'

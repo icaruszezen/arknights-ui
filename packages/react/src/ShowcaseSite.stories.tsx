@@ -7,6 +7,8 @@ import {
   Carousel,
   CarouselSlide,
   Counter,
+  EntryList,
+  EntryListItem,
   Glitch,
   Heading,
   Icon,
@@ -14,7 +16,7 @@ import {
   MicroText,
   Nav,
   NavItem,
-  OperatorShowcase,
+  ProfileShowcase,
   ScrollHint,
   Shell,
   Stagger,
@@ -26,8 +28,6 @@ import {
   Tag,
   Thumbnail,
   ThumbnailStrip,
-  WorldEntry,
-  WorldEntryList,
 } from './index'
 
 // 不是组件，只是把组件按官网的编排拼在一起：
@@ -35,7 +35,7 @@ import {
 //
 // 官网的根字号随视口等比缩放（横屏以 1920 × 1080 为基准，竖屏以 750 × 1334 为基准），尺寸全用 rem。
 // 骨架自己不改根字号，要由页面来设，这里照做：整屏按比例缩进画布，多大的画布都是同一个版面。
-// 把画布拉成竖的（或者用工具栏换成手机尺寸）就是竖屏的编排
+// 把画布拉成竖的（或者用工具栏换成手机尺寸）就是窄屏的编排
 const meta = {
   title: '示例/官网分屏',
   tags: ['!autodocs'],
@@ -148,9 +148,9 @@ const entries = [
 // 竖屏时图片堆到列表上方，贴着顶栏下面的横线和内容区的两边（官网的做法）
 function InformationScreen() {
   return (
-    <div className="grid h-full grid-cols-[minmax(0,2fr)_minmax(0,5fr)] items-start gap-ark-7 portrait:h-auto portrait:grid-cols-1 portrait:gap-ark-5">
+    <div className="grid h-full grid-cols-[minmax(0,2fr)_minmax(0,5fr)] items-start gap-ark-7 max-md:h-auto max-md:grid-cols-1 max-md:gap-ark-5">
       <Stagger className="grid gap-ark-4">
-        <Tabs defaultValue="latest">
+        <Tabs variant="block" defaultValue="latest">
           <TabList aria-label="情报分类">
             <Tab value="latest">最新</Tab>
             <Tab value="notice">公告</Tab>
@@ -166,14 +166,14 @@ function InformationScreen() {
             </li>
           ))}
         </ul>
-        <Button variant="primary" sub="READ MORE" arrow className="justify-self-start">
+        <Button variant="primary" size="xl" sub="READ MORE" arrow className="justify-self-start">
           更多情报
         </Button>
       </Stagger>
       <Carousel
         aria-label="活动"
         autoplay={5000}
-        className="-mr-ark-6 portrait:order-first portrait:-mx-[0.875rem] portrait:-mt-[0.875rem]"
+        className="-mr-ark-6 max-md:order-first max-md:-mx-[0.875rem] max-md:-mt-[0.875rem]"
       >
         {events.map((event, index) => (
           <CarouselSlide key={event.id} src={scenes[index] ?? ''} href={`#${event.id}`}>
@@ -195,7 +195,7 @@ function OperatorScreen() {
   const [current, setCurrent] = useState('a')
   const operator = operators.find(item => item.id === current) ?? firstOperator
   return (
-    <OperatorShowcase
+    <ProfileShowcase
       // 换人时重新挂载，文字和立绘的入场重播
       key={operator.id}
       nameAs="h1"
@@ -204,7 +204,7 @@ function OperatorScreen() {
       src={operator.art}
       emblem={<Icon frame="triangle">{glyphs[0]}</Icon>}
       meta="CV 占位声优"
-      className="-mr-ark-6 -mb-ark-6 h-[calc(100%+var(--ark-space-6))] portrait:m-0 portrait:h-auto"
+      className="-mr-ark-6 -mb-ark-6 h-[calc(100%+var(--ark-space-6))] max-md:m-0 max-md:h-auto"
       footer={
         <ThumbnailStrip aria-label="干员" value={current} onValueChange={setCurrent}>
           {operators.map(item => (
@@ -214,7 +214,7 @@ function OperatorScreen() {
       }
     >
       {operator.intro}
-    </OperatorShowcase>
+    </ProfileShowcase>
   )
 }
 
@@ -222,26 +222,26 @@ function OperatorScreen() {
 function WorldScreen() {
   return (
     <div className="grid h-full content-center">
-      <WorldEntryList aria-label="设定" className="max-w-3xl">
+      <EntryList aria-label="设定" className="max-w-3xl">
         {terms.map(term => (
-          <WorldEntry key={term.id} href={`#${term.id}`} sub={term.en}>
+          <EntryListItem key={term.id} href={`#${term.id}`} sub={term.en}>
             {term.zh}
-          </WorldEntry>
+          </EntryListItem>
         ))}
-      </WorldEntryList>
+      </EntryList>
     </div>
   )
 }
 
 // 更多内容屏：四条等宽竖带，各取一张图的局部，上下压黑，条带之间没有缝。
 // 官网的条带铺满整屏；这里放在内容区里，向左、向右、向下出血到骨架的线上。
-// 竖屏时四条横带上下叠着，占满内容区
+// 窄屏时四条横带上下叠着，占满内容区
 function MoreScreen() {
   return (
     // 外层占满内容区，里层靠负边距伸进内容区四周的留白。里层的高度不用 calc 去凑：
     // 作为网格项被拉伸时，它的边距和留白是同一个长度，根字号不是整数也不会差出一个像素
     <div className="grid h-full">
-      <div className="-my-ark-6 -mr-ark-6 -ml-ark-9 grid min-h-0 portrait:-m-[0.875rem]">
+      <div className="-my-ark-6 -mr-ark-6 -ml-ark-9 grid min-h-0 max-md:-m-[0.875rem]">
         <h1 className="sr-only">更多内容</h1>
         <StripGallery aria-label="更多内容" className="h-full">
           {entries.map((entry, index) => (
@@ -254,7 +254,7 @@ function MoreScreen() {
               tint={entry.tint}
               hoverTint={entry.hoverTint}
               // 不按比例，撑满所在的那一格
-              className="aspect-auto portrait:aspect-auto"
+              className="aspect-auto max-md:aspect-auto"
             >
               {entry.title}
             </Strip>
@@ -272,7 +272,7 @@ const content = {
   more: <MoreScreen />,
 }
 
-/** 画布拉成竖的就是竖屏的编排；侧栏里另有一个固定成手机尺寸的。 */
+/** 画布拉成竖的就是窄屏的编排；侧栏里另有一个固定成手机尺寸的。 */
 export const Site: Story = {
   name: '官网分屏',
   render: function SiteScreens() {
@@ -292,7 +292,7 @@ export const Site: Story = {
             </span>
           }
           nav={
-            // 竖屏时收成菜单按钮，落在右栏上方的那一格里
+            // 窄屏时收成菜单按钮，落在右栏上方的那一格里
             <Nav aria-label="主导航">
               {screens.map((item, i) => (
                 <NavItem
@@ -316,8 +316,8 @@ export const Site: Story = {
               total={screens.length}
               label={screen.en}
               micro="ARKNIGHTS-UI"
-              // 竖屏的右栏只有菜单按钮那么宽，计数换成竖排
-              vertical="portrait"
+              // 窄屏的右栏只有菜单按钮那么宽，计数换成竖排
+              vertical="narrow"
             />
           }
           aside={
@@ -325,13 +325,13 @@ export const Site: Story = {
           }
           ghost={screen.ghost}
           line={screen.line}
-          portraitLine="top"
+          narrowLine="top"
           scrollHint={
             // 最后一屏换成向上的箭头，回到第一屏
             index === screens.length - 1 ? (
               <ScrollHint direction="up" label="回到第一屏" onClick={() => setIndex(0)} />
             ) : (
-              <ScrollHint label="下一屏" onClick={() => setIndex(index + 1)} />
+              <ScrollHint onClick={() => setIndex(index + 1)} />
             )
           }
         >

@@ -1,9 +1,11 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
+import { type ArkColor, textColor } from '../../utils/color'
+import { formatStatValue } from '../../utils/format'
 
 export type StatSize = 'sm' | 'md' | 'lg'
 
-export interface StatProps extends Omit<ComponentProps<'dl'>, 'children'> {
+export interface StatProps extends Omit<ComponentProps<'dl'>, 'children' | 'color'> {
   /** 标签。英文会显示为窄体大写小字。 */
   label: ReactNode
   /**
@@ -29,19 +31,10 @@ export interface StatProps extends Omit<ComponentProps<'dl'>, 'children'> {
    */
   orientation?: 'vertical' | 'horizontal'
   /**
-   * 数值颜色。`signal` 用于计数这类需要点睛的数字。
-   * @default 'default'
+   * 数值颜色。`signal` 用于计数这类需要点睛的数字；涨跌、告警用 `success` / `danger`。
+   * @default 'neutral'
    */
-  tone?: 'default' | 'signal'
-}
-
-const thousands = new Intl.NumberFormat('en-US')
-
-/** 数字加千分位逗号；指定 `pad` 时改为补前导零。字符串原样返回。 */
-export function formatStatValue(value: number | string, pad?: number): string {
-  if (typeof value === 'string') return value
-  if (pad === undefined) return thousands.format(value)
-  return `${value < 0 ? '-' : ''}${String(Math.abs(value)).padStart(pad, '0')}`
+  color?: ArkColor
 }
 
 const valueSize: Record<StatSize, string> = {
@@ -66,7 +59,7 @@ export function Stat({
   pad,
   size = 'md',
   orientation = 'vertical',
-  tone = 'default',
+  color = 'neutral',
   className,
   ...rest
 }: StatProps) {
@@ -86,13 +79,7 @@ export function Stat({
         {label}
       </dt>
       <dd className="m-0 flex items-baseline font-ark-data leading-ark-solid">
-        <b
-          className={cn(
-            'font-ark-bold',
-            valueSize[size],
-            tone === 'signal' ? 'text-ark-signal-fg' : 'text-ark-fg',
-          )}
-        >
+        <b className={cn('font-ark-bold', valueSize[size], textColor[color])}>
           {typeof value === 'number' || typeof value === 'string'
             ? formatStatValue(value, pad)
             : value}

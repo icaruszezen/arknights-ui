@@ -33,7 +33,7 @@ export const Thick: Story = {
   ),
   args: {
     variant: 'thick',
-    tone: 'action',
+    color: 'warning',
     value: 2480,
     max: 3600,
     segments: 5,

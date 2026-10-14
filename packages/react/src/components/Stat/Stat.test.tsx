@@ -1,6 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
-import { formatStatValue, Stat } from './Stat'
+import { formatStatValue } from '../../utils/format'
+import { Stat } from './Stat'
 
 describe('formatStatValue', () => {
   it('数字加千分位逗号', () => {

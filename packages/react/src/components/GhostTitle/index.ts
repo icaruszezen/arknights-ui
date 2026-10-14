@@ -1,1 +1,1 @@
-export { GhostTitle, type GhostTitleProps, type GhostTitleTone } from './GhostTitle'
+export { GhostTitle, type GhostTitleColor, type GhostTitleProps } from './GhostTitle'

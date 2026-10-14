@@ -1,6 +1,7 @@
 import { type ComponentProps, type ReactNode, useId } from 'react'
 import { cn } from '../../utils/cn'
 import { clampProgress } from '../../utils/progress'
+import { Spinner } from '../Spinner'
 
 export interface LoadingProps extends ComponentProps<'div'> {
   /**
@@ -28,7 +29,7 @@ export interface LoadingProps extends ComponentProps<'div'> {
 /**
  * 短加载。有进度时照官网的加载屏排（实测）：一条 2px 的灰线，两端各一个 6px 的方块，
  * 信号色的进度段 6px 高、压在线上；下面一行粗体的数据体，写“状态文字 - 百分比”。
- * 不知道进度时换成旋转指示和闪烁的光标。
+ * 不知道进度时换成旋转指示（`Spinner`）和闪烁的光标。
  * 长加载应当铺满内容（插画、提示），而不是让人盯着一个进度条。
  *
  * 状态文字同时是进度的可访问名称。旋转和闪烁在“减少动效”下停住。
@@ -69,11 +70,7 @@ export function Loading({
         className={cn('box-border inline-flex items-center gap-ark-2 text-ark-fg', className)}
       >
         {/* 没有 aria-valuenow 的 progressbar 表示进度未知 */}
-        <span
-          role="progressbar"
-          {...labelling}
-          className="box-border block size-4 shrink-0 rounded-full border-2 border-ark-rule border-t-ark-signal motion-safe:animate-ark-spin"
-        />
+        <Spinner role="progressbar" {...labelling} />
         {hasStatus && (
           <span
             id={statusId}
@@ -112,7 +109,7 @@ export function Loading({
           style={{ width: `${percent}%` }}
         />
       </div>
-      <div className="flex items-center justify-between gap-ark-4 font-ark-data text-[1rem] leading-ark-solid">
+      <div className="flex items-center justify-between gap-ark-4 font-ark-data text-ark-base leading-ark-solid">
         <span className="font-ark-bold uppercase">
           {hasStatus && <span id={statusId}>{children}</span>}
           {/* 百分比已经在进度条的 aria-valuenow 里，不必再读一遍 */}

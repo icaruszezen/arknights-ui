@@ -1,24 +1,35 @@
 import { type ComponentProps, type ReactNode, useId } from 'react'
 import { OverlayHeader } from '../../internal/OverlayHeader'
-import { brighterMuted } from '../../utils/classes'
 import { cn } from '../../utils/cn'
+import { type SurfaceTone, surfaceClass, surfaceContext } from '../../utils/surface'
 import { useModalDialog } from '../../utils/useModalDialog'
 
-export type DrawerTone = 'graphite' | 'paper'
+export type DrawerTone = Exclude<SurfaceTone, 'frosted'>
+export type DrawerSide = 'right' | 'left' | 'bottom'
+export type DrawerSize = 'sm' | 'md' | 'lg'
 
 export interface DrawerProps
   extends Omit<ComponentProps<'dialog'>, 'open' | 'title' | 'onCancel' | 'onClose'> {
   /** 是否打开。受控：请在 `onOpenChange` 里更新它。 */
   open: boolean
   /**
-   * 表面。
-   * - `graphite`：石墨灰，默认的深色抽屉
-   * - `paper`：纸白，游戏内基建的进驻信息就是这种；里面的子组件自动换成深色前景
-   * @default 'graphite'
+   * 从哪一边进来。右边放详情，左边放导航，下边放窄屏上的操作。
+   * @default 'right'
+   */
+  side?: DrawerSide
+  /**
+   * 左右抽屉的宽度：`sm` 20rem、`md` 约屏宽的四成（不窄于 22.5rem）、`lg` 48rem；
+   * 窄屏上都给主画面留出 3rem。下边的抽屉高度随内容，最高 85% 屏高。
+   * @default 'md'
+   */
+  size?: DrawerSize
+  /**
+   * 表面，取值与 `Panel` 相同（没有毛玻璃）。
+   * @default 'surface'
    */
   tone?: DrawerTone
   /**
-   * 左缘加一条信号色的强调边。实机的抽屉没有这条边，所以默认不画；
+   * 朝主画面的那一缘加一条信号色的强调边。
    * 需要标出抽屉属于哪个系统时打开，并在抽屉或它的祖先上覆盖 `--ark-signal`。
    */
   accent?: boolean
@@ -37,19 +48,47 @@ export interface DrawerProps
   closeLabel?: string
 }
 
+// 贴哪一边、从哪一边平移进来。退场原路返回
+const placement: Record<DrawerSide, string> = {
+  right: cn(
+    'inset-y-0 right-0 left-auto h-full max-h-none',
+    'motion-safe:translate-x-full motion-safe:open:translate-x-0 motion-safe:starting:open:translate-x-full',
+  ),
+  left: cn(
+    'inset-y-0 right-auto left-0 h-full max-h-none',
+    'motion-safe:-translate-x-full motion-safe:open:translate-x-0 motion-safe:starting:open:-translate-x-full',
+  ),
+  bottom: cn(
+    'inset-x-0 top-auto bottom-0 max-h-[85dvh] w-full',
+    'motion-safe:translate-y-full motion-safe:open:translate-y-0 motion-safe:starting:open:translate-y-full',
+  ),
+}
+
+const widths: Record<DrawerSize, string> = {
+  sm: 'w-[min(100vw-3rem,20rem)]',
+  md: 'w-[min(100vw-3rem,max(40vw,22.5rem))]',
+  lg: 'w-[min(100vw-3rem,48rem)]',
+}
+
+const accents: Record<DrawerSide, string> = {
+  right: 'border-l-(length:--ark-line-strong) border-l-ark-signal',
+  left: 'border-r-(length:--ark-line-strong) border-r-ark-signal',
+  bottom: 'border-t-(length:--ark-line-strong) border-t-ark-signal',
+}
+
 /**
- * 抽屉从右侧滑入，压住一部分主画面，但不完全遮挡：详情不占满屏，背后的内容被压暗但仍然可见，
+ * 抽屉从一侧滑入，压住一部分主画面，但不完全遮挡：背后的内容被压暗但仍然可见，
  * 用户始终知道自己在哪。关闭时原路退回。
  *
  * 抽屉直接关闭——点关闭、按 Esc、点主画面都行，没有二次确认：
- * 反馈的重量不应该超过操作本身。
- *
- * 打开 `accent` 时左缘多一条信号色的强调边，配合 `--ark-signal` 标出它属于哪个系统。
+ * 反馈的重量不应该超过操作本身。页面上的“返回”应当先关抽屉，再退出页面。
  */
 export function Drawer({
   open,
   onOpenChange,
-  tone = 'graphite',
+  side = 'right',
+  size = 'md',
+  tone = 'surface',
   accent = false,
   title,
   sub,
@@ -67,19 +106,19 @@ export function Drawer({
   return (
     <dialog
       data-ark="drawer"
-      data-ark-tone={tone === 'paper' ? 'light' : 'dark'}
+      data-side={side}
+      data-ark-tone={surfaceContext[tone]}
       aria-labelledby={title != null ? titleId : undefined}
       {...rest}
       {...dialogProps}
       className={cn(
-        // 贴右、满高。宽度约为屏宽的 40%，不窄于 22.5rem；窄屏上也给主画面留出 3rem
-        'fixed inset-y-0 right-0 left-auto m-0 box-border h-full max-h-none w-[min(100vw-3rem,max(40vw,22.5rem))] max-w-none overflow-hidden border-0 bg-transparent p-0 text-ark-fg',
-        // 主画面压暗但不模糊（实机的写法），点它就关
+        'fixed m-0 box-border max-w-none overflow-hidden border-0 bg-transparent p-0 text-ark-fg',
+        placement[side],
+        side !== 'bottom' && widths[size],
+        // 主画面压暗但不模糊，点它就关
         'backdrop:bg-ark-overlay-scrim',
         // 退场过渡期间不拦截点击，下层页面立刻可用
         'pointer-events-none open:pointer-events-auto',
-        // 自右向左平移，退场原路返回
-        'motion-safe:translate-x-full motion-safe:open:translate-x-0 motion-safe:starting:open:translate-x-full',
         // 减少动效时不位移，改成淡入淡出
         'motion-reduce:opacity-0 motion-reduce:open:opacity-100 motion-reduce:starting:open:opacity-0',
         'transition-[translate,opacity,display,overlay] transition-discrete duration-(--ark-motion-duration-base) ease-ark-standard',
@@ -89,11 +128,9 @@ export function Drawer({
       {/* 内容铺满 <dialog>：强调边和底色画在这一层，点在它们上面不会被当成点了遮罩 */}
       <div
         className={cn(
-          'box-border flex h-full flex-col font-ark-cjk-sans',
-          accent && 'border-l-(length:--ark-line-strong) border-ark-signal',
-          tone === 'paper'
-            ? 'bg-ark-overlay-panel-light'
-            : ['bg-ark-overlay-panel-dark', brighterMuted],
+          'box-border flex h-full max-h-[inherit] flex-col font-ark-cjk-sans',
+          accent && accents[side],
+          surfaceClass[tone],
         )}
       >
         <OverlayHeader

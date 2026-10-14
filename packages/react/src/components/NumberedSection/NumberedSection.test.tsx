@@ -50,7 +50,7 @@ describe('NumberedSection', () => {
     expect(screen.getByText('Event Info')).toHaveClass('font-ark-latin-condensed', 'uppercase')
   })
 
-  it('内容从小节名的左缘写起，竖屏回到最左', () => {
+  it('内容从小节名的左缘写起，窄屏回到最左', () => {
     render(
       <NumberedSection number={1} title="活动说明">
         <p data-testid="body">正文</p>
@@ -58,8 +58,8 @@ describe('NumberedSection', () => {
     )
     expect(screen.getByTestId('body').parentElement).toHaveClass(
       'col-start-2',
-      'portrait:col-start-1',
-      'portrait:col-span-2',
+      'max-md:col-start-1',
+      'max-md:col-span-2',
     )
   })
 

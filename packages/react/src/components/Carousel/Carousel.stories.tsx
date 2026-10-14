@@ -14,7 +14,7 @@ const events = [
 ]
 
 const meta = {
-  title: '场景/官网/Carousel',
+  title: '图片/Carousel',
   component: Carousel,
   subcomponents: { CarouselSlide },
   args: { 'aria-label': '活动' },

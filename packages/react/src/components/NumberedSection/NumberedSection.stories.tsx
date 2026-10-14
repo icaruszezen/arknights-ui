@@ -4,7 +4,7 @@ import { TimeRange } from '../TimeRange'
 import { NumberedSection } from './NumberedSection'
 
 const meta = {
-  title: '场景/宣传物料/NumberedSection',
+  title: '排版与装饰/NumberedSection',
   component: NumberedSection,
   args: { number: 1, title: '活动说明' },
 } satisfies Meta<typeof NumberedSection>
@@ -17,7 +17,7 @@ export const Default: Story = {
   render: args => (
     <NumberedSection {...args} className="max-w-xl">
       <KeyValueList>
-        <KeyValue label="活动时间" tone="signal">
+        <KeyValue label="活动时间" color="signal">
           <TimeRange from="2026-10-03T16:00" to="2026-10-17T03:59" />
         </KeyValue>
         <KeyValue label="解锁条件">通关主线 1-10</KeyValue>
@@ -47,7 +47,7 @@ export const Sequence: Story = {
     <div className="grid max-w-xl gap-ark-6">
       <NumberedSection number={1} title="活动说明" sub="Event Info">
         <KeyValueList>
-          <KeyValue label="活动时间" tone="signal">
+          <KeyValue label="活动时间" color="signal">
             <TimeRange from="2026-10-03T16:00" to="2026-10-17T03:59" />
           </KeyValue>
           <KeyValue label="解锁条件">通关主线 1-10</KeyValue>

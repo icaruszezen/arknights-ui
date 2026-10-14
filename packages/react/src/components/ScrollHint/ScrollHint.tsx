@@ -68,18 +68,18 @@ export function ScrollHint(props: ScrollHintProps) {
     <span
       data-ark="scroll-hint-body"
       className={cn(
-        'inline-grid justify-items-center gap-[0.25rem] portrait:gap-[0.125rem]',
+        'inline-grid justify-items-center gap-[0.25rem] max-md:gap-[0.125rem]',
         motions[direction],
       )}
     >
       {hasText && (
-        <span className="font-ark-latin-wide text-ark-caption leading-ark-solid font-ark-medium portrait:text-[0.375rem]">
+        <span className="font-ark-latin-wide text-ark-caption leading-ark-solid font-ark-medium max-md:text-[0.375rem]">
           {children}
         </span>
       )}
       <ScrollArrowIcon
         className={cn(
-          'block h-5 w-[2.68rem] portrait:h-[0.625rem] portrait:w-[1.34rem]',
+          'block h-5 w-[2.68rem] max-md:h-[0.625rem] max-md:w-[1.34rem]',
           direction === 'up' && '-scale-y-100',
         )}
       />

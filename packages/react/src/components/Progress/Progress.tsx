@@ -1,13 +1,14 @@
 import type { ComponentProps } from 'react'
 import { cn } from '../../utils/cn'
+import { type ArkColor, fillColor } from '../../utils/color'
 import { clampProgress } from '../../utils/progress'
 
 export type ProgressVariant = 'thin' | 'thick' | 'rail' | 'meter'
-export type ProgressTone = 'signal' | 'action' | 'neutral'
+export type ProgressColor = ArkColor
 
-export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children'> {
-  /** 当前值，会被限制在 `0`–`max` 之间。 */
-  value: number
+export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children' | 'color'> {
+  /** 当前值，会被限制在 `0`–`max` 之间。不给就是“不知道还要多久”：一段色条来回走。 */
+  value?: number
   /**
    * 上限。
    * @default 100
@@ -21,8 +22,8 @@ export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children'> {
    * @default 'thin'
    */
   variant?: ProgressVariant
-  /** 进度的颜色。默认 `meter` 用前景色，其余用信号色。 */
-  tone?: ProgressTone
+  /** 进度的颜色。默认 `meter` 用前景色，其余用信号色；经验、等级这类用 `warning`（黄）。 */
+  color?: ProgressColor
   /** 用 2px 细缝切成几段。仅 `thick`。 */
   segments?: number
   /**
@@ -34,19 +35,13 @@ export interface ProgressProps extends Omit<ComponentProps<'div'>, 'children'> {
 
 const track: Record<ProgressVariant, string> = {
   thin: 'h-(--ark-line-strong)',
-  thick: 'h-2 bg-ark-neutral-ink-700',
+  thick: 'h-2 bg-ark-control',
   // #ababab，官网实测
   rail: 'h-2 bg-ark-neutral-gray-400',
   meter: 'h-0.5 bg-ark-fg/25',
 }
 
-const fill: Record<ProgressTone, string> = {
-  signal: 'bg-ark-signal',
-  action: 'bg-ark-signal-action',
-  neutral: 'bg-ark-fg',
-}
-
-const defaultTone: Record<ProgressVariant, ProgressTone> = {
+const defaultColor: Record<ProgressVariant, ProgressColor> = {
   thin: 'signal',
   thick: 'signal',
   rail: 'signal',
@@ -62,14 +57,15 @@ export function Progress({
   value,
   max = 100,
   variant = 'thin',
-  tone = defaultTone[variant],
+  color = defaultColor[variant],
   segments,
   span,
   className,
   style,
   ...rest
 }: ProgressProps) {
-  const { clamped, percent } = clampProgress(value, max)
+  const indeterminate = value === undefined
+  const { clamped, percent } = clampProgress(value ?? 0, max)
   const segmented = variant === 'thick' && segments !== undefined && segments > 1
   // 只画一段时，起点是 value 往回退 span；退过头就从 0 开始
   const start = span === undefined ? 0 : clampProgress(clamped - span, max).percent
@@ -79,9 +75,15 @@ export function Progress({
       role="progressbar"
       aria-valuemin={0}
       aria-valuemax={max}
-      aria-valuenow={clamped}
+      // 没有 aria-valuenow 的 progressbar 表示进度未知
+      aria-valuenow={indeterminate ? undefined : clamped}
       {...rest}
-      className={cn('relative box-border w-full', track[variant], className)}
+      className={cn(
+        'relative box-border w-full',
+        indeterminate && 'overflow-hidden',
+        track[variant],
+        className,
+      )}
       style={
         segmented
           ? {
@@ -96,17 +98,28 @@ export function Progress({
       {variant === 'thin' && (
         <span className="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-ark-rule" />
       )}
-      <span
-        className={cn(
-          'absolute inset-y-0 left-0 transition-[width,left] duration-(--ark-motion-duration-base) ease-ark-standard motion-reduce:transition-none',
-          fill[tone],
-        )}
-        style={
-          span === undefined
-            ? { width: `${percent}%` }
-            : { left: `${start}%`, width: `${percent - start}%` }
-        }
-      />
+      {indeterminate ? (
+        // 一段 40% 的色条自左向右走；减少动效时停在中间
+        <span
+          data-ark="progress-indeterminate"
+          className={cn(
+            'absolute inset-y-0 left-[30%] w-2/5 motion-safe:animate-ark-sweep',
+            fillColor[color],
+          )}
+        />
+      ) : (
+        <span
+          className={cn(
+            'absolute inset-y-0 left-0 transition-[width,left] duration-(--ark-motion-duration-base) ease-ark-standard motion-reduce:transition-none',
+            fillColor[color],
+          )}
+          style={
+            span === undefined
+              ? { width: `${percent}%` }
+              : { left: `${start}%`, width: `${percent - start}%` }
+          }
+        />
+      )}
     </div>
   )
 }

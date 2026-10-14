@@ -14,6 +14,7 @@ export const arkFontSizes = [
   'ark-nav',
   'ark-body-lg',
   'ark-body',
+  'ark-base',
   'ark-label',
   'ark-caption',
   'ark-micro',

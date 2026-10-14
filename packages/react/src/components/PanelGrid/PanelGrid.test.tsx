@@ -20,9 +20,9 @@ describe('PanelGrid', () => {
     expect(screen.getByTestId('grid')).not.toHaveClass('gap-ark-4')
   })
 
-  it('竖屏改成一列', () => {
+  it('窄屏改成一列', () => {
     render(<PanelGrid data-testid="grid" />)
-    expect(screen.getByTestId('grid')).toHaveClass('portrait:grid-cols-1')
+    expect(screen.getByTestId('grid')).toHaveClass('max-md:grid-cols-1')
   })
 
   it('行高由变量决定，可以覆盖', () => {
@@ -75,8 +75,8 @@ describe('PanelGridItem', () => {
     expect(item).toHaveTextContent('作战')
   })
 
-  it('竖屏时不再跨列跨行', () => {
+  it('窄屏时不再跨列跨行', () => {
     render(<PanelGridItem data-testid="item" span="1/3" rows={2} />)
-    expect(screen.getByTestId('item')).toHaveClass('portrait:col-span-1', 'portrait:row-span-1')
+    expect(screen.getByTestId('item')).toHaveClass('max-md:col-span-1', 'max-md:row-span-1')
   })
 })

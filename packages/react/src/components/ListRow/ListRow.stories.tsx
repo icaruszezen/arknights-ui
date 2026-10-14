@@ -90,8 +90,8 @@ export const Partial: Story = {
 }
 
 /**
- * 竖屏时排成一行，日期移到标题右侧，字号和行高另设。
- * 在画布视图里把视口切到竖屏的手机就能看到；文档页是横向的，这里看到的是横屏的样子。
+ * 窄屏时排成一行，日期移到标题右侧，字号和行高另设。
+ * 在画布视图里把视口切到窄屏的手机就能看到；文档页是横向的，这里看到的是宽屏的样子。
  */
 export const Portrait: Story = {
   globals: { viewport: { value: 'mobile1', isRotated: false } },

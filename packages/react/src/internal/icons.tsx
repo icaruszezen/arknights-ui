@@ -203,3 +203,30 @@ export function HexagonIcon({ hollow = false, ...props }: IconProps & { hollow?:
     </Icon>
   )
 }
+
+/** 向左的折线箭头：上一页、返回上一级。形状是 ChevronRightIcon 的镜像。 */
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <Icon viewBox="0 0 7 14" {...props}>
+      <path d="M7 0 0 7l7 7v-4L4 7l3-3z" fill="currentColor" />
+    </Icon>
+  )
+}
+
+/** 向下的折线箭头：点了会展开（下拉、折叠面板）。同一个形状转了 90°，画板是 2:1 的横条。 */
+export function ChevronDownIcon(props: IconProps) {
+  return (
+    <Icon viewBox="0 0 14 7" {...props}>
+      <path d="M0 0l7 7 7-7h-4L7 3 4 0z" fill="currentColor" />
+    </Icon>
+  )
+}
+
+/** 减号：步进器的“减”。 */
+export function MinusIcon(props: IconProps) {
+  return (
+    <Icon {...props}>
+      <path d="M4 12h16" stroke="currentColor" strokeWidth="2" />
+    </Icon>
+  )
+}

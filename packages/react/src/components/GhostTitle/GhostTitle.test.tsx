@@ -20,7 +20,7 @@ describe('GhostTitle', () => {
     const { rerender } = render(<GhostTitle>WORLD</GhostTitle>)
     expect(screen.getByText('WORLD')).toHaveClass('text-ark-fg/14')
 
-    rerender(<GhostTitle tone="signal">WORLD</GhostTitle>)
+    rerender(<GhostTitle color="signal">WORLD</GhostTitle>)
     const title = screen.getByText('WORLD')
     expect(title).toHaveClass('text-ark-signal/25')
     expect(title).not.toHaveClass('text-ark-fg/14')

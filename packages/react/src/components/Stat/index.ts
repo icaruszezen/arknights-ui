@@ -1,1 +1,2 @@
-export { formatStatValue, Stat, type StatProps, type StatSize } from './Stat'
+export { formatStatValue } from '../../utils/format'
+export { Stat, type StatProps, type StatSize } from './Stat'

@@ -1,9 +1,10 @@
 import type { ComponentProps, ReactNode } from 'react'
 import { cn } from '../../utils/cn'
+import { type ArkColor, solidColor } from '../../utils/color'
 
-export type BadgeTone = 'alert' | 'signal'
+export type BadgeColor = ArkColor
 
-export interface BadgeProps extends Omit<ComponentProps<'span'>, 'children'> {
+export interface BadgeProps extends Omit<ComponentProps<'span'>, 'children' | 'color'> {
   /** 数量。为 0 时不显示。 */
   count?: number
   /**
@@ -15,11 +16,12 @@ export interface BadgeProps extends Omit<ComponentProps<'span'>, 'children'> {
   dot?: boolean
   /**
    * 计数色块的颜色。
-   * - `alert`：告警的暗红，白字
+   * - `danger`：告警的红，白字
    * - `signal`：信号色，通知一类
-   * @default 'alert'
+   * - `neutral`：不带彩色的反色块，只是一个数
+   * @default 'danger'
    */
-  tone?: BadgeTone
+  color?: BadgeColor
   /** 数字前的小图标（告警的三角、通知的铃铛）。组件库不带图标，请自备；它对读屏隐藏。 */
   icon?: ReactNode
   /**
@@ -31,24 +33,18 @@ export interface BadgeProps extends Omit<ComponentProps<'span'>, 'children'> {
   children?: ReactNode
 }
 
-// 实机的蓝色通知角标是白字压蓝，对比度只有 3:1；这里用信号色配它自己的前景色
-const tones: Record<BadgeTone, string> = {
-  alert: 'bg-ark-signal-alert text-ark-neutral-white',
-  signal: 'bg-ark-signal text-ark-on-signal',
-}
-
 /**
  * 提醒标记与计数角标。
  *
  * 提醒标记是一个橙色的菱形，带一圈白边，骑在元素的角上：只说“有”，不说“有多少”。
  * 计数是一块直角的色块，白色的图标加数字。两样的颜色都是固定语义，不跟随可替换的信号色
- * （`tone="signal"` 除外）。其余属性和 `className` 作用在角标本身。
+ * （`color="signal"` 除外）。其余属性和 `className` 作用在角标本身。
  */
 export function Badge({
   count,
   max = 99,
   dot = false,
-  tone = 'alert',
+  color = 'danger',
   icon,
   label,
   className,
@@ -73,7 +69,7 @@ export function Badge({
             'size-2.5 rotate-45 border border-ark-neutral-white bg-ark-signal-accent'
           : [
               'h-5 min-w-5 gap-0.5 px-ark-1 font-ark-data text-ark-caption leading-ark-solid font-ark-bold',
-              tones[tone],
+              solidColor[color],
             ],
         children != null && 'absolute top-0 right-0 translate-x-1/2 -translate-y-1/2',
         className,

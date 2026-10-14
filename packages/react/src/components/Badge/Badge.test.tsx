@@ -37,13 +37,13 @@ describe('Badge', () => {
     expect(badge).not.toHaveClass('rounded-full')
   })
 
-  it('计数是暗红的色块压白字', () => {
+  it('计数默认是告警红的色块压白字', () => {
     const { container } = render(<Badge count={3} />)
-    expect(getBadge(container)).toHaveClass('bg-ark-signal-alert', 'text-ark-neutral-white')
+    expect(getBadge(container)).toHaveClass('bg-ark-danger', 'text-ark-on-danger')
   })
 
-  it('tone="signal" 换成信号色和它自己的前景色', () => {
-    const { container } = render(<Badge count={10} tone="signal" />)
+  it('color="signal" 换成信号色和它自己的前景色', () => {
+    const { container } = render(<Badge count={10} color="signal" />)
     const badge = getBadge(container)
     expect(badge).toHaveClass('bg-ark-signal', 'text-ark-on-signal')
     expect(badge).not.toHaveClass('bg-ark-signal-alert')

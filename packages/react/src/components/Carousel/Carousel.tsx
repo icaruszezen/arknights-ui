@@ -76,7 +76,7 @@ const SWIPE_DISTANCE = 48
 const control = cn(
   'm-0 box-border grid size-11 shrink-0 cursor-pointer appearance-none place-items-center border-0 bg-transparent p-0 text-ark-fg',
   'hover:bg-ark-invert hover:text-ark-on-invert',
-  'disabled:cursor-not-allowed disabled:text-ark-neutral-gray-600 disabled:hover:bg-transparent',
+  'disabled:cursor-not-allowed disabled:text-ark-on-disabled disabled:hover:bg-transparent',
   colorTransition,
   focusRing,
 )

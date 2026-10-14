@@ -38,7 +38,7 @@ const SWAY = 2
  * 透视只做这一层：只有整组倾斜，里面的面板、文字保持正交，不再二次变形。
  * 倾斜后的点击区跟着看到的形状走。一屏只给一两组面板用，不要给每个元素都加。
  *
- * 竖屏时取消倾斜（面板请改为纵向堆叠，`PanelGrid` 会自己处理）。
+ * 窄屏时取消倾斜（面板请改为纵向堆叠，`PanelGrid` 会自己处理）。
  * 摆动默认关闭；打开后只跟指针，不读陀螺仪。
  */
 export function TiltGroup({
@@ -68,7 +68,7 @@ export function TiltGroup({
       {...rest}
       ref={setRef}
       className={cn(
-        'box-border ark-tilt portrait:transform-none',
+        'box-border ark-tilt max-md:transform-none',
         sides[side],
         // 摆动时给一点过渡，指针每一帧的小位移不会显得生硬
         sway && 'transition-transform duration-(--ark-motion-duration-fast) ease-out',

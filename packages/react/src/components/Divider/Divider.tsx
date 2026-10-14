@@ -29,17 +29,17 @@ export interface DividerProps extends Omit<ComponentProps<'div'>, 'children'> {
   orientation?: DividerOrientation
 }
 
-// fade 没有直接用 --ark-pattern-fade-rule：那个取值固定为白色、且从右向左渐隐；
-// 这里跟随明暗上下文，并从起点一侧开始
+// dash 和 fade 没有直接用 token 里的 --ark-pattern-dash / --ark-pattern-fade-rule：那两个取值的颜色是
+// 写死的（官网黑底上的灰和白）。这里取描边的颜色，跟随主题和明暗上下文；fade 从起点一侧开始
 const line: Record<DividerOrientation, Record<DividerVariant, string>> = {
   horizontal: {
     solid: 'h-px bg-ark-rule',
-    dash: 'h-px bg-(image:--ark-pattern-dash)',
+    dash: 'h-px bg-[repeating-linear-gradient(90deg,var(--ark-rule-strong)_0_0.25rem,transparent_0_0.5rem)]',
     fade: 'h-px bg-linear-to-r from-ark-rule to-transparent',
   },
   vertical: {
     solid: 'w-px bg-ark-rule',
-    dash: 'w-px bg-[repeating-linear-gradient(180deg,#b2b2b2_0_0.25rem,transparent_0_0.5rem)]',
+    dash: 'w-px bg-[repeating-linear-gradient(180deg,var(--ark-rule-strong)_0_0.25rem,transparent_0_0.5rem)]',
     fade: 'w-px bg-linear-to-b from-ark-rule to-transparent',
   },
 }

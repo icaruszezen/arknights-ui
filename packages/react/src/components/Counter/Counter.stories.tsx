@@ -45,7 +45,7 @@ export const InSideRail: Story = {
  * 数字缩小、居中，“当前 / 总数”和栏目名竖着写，压在数字上，微缩字不显示。
  * 字很小——取值是官网竖屏的一半（那里以 750 宽为基准，同样的 rem 在手机上只有一半大）。
  *
- * 通常写成 `vertical="portrait"`，只在竖屏切换；这里固定成竖排，放在一条 2.875rem 宽的栏里。
+ * 通常写成 `vertical="narrow"`，只在窄屏切换；这里固定成竖排，放在一条 2.875rem 宽的栏里。
  */
 export const Vertical: Story = {
   args: { vertical: 'always', micro: 'ARKNIGHTS' },

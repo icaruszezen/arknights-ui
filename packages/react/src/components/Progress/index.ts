@@ -1,6 +1,6 @@
 export {
   Progress,
+  type ProgressColor,
   type ProgressProps,
-  type ProgressTone,
   type ProgressVariant,
 } from './Progress'

@@ -1,10 +1,10 @@
 import { type ComponentProps, useEffect, useMemo, useRef, useState } from 'react'
 import { cn } from '../../utils/cn'
 import { mechanical } from '../../utils/easing'
+import { formatStatValue } from '../../utils/format'
 import { mergeRefs } from '../../utils/mergeRefs'
 import { useInView } from '../../utils/useInView'
 import { useReducedMotion } from '../../utils/useReducedMotion'
-import { formatStatValue } from '../Stat'
 
 export interface CountUpProps extends Omit<ComponentProps<'span'>, 'children'> {
   /** 目标值。之后它再变化时，从当前显示的数字接着滚过去。 */

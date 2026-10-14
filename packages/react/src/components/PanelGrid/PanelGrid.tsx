@@ -27,7 +27,7 @@ const gaps: Record<PanelGridGap, string> = {
  *
  * 子元素是若干个 `PanelGridItem`，各自说明占一行的几分之几、占几行高。
  * 一行的基准高度由 `--ark-panel-grid-row` 决定，默认 5rem。
- * 竖屏时改成一列纵向堆叠，而不是把横屏的拼法整体缩小。
+ * 窄屏时改成一列纵向堆叠，而不是把宽屏的拼法整体缩小。
  */
 export function PanelGrid({ gap = 'lg', className, ...rest }: PanelGridProps) {
   return (
@@ -37,7 +37,7 @@ export function PanelGrid({ gap = 'lg', className, ...rest }: PanelGridProps) {
       className={cn(
         // 12 列：二、三、四等分都能整除
         'box-border grid auto-rows-[minmax(var(--ark-panel-grid-row,5rem),auto)] grid-cols-12',
-        'portrait:grid-cols-1',
+        'max-md:grid-cols-1',
         gaps[gap],
         className,
       )}
@@ -88,7 +88,7 @@ export function PanelGridItem({ span = 'full', rows = 1, className, ...rest }: P
         'box-border grid min-w-0',
         spans[span],
         rowSpans[rows],
-        'portrait:col-span-1 portrait:row-span-1',
+        'max-md:col-span-1 max-md:row-span-1',
         className,
       )}
     />

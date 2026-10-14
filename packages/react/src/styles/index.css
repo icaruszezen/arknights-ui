@@ -1,5 +1,6 @@
 /*
  * 预编译入口，产出 dist/styles.css，给不使用 Tailwind 的项目。
+ * 只含主入口的组件；游戏入口（@arknights-ui/react/game）的样式在 game.css 里。
  * 不引入 Preflight：组件自己写全重置，不改动使用方页面的全局样式。
  */
 @layer theme, base, components, utilities;
@@ -8,5 +9,6 @@
 @import "./theme.css";
 
 @source "../";
+@source not "../game";
 @source not "../**/*.stories.tsx";
 @source not "../**/*.test.{ts,tsx}";

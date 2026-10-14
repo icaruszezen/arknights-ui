@@ -21,7 +21,7 @@ export const Thousands: Story = {
 
 /** 编号：补前导零并带总数。信号色只用在这种需要点睛的数字上。 */
 export const Counter: Story = {
-  args: { label: 'Information', value: 1, max: 5, pad: 2, tone: 'signal', size: 'lg' },
+  args: { label: 'Information', value: 1, max: 5, pad: 2, color: 'signal', size: 'lg' },
 }
 
 export const WithUnit: Story = {

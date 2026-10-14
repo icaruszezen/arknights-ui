@@ -80,7 +80,7 @@ export const Choreography: Story = {
             {list}
           </Stagger>
           <Stagger delay={700} from="none">
-            <Button variant="primary" sub="READ MORE" arrow>
+            <Button variant="primary" size="xl" sub="READ MORE" arrow>
               更多情报
             </Button>
           </Stagger>

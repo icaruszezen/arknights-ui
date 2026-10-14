@@ -22,10 +22,10 @@ describe('StripGallery', () => {
     expect(within(list).getAllByRole('listitem')).toHaveLength(2)
   })
 
-  it('等宽并排、没有间缝，竖屏改为纵向堆叠', () => {
+  it('等宽并排、没有间缝，窄屏改为纵向堆叠', () => {
     render(<StripGallery data-testid="gallery" />)
     const gallery = screen.getByTestId('gallery')
-    expect(gallery).toHaveClass('grid-flow-col', 'auto-cols-fr', 'portrait:grid-flow-row')
+    expect(gallery).toHaveClass('grid-flow-col', 'auto-cols-fr', 'max-md:grid-flow-row')
     expect(gallery.className).not.toMatch(/(^|\s)gap-/)
   })
 })
@@ -177,31 +177,31 @@ describe('Strip', () => {
     expect(screen.queryByText('VIEW MORE >')).not.toBeInTheDocument()
   })
 
-  it('默认是 4:9 的竖条，竖屏变成横带', () => {
+  it('默认是 4:9 的竖条，窄屏变成横带', () => {
     render(
       <Strip data-testid="strip" src="/a.png">
         集成战略
       </Strip>,
     )
-    expect(screen.getByTestId('strip')).toHaveClass('aspect-[4/9]', 'portrait:aspect-[5/2]')
+    expect(screen.getByTestId('strip')).toHaveClass('aspect-[4/9]', 'max-md:aspect-[5/2]')
   })
 
-  it('竖屏的横带上，文字块的位置和字号是固定的，不跟着宽度走', () => {
+  it('窄屏的横带上，文字块的位置和字号是固定的，不跟着宽度走', () => {
     render(
       <Strip data-testid="strip" src="/a.png" sub="INTEGRATED STRATEGIES">
         集成战略
       </Strip>,
     )
     const title = screen.getByText('集成战略').closest('[data-ark="icon-title"]')
-    expect(title).toHaveClass('portrait:text-[1.6875rem]')
+    expect(title).toHaveClass('max-md:text-[1.6875rem]')
     expect(title?.parentElement).toHaveClass(
       'left-[27.9167cqw]',
-      'portrait:left-[3.75rem]',
-      'portrait:bottom-[1.8125rem]',
+      'max-md:left-[3.75rem]',
+      'max-md:bottom-[1.8125rem]',
     )
     expect(screen.getByTestId('strip').querySelector('[data-ark="strip-rule"]')).toHaveClass(
-      'portrait:w-[3.375rem]',
-      'portrait:mt-[0.625rem]',
+      'max-md:w-[3.375rem]',
+      'max-md:mt-[0.625rem]',
     )
   })
 })

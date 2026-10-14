@@ -1,7 +1,9 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import type { ComponentProps } from 'react'
 import { describe, expect, it, vi } from 'vitest'
 import { Button } from './Button'
+import { IconButton } from './IconButton'
 
 describe('Button', () => {
   it('默认渲染为 type="button" 的按钮', () => {
@@ -23,6 +25,21 @@ describe('Button', () => {
     expect(link).not.toHaveAttribute('type')
   })
 
+  it('as 换成路由库的链接组件，href 和类名照样传下去', () => {
+    const RouterLink = ({ href, ...rest }: ComponentProps<'a'>) => (
+      <a data-router="" href={`/app${href}`} {...rest} />
+    )
+    render(
+      <Button href="/news" as={RouterLink}>
+        更多情报
+      </Button>,
+    )
+    const link = screen.getByRole('link', { name: '更多情报' })
+    expect(link).toHaveAttribute('data-router')
+    expect(link).toHaveAttribute('href', '/app/news')
+    expect(link).toHaveAttribute('data-ark', 'button')
+  })
+
   it('sub 作为第二行计入可访问名称', () => {
     render(<Button sub="READ MORE">更多情报</Button>)
     expect(screen.getByRole('button')).toHaveAccessibleName('更多情报 READ MORE')
@@ -35,11 +52,27 @@ describe('Button', () => {
     expect(arrow).not.toBeNull()
     expect(arrow).toHaveClass('ml-auto')
     expect(button.lastElementChild).toBe(arrow)
+    expect(button).toHaveClass('justify-between')
   })
 
-  it('primary 是官网实测的长条：最小宽 14.375rem、高 3.75rem', () => {
-    render(<Button variant="primary">更多情报</Button>)
-    expect(screen.getByRole('button')).toHaveClass('min-w-[14.375rem]', 'min-h-[3.75rem]')
+  it('size 决定高度，默认 md', () => {
+    const { rerender } = render(<Button>查看</Button>)
+    expect(screen.getByRole('button')).toHaveClass('min-h-(--ark-size-control-md)')
+    rerender(<Button size="xs">查看</Button>)
+    expect(screen.getByRole('button')).toHaveClass('min-h-(--ark-size-control-xs)')
+  })
+
+  it('xl 是官网实测的长条：最小宽 14.375rem，文字贴左', () => {
+    render(
+      <Button variant="primary" size="xl">
+        更多情报
+      </Button>,
+    )
+    expect(screen.getByRole('button')).toHaveClass(
+      'min-w-[14.375rem]',
+      'min-h-(--ark-size-control-xl)',
+      'justify-between',
+    )
   })
 
   it('selected 输出 aria-pressed，样式是整块明暗对调', () => {
@@ -51,33 +84,27 @@ describe('Button', () => {
     expect(screen.getByRole('button')).toHaveAttribute('aria-pressed', 'false')
   })
 
-  it('confirm 是暗红块、cancel 是黑色块，各带一个对读屏隐藏的默认图标', () => {
-    render(
-      <>
-        <Button variant="cancel">取消</Button>
-        <Button variant="confirm">确认</Button>
-      </>,
-    )
-    const cancel = screen.getByRole('button', { name: '取消' })
-    const confirm = screen.getByRole('button', { name: '确认' })
-    expect(cancel).toHaveClass('bg-ark-neutral-ink-950')
-    expect(confirm).toHaveClass('bg-ark-signal-confirm')
-    expect(cancel.querySelector('[aria-hidden="true"] svg')).not.toBeNull()
-    expect(confirm.querySelector('[aria-hidden="true"] svg')).not.toBeNull()
+  it.each([
+    ['primary', 'bg-ark-signal'],
+    ['subtle', 'bg-ark-control'],
+    ['inverse', 'bg-ark-invert'],
+    ['danger', 'bg-ark-danger'],
+  ] as const)('%s 的底色取语义键 %s，跟着主题走', (variant, background) => {
+    render(<Button variant={variant}>操作</Button>)
+    expect(screen.getByRole('button')).toHaveClass(background)
   })
 
-  it('icon 传 null 去掉默认图标，传节点则换成自己的', () => {
-    const { rerender } = render(
-      <Button variant="confirm" icon={null}>
-        继续结算
+  it('图标对读屏隐藏，前后各一个位置', () => {
+    render(
+      <Button icon={<svg data-testid="lead" />} iconEnd={<svg data-testid="trail" />}>
+        筛选
       </Button>,
     )
-    expect(screen.getByRole('button').querySelector('svg')).toBeNull()
-
-    rerender(<Button icon={<svg data-testid="own" />}>筛选</Button>)
     const button = screen.getByRole('button', { name: '筛选' })
-    expect(screen.getByTestId('own').parentElement).toHaveAttribute('aria-hidden', 'true')
-    expect(button).toContainElement(screen.getByTestId('own'))
+    expect(screen.getByTestId('lead').parentElement).toHaveAttribute('aria-hidden', 'true')
+    expect(screen.getByTestId('trail').parentElement).toHaveAttribute('aria-hidden', 'true')
+    expect(button).toContainElement(screen.getByTestId('lead'))
+    expect(button.lastElementChild).toBe(screen.getByTestId('trail').parentElement)
   })
 
   it('点击时调用 onClick，禁用时不调用', async () => {
@@ -96,16 +123,37 @@ describe('Button', () => {
     expect(onClick).toHaveBeenCalledTimes(1)
   })
 
+  it('loading 时标记为忙、不响应点击，但仍然可以聚焦', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(
+      <Button loading icon={<svg data-testid="own" />} onClick={onClick}>
+        保存
+      </Button>,
+    )
+    const button = screen.getByRole('button', { name: '保存' })
+    expect(button).toHaveAttribute('aria-busy', 'true')
+    expect(button).toHaveAttribute('aria-disabled', 'true')
+    expect(button).not.toBeDisabled()
+    // 图标的位置换成旋转指示
+    expect(screen.queryByTestId('own')).toBeNull()
+    expect(button.querySelector('[data-ark="spinner"]')).not.toBeNull()
+    await user.click(button)
+    expect(onClick).not.toHaveBeenCalled()
+    button.focus()
+    expect(button).toHaveFocus()
+  })
+
   it('使用方的 className 覆盖同属性的默认类', () => {
     render(<Button className="px-ark-2">查看</Button>)
     const button = screen.getByRole('button')
     expect(button).toHaveClass('px-ark-2')
-    expect(button).not.toHaveClass('px-ark-5')
+    expect(button).not.toHaveClass('px-ark-4')
   })
 
-  it('weak + cut 把背景画在 ::before 上，根元素不裁切', () => {
+  it('subtle + cut 把背景画在 ::before 上，根元素不裁切', () => {
     render(
-      <Button variant="weak" cut>
+      <Button variant="subtle" cut>
         READ MORE
       </Button>,
     )
@@ -126,5 +174,40 @@ describe('Button', () => {
       </Button>,
     )
     expect(node).toBeInstanceOf(HTMLButtonElement)
+  })
+})
+
+describe('IconButton', () => {
+  it('名称来自 label，是一个方形的按钮', () => {
+    render(
+      <IconButton label="关闭">
+        <svg />
+      </IconButton>,
+    )
+    const button = screen.getByRole('button', { name: '关闭' })
+    expect(button).toHaveAttribute('type', 'button')
+    expect(button).toHaveAttribute('data-ark', 'icon-button')
+    expect(button).toHaveClass('size-(--ark-size-control-md)')
+  })
+
+  it('selected 输出 aria-pressed', () => {
+    render(
+      <IconButton label="收藏" selected>
+        <svg />
+      </IconButton>,
+    )
+    expect(screen.getByRole('button', { name: '收藏' })).toHaveAttribute('aria-pressed', 'true')
+  })
+
+  it('禁用时不响应点击', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(
+      <IconButton label="删除" disabled onClick={onClick}>
+        <svg />
+      </IconButton>,
+    )
+    await user.click(screen.getByRole('button', { name: '删除' }))
+    expect(onClick).not.toHaveBeenCalled()
   })
 })

@@ -16,13 +16,18 @@
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
     },
+    "./game": {
+      "types": "./dist/game.d.ts",
+      "default": "./dist/game.js"
+    },
     "./styles.css": "./dist/styles.css",
+    "./game.css": "./dist/game.css",
     "./theme.css": "./dist/theme.css"
   },
   "scripts": {
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "build": "tsdown && tailwindcss -i src/styles/index.css -o dist/styles.css --minify",
+    "build": "tsdown && tailwindcss -i src/styles/index.css -o dist/styles.css --minify && tailwindcss -i src/styles/game.css -o dist/game.css --minify",
     "test": "vitest run",
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit"
@@ -33,6 +38,7 @@
   },
   "dependencies": {
     "@arknights-ui/tokens": "workspace:*",
+    "@floating-ui/dom": "^1.8.0",
     "clsx": "^2.1.1",
     "tailwind-merge": "^3.7.0"
   },

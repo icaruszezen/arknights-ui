@@ -10,7 +10,7 @@ import { ScrollHint } from '../ScrollHint'
 import { Shell } from './Shell'
 
 // 横线的位置随屏换：官网的情报、干员两屏在内容区上缘，其余在下缘。
-// 竖屏时只有首页的还在下缘，其余各屏都在顶栏的下缘
+// 窄屏时只有首页的还在下缘，其余各屏都在顶栏的下缘
 const screens = [
   {
     id: 'index',
@@ -18,7 +18,7 @@ const screens = [
     zh: '首页',
     ghost: 'ARKNIGHTS-UI',
     line: 'bottom',
-    portrait: 'bottom',
+    narrow: 'bottom',
   },
   {
     id: 'information',
@@ -26,17 +26,17 @@ const screens = [
     zh: '情报',
     ghost: 'BREAKING NEWS',
     line: 'top',
-    portrait: 'top',
+    narrow: 'top',
   },
-  { id: 'operator', en: 'OPERATOR', zh: '干员', ghost: 'RHODES', line: 'top', portrait: 'top' },
-  { id: 'world', en: 'WORLD', zh: '设定', ghost: 'WORLD', line: 'bottom', portrait: 'top' },
+  { id: 'operator', en: 'OPERATOR', zh: '干员', ghost: 'RHODES', line: 'top', narrow: 'top' },
+  { id: 'world', en: 'WORLD', zh: '设定', ghost: 'WORLD', line: 'bottom', narrow: 'top' },
   {
     id: 'more',
     en: 'MORE',
     zh: '更多内容',
     ghost: 'MORE CONTENT',
     line: 'bottom',
-    portrait: 'top',
+    narrow: 'top',
   },
 ] as const
 
@@ -80,7 +80,7 @@ const aside = (
   </ul>
 )
 
-// 手机上放不下最大一档的标题，竖屏的那个 Story 用小一档的
+// 手机上放不下最大一档的标题，窄屏的那个 Story 用小一档的
 const newsBlock = (size: 'lg' | 'md') => (
   <div className="grid max-w-xl gap-ark-5">
     <Heading as="h1" size={size} sub="BREAKING NEWS" bar>
@@ -98,7 +98,7 @@ const newsBlock = (size: 'lg' | 'md') => (
         </li>
       ))}
     </ul>
-    <Button variant="primary" sub="READ MORE" arrow className="justify-self-start">
+    <Button variant="primary" size="xl" sub="READ MORE" arrow className="justify-self-start">
       更多情报
     </Button>
   </div>
@@ -133,9 +133,9 @@ const meta = {
         ))}
       </Nav>
     ),
-    // 竖屏的右栏只有菜单按钮那么宽，计数换成竖排
+    // 窄屏的右栏只有菜单按钮那么宽，计数换成竖排
     counter: (
-      <Counter value={1} total={4} label="INFORMATION" micro="ARKNIGHTS-UI" vertical="portrait" />
+      <Counter value={1} total={4} label="INFORMATION" micro="ARKNIGHTS-UI" vertical="narrow" />
     ),
     children: news,
   },
@@ -156,10 +156,10 @@ export const Default: Story = {}
 /**
  * 竖屏是另一套编排（官网实测）：顶栏高 4.6875rem，横线就是它的下缘；右栏还在右边，
  * 收窄到 2.875rem——上面是菜单按钮，底下是竖排的计数；小按钮排到菜单按钮的左边；
- * 常驻入口不显示；线比横屏亮一档。
+ * 常驻入口不显示；线比宽屏亮一档。
  *
  * 取值是官网竖屏的一半：官网竖屏以 750 宽为基准，375 宽的手机上根字号只有 8px。
- * 在画布视图里才是竖屏；文档页是横向的，这里看到的是横屏。
+ * 在画布视图里才是窄屏；文档页是横向的，这里看到的是宽屏。
  */
 export const Portrait: Story = {
   // 抵消 Story 的留白，让骨架铺满手机尺寸的画布
@@ -186,21 +186,21 @@ export const Screens: Story = {
         {...args}
         ghost={screen.ghost}
         line={screen.line}
-        portraitLine={screen.portrait}
+        narrowLine={screen.narrow}
         counter={
           <Counter
             value={index}
             total={screens.length - 1}
             label={screen.en}
             micro="ARKNIGHTS-UI"
-            vertical="portrait"
+            vertical="narrow"
           />
         }
         scrollHint={
           index === screens.length - 1 ? (
             <ScrollHint direction="up" label="回到首屏" onClick={() => setIndex(0)} />
           ) : (
-            <ScrollHint label="下一屏" onClick={() => setIndex(index + 1)} />
+            <ScrollHint onClick={() => setIndex(index + 1)} />
           )
         }
         nav={
