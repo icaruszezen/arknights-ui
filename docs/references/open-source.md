@@ -1,6 +1,6 @@
 # 开源项目盘点
 
-GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 GitHub API 查询于 2026-10-06，星数与更新时间会变化。
+GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 GitHub API 查询于 2026-10-06，2026-10-14 重查了一遍；星数与更新时间会变化。
 
 > 表中“含官方素材”一栏标注该仓库是否直接存放了游戏立绘、界面贴图等。这类仓库可以读代码学写法，但不要把其中的素材复制到自己的公开项目里。
 
@@ -10,10 +10,10 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 
 | 项目 | ★ | 许可 | 技术 | 最近更新 | 含官方素材 | 一句话 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [YunYouJun/ak-ui](https://github.com/YunYouJun/ak-ui) | 58 | MIT | SCSS / Vue | 2026-09 | 否 | 非官方的风格基础：语义 token、框架无关的 CSS、组件准则、可安装的 Agent Skill |
+| [YunYouJun/ak-ui](https://github.com/YunYouJun/ak-ui) | 60 | MIT | SCSS / Vue | 2026-10 | 否 | 非官方的风格基础：语义 token、框架无关的 CSS、组件准则、可安装的 Agent Skill |
 | [Cromemadnd/ArknightsUI-React-Template](https://github.com/Cromemadnd/ArknightsUI-React-Template) | 10 | MIT | React 19 / Tailwind / Headless UI | 2025-04 | 部分（背景与音频取自 PRTS，注明来源） | 主界面风格的 React 模板，含鼠标驱动的 3D 变换 |
 | [SeptThirteen/Arknights-UI-Style](https://github.com/SeptThirteen/Arknights-UI-Style) | 0 | 未声明 | 原生 HTML / CSS / JS | 2026-09 | 否 | 终端风格个人主页：斜切角、警示条纹、点阵、编号徽章、双语区块标题 |
-| [tkesgar/ark-royal](https://github.com/tkesgar/ark-royal) | 4 | MIT | React | 2020-01 | 是（截图） | 生成自定义角色的仿游戏截图 |
+| [tkesgar/ark-royal](https://github.com/tkesgar/ark-royal) | 4 | MIT | React | 2020-01（已归档） | 是（截图） | 生成自定义角色的仿游戏截图 |
 
 ### 重点：ak-ui
 
@@ -49,8 +49,8 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 
 | 项目 | ★ | 许可 | 技术 | 最近更新 | 含官方素材 | 一句话 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [mashirozx/arknights-ui](https://github.com/mashirozx/arknights-ui) | 388 | MIT | HTML / CSS | 2023-01 | 是（README 注明素材为逆向所得，仅供学习，请勿商用） | H5 复刻的游戏主界面，这一类项目的源头。[Demo](https://mashirozx.github.io/arknights-ui/) |
-| [ngc7331/arknights-ui-remastered](https://github.com/ngc7331/arknights-ui-remastered) | 21 | MIT | CSS / Vue | 2022-06 | 是 | 上一项的重制版 |
+| [mashirozx/arknights-ui](https://github.com/mashirozx/arknights-ui) | 389 | MIT | HTML / CSS | 2023-01 | 是（README 注明素材为逆向所得，仅供学习，请勿商用） | H5 复刻的游戏主界面，这一类项目的源头。复刻的是开服时期的主界面，和现行界面有出入，见 [游戏 · 主界面](../modules/game/home.md)。[Demo](https://mashirozx.github.io/arknights-ui/) |
+| [ngc7331/arknights-ui-remastered](https://github.com/ngc7331/arknights-ui-remastered) | 21 | MIT | CSS / Vue | 2022-06（已归档） | 是 | 上一项的重制版 |
 | [kyuna0312/kyuna_arknights_ui](https://github.com/kyuna0312/kyuna_arknights_ui) | 2 | 未声明 | CSS / JS | 2022-05 | 是 | 同源的 H5 复刻练习 |
 
 ### 重点：mashirozx/arknights-ui
@@ -72,17 +72,19 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 | 大字投影 | `text-shadow: #8b8b8b 5px 5px 0` |
 | 边框渐变 | `linear-gradient(#05a7dc, #454545, #05a7dc)` |
 
-它证实了一件事：主界面入口的大字用的是**中文衬线体**，信息文字用黑体。
+它证实了一件事：主界面入口的大字用的是**中文衬线体**，信息文字用黑体。机核《尝试优化〈明日方舟〉官方网站的设计》的归纳与此一致：游戏内标题以思源宋体为主，其他文字用思源黑体。
+
+要留意的是，这份复刻照的是旧版界面：入口名贴左下、下面一行大写的英文注脚、大字带灰色硬投影。现行界面这三处都变了。
 
 ## 三、博客与站点主题
 
 | 项目 | ★ | 许可 | 技术 | 最近更新 | 含官方素材 | 一句话 |
 | --- | --- | --- | --- | --- | --- | --- |
-| [Yue-plus/hexo-theme-arknights](https://github.com/Yue-plus/hexo-theme-arknights) | 873 | MIT | Hexo / Pug / Stylus | 2026-07 | 少量 | 罗德岛阵营风格的 Hexo 主题，星数最高。[Demo](https://arknights.theme.hexo.yue.zone/) |
+| [Yue-plus/hexo-theme-arknights](https://github.com/Yue-plus/hexo-theme-arknights) | 878 | MIT | Hexo / Pug / Stylus | 2026-07 | 少量 | 罗德岛阵营风格的 Hexo 主题，星数最高。[Demo](https://arknights.theme.hexo.yue.zone/) |
 | [valaxyjs/valaxy-theme-arknights](https://github.com/valaxyjs/valaxy-theme-arknights) | 4 | MIT | Valaxy / Vue | 2026-09 | 否（声明为原创） | 基于 ak-ui CSS Core 的 Valaxy 博客主题。[Demo](https://arknights.valaxy.site) |
 | [ETOgaosion/hugo-theme-arknights](https://github.com/ETOgaosion/hugo-theme-arknights) | 3 | GPL-3.0 | Hugo | 2025-09 | 未核实 | Hugo 主题 |
 | [yororoA/Ark](https://github.com/yororoA/Ark) | 1 | MIT | Next.js / React / Tailwind | 2026-10 | 未核实 | 博客 UI，开发中 |
-| [bwwq/arknights-blog](https://github.com/bwwq/arknights-blog) | 6 | 未声明 | JavaScript | 2025-11 | 未核实 | 博客 |
+| [bwwq/arknights-blog](https://github.com/bwwq/arknights-blog) | 7 | 未声明 | JavaScript | 2025-11 | 未核实 | 博客 |
 | [Alpha1022/hexo-theme-arknights](https://github.com/Alpha1022/hexo-theme-arknights) | 6 | 未声明 | — | 2019-07 | — | 仅有设计思路的早期构想 |
 
 ### 重点：Yue-plus/hexo-theme-arknights
@@ -107,11 +109,12 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 | 项目 | ★ | 许可 | 最近更新 | 说明 |
 | --- | --- | --- | --- | --- |
 | [TimWangZi/The-font-of-Arknights](https://github.com/TimWangZi/The-font-of-Arknights) | 40 | 未声明 | 2020-06 | 整理了游戏使用的字体及其使用场合。仓库内含字体文件，各字体授权不同，使用前自行确认 |
-| [Kengxxiao/ArknightsGameData](https://github.com/Kengxxiao/ArknightsGameData) | 1835 | 未声明 | 2026-09 | 游戏文本与数值数据（解包所得） |
-| [yuanyan3060/ArknightsGameResource](https://github.com/yuanyan3060/ArknightsGameResource) | 588 | AGPL-3.0 | 2026-09 | 客户端素材（解包所得） |
-| [isHarryh/Ark-Unpacker](https://github.com/isHarryh/Ark-Unpacker) | 693 | BSD-3-Clause | 2026-09 | 资源批量解包工具 |
+| [Kengxxiao/ArknightsGameData](https://github.com/Kengxxiao/ArknightsGameData) | 1846 | 未声明 | 2026-10 | 游戏文本与数值数据（解包所得） |
+| [yuanyan3060/ArknightsGameResource](https://github.com/yuanyan3060/ArknightsGameResource) | 602 | AGPL-3.0 | 2026-10 | 客户端素材（解包所得） |
+| [isHarryh/Ark-Unpacker](https://github.com/isHarryh/Ark-Unpacker) | 701 | BSD-3-Clause | 2026-09 | 资源批量解包工具 |
+| [MaaAssistantArknights/MaaAssistantArknights](https://github.com/MaaAssistantArknights/MaaAssistantArknights) | 23739 | AGPL-3.0 | 2026-10 | 自动化助手。`resource/template` 下有三千多张从 1280 × 720 实机画面裁出的控件图，本仓库用它核对控件的形状与颜色，见 [官方图片外链索引](image-index.md#控件级的实机参考) |
 
-> 后三项涉及解包的游戏数据与素材，版权属于鹰角网络。仓库的开源许可只覆盖其代码或整理工作，不改变素材本身的权利归属。本仓库不搬运其中任何内容。
+> 后四项涉及解包的游戏数据、素材或实机画面的裁图，版权属于鹰角网络。仓库的开源许可只覆盖其代码或整理工作，不改变素材本身的权利归属。本仓库不搬运其中任何内容。
 
 ## 五、风格化的工具类项目
 
@@ -119,9 +122,9 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 
 | 项目 | ★ | 许可 | 技术 | 说明 |
 | --- | --- | --- | --- | --- |
-| [arkntools/arknights-toolbox](https://github.com/arkntools/arknights-toolbox) | 694 | MIT | Vue | 明日方舟工具箱。[站点](https://arkntools.app) |
+| [arkntools/arknights-toolbox](https://github.com/arkntools/arknights-toolbox) | 698 | MIT | Vue | 明日方舟工具箱。[站点](https://arkntools.app) |
 | [050644zf/ArknightsStoryTextReader](https://github.com/050644zf/ArknightsStoryTextReader) | 454 | MIT | Vue | 剧情文本阅读器。[站点](https://astr.pages.dev) |
-| [penguin-statistics/frontend-v2](https://github.com/penguin-statistics/frontend-v2) | 415 | MIT | Vue | 企鹅物流数据统计前端。[站点](https://penguin-stats.io) |
+| [penguin-statistics/frontend-v2](https://github.com/penguin-statistics/frontend-v2) | 413 | MIT | Vue | 企鹅物流数据统计前端。[站点](https://penguin-stats.io) |
 
 ## 延伸：《终末地》风格
 
@@ -148,5 +151,5 @@ GitHub 上与《明日方舟》视觉风格相关的开源项目。数据通过 
 
 ## 来源
 
-- GitHub API（`gh api repos/<owner>/<repo>`），2026-10-06
+- GitHub API（`gh api repos/<owner>/<repo>`），2026-10-06；2026-10-14 重查星数、许可、最近推送时间与归档状态
 - 各仓库 README 与样式源码

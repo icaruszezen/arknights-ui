@@ -14,7 +14,7 @@
 
   <!-- 1 矩形模块 -->
   <text x="40" y="44" class="data tag">01 MODULE</text>
-  <text x="40" y="64" class="cjk note">直角矩形，错位拼合，不留圆角</text>
+  <text x="40" y="64" class="cjk note">直角矩形，错位拼合；圆角只给小件</text>
   <rect x="40" y="84" width="150" height="96" fill="#fdfdfb"/>
   <rect x="196" y="84" width="74" height="45" fill="#424242"/>
   <rect x="196" y="135" width="74" height="45" fill="#424242"/>
@@ -23,7 +23,7 @@
 
   <!-- 2 切角 -->
   <text x="340" y="44" class="data tag">02 CUT CORNER</text>
-  <text x="340" y="64" class="cjk note">只切一个角；切角尺寸三档 6 / 12 / 24px</text>
+  <text x="340" y="64" class="cjk note">社区的提炼；只切一个角，分三档</text>
   <polygon points="340,84 566,84 590,108 590,226 340,226" fill="#1d1f20" stroke="#fff" stroke-opacity=".5"/>
   <path class="dim" d="M566 76 V70 H590 V76"/>
   <text x="578" y="62" text-anchor="middle" class="data" font-size="11" fill="#18d1ff">24</text>

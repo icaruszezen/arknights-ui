@@ -43,9 +43,9 @@
 - 面板的底有三种：纸白、石墨、蓝。日间主题下纸白最多。
 - 纸白面板上的字没有硬投影。
 - 面板之间只留很窄的缝，没有描边。
+- 提醒标记是一个带白边的橙色菱形，骑在面板的角上（实机的“档案”面板）；数量写在面板里的色块上（“基建”面板里的告警数和通知数）。实机上没有圆形的红点。
 
 > **2026-10-07 更正。** 上面这一节原先照的是社区复刻的旧版界面：入口名贴左下、下面是大写的英文注脚（`TERMINAL`、`SQUADS`），第二行是石墨面板，纸白大字带 5px 的灰色硬投影。现行界面（PRTS 的八个主题预览图、英文维基的截图都一致）是上面改过的样子。蓝色面板取色 `#0da1d1`。
-- 提醒标记是一个带白边的橙色菱形，骑在面板的角上（实机的“档案”面板）；数量写在面板里的色块上（“基建”面板里的告警数和通知数）。实机上没有圆形的红点。
 
 ## 规范
 
@@ -61,7 +61,7 @@
 | 入口名 | 中文衬线 Heavy（复刻项目用 Noto Serif SC），贴左上 | 社区（实机截图） |
 | 入口名下面的小字 | 与入口名同一种语言，灰色黑体，约为入口名的 2/5 | 社区（实机截图） |
 | 数值 | 数据体（Bender 或 Novecento） | 社区 |
-| 文字硬投影 | `5px 5px 0 #8b8b8b`（大标题）、`0.2rem 0.15rem rgba(0,0,0,.6)` | 社区 |
+| 文字硬投影 | `5px 5px 0 #8b8b8b`（大标题）、`0.2rem 0.15rem rgba(0,0,0,.6)` | 社区（旧版界面的复刻取值）。现行界面的纸白面板和蓝色面板上没有投影 |
 | 摆动 | 随陀螺仪 / 鼠标位置改变 `rotateX/rotateY`，幅度几度以内 | 社区 |
 
 ```css
@@ -83,7 +83,7 @@
 - 透视面板在网页上要保证点击区仍是矩形，且文字不因变形而模糊（必要时对文字层单独处理）。
 - 陀螺仪 / 鼠标摆动必须可以关闭，并遵循 `prefers-reduced-motion`。
 - 窄屏下取消透视，面板改为纵向堆叠。
-- 一条评论指出：把 UI 布局框得这么死，做多语言本地化时文字长度的适配会比较吃力。固定尺寸的面板需要为较长的译文预留方案（缩字、换行或缩写）。
+- 知乎专栏那篇分析下面有一条评论：把 UI 布局框得这么死，做国际化时文字长度的适配会比较吃力。固定尺寸的面板需要为较长的译文预留方案（缩字、换行或缩写）。英文客户端的截图里能看到实际的做法：长的词直接缩小字号（设置页的 `Performance Optimization` 比别的项名小一大截）。
 
 ## 官方参考
 
@@ -94,7 +94,7 @@
 | 现行主界面的实机截图 | [界面主题一览 · PRTS](https://prts.wiki/w/%E7%95%8C%E9%9D%A2%E4%B8%BB%E9%A2%98%E4%B8%80%E8%A7%88) | 1280 × 720，每个主题一张，可以取色 |
 | H5 复刻（可交互） | [mashirozx/arknights-ui · Demo](https://mashirozx.github.io/arknights-ui/) | 鼠标 / 陀螺仪驱动的透视 |
 | React 复刻模板 | [Cromemadnd/ArknightsUI-React-Template](https://github.com/Cromemadnd/ArknightsUI-React-Template) | 3D 变换、设置面板 |
-| 画内界面的分析 | [UI/UX 分析（GameRes）](https://www.gameres.com/849200.html) | “Diegetic Interface 风格与沉浸感”一节 |
+| 画内界面的分析 | [UI/UX 分析（GameRes）](https://www.gameres.com/849200.html) | “Diegetic Interface……沉浸感”一节 |
 
 ## 来源
 
@@ -102,3 +102,4 @@
 - [从 TA 的视角看 UI #1](https://zhuanlan.zhihu.com/p/570566718)
 - [mashirozx/arknights-ui](https://github.com/mashirozx/arknights-ui)、[YunYouJun/ak-ui](https://github.com/YunYouJun/ak-ui)、[Cromemadnd/ArknightsUI-React-Template](https://github.com/Cromemadnd/ArknightsUI-React-Template)
 - [明日方舟 UI 图案以及 LOGO 的设计是什么美术风格？](https://www.zhihu.com/question/489842081)
+- 2026-10-14：对照原文核对了转述（与《全境封锁》《死亡空间》的比较、设备信息随陀螺仪移动，都在 GameRes 一文里；关于国际化的评论在知乎专栏那篇的评论区）。同日把挂在更正说明后面的一条列表项挪回了列表

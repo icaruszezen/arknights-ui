@@ -42,6 +42,8 @@
 | 最小点击区 | 44 × 44px | 44 × 44px | 44 × 44px（可见形状可以更小） | 社区 |
 
 > **次按钮一列是估计，不是实测（2026-10-07 更正）。** 这一列原先标的是“实测”，但官网的样式表里没有这种“1px 白色半透明描边、悬停整块反白”的按钮。最接近的是首页的下载按钮：`10.5rem × 3rem`，描边 `1px solid #333`，圆角 `.25rem`，悬停时只把描边变成白色。次按钮现在的取值是本仓库按“直角、悬停整块换色”的原则定的。
+>
+> **2026-10-14 补充。** 描边按钮在实机上有出处：设置页右上角的重置按钮（英文客户端写作 `Reset Settings`）是一块深色半透明的底加一圈浅色细边，白字，直角。它的底不是透明的。官网另有一种灰底的大按钮——图集页的“返回 / GO BACK”：`17.25rem × 3.75rem`，底色 `#585858`，中文思源黑体 Bold `1.25rem`、英文 Bender Bold `0.875rem`，左端一个 `1rem` 的箭头，悬停变白底黑字。它和弱按钮同色，和主按钮同高，骑在骨架的横线上。
 
 ### 游戏内的按钮（实机裁图）
 
@@ -53,8 +55,13 @@
 | 确认 | 弹窗、寻访是暗红 `#731111`；编队、升级、招募是蓝 `#0098dc` / `#0075a8`。图形是白色圆圈里一个对勾 | 社区（实机裁图） |
 | 取消 | 黑色块（`#0c0c0c`–`#2b2b2b`），图形是白色圆圈里一个叉 | 社区（实机裁图） |
 | 只有一个按钮的弹窗 | 黑色块 + 圆圈对勾 | 社区（实机裁图） |
+| 通栏的肯定按钮（公开招募的 `Hire`） | 一整条蓝色实底、白字居中，占满面板的宽度 | 社区（实机截图，英文客户端） |
+| 并排的一对（公开招募的 `Cancel` / `Recruit`） | 两块等宽的深色块，白字，中间一道窄缝；带一层很淡的网纹 | 社区（实机截图，英文客户端） |
+| 描边按钮（设置页的 `Reset Settings`） | 深色半透明的底，一圈浅色细边，白字 | 社区（实机截图，英文客户端） |
 | 开关（代理指挥） | 整块明暗对调：开是 `#232323` 底浅字，关是 `#a6a7a7` 底深字 | 社区（实机裁图） |
 | 小号操作（最多 / 最少） | `#535353` 底白字 | 社区（实机裁图） |
+
+设置页里的开关是另一种写法（带一块会滑动的白色滑块），和分段选项、滑条、数量步进器一起写在 [表单控件](forms.md)。
 
 ### 状态
 
@@ -103,6 +110,8 @@
 | 弱按钮 | [官网 · 情报](https://ak.hypergryph.com/#information) | 列表下方的灰色 READ MORE |
 | VIEW MORE + 短横线 | [官网 · 更多内容](https://ak.hypergryph.com/#more) | 四个入口的底部 |
 | 游戏内的确认、取消、开始行动 | [MAA · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | 从实机裁出的控件图：`PopupConfirm`、`PopupCancel`、`Battle/StartButton/StartButton1` 等 |
+| 通栏按钮、并排的一对、描边按钮 | [Terra Wiki 的 `UI-recruitment`](https://arknights.wiki.gg/wiki/File:UI-recruitment.png)、[`UI-settingsmenu`](https://arknights.wiki.gg/wiki/File:UI-settingsmenu.png) | 公开招募与设置页的整屏截图 |
+| 灰底的返回按钮 | [官网 · 泰拉万象](https://ak.hypergryph.com/#media) | 点开物件、再点“查看详情”之后的二级页右下角 |
 | 社区实现 | [ak-ui · Buttons](https://ak-ui.yyj.moe/en/components/) | 可交互的按钮样例 |
 
 ## Do / Don't
@@ -122,3 +131,4 @@
 - [ak-ui · Official website UI study](https://ak-ui.yyj.moe/en/guide/official-site-study.html)
 - 官网样式表逐条核对（2026-10-07）：主 / 弱按钮的尺寸、内边距与箭头
 - 游戏内样式取自 [MAA](https://github.com/MaaAssistantArknights/MaaAssistantArknights) 的实机裁图（1280 × 720），色值为裁图取色（2026-10-07）
+- 2026-10-14：公开招募与设置页的按钮看的是 Terra Wiki 的整屏截图；官网图集页的返回按钮读自样式表；泰拉万象屏的“查看详情”与情报屏的主按钮是同一套取值（`14.375rem × 3.75rem`、内边距 `0 1.75rem 0 1rem`、箭头 `0.5rem`）

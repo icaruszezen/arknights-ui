@@ -114,8 +114,8 @@
   --ark-cut-lg: 1.5rem; /* 社区 · 大面板切角 */
 
   /* radius */
-  --ark-radius-none: 0; /* 实测 · 默认直角 */
-  --ark-radius-subtle: 2px; /* 社区 · 仅用于消除锯齿感的极小圆角 */
+  --ark-radius-none: 0; /* 实测 · 默认直角：面板、按钮、标签、进度条。官网把轮播库滚动条默认的 10px 圆角显式改回了 0 */
+  --ark-radius-subtle: 2px; /* 实测 · 极小的圆角。官网标注的小方框、干员屏缩略图的滚动条是这个值。更大的圆角只出现在少数功能性的小件上，没有 token，见 docs/foundations/geometry.md */
 
   /* shadow */
   --ark-shadow-drop: -0.5rem 0.5rem 1rem #000000; /* 实测 · 官网干员屏缩略图的 drop-shadow，向左下偏移。大立绘本身没有投影 */

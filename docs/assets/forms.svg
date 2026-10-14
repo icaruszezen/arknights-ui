@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 470" role="img" aria-labelledby="t d">
+  <title id="t">表单控件</title>
+  <desc id="d">设置页里的分段选项、开关、滑条、小节带与设置项，竖排页签，以及购买弹层里的数量步进器。</desc>
+  <style>
+    .cond { font-family: 'Oswald','Bahnschrift','Arial Narrow',Arial,sans-serif; font-weight: 500; }
+    .cjk { font-family: 'Source Han Sans SC','Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif; }
+    .data { font-family: 'Bender','JetBrains Mono',Consolas,monospace; }
+    .note { fill: #8d8d8d; font-size: 12px; }
+    .tag { fill: #18d1ff; font-size: 12px; }
+    .lead { stroke: #585858; stroke-width: 1; fill: none; }
+  </style>
+  <defs>
+    <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)"><rect width="3" height="8" fill="#fff" fill-opacity=".35"/></pattern>
+  </defs>
+  <rect width="960" height="470" fill="#121212"/>
+  <rect x="0.5" y="0.5" width="959" height="469" fill="none" stroke="#333"/>
+
+  <!-- 1 设置面板 -->
+  <text x="40" y="44" class="data tag">01 SETTINGS PANEL</text>
+  <text x="172" y="44" class="cjk note">浅色的面上：小节带、设置项、三种控件</text>
+  <rect x="40" y="64" width="560" height="290" fill="#d2d2d2"/>
+
+  <!-- 小节带 -->
+  <rect x="40" y="64" width="560" height="30" fill="#313131"/>
+  <rect x="500" y="64" width="100" height="30" fill="url(#hatch)"/>
+  <text x="56" y="84" class="cjk" font-size="14" font-weight="700" fill="#fff">界面设置</text>
+
+  <!-- 行 1：分段选项 -->
+  <text x="56" y="128" class="cjk" font-size="15" fill="#323232">画质</text>
+  <path d="M56 138H236" stroke="#787878" fill="none"/>
+  <text x="56" y="156" class="cjk" font-size="11" fill="#585858">* 画质越高，耗电越多</text>
+  <path d="M366 124H380M476 124H490" stroke="#585858" fill="none"/>
+  <rect x="270" y="106" width="96" height="36" fill="#313131"/>
+  <rect x="380" y="106" width="96" height="36" fill="#313131"/>
+  <rect x="490" y="106" width="96" height="36" fill="#0075a8"/>
+  <text x="318" y="129" text-anchor="middle" class="cjk" font-size="14" fill="#fff">低</text>
+  <text x="428" y="129" text-anchor="middle" class="cjk" font-size="14" fill="#fff">中</text>
+  <text x="538" y="129" text-anchor="middle" class="cjk" font-size="14" fill="#fff">高</text>
+
+  <!-- 行 2：开关（开 / 关） -->
+  <text x="56" y="206" class="cjk" font-size="15" fill="#323232">省电模式</text>
+  <path d="M56 216H236" stroke="#787878" fill="none"/>
+  <rect x="270" y="186" width="128" height="32" fill="#0075a8" stroke="#1c1c1c"/>
+  <rect x="334" y="186" width="64" height="32" fill="#f7f7f7" stroke="#1c1c1c"/>
+  <text x="302" y="207" text-anchor="middle" class="data" font-size="13" fill="#fff">ON</text>
+  <rect x="458" y="186" width="128" height="32" fill="#313131" stroke="#1c1c1c"/>
+  <rect x="458" y="186" width="64" height="32" fill="#f7f7f7" stroke="#1c1c1c"/>
+  <text x="554" y="207" text-anchor="middle" class="data" font-size="13" fill="#fff">OFF</text>
+  <text x="334" y="238" text-anchor="middle" class="cjk" font-size="11" fill="#585858">开：滑块在右</text>
+  <text x="522" y="238" text-anchor="middle" class="cjk" font-size="11" fill="#585858">关：滑块在左</text>
+
+  <!-- 行 3：滑条 -->
+  <text x="56" y="296" class="cjk" font-size="15" fill="#323232">界面适配</text>
+  <path d="M56 306H236" stroke="#787878" fill="none"/>
+  <text x="56" y="324" class="cjk" font-size="11" fill="#585858">* 界面与屏幕边缘的距离</text>
+  <path d="M270 291H586" stroke="#1c1c1c" stroke-width="3" fill="none"/>
+  <rect x="372" y="275" width="48" height="32" fill="#f7f7f7" stroke="#8d8d8d"/>
+  <text x="396" y="296" text-anchor="middle" class="data" font-size="14" fill="#323232">4</text>
+
+  <!-- 2 竖排页签 -->
+  <text x="640" y="44" class="data tag">02 VERTICAL TABS</text>
+  <text x="762" y="44" class="cjk note">选中反白</text>
+  <rect x="640" y="64" width="160" height="46" fill="#f0f0f0"/>
+  <rect x="656" y="79" width="16" height="16" fill="#323232"/>
+  <text x="688" y="92" class="cjk" font-size="14" font-weight="700" fill="#323232">游戏</text>
+  <rect x="640.5" y="120.5" width="159" height="45" fill="#404040" stroke="#d2d2d2"/>
+  <rect x="656" y="135" width="16" height="16" fill="#fff"/>
+  <text x="688" y="148" class="cjk" font-size="14" fill="#fff">音量</text>
+  <rect x="640.5" y="176.5" width="159" height="45" fill="#404040" stroke="#d2d2d2"/>
+  <rect x="656" y="191" width="16" height="16" fill="#fff"/>
+  <text x="688" y="204" class="cjk" font-size="14" fill="#fff">通知</text>
+  <rect x="770" y="170" width="18" height="16" fill="#a32339"/>
+  <text x="779" y="182" text-anchor="middle" class="data" font-size="11" fill="#fff">1</text>
+
+  <!-- 3 数量步进器 -->
+  <text x="640" y="258" class="data tag">03 STEPPER</text>
+  <text x="722" y="258" class="cjk note">两端给捷径；要用的数摆在旁边</text>
+  <rect x="640" y="274" width="280" height="80" fill="#424242"/>
+  <text x="654" y="296" class="cjk" font-size="12" fill="#d2d2d2">已有 5</text>
+  <text x="906" y="296" text-anchor="end" class="cjk" font-size="12" fill="#d2d2d2">剩余 4</text>
+  <rect x="654" y="308" width="52" height="32" fill="#535353"/>
+  <rect x="710" y="308" width="36" height="32" fill="#535353"/>
+  <rect x="750" y="308" width="60" height="32" fill="#1d1f20"/>
+  <rect x="814" y="308" width="36" height="32" fill="#535353"/>
+  <rect x="854" y="308" width="52" height="32" fill="#535353"/>
+  <text x="680" y="329" text-anchor="middle" class="cjk" font-size="12" fill="#fff">最少</text>
+  <path d="M722 324H734M826 324H838M832 318V330" stroke="#fff" stroke-width="2" fill="none"/>
+  <text x="780" y="330" text-anchor="middle" class="data" font-size="16" font-weight="700" fill="#fff">2</text>
+  <text x="880" y="329" text-anchor="middle" class="cjk" font-size="12" fill="#fff">最多</text>
+
+  <!-- 说明 -->
+  <text x="40" y="384" class="cjk note">· 分段选项：选项直接摆出来，不收进下拉框；未选 #313131，选中 #0075a8，块与块之间一条细线相连</text>
+  <text x="40" y="404" class="cjk note">· 开关：直角的两格，一格是白色滑块，一格写状态；滑条的数值印在滑块上</text>
+  <text x="40" y="424" class="cjk note">· 设置项：项名下面一条固定长度的细线，注释以 * 起头；小节是一条通栏的深色带，右端一段斜纹</text>
+  <text x="40" y="444" class="cjk note">· 取值来自实机截图（社区）；步进器里加、减两格的底色是估计</text>
+</svg>

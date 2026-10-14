@@ -23,9 +23,9 @@
 | --- | --- | --- | --- |
 | 首页 | <https://ak.hypergryph.com/#index> | 主视觉与色块穿插、品牌字、右栏下载入口 | [官网](../modules/website.md) |
 | 情报 | <https://ak.hypergryph.com/#information> | 新闻行、分类标签、主按钮、轮播进度条 | [数据展示](../elements/data-display.md)、[按钮](../elements/buttons.md) |
-| 干员 | <https://ak.hypergryph.com/#operator> | 立绘出血、幽灵重影、中英文名排版、缩略图条 | [图片](../foundations/imagery.md) |
+| 干员 | <https://ak.hypergryph.com/#operator> | 立绘出血、幽灵重影、中英文名排版、缩略图条；挂在右栏竖线上的阵营切换、语音播放条 | [图片](../foundations/imagery.md)、[官网](../modules/website.md#干员-operator) |
 | 设定 | <https://ak.hypergryph.com/#world> | 条目列表、逐条滑入的入场、斜线网格、悬停幽灵字 | [底纹](../foundations/texture-and-pattern.md) |
-| 泰拉万象 | <https://ak.hypergryph.com/#media> | 等距场景、标注的两种状态、标题组、点阵 | [装饰元素](../elements/decorations.md)、[底纹](../foundations/texture-and-pattern.md) |
+| 泰拉万象 | <https://ak.hypergryph.com/#media> | 等距场景、标注的两种状态、标题组、点阵；点开物件再点“查看详情”进入二级页，图集一页有年份页签和月份刻度的时间轴 | [装饰元素](../elements/decorations.md)、[底纹](../foundations/texture-and-pattern.md)、[数据展示](../elements/data-display.md#时间轴) |
 | 更多内容 | <https://ak.hypergryph.com/#more> | 条带切图、图标 + 双语标题 | [图标与符号](../foundations/iconography.md)、[图片](../foundations/imagery.md) |
 
 ## 游戏界面
@@ -50,7 +50,8 @@
 | MAA 的模板图 | [MaaAssistantArknights · resource/template](https://github.com/MaaAssistantArknights/MaaAssistantArknights/tree/dev-v2/resource/template) | 从 1280 × 720 的实机画面裁出的单个控件：`PopupConfirm` / `PopupCancel`（弹窗按钮）、`Battle/BattleFlag/PrtsErrorConfirm`（整条弹窗）、`ReturnButton/Return`（返回）、`Battle/StartButton/StartButton1`（开始行动）、`Depot/DepotMaterialTab*`（仓库分类）等 | [按钮](../elements/buttons.md)、[反馈](../elements/feedback.md)、[导航](../elements/navigation.md) |
 | 机核文章的配图 | [《明日方舟》UI/UX 设计复盘](https://www.gcores.com/articles/123154) | 2436 × 1125 的实机截图：展开的快捷导航、基建的进驻信息抽屉、凭证交易所的兑换弹层、干员列表（星级、等级环）、干员详情（属性、标签）、仓库（分类）、基建总览（资源条） | [导航](../elements/navigation.md)、[面板与卡片](../elements/panels-and-cards.md)、[数据展示](../elements/data-display.md) |
 | PRTS 的界面主题预览图 | [界面主题一览 · PRTS](https://prts.wiki/w/%E7%95%8C%E9%9D%A2%E4%B8%BB%E9%A2%98%E4%B8%80%E8%A7%88) | 1280 × 720 的主界面实机截图，每个主题一张：资源条、入口面板的三种底色、橙色条与橙色菱形、计数色块、等级环。原图可以直接取色 | [数据展示](../elements/data-display.md)、[面板与卡片](../elements/panels-and-cards.md)、[色彩](../foundations/color.md) |
-
+| Terra Wiki 的设置页截图 | [`UI-settingsmenu`](https://arknights.wiki.gg/wiki/File:UI-settingsmenu.png)（1600 × 900）、[`UI-settingsmenu-1-2025`](https://arknights.wiki.gg/wiki/File:UI-settingsmenu-1-2025.png)（1077 × 598） | 一整套表单控件：分段选项、开关的开与关、带数值的滑条、小节的深色带、左侧竖排的页签、右上角描边的“恢复默认” | [表单控件](../elements/forms.md) |
+| Terra Wiki 的公开招募截图 | [`UI-recruitment`](https://arknights.wiki.gg/wiki/File:UI-recruitment.png)（1600 × 900） | 四个招募位：带大号序号的浅色面板、蓝色的通栏按钮、并排的两个深色按钮、圆头的小标签、**空位**（细线框 + 加号 + 动作名） | [反馈](../elements/feedback.md#空状态)、[几何语言](../foundations/geometry.md) |
 | Terra Wiki 的界面截图 | [Operation · Arknights Terra Wiki](https://arknights.wiki.gg/wiki/Operation)，以及站内文件名以 `UI-` 开头的图 | 2140 × 1080 上下的整屏实机截图：作战 HUD（`Operation-main`）、关卡选择（`Operation-selection`）、选中干员（`Operation-select_manual`）、编队（`UI-squads`）、干员列表与筛选（`UI-opmenu`、`UI-opfilter`）、采购中心首页（`Store_main_page`）、主界面（`Home_Screen_UI-Day`）、设置页（`UI-settingsmenu`）。站内可以直接取色 | [作战](../modules/game/battle.md)、[干员](../modules/game/operator.md)、[主界面](../modules/game/home.md) |
 | Terra Wiki 的章节封面 | [Story · Arknights Terra Wiki](https://arknights.wiki.gg/wiki/Story) | 各章的封面图（`Episode_NN`）：章节编号的小方框、标题字 | [剧情](../modules/game/story.md) |
 | 官网的公告正文 | [官网 · 情报](https://ak.hypergryph.com/#information) 里的任意一条 | 公告的原文标记：中文数字的小节、粗体的键、`◆` 起头的注意事项、时间写法；标题下面带起点的分隔线 | [宣传物料](../modules/promotional.md)、[装饰元素](../elements/decorations.md) |
@@ -60,7 +61,9 @@
 
 模板图是自动化工具用来识别界面的素材，属于游戏画面的局部截图，版权同样归鹰角网络。只在原仓库查看，不要转存。维基上的截图同理。
 
-还没有找到整屏截图的界面：剧情的对话画面、寻访的卡池界面、编队里的空位。
+Terra Wiki 上文件名以 `UI-` 开头的图一共七十来张，可以用站内接口列出来（`/api.php?action=query&list=allimages&aiprefix=UI-&ailimit=300&format=json`）。除了上面用到的，还有任务（`UI-dailymissions`）、仓库（`UI-depot`）、邮件（`UI-mailbox`）、公告（`UI-notice`）、个人名片（`UI-profile`）、敌方情报（`UI-enemyintel-new`）、首领的生命条（`UI-bigbosshealth-cur`）等，本仓库还没有拆。
+
+还没有找到整屏截图的界面：剧情的对话画面、寻访的卡池界面、编队里的空位。2026-10-14 又找了一轮（Terra Wiki 的 `Headhunting*`、`UI-squads*`，按“cutscene”“dialogue”搜文件），仍然没有；公开招募的空位算是最接近的一个参照。
 
 ## 宣传物料
 
@@ -88,7 +91,7 @@
 | --- | --- | --- |
 | ak-ui 组件与示例 | <https://ak-ui.yyj.moe/en/components/> | 原创素材 |
 | ak-ui 官网模式示例 | <https://ak-ui.yyj.moe/en/showcase/website.html> | 原创素材 |
-| arknights-ui 主界面复刻 | <https://mashirozx.github.io/arknights-ui/> | 含游戏素材，仅供学习 |
+| arknights-ui 主界面复刻 | <https://mashirozx.github.io/arknights-ui/> | 含游戏素材，仅供学习。现在会跳转到作者自己的域名 |
 | hexo-theme-arknights 演示 | <https://arknights.theme.hexo.yue.zone/> | 博客主题 |
 | valaxy-theme-arknights 演示 | <https://arknights.valaxy.site> | 博客主题，原创素材 |
 
@@ -109,6 +112,7 @@
 | [navigation.svg](../assets/navigation.svg) | 导航结构 |
 | [data-display.svg](../assets/data-display.svg) | 数据展示 |
 | [feedback.svg](../assets/feedback.svg) | 反馈元素 |
+| [forms.svg](../assets/forms.svg) | 表单控件 |
 | [decorations.svg](../assets/decorations.svg) | 装饰元素 |
 | [website-layout.svg](../assets/website-layout.svg) | 官网分屏线框 |
 | [website-layout-portrait.svg](../assets/website-layout-portrait.svg) | 官网竖屏线框 |
@@ -120,4 +124,5 @@
 
 - 外链可能因站点改版而失效。发现失效链接欢迎提 Issue。
 - 部分站点有防盗链或访问限制，因此本仓库只给链接，不在文档中内嵌这些图片。
-- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源；2026-10-08 加了官网的加载屏、底纹图和竖屏。
+- 链接核对于 2026-10-06；“控件级的实机参考”一节补于 2026-10-07，同日又加了 Terra Wiki 和官网公告两处来源；2026-10-08 加了官网的加载屏、底纹图和竖屏；2026-10-14 加了 Terra Wiki 的设置页与公开招募，并把全部外链重新核对了一遍。
+- PRTS 会拒绝脚本直接请求（返回 403），在浏览器里打开没有问题。

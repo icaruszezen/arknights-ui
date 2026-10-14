@@ -17,7 +17,7 @@
 | | |
 | --- | --- |
 | 颜色 | 九成黑白灰 + 一个信号色（官网为青蓝 `#18d1ff`） |
-| 形状 | 直角矩形；强调时切一个角；全局只用 45° |
+| 形状 | 骨架上一律直角矩形，圆角只给少数小件；全局只用 45° |
 | 字体 | 窄体英文（Oswald）+ 宽体英文（Novecento Sans Wide）+ 数据体（Bender）+ 思源黑体 / 宋体 |
 | 排版 | 中英成对、一主一辅；标题行高 1；数字大而带分母 |
 | 底纹 | 半调网点、噪点、警戒条纹窄边、斜线网格 |
@@ -52,6 +52,7 @@
 | [导航](docs/elements/navigation.md) | 双语顶栏、返回 + 主页、标签页 |
 | [数据展示](docs/elements/data-display.md) | 数值、列表行、进度、标签、星级 |
 | [反馈](docs/elements/feedback.md) | 弹窗、提示、加载、空状态 |
+| [表单控件](docs/elements/forms.md) | 分段选项、开关、滑条、数量步进器、下拉 |
 | [装饰元素](docs/elements/decorations.md) | 编号、日期写法、微缩英文、角标、标注 |
 
 ### 场景模块
@@ -134,7 +135,7 @@ node scripts/build-tokens.mjs
 
 ## React 组件库
 
-[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。[通用元素](#通用元素) 六篇文档里写到的东西都有对应的组件，[基础规范](#基础规范) 里能做成组件的部分也有：
+[`packages/react`](packages/react) 是按这套规范实现的 React 组件库（`@arknights-ui/react`），用 Tailwind CSS v4 编写。[通用元素](#通用元素) 里除“表单控件”以外的六篇，写到的东西都有对应的组件，[基础规范](#基础规范) 里能做成组件的部分也有：
 
 | 文档 | 组件 |
 | --- | --- |
@@ -149,6 +150,8 @@ node scripts/build-tokens.mjs
 | 图片 | `Portrait` · `Scrim` · `StripGallery` |
 | 布局与层级 | `Shell` · `ScrollHint` · `TiltGroup` · `PanelGrid` · `Parallax` |
 | 动效 | `Stagger` · `CountUp` |
+
+“表单控件”一篇是 2026-10-14 新增的，分段选项、开关、滑条、数量步进器还没有组件；同一轮补进文档的时间轴、官网干员屏的阵营切换与语音播放条也没有。文档与组件之间的全部差异列在 [packages/react/README.md](packages/react/README.md#与文档的出入)。
 
 [场景模块](#场景模块) 的八篇各有一组场景组件，把上面这些通用组件按模块的编排拼好：
 
@@ -187,11 +190,12 @@ pnpm storybook
 
 | 标记 | 含义 |
 | --- | --- |
-| **实测**（`measured`） | 2026-10-06 从 [官方网站](https://ak.hypergryph.com/) 的样式表或计算样式中直接读出 |
-| **社区**（`community`） | 来自开源项目或分析文章，非官方 |
-| **估计**（`estimated`） | 根据截图与观察归纳，仅作起点 |
+| **实测**（`measured`） | 从 [官方网站](https://ak.hypergryph.com/) 的样式表、计算样式或页面上的图片里直接读出。只对官网成立 |
+| **社区（实机裁图 / 实机截图）** | 对社区项目裁的控件图、维基和文章里的实机截图取色、量尺寸。形状和颜色来自真实画面，尺寸会差一两个像素。token 里记作 `community` |
+| **社区**（`community`） | 开源项目或分析文章里他人的取值与整理，非官方 |
+| **估计**（`estimated`） | 根据截图与观察归纳，或本仓库自己的设计决定，仅作起点 |
 
-游戏内界面没有做过像素级测量，相关数值都是社区或估计。官网数值可信度最高。按钮、弹窗、返回 + 主页等几样控件在 2026-10-07 对照过实机裁图，文档里标作“社区（实机裁图）”。
+官网数值可信度最高。游戏内界面没有拿到过设计稿，最好的一档是对实机截图的测量；剧情的对话画面、寻访的卡池界面还没有找到可以量的截图，仍是估计。各项数值是哪一天、用什么办法读到的，写在每篇文档末尾的“来源”里；改过的结论在原处留有“更正”说明。详见 [设计总纲 · 可信度约定](docs/00-overview.md#可信度约定)。
 
 ## 仓库结构
 
@@ -200,10 +204,10 @@ README.md
 docs/
   00-overview.md      设计总纲
   foundations/        基础规范（8 篇）
-  elements/           通用元素（6 篇）
+  elements/           通用元素（7 篇）
   modules/            场景模块（官网、游戏 7 篇、宣传物料、衍生品牌）
   references/         参考资料（3 篇）
-  assets/             自绘 SVG 示意图（16 张）
+  assets/             自绘 SVG 示意图（18 张）
 tokens/
   tokens.json         Design Tokens 数据源
   tokens.css          生成的 CSS 变量
